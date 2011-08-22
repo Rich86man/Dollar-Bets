@@ -7,19 +7,57 @@
 //
 
 #import "AppDelegate.h"
-
+#import "MainViewController.h"
 @implementation AppDelegate
 
+
 @synthesize window = _window;
+@synthesize mainViewController = _mainViewController;
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    // Get current version ("Bundle Version") from the default Info.plist file
+    NSString *currentVersion = (NSString*)[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSArray *prevStartupVersions = [[NSUserDefaults standardUserDefaults] arrayForKey:@"prevStartupVersions"];
+    if (prevStartupVersions == nil) 
+    {
+        // Starting up for first time with NO pre-existing installs (e.g., fresh 
+        // install of some version)
+        [self firstStartAfterFreshInstall];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObject:currentVersion] forKey:@"prevStartupVersions"];
+    }
+    else
+    {
+        if (![prevStartupVersions containsObject:currentVersion]) 
+        {
+            // Starting up for first time with this version of the app. This
+            // means a different version of the app was alread installed once 
+            // and started.
+            [self firstStartAfterUpgradeDowngrade];
+            NSMutableArray *updatedPrevStartVersions = [NSMutableArray arrayWithArray:prevStartupVersions];
+            [updatedPrevStartVersions addObject:currentVersion];
+            [[NSUserDefaults standardUserDefaults] setObject:updatedPrevStartVersions forKey:@"prevStartupVersions"];
+        }
+    }
+    
+    // Save changes to disk
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+
+    
+    
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    
+    self.mainViewController = [[MainViewController alloc]initWithNibName:@"MainViewController" bundle:nil];
+    
+    self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -172,5 +210,24 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
+
+#pragma mark - Initial Launch directives
+
+
+-(void)firstStartAfterFreshInstall
+{
+    
+    [[NSUserDefaults standardUserDefaults] setObject:0 forKey:@"betBooks"];
+    
+    
+}
+
+-(void)firstStartAfterUpgradeDowngrade
+{
+    
+}
+
+
 
 @end

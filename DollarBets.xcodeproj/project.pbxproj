@@ -14,6 +14,15 @@
 		FA45BA2D1401E66E00C02A78 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA2C1401E66E00C02A78 /* main.m */; };
 		FA45BA311401E66E00C02A78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA301401E66E00C02A78 /* AppDelegate.m */; };
 		FA45BA341401E66E00C02A78 /* DollarBets.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA321401E66E00C02A78 /* DollarBets.xcdatamodeld */; };
+		FA45BA411401E6C900C02A78 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA3F1401E6C900C02A78 /* MainViewController.m */; };
+		FA45BA421401E6C900C02A78 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA401401E6C900C02A78 /* MainViewController.xib */; };
+		FA45BA441401E91E00C02A78 /* pattern8.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA431401E91E00C02A78 /* pattern8.png */; };
+		FA45BA461402A2EC00C02A78 /* BookCoverFull.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA451402A2EC00C02A78 /* BookCoverFull.png */; };
+		FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6ADA331402A9FF007E6CB1 /* BookViewController.m */; };
+		FA6ADA361402A9FF007E6CB1 /* BookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA341402A9FF007E6CB1 /* BookViewController.xib */; };
+		FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA371402AA99007E6CB1 /* bookCover1.png */; };
+		FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA391402B023007E6CB1 /* plusSign.png */; };
+		FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,13 +30,24 @@
 		FA45BA201401E66E00C02A78 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FA45BA221401E66E00C02A78 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FA45BA241401E66E00C02A78 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		FA45BA281401E66E00C02A78 /* DollarBets-Info.plist */ = {isa = PBXFileReference; path = "DollarBets-Info.plist"; sourceTree = "<group>"; };
+		FA45BA281401E66E00C02A78 /* DollarBets-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DollarBets-Info.plist"; sourceTree = "<group>"; };
 		FA45BA2A1401E66E00C02A78 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA45BA2C1401E66E00C02A78 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FA45BA2E1401E66E00C02A78 /* DollarBets-Prefix.pch */ = {isa = PBXFileReference; path = "DollarBets-Prefix.pch"; sourceTree = "<group>"; };
-		FA45BA2F1401E66E00C02A78 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		FA45BA2E1401E66E00C02A78 /* DollarBets-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DollarBets-Prefix.pch"; sourceTree = "<group>"; };
+		FA45BA2F1401E66E00C02A78 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FA45BA301401E66E00C02A78 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		FA45BA331401E66E00C02A78 /* DollarBets.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DollarBets.xcdatamodel; sourceTree = "<group>"; };
+		FA45BA3E1401E6C900C02A78 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		FA45BA3F1401E6C900C02A78 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		FA45BA401401E6C900C02A78 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		FA45BA431401E91E00C02A78 /* pattern8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern8.png; sourceTree = "<group>"; };
+		FA45BA451402A2EC00C02A78 /* BookCoverFull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BookCoverFull.png; sourceTree = "<group>"; };
+		FA6ADA321402A9FF007E6CB1 /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookViewController.h; sourceTree = "<group>"; };
+		FA6ADA331402A9FF007E6CB1 /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookViewController.m; sourceTree = "<group>"; };
+		FA6ADA341402A9FF007E6CB1 /* BookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookViewController.xib; sourceTree = "<group>"; };
+		FA6ADA371402AA99007E6CB1 /* bookCover1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookCover1.png; sourceTree = "<group>"; };
+		FA6ADA391402B023007E6CB1 /* plusSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusSign.png; sourceTree = "<group>"; };
+		FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */,
 				FA45BA211401E66E00C02A78 /* UIKit.framework in Frameworks */,
 				FA45BA231401E66E00C02A78 /* Foundation.framework in Frameworks */,
 				FA45BA251401E66E00C02A78 /* CoreData.framework in Frameworks */,
@@ -64,6 +85,7 @@
 		FA45BA1F1401E66E00C02A78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */,
 				FA45BA201401E66E00C02A78 /* UIKit.framework */,
 				FA45BA221401E66E00C02A78 /* Foundation.framework */,
 				FA45BA241401E66E00C02A78 /* CoreData.framework */,
@@ -74,9 +96,9 @@
 		FA45BA261401E66E00C02A78 /* DollarBets */ = {
 			isa = PBXGroup;
 			children = (
+				FA6ADA2B1402A983007E6CB1 /* MainScreen */,
 				FA45BA2F1401E66E00C02A78 /* AppDelegate.h */,
 				FA45BA301401E66E00C02A78 /* AppDelegate.m */,
-				FA45BA321401E66E00C02A78 /* DollarBets.xcdatamodeld */,
 				FA45BA271401E66E00C02A78 /* Supporting Files */,
 			);
 			path = DollarBets;
@@ -85,12 +107,30 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FA6ADA391402B023007E6CB1 /* plusSign.png */,
+				FA6ADA371402AA99007E6CB1 /* bookCover1.png */,
+				FA45BA451402A2EC00C02A78 /* BookCoverFull.png */,
+				FA45BA431401E91E00C02A78 /* pattern8.png */,
+				FA45BA321401E66E00C02A78 /* DollarBets.xcdatamodeld */,
 				FA45BA281401E66E00C02A78 /* DollarBets-Info.plist */,
 				FA45BA291401E66E00C02A78 /* InfoPlist.strings */,
 				FA45BA2C1401E66E00C02A78 /* main.m */,
 				FA45BA2E1401E66E00C02A78 /* DollarBets-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FA6ADA2B1402A983007E6CB1 /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FA45BA3E1401E6C900C02A78 /* MainViewController.h */,
+				FA45BA3F1401E6C900C02A78 /* MainViewController.m */,
+				FA45BA401401E6C900C02A78 /* MainViewController.xib */,
+				FA6ADA321402A9FF007E6CB1 /* BookViewController.h */,
+				FA6ADA331402A9FF007E6CB1 /* BookViewController.m */,
+				FA6ADA341402A9FF007E6CB1 /* BookViewController.xib */,
+			);
+			name = MainScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +185,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA45BA2B1401E66E00C02A78 /* InfoPlist.strings in Resources */,
+				FA45BA421401E6C900C02A78 /* MainViewController.xib in Resources */,
+				FA45BA441401E91E00C02A78 /* pattern8.png in Resources */,
+				FA45BA461402A2EC00C02A78 /* BookCoverFull.png in Resources */,
+				FA6ADA361402A9FF007E6CB1 /* BookViewController.xib in Resources */,
+				FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */,
+				FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +204,8 @@
 				FA45BA2D1401E66E00C02A78 /* main.m in Sources */,
 				FA45BA311401E66E00C02A78 /* AppDelegate.m in Sources */,
 				FA45BA341401E66E00C02A78 /* DollarBets.xcdatamodeld in Sources */,
+				FA45BA411401E6C900C02A78 /* MainViewController.m in Sources */,
+				FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +311,7 @@
 				FA45BA391401E66E00C02A78 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
