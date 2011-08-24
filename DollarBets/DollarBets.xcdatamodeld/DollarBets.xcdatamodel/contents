@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="858" systemVersion="11B26" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Bet">
+    <entity name="Bet" representedClassName="Bet">
         <attribute name="amount" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="date" optional="YES" attributeType="Date"/>
-        <attribute name="didWin" optional="YES" attributeType="Integer 16"/>
+        <attribute name="didWin" optional="YES" attributeType="Integer 16" indexed="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0"/>
         <attribute name="picture" optional="YES" attributeType="Binary"/>
@@ -13,13 +13,14 @@
             <fetchRequest name="fetchedPropertyFetchRequest" entity="Bet" predicateString="SELECT * FROM Bet"/>
         </fetchedProperty>
     </entity>
-    <entity name="Opponent">
+    <entity name="Opponent" representedClassName="Opponent">
+        <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="picture" optional="YES" attributeType="Binary"/>
         <relationship name="bets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bet" inverseName="opponent" inverseEntity="Bet"/>
     </entity>
     <elements>
         <element name="Bet" positionX="-335" positionY="150" width="128" height="194"/>
-        <element name="Opponent" positionX="-909" positionY="-90" width="128" height="90"/>
+        <element name="Opponent" positionX="-909" positionY="-90" width="128" height="105"/>
     </elements>
 </model>

@@ -8,13 +8,14 @@
 
 #import "MainViewController.h"
 #import "BookViewController.h"
+#import "Opponent.h"
 #import <CoreGraphics/CoreGraphics.h>
 
-static NSUInteger kNumberOfPages = 3;
+static NSUInteger kNumberOfPages = 10;
 
 
 @interface MainViewController (PrivateMethods)
-- (void)loadScrollViewWithPage:(int)page;
+- (void)loadScrollViewWithPage:(int)page isAddBook:(bool)newBook;
 - (void)scrollViewDidScroll:(UIScrollView *)sender;
 @end
 
@@ -22,8 +23,24 @@ static NSUInteger kNumberOfPages = 3;
 
 @implementation MainViewController
 @synthesize mainScrollView,pageControl, books;
+@synthesize context;
+@synthesize opponents;
 
 
+
+-(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt
+{
+    
+    self =  [self initWithNibName:nil bundle:nil];
+    
+    self.context = cntxt;
+    
+    
+    
+    return self;
+    
+    
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -65,9 +82,13 @@ static NSUInteger kNumberOfPages = 3;
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width * 3, self.mainScrollView.frame.size.height);
     
     
-    [self loadScrollViewWithPage:0];
-    [self loadScrollViewWithPage:1];
-    [self loadScrollViewWithPage:2];
+    [self retrieveOpponents];
+    
+    for (int i=0; i < [opponents count]; i++) {
+        [self loadScrollViewWithPage:i isAddBook:NO];
+    }
+
+    [self loadScrollViewWithPage:[opponents count] isAddBook:YES];
     
     
     
@@ -94,20 +115,21 @@ static NSUInteger kNumberOfPages = 3;
 
 #pragma mark - Scroll View Functions
 
-- (void)loadScrollViewWithPage:(int)page
+- (void)loadScrollViewWithPage:(int)page isAddBook:(bool)newBook
 {
     if (page < 0)
         return;
-    if (page >= kNumberOfPages)
+    if (page >= [books count])
         return;
     
     
-    if (page == 2)
+    if (newBook)
     {
         BookViewController *controller = [books objectAtIndex:page];
         if ((NSNull *)controller == [NSNull null])
         {
             controller = [[BookViewController alloc] initAsAddBook];
+            controller.delegate = self;
             [books replaceObjectAtIndex:page withObject:controller];
             
         }
@@ -132,7 +154,7 @@ static NSUInteger kNumberOfPages = 3;
         if ((NSNull *)controller == [NSNull null])
         {
             controller = [[BookViewController alloc] initWithNibName:@"BookViewController" bundle:nil];
-            controller.opponentLabel.text = @"Johnny Curry";
+            controller.opponentTextField.text = @"Johnny Curry";
             controller.dateLabel.text = @"01/20/2011";
             controller.debugPageNumber.text = [[NSNumber numberWithInt:page] description];
             [books replaceObjectAtIndex:page withObject:controller];
@@ -172,9 +194,14 @@ static NSUInteger kNumberOfPages = 3;
     pageControl.currentPage = page;
     
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-    [self loadScrollViewWithPage:page - 1];
-    [self loadScrollViewWithPage:page];
-    [self loadScrollViewWithPage:page + 1];
+    [self loadScrollViewWithPage:page - 1 isAddBook:NO];
+    [self loadScrollViewWithPage:page isAddBook:NO];
+    if (page + 1 < [books count])
+    {
+    [self loadScrollViewWithPage:page + 1 isAddBook:NO];
+    }
+    
+    
     
     // A possible optimization would be to unload the views+controllers which are no longer visible
 }
@@ -196,9 +223,9 @@ static NSUInteger kNumberOfPages = 3;
     int page = pageControl.currentPage;
 	
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-    [self loadScrollViewWithPage:page - 1];
-    [self loadScrollViewWithPage:page];
-    [self loadScrollViewWithPage:page + 1];
+    [self loadScrollViewWithPage:page - 1 isAddBook:NO];
+    [self loadScrollViewWithPage:page isAddBook:NO];
+    [self loadScrollViewWithPage:page + 1 isAddBook:NO];
     
 	// update the scroll view to the appropriate page
     CGRect frame = mainScrollView.frame;
@@ -210,6 +237,87 @@ static NSUInteger kNumberOfPages = 3;
     pageControlUsed = YES;
 }
 
+
+-(void)addNewBook
+{
+    
+    NSLog(@"The delegate worked!!");
+    
+    [self loadScrollViewWithPage:[books count] isAddBook:YES];
+
+}
+
+-(void)opponentCreatedWithName:(NSString *)oppName
+{
+    //NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    //[dateFormatter setDateFormat:@"MM/DD/YYYY"];
+
+    Opponent *newOpponent = [NSEntityDescription insertNewObjectForEntityForName:@"Opponent" inManagedObjectContext:self.context];
+    
+    newOpponent.name = oppName;
+    //newOpponent.date = [dateFormatter stringFromDate:[NSDate date]];
+    
+    NSError *error = [[NSError alloc] init ];
+    
+    [context save:&error];
+    
+    
+    if(error)
+    {
+         NSLog(@"%@\n", [error  description]);
+    }
+    
+    
+    [self retrieveOpponents];
+    
+    
+}
+
+
+-(void)retrieveOpponents
+{
+    
+    
+    //[self.context ]
+    
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Opponent" inManagedObjectContext:self.context];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Opponent"];
+    
+    //[request setEntity:entityDescription];
+    
+    
+    
+    // Set example predicate and sort orderings...
+/*
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+    
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+  */  
+    
+    
+    
+    NSError *error = nil;
+    
+    NSArray *array = [self.context executeFetchRequest:request error:&error];
+    
+    if(error)
+    {
+          NSLog(@"%@\n", [error  description]);
+    }
+    
+    
+    
+    if (array == nil)
+    {
+        opponents = [NSArray arrayWithObject:@"empty"];
+    }
+    
+    opponents = array;
+    
+    
+    
+}
 
 
 

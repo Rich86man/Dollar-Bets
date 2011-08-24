@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA437B7614045B5C00CD43EF /* TextEditField.png in Resources */ = {isa = PBXBuildFile; fileRef = FA437B7514045B5C00CD43EF /* TextEditField.png */; };
+		FA437B7D14046EBC00CD43EF /* Bet.m in Sources */ = {isa = PBXBuildFile; fileRef = FA437B7C14046EBC00CD43EF /* Bet.m */; };
 		FA45BA211401E66E00C02A78 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA45BA201401E66E00C02A78 /* UIKit.framework */; };
 		FA45BA231401E66E00C02A78 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA45BA221401E66E00C02A78 /* Foundation.framework */; };
 		FA45BA251401E66E00C02A78 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA45BA241401E66E00C02A78 /* CoreData.framework */; };
@@ -23,9 +25,13 @@
 		FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA371402AA99007E6CB1 /* bookCover1.png */; };
 		FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA391402B023007E6CB1 /* plusSign.png */; };
 		FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */; };
+		FAB9D59014047943000F4FC0 /* Opponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB9D58F14047943000F4FC0 /* Opponent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA437B7514045B5C00CD43EF /* TextEditField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TextEditField.png; sourceTree = "<group>"; };
+		FA437B7B14046EBC00CD43EF /* Bet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bet.h; sourceTree = "<group>"; };
+		FA437B7C14046EBC00CD43EF /* Bet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bet.m; sourceTree = "<group>"; };
 		FA45BA1C1401E66E00C02A78 /* DollarBets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DollarBets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA45BA201401E66E00C02A78 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FA45BA221401E66E00C02A78 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -48,6 +54,8 @@
 		FA6ADA371402AA99007E6CB1 /* bookCover1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookCover1.png; sourceTree = "<group>"; };
 		FA6ADA391402B023007E6CB1 /* plusSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusSign.png; sourceTree = "<group>"; };
 		FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FAB9D58E14047943000F4FC0 /* Opponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Opponent.h; sourceTree = "<group>"; };
+		FAB9D58F14047943000F4FC0 /* Opponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Opponent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +73,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA437B8114046ED200CD43EF /* Managed Objects */ = {
+			isa = PBXGroup;
+			children = (
+				FAB9D58E14047943000F4FC0 /* Opponent.h */,
+				FAB9D58F14047943000F4FC0 /* Opponent.m */,
+				FA437B7B14046EBC00CD43EF /* Bet.h */,
+				FA437B7C14046EBC00CD43EF /* Bet.m */,
+			);
+			name = "Managed Objects";
+			sourceTree = "<group>";
+		};
 		FA45BA111401E66E00C02A78 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +115,7 @@
 		FA45BA261401E66E00C02A78 /* DollarBets */ = {
 			isa = PBXGroup;
 			children = (
+				FA437B8114046ED200CD43EF /* Managed Objects */,
 				FA6ADA2B1402A983007E6CB1 /* MainScreen */,
 				FA45BA2F1401E66E00C02A78 /* AppDelegate.h */,
 				FA45BA301401E66E00C02A78 /* AppDelegate.m */,
@@ -107,6 +127,7 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FA437B7514045B5C00CD43EF /* TextEditField.png */,
 				FA6ADA391402B023007E6CB1 /* plusSign.png */,
 				FA6ADA371402AA99007E6CB1 /* bookCover1.png */,
 				FA45BA451402A2EC00C02A78 /* BookCoverFull.png */,
@@ -191,6 +212,7 @@
 				FA6ADA361402A9FF007E6CB1 /* BookViewController.xib in Resources */,
 				FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */,
 				FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */,
+				FA437B7614045B5C00CD43EF /* TextEditField.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +228,8 @@
 				FA45BA341401E66E00C02A78 /* DollarBets.xcdatamodeld in Sources */,
 				FA45BA411401E6C900C02A78 /* MainViewController.m in Sources */,
 				FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */,
+				FA437B7D14046EBC00CD43EF /* Bet.m in Sources */,
+				FAB9D59014047943000F4FC0 /* Opponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
