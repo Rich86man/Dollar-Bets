@@ -28,7 +28,7 @@
 		FA45BA441401E91E00C02A78 /* pattern8.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA431401E91E00C02A78 /* pattern8.png */; };
 		FA45BA461402A2EC00C02A78 /* BookCoverFull.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA451402A2EC00C02A78 /* BookCoverFull.png */; };
 		FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6ADA331402A9FF007E6CB1 /* BookViewController.m */; };
-		FA6ADA361402A9FF007E6CB1 /* BookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA341402A9FF007E6CB1 /* BookViewController.xib */; };
+		FA6ADA361402A9FF007E6CB1 /* BookViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA341402A9FF007E6CB1 /* BookViewController2.xib */; };
 		FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA371402AA99007E6CB1 /* bookCover1.png */; };
 		FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA391402B023007E6CB1 /* plusSign.png */; };
 		FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */; };
@@ -68,7 +68,7 @@
 		FA45BA451402A2EC00C02A78 /* BookCoverFull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BookCoverFull.png; sourceTree = "<group>"; };
 		FA6ADA321402A9FF007E6CB1 /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookViewController.h; sourceTree = "<group>"; };
 		FA6ADA331402A9FF007E6CB1 /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookViewController.m; sourceTree = "<group>"; };
-		FA6ADA341402A9FF007E6CB1 /* BookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookViewController.xib; sourceTree = "<group>"; };
+		FA6ADA341402A9FF007E6CB1 /* BookViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookViewController2.xib; sourceTree = "<group>"; };
 		FA6ADA371402AA99007E6CB1 /* bookCover1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookCover1.png; sourceTree = "<group>"; };
 		FA6ADA391402B023007E6CB1 /* plusSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusSign.png; sourceTree = "<group>"; };
 		FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -103,6 +103,8 @@
 		FA2486EC14083CFF00AC31BE /* BookViewController */ = {
 			isa = PBXGroup;
 			children = (
+				FA6ADA321402A9FF007E6CB1 /* BookViewController.h */,
+				FA6ADA331402A9FF007E6CB1 /* BookViewController.m */,
 			);
 			name = BookViewController;
 			sourceTree = "<group>";
@@ -195,9 +197,7 @@
 				FA45BA3E1401E6C900C02A78 /* MainViewController.h */,
 				FA45BA3F1401E6C900C02A78 /* MainViewController.m */,
 				FA45BA401401E6C900C02A78 /* MainViewController.xib */,
-				FA6ADA321402A9FF007E6CB1 /* BookViewController.h */,
-				FA6ADA331402A9FF007E6CB1 /* BookViewController.m */,
-				FA6ADA341402A9FF007E6CB1 /* BookViewController.xib */,
+				FA6ADA341402A9FF007E6CB1 /* BookViewController2.xib */,
 				FA2486D214071EB500AC31BE /* BookSettingsViewController.h */,
 				FA2486D314071EB500AC31BE /* BookSettingsViewController.m */,
 				FA2486D414071EB500AC31BE /* BookSettingsViewController.xib */,
@@ -262,7 +262,7 @@
 				FA45BA421401E6C900C02A78 /* MainViewController.xib in Resources */,
 				FA45BA441401E91E00C02A78 /* pattern8.png in Resources */,
 				FA45BA461402A2EC00C02A78 /* BookCoverFull.png in Resources */,
-				FA6ADA361402A9FF007E6CB1 /* BookViewController.xib in Resources */,
+				FA6ADA361402A9FF007E6CB1 /* BookViewController2.xib in Resources */,
 				FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */,
 				FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */,
 				FA437B7614045B5C00CD43EF /* TextEditField.png in Resources */,

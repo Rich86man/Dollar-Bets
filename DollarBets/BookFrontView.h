@@ -36,7 +36,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *plusSignButton;
 @property (strong, nonatomic) IBOutlet UIButton *configButton;
 
-@property (assign,nonatomic)BookViewController *viewController;
+@property (strong, nonatomic)BookViewController *viewController;
 
 
 -(id)initWithFrame:(CGRect)frame asNewBook:(BOOL)isNewBook;

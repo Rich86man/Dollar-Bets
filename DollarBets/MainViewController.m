@@ -139,11 +139,7 @@ static NSUInteger kNumberOfPages = 10;
             else
             {
                 controller = [[BookViewController alloc] initWithOpponent:[self.opponents objectAtIndex:page]];
-                UIButton *removeButton = [[UIButton alloc]init];
-                removeButton.backgroundColor = [UIColor redColor];
-                [removeButton addTarget:self action:@selector(removeBook:) forControlEvents:UIControlEventTouchUpInside];
-                [[controller view]  addSubview:removeButton];
-                
+                               
                 
             }
             controller.delegate = self;

@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Opponent.h"
 #import "BookSettingsViewController.h"
+
+@class BookFrontView;
+@class BookSettingsView;
+
 @protocol BookViewControllerDelegate <NSObject>
 
 -(void)addNewBook;
@@ -18,39 +22,39 @@
 
 
 @interface BookViewController : UIViewController {
-    UILabel *opponentLabel;
-    UILabel *dateLabel;
-    UIImageView *plusSignImageView;
-
-    UILabel *debugPageNumber;
-    UIButton *plusSignButton;
-    UIButton *configButton;
-    UITextField *opponentTextField;
     BOOL newBook;
     BOOL frontViewIsVisible;
     
-    
-    
-    BookSettingsViewController *settings;
-    
+    BookFrontView *frontView;
+    BookSettingsView *backView;
+
+    UIView *containerView;	
     
     id<BookViewControllerDelegate> delegate;
-    
-    
-    
+
 }
 @property (assign)BOOL frontViewIsVisible;
-@property (strong, nonatomic) IBOutlet UILabel *opponentLabel;
-@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *plusSignImageView;
-@property (strong, nonatomic) IBOutlet UILabel *debugPageNumber;
-@property (strong, nonatomic) IBOutlet UIButton *plusSignButton;
-@property (strong, nonatomic) IBOutlet UIButton *configButton;
-@property (strong, nonatomic) IBOutlet UITextField *opponentTextField;
 @property (strong, nonatomic) Opponent * opponent;
-@property (strong, nonatomic) BookSettingsViewController *settings;
-
+@property (strong, nonatomic) UIView *containerView;
 @property (strong, nonatomic)id delegate;
+@property (strong, nonatomic)BookFrontView *frontView;
+@property (strong, nonatomic)BookSettingsView *backView;
+
+
+
+
+- (void)flipCurrentView;
+- (void)myTransitionDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
+
+-(void)deleteButtonSelected;
+
+
+
+
+
+
+
+
 
 
 -(id)initAsAddBook;
@@ -59,14 +63,7 @@
 -(IBAction)enteredNewOpponentName:(UITextField *)sender;
 - (IBAction)configButtonPressed:(id)sender;
 
--(void)showPlusButton;
--(void)hidePlusButton;
--(void)showOpponentLabel;
--(void)hideOpponentLabel;
--(void)showOpponentTextField;
--(void)hideOpponentTextField;
--(void)showDateLabel;
--(void)hideDateLabel;
+
 
 
 

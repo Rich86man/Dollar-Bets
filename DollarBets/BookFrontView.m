@@ -30,7 +30,7 @@
     self.textField = nil;
     self.dateLabel = nil;
     self.plusSignButton = nil;
-    self.plusSignImageView.nil;
+    self.plusSignImageView = nil;
     
     
     
@@ -63,6 +63,8 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
+    
+    self.backgroundColor = [UIColor clearColor];
     
     UIImageView *setupImgView = [[UIImageView alloc]initWithFrame:CGRectMake(27, 64, 267, 331)];
     setupImgView.image = [UIImage imageNamed:@"bookCover1.png"];
