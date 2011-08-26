@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA03E8061408481B00DA2345 /* BookSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA03E8051408481B00DA2345 /* BookSettingsView.m */; };
+		FA2486CD14071C1000AC31BE /* config-wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2486CC14071C1000AC31BE /* config-wheel.png */; };
+		FA2486D114071DE700AC31BE /* bookCoverFlipped.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2486D014071DE700AC31BE /* bookCoverFlipped.png */; };
+		FA2486D514071EB500AC31BE /* BookSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2486D314071EB500AC31BE /* BookSettingsViewController.m */; };
+		FA2486D614071EB500AC31BE /* BookSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA2486D414071EB500AC31BE /* BookSettingsViewController.xib */; };
+		FA2486DD1407209D00AC31BE /* PopOverController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2486DC1407209D00AC31BE /* PopOverController.m */; };
+		FA2486F214083E1C00AC31BE /* BookFrontView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2486F114083E1C00AC31BE /* BookFrontView.m */; };
 		FA437B7614045B5C00CD43EF /* TextEditField.png in Resources */ = {isa = PBXBuildFile; fileRef = FA437B7514045B5C00CD43EF /* TextEditField.png */; };
 		FA437B7D14046EBC00CD43EF /* Bet.m in Sources */ = {isa = PBXBuildFile; fileRef = FA437B7C14046EBC00CD43EF /* Bet.m */; };
 		FA45BA211401E66E00C02A78 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA45BA201401E66E00C02A78 /* UIKit.framework */; };
@@ -29,6 +36,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA03E8041408481B00DA2345 /* BookSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookSettingsView.h; sourceTree = "<group>"; };
+		FA03E8051408481B00DA2345 /* BookSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookSettingsView.m; sourceTree = "<group>"; };
+		FA2486CC14071C1000AC31BE /* config-wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "config-wheel.png"; sourceTree = "<group>"; };
+		FA2486D014071DE700AC31BE /* bookCoverFlipped.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookCoverFlipped.png; sourceTree = "<group>"; };
+		FA2486D214071EB500AC31BE /* BookSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookSettingsViewController.h; sourceTree = "<group>"; };
+		FA2486D314071EB500AC31BE /* BookSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookSettingsViewController.m; sourceTree = "<group>"; };
+		FA2486D414071EB500AC31BE /* BookSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookSettingsViewController.xib; sourceTree = "<group>"; };
+		FA2486DB1407209D00AC31BE /* PopOverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopOverController.h; sourceTree = "<group>"; };
+		FA2486DC1407209D00AC31BE /* PopOverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopOverController.m; sourceTree = "<group>"; };
+		FA2486F014083E1C00AC31BE /* BookFrontView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookFrontView.h; sourceTree = "<group>"; };
+		FA2486F114083E1C00AC31BE /* BookFrontView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookFrontView.m; sourceTree = "<group>"; };
 		FA437B7514045B5C00CD43EF /* TextEditField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TextEditField.png; sourceTree = "<group>"; };
 		FA437B7B14046EBC00CD43EF /* Bet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bet.h; sourceTree = "<group>"; };
 		FA437B7C14046EBC00CD43EF /* Bet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bet.m; sourceTree = "<group>"; };
@@ -73,6 +91,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA2486EB14083CF100AC31BE /* Induvidual books */ = {
+			isa = PBXGroup;
+			children = (
+				FA2486ED14083D0D00AC31BE /* Book Views */,
+				FA2486EC14083CFF00AC31BE /* BookViewController */,
+			);
+			name = "Induvidual books";
+			sourceTree = "<group>";
+		};
+		FA2486EC14083CFF00AC31BE /* BookViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = BookViewController;
+			sourceTree = "<group>";
+		};
+		FA2486ED14083D0D00AC31BE /* Book Views */ = {
+			isa = PBXGroup;
+			children = (
+				FA2486F014083E1C00AC31BE /* BookFrontView.h */,
+				FA2486F114083E1C00AC31BE /* BookFrontView.m */,
+				FA03E8041408481B00DA2345 /* BookSettingsView.h */,
+				FA03E8051408481B00DA2345 /* BookSettingsView.m */,
+			);
+			name = "Book Views";
+			sourceTree = "<group>";
+		};
 		FA437B8114046ED200CD43EF /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +172,8 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FA2486D014071DE700AC31BE /* bookCoverFlipped.png */,
+				FA2486CC14071C1000AC31BE /* config-wheel.png */,
 				FA437B7514045B5C00CD43EF /* TextEditField.png */,
 				FA6ADA391402B023007E6CB1 /* plusSign.png */,
 				FA6ADA371402AA99007E6CB1 /* bookCover1.png */,
@@ -144,12 +191,18 @@
 		FA6ADA2B1402A983007E6CB1 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				FA2486EB14083CF100AC31BE /* Induvidual books */,
 				FA45BA3E1401E6C900C02A78 /* MainViewController.h */,
 				FA45BA3F1401E6C900C02A78 /* MainViewController.m */,
 				FA45BA401401E6C900C02A78 /* MainViewController.xib */,
 				FA6ADA321402A9FF007E6CB1 /* BookViewController.h */,
 				FA6ADA331402A9FF007E6CB1 /* BookViewController.m */,
 				FA6ADA341402A9FF007E6CB1 /* BookViewController.xib */,
+				FA2486D214071EB500AC31BE /* BookSettingsViewController.h */,
+				FA2486D314071EB500AC31BE /* BookSettingsViewController.m */,
+				FA2486D414071EB500AC31BE /* BookSettingsViewController.xib */,
+				FA2486DB1407209D00AC31BE /* PopOverController.h */,
+				FA2486DC1407209D00AC31BE /* PopOverController.m */,
 			);
 			name = MainScreen;
 			sourceTree = "<group>";
@@ -213,6 +266,9 @@
 				FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */,
 				FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */,
 				FA437B7614045B5C00CD43EF /* TextEditField.png in Resources */,
+				FA2486CD14071C1000AC31BE /* config-wheel.png in Resources */,
+				FA2486D114071DE700AC31BE /* bookCoverFlipped.png in Resources */,
+				FA2486D614071EB500AC31BE /* BookSettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +286,10 @@
 				FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */,
 				FA437B7D14046EBC00CD43EF /* Bet.m in Sources */,
 				FAB9D59014047943000F4FC0 /* Opponent.m in Sources */,
+				FA2486D514071EB500AC31BE /* BookSettingsViewController.m in Sources */,
+				FA2486DD1407209D00AC31BE /* PopOverController.m in Sources */,
+				FA2486F214083E1C00AC31BE /* BookFrontView.m in Sources */,
+				FA03E8061408481B00DA2345 /* BookSettingsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

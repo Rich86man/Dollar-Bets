@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+
 @implementation AppDelegate
 
 
@@ -19,7 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+    /*
     // Get current version ("Bundle Version") from the default Info.plist file
     NSString *currentVersion = (NSString*)[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSArray *prevStartupVersions = [[NSUserDefaults standardUserDefaults] arrayForKey:@"prevStartupVersions"];
@@ -50,14 +51,17 @@
 
     
     
+    */
     
+    
+    [[self managedObjectContext] reset];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
     
         
-    self.mainViewController = [[MainViewController alloc]initWithManagedObjectContext:[self managedObjectContext]];
+    self.mainViewController = [[MainViewController alloc] initWithManagedObjectContext:[self managedObjectContext]];
     
     self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
@@ -152,7 +156,13 @@
         return __managedObjectModel;
     }
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"DollarBets" withExtension:@"momd"];
-    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];    
+    NSLog(@"%@",[modelURL description]);
+    
+    
+    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];  
+    
+    
+    
     return __managedObjectModel;
 }
 
@@ -161,7 +171,7 @@
  If the coordinator doesn't already exist, it is created and the application's store added to it.
  */
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
+{   
     if (__persistentStoreCoordinator != nil)
     {
         return __persistentStoreCoordinator;

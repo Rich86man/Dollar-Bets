@@ -32,6 +32,9 @@
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt;
 -(void)addNewBook;
 -(void)retrieveOpponents;
+-(void)resizeScrollView;
+-(void)removeBook;
+
 
 
 @end

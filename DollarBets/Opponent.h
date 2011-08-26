@@ -13,7 +13,7 @@
 
 @interface Opponent : NSManagedObject
 
-@property (nonatomic, retain) NSString * date;
+@property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSData * picture;
 @property (nonatomic, retain) NSSet *bets;

@@ -9,18 +9,15 @@
         <attribute name="picture" optional="YES" attributeType="Binary"/>
         <attribute name="report" optional="YES" attributeType="String"/>
         <relationship name="opponent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Opponent" inverseName="bets" inverseEntity="Opponent"/>
-        <fetchedProperty name="allBets" optional="YES">
-            <fetchRequest name="fetchedPropertyFetchRequest" entity="Bet" predicateString="SELECT * FROM Bet"/>
-        </fetchedProperty>
     </entity>
     <entity name="Opponent" representedClassName="Opponent">
-        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="picture" optional="YES" attributeType="Binary"/>
         <relationship name="bets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bet" inverseName="opponent" inverseEntity="Bet"/>
     </entity>
     <elements>
-        <element name="Bet" positionX="-335" positionY="150" width="128" height="194"/>
+        <element name="Bet" positionX="-335" positionY="150" width="128" height="165"/>
         <element name="Opponent" positionX="-909" positionY="-90" width="128" height="105"/>
     </elements>
 </model>

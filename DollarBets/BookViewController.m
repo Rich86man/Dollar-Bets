@@ -16,12 +16,12 @@
 @synthesize plusSignImageView;
 @synthesize debugPageNumber;
 @synthesize plusSignButton;
+@synthesize configButton;
 @synthesize opponentTextField;
 @synthesize delegate;
 @synthesize opponent;
-
-
-
+@synthesize settings;
+@synthesize frontViewIsVisible;
 
 
 -(id)initWithOpponent:(Opponent *)opp
@@ -44,7 +44,7 @@
         newBook = YES;
     }
     
-    return self;
+   return self;
 }
 
 
@@ -77,10 +77,11 @@
     else
     {
         NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM/DD/YYYY"];
+        [dateFormatter setDateFormat:@"MM / DD / YYYY"];
 
-//        self.dateLabel.text = [dateFormatter stringFromDate:[opponent date]];
-        self.opponentTextField.text = [opponent name];
+
+        self.opponentTextField.text = [self.opponent name];
+        self.dateLabel.text = [dateFormatter stringFromDate:[self.opponent date]];
         
         [self showDateLabel];
         [self showOpponentLabel];
@@ -99,6 +100,7 @@
     [self setPlusSignButton:nil];
     [self setPlusSignImageView:nil];
     [self setOpponentTextField:nil];
+    [self setConfigButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -127,9 +129,33 @@
 }
 
 -(IBAction)enteredNewOpponentName:(UITextField *)sender
-{
+{ 
+    
+    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM / DD / YYYY"];
+    
+    
+
+    self.dateLabel.text = [dateFormatter stringFromDate:[NSDate date]];
+
+
+    
     [delegate opponentCreatedWithName:[sender text]];
     
+}
+
+- (IBAction)configButtonPressed:(id)sender 
+{
+    if(self.settings == nil)
+    {
+        self.settings = [[BookSettingsViewController alloc]initWithNibName:@"BookSettingsViewController" bundle:nil];
+    }
+    
+      
+      
+
+    
+
 }
 
 
@@ -229,6 +255,54 @@
 {
     self.dateLabel.alpha = 0;
 }
+
+- (void)flipCurrentView {
+	NSUInteger reflectionHeight;
+	UIImage *reflectedImage;
+	
+	// disable user interaction during the flip
+	self.view.userInteractionEnabled = NO;
+	
+	
+	// setup the animation group
+	[UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.75];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(myTransitionDidStop:finished:context:)];
+	
+	// swap the views and transition
+    if (frontViewIsVisible == YES) {
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.view cache:YES];
+
+		
+		
+
+    } else {
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
+          }
+	[UIView commitAnimations];
+	
+	
+	[UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.75];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(myTransitionDidStop:finished:context:)];
+    
+	if (frontViewIsVisible==YES)
+	{
+		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:flipIndicatorButton cache:YES];
+		[flipIndicatorButton setBackgroundImage:element.flipperImageForAtomicElementNavigationItem forState:UIControlStateNormal];
+	}
+	else
+	{
+		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:flipIndicatorButton cache:YES];
+		[flipIndicatorButton setBackgroundImage:[UIImage imageNamed:@"flipper_list_blue.png"] forState:UIControlStateNormal];
+		
+	}
+	[UIView commitAnimations];
+	frontViewIsVisible=!frontViewIsVisible;
+}
+
 
 
 
