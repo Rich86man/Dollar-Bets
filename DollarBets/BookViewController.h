@@ -46,7 +46,7 @@
 - (void)flipCurrentView;
 - (void)myTransitionDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
 
--(void)deleteButtonSelected;
+-(void)deleteButtonSelected:(id)sender;
 
 
 
@@ -62,6 +62,7 @@
 -(IBAction)plusSignPressed:(id)sender;
 -(IBAction)enteredNewOpponentName:(UITextField *)sender;
 - (IBAction)configButtonPressed:(id)sender;
+-(void)backButtonSelected:(id)sender;
 
 
 

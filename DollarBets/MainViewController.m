@@ -68,8 +68,9 @@ static NSUInteger kNumberOfPages = 10;
     
     // Set up the backround 
     UIImage *pattern = [UIImage imageNamed:@"pattern8.png"];
-    self.mainScrollView.backgroundColor = [UIColor colorWithPatternImage:pattern];
-    self.mainScrollView.pagingEnabled = YES;
+       
+     self.mainScrollView.backgroundColor = [UIColor colorWithPatternImage:pattern];
+     self.mainScrollView.pagingEnabled = YES;
     
     
     // view controllers are created lazily
@@ -154,8 +155,9 @@ static NSUInteger kNumberOfPages = 10;
             frame.origin.x = frame.size.width * page;
             frame.origin.y = 0;
             controller.view.frame = frame;
-            [mainScrollView addSubview:controller.view];
-            
+            [self.mainScrollView addSubview:controller.view];
+           // [self.mainScrollView insertSubview:controller.view atIndex:1];
+       
         }
         
         

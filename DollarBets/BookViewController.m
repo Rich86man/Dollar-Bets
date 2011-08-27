@@ -33,17 +33,14 @@
     [self setOpponent:nil];
     
     
-    UIView *localContainerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-	self.containerView = localContainerView;
-    
-    self.view = self.containerView;
+
     
 
 }
 
 -(id)initWithOpponent:(Opponent *)opp
 {
-    if (self = [super initWithNibName:nil bundle:nil])
+    if (self = [super init])
     {
         [self setup];
         newBook = NO;
@@ -57,7 +54,7 @@
 
 -(id)initAsAddBook
 {
-    if (self = [super initWithNibName:nil bundle:nil])
+    if (self = [super init])
     {   [self setup];
         newBook = YES;
     }
@@ -68,18 +65,27 @@
 
 
 #pragma mark - View lifecycle
-
-- (void)viewDidLoad
+- (void)loadView
 {
-    [super viewDidLoad];
+    [super loadView];
     // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = [UIColor clearColor];
     
     UIView *localContainerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
 	self.containerView = localContainerView;
-
+    self.containerView.backgroundColor = [UIColor clearColor];
+    
+    
     BookFrontView *bfw = [[BookFrontView alloc] initWithFrame:self.containerView.frame asNewBook:newBook];
     bfw.viewController = self;
+    bfw.textField.text = [self.opponent name];
+    bfw.backgroundColor = [UIColor clearColor];
+    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM / DD / YYYY"];
+    bfw.dateLabel.text = [dateFormatter stringFromDate:[self.opponent date]];
+    
+    
+    frontViewIsVisible = YES;
+  
     self.frontView = bfw;
     [self.containerView addSubview:self.frontView];
     
@@ -88,13 +94,24 @@
     
     BookSettingsView *bsw = [[BookSettingsView alloc] initWithFrame:self.containerView.frame];
     bsw.viewController = self;
+    bsw.backgroundColor = [UIColor clearColor];
+    self.backView = bsw;
     
     
     
-
+    self.view = self.containerView;
+    
+   
 }
 
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    NSLog(@"ViewDidLoad");
+    [self.view layoutSubviews];
+}
 
 - (void)viewDidUnload
 {
@@ -138,14 +155,14 @@
 - (IBAction)configButtonPressed:(id)sender 
 {
     [self flipCurrentView];    
-      
-      
-
-    
-
 }
 
--(void)deleteButtonSelected
+-(void)backButtonSelected:(id)sender
+{
+    [self flipCurrentView];
+}
+
+-(void)deleteButtonSelected:(id)sender
 {
     NSLog(@"DeleteButtonSelected:");
 }
@@ -168,11 +185,17 @@
 	// swap the views and transition
     if (frontViewIsVisible == YES) 
     {
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.view cache:YES];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.view cache:NO];
+        [self.frontView removeFromSuperview];
+        [self.view addSubview:self.backView];
+        
     } 
     else 
     {
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:NO];
+        [self.backView removeFromSuperview];
+        [self.view addSubview:self.frontView];
+    
     }
 	[UIView commitAnimations];
 	
@@ -190,7 +213,7 @@
 - (void)myTransitionDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
 {
     // re-enable user interaction when the flip is completed.
-	containerView.userInteractionEnabled = YES;
+	self.containerView.userInteractionEnabled = YES;
 	
 
 }

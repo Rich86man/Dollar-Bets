@@ -34,6 +34,41 @@
     
     
     
+    UIImageView *setupImgView = [[UIImageView alloc]initWithFrame:CGRectMake(27, 64, 267, 331)];
+    setupImgView.backgroundColor = [UIColor clearColor];
+    setupImgView.image = [UIImage imageNamed:@"bookCover1.png"];
+    setupImgView.userInteractionEnabled = NO;
+    self.bookImgView = setupImgView;
+    [self addSubview:self.bookImgView];
+    
+    
+    UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(53, 113, 215, 100)];
+    tf.font = [UIFont fontWithName:@"Helvetica" size:30.0f];
+    tf.placeholder = @"Opponent...";
+    
+    self.textField = tf;
+    [self.bookImgView addSubview:self.textField];
+    
+    
+    
+    
+    if (newBook) {
+        [self showPlusButton];
+        
+        
+    }
+    else
+    {
+        
+        [self showConfigAndDate:nil];
+        self.dateLabel.text = @"";
+        
+        
+    }
+    
+
+    
+    
 }
 
 -(id)initWithFrame:(CGRect)frame asNewBook:(BOOL)isNewBook
@@ -43,6 +78,8 @@
     
     if (self) {
         newBook = isNewBook;
+        [self setupView];
+        
     }
     return self;
 }
@@ -66,40 +103,10 @@
     
     self.backgroundColor = [UIColor clearColor];
     
-    UIImageView *setupImgView = [[UIImageView alloc]initWithFrame:CGRectMake(27, 64, 267, 331)];
-    setupImgView.image = [UIImage imageNamed:@"bookCover1.png"];
-    setupImgView.userInteractionEnabled = NO;
-    self.bookImgView = setupImgView;
-    [self addSubview:self.bookImgView];
-    
-    UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(53, 113, 215, 100)];
-    tf.font = [UIFont fontWithName:@"Helvetica" size:30.0f];
-    tf.placeholder = @"Opponent...";
-    self.textField = tf;
-    [self addSubview:self.textField];
+       
     
     
-    
-    
-    if (newBook) {
-        [self showPlusButton];
-        
-        
-    }
-    else
-    {
-        
-        [self showConfigAndDate:nil];
-        self.dateLabel.text = @"";
-        
-        
-    }
-    
-    
-    
-    
-    
-    
+
     
     
     
@@ -175,11 +182,20 @@
 {
     if(self.configButton == nil)
     {
-        UIButton *setupConfigButton = [[UIButton alloc] initWithFrame:CGRectMake(37, 359, 29, 29)];
-        setupConfigButton.imageView.image = [UIImage imageNamed:@"config-wheel.png"];
+        
+        
+        UIButton *setupConfigButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        setupConfigButton.frame  = CGRectMake(37, 359, 29, 29);
+        setupConfigButton.backgroundColor = [UIColor blueColor];
+        //[setupConfigButton.imageView initWithImage:[UIImage imageNamed:@"config-wheel.png"]];
+        //setupConfigButton.imageView.image = [UIImage imageNamed:@"config-wheel.png"]
+        [setupConfigButton setImage:[UIImage imageNamed:@"config-wheel.png"] forState:UIControlStateNormal];
         [setupConfigButton addTarget:self.viewController action:@selector(configButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [setupConfigButton setEnabled:YES];
         self.configButton = setupConfigButton;
         [self addSubview:self.configButton];
+ 
+    
     }
     
     
