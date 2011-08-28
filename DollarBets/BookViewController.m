@@ -23,6 +23,7 @@
 @synthesize frontViewIsVisible;
 @synthesize containerView;
 
+@synthesize debugLabel;
 
 
 -(void)setup
@@ -33,7 +34,10 @@
     [self setOpponent:nil];
     
     
-
+    UILabel *dl = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, 320, 30)];
+    dl.font = [UIFont fontWithName:@"STHeitiJ-Light" size:20.0f];
+    dl.textAlignment = UITextAlignmentCenter;
+    self.debugLabel = dl;
     
 
 }
@@ -73,21 +77,20 @@
     UIView *localContainerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
 	self.containerView = localContainerView;
     self.containerView.backgroundColor = [UIColor clearColor];
-    
+      [self.containerView addSubview:self.debugLabel];
     
     BookFrontView *bfw = [[BookFrontView alloc] initWithFrame:self.containerView.frame asNewBook:newBook];
+    bfw.opponent = self.opponent;
     bfw.viewController = self;
-    bfw.textField.text = [self.opponent name];
     bfw.backgroundColor = [UIColor clearColor];
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM / DD / YYYY"];
-    bfw.dateLabel.text = [dateFormatter stringFromDate:[self.opponent date]];
     
+
     
     frontViewIsVisible = YES;
   
     self.frontView = bfw;
     [self.containerView addSubview:self.frontView];
+    [self.frontView setNeedsLayout];
     
    // self.view = containerView;
     
@@ -97,7 +100,7 @@
     bsw.backgroundColor = [UIColor clearColor];
     self.backView = bsw;
     
-    
+  
     
     self.view = self.containerView;
     
@@ -109,12 +112,12 @@
 {
     [super viewDidLoad];
     
-    NSLog(@"ViewDidLoad");
-    [self.view layoutSubviews];
 }
 
 - (void)viewDidUnload
 {
+    NSLog(@"%@: viewDidUnload",[self.debugLabel.text substringToIndex:8] );
+    
     [self setFrontView:nil];
     [self setBackView:nil];
     [self setContainerView:nil];
@@ -144,11 +147,11 @@
   
 }
 
--(IBAction)enteredNewOpponentName:(UITextField *)sender
+-(void)enteredNewOpponentName:(UITextField *)sender
 { 
 
     
-    [delegate opponentCreatedWithName:[sender text]];
+    [delegate opponentCreatedWithName:[sender text] by:self];
     
 }
 
@@ -165,9 +168,28 @@
 -(void)deleteButtonSelected:(id)sender
 {
     NSLog(@"DeleteButtonSelected:");
+        
+    [self.delegate deleteThisBook:self];
+}
+-(void)setDateLabel:(NSDate *)date
+{
+    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM / DD / YYYY"];
+    if(date == nil)
+    {
+        frontView.dateLabel.text = [dateFormatter stringFromDate:[NSDate date]];
+    }
+    else 
+    {
+        frontView.dateLabel.text = [dateFormatter stringFromDate:date];
+    }
+
 }
 
-
+-(void)showConfigAndDate
+{
+    [self.frontView showConfigAndDate:nil];
+}
 
 - (void)flipCurrentView {
 

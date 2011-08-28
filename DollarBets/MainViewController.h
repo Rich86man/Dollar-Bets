@@ -34,6 +34,7 @@
 -(void)retrieveOpponents;
 -(void)resizeScrollView;
 -(void)removeBook;
+-(bool)deleteOpponent:(Opponent *)opp;
 
 
 

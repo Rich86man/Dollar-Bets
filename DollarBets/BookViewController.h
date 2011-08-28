@@ -12,11 +12,13 @@
 
 @class BookFrontView;
 @class BookSettingsView;
+@class BookViewController;
 
 @protocol BookViewControllerDelegate <NSObject>
 
 -(void)addNewBook;
--(void)opponentCreatedWithName:(NSString *)oppName;
+-(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *) cont;
+-(void)deleteThisBook:(BookViewController *)sender;
 
 @end
 
@@ -24,6 +26,8 @@
 @interface BookViewController : UIViewController {
     BOOL newBook;
     BOOL frontViewIsVisible;
+    
+    UILabel * debugLabel;
     
     BookFrontView *frontView;
     BookSettingsView *backView;
@@ -40,6 +44,8 @@
 @property (strong, nonatomic)BookFrontView *frontView;
 @property (strong, nonatomic)BookSettingsView *backView;
 
+
+@property (strong, nonatomic)UILabel *debugLabel;
 
 
 
@@ -60,10 +66,11 @@
 -(id)initAsAddBook;
 -(id)initWithOpponent:(Opponent *)opp;
 -(IBAction)plusSignPressed:(id)sender;
--(IBAction)enteredNewOpponentName:(UITextField *)sender;
+-(void)enteredNewOpponentName:(UITextField *)sender;
 - (IBAction)configButtonPressed:(id)sender;
 -(void)backButtonSelected:(id)sender;
-
+-(void)setDateLabel:(NSDate *)date;
+-(void)showConfigAndDate;
 
 
 

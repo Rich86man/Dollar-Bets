@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class BookViewController;
-
+@class Opponent;
 
 @interface BookFrontView : UIView
 {
@@ -29,19 +29,18 @@
 @property (strong, retain) UIImageView *bookImgView;
 @property (strong, retain) UITextField *textField;
 @property (strong, retain) UILabel *dateLabel;
-
-
-
-@property (strong, nonatomic) IBOutlet UIImageView *plusSignImageView;
-@property (strong, nonatomic) IBOutlet UIButton *plusSignButton;
-@property (strong, nonatomic) IBOutlet UIButton *configButton;
+@property (strong, nonatomic) UIImageView *plusSignImageView;
+@property (strong, nonatomic) UIButton *plusSignButton;
+@property (strong, nonatomic) UIButton *configButton;
+@property (strong,nonatomic) Opponent *opponent;
 
 @property (strong, nonatomic)BookViewController *viewController;
 
 
 -(id)initWithFrame:(CGRect)frame asNewBook:(BOOL)isNewBook;
--(void)configButtonSelected;
 
-
+-(void)showPlusButton;
+-(void)hidePlusButton;
+-(void)showConfigAndDate:(NSDate *)date;
 
 @end

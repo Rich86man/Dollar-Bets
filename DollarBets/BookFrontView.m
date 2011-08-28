@@ -7,13 +7,11 @@
 //
 
 #import "BookFrontView.h"
-
+#import "Opponent.h"
 
 @interface BookFrontView (PrivateMethods)
 
--(void)showPlusButton;
--(void)hidePlusButton;
--(void)showConfigAndDate:(NSDate *)date;
+
 
 @end
 
@@ -21,6 +19,7 @@
 @synthesize textField, bookImgView, dateLabel;
 @synthesize configButton, plusSignButton, plusSignImageView;
 @synthesize viewController;
+@synthesize opponent;
 
 -(void)setupView
 {
@@ -34,41 +33,6 @@
     
     
     
-    UIImageView *setupImgView = [[UIImageView alloc]initWithFrame:CGRectMake(27, 64, 267, 331)];
-    setupImgView.backgroundColor = [UIColor clearColor];
-    setupImgView.image = [UIImage imageNamed:@"bookCover1.png"];
-    setupImgView.userInteractionEnabled = NO;
-    self.bookImgView = setupImgView;
-    [self addSubview:self.bookImgView];
-    
-    
-    UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(53, 113, 215, 100)];
-    tf.font = [UIFont fontWithName:@"Helvetica" size:30.0f];
-    tf.placeholder = @"Opponent...";
-    
-    self.textField = tf;
-    [self.bookImgView addSubview:self.textField];
-    
-    
-    
-    
-    if (newBook) {
-        [self showPlusButton];
-        
-        
-    }
-    else
-    {
-        
-        [self showConfigAndDate:nil];
-        self.dateLabel.text = @"";
-        
-        
-    }
-    
-
-    
-    
 }
 
 -(id)initWithFrame:(CGRect)frame asNewBook:(BOOL)isNewBook
@@ -79,7 +43,6 @@
     if (self) {
         newBook = isNewBook;
         [self setupView];
-        
     }
     return self;
 }
@@ -95,6 +58,9 @@
 
 
 
+
+
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
@@ -103,10 +69,49 @@
     
     self.backgroundColor = [UIColor clearColor];
     
-       
+    UIImageView *setupImgView = [[UIImageView alloc]initWithFrame:CGRectMake(27, 64, 267, 331)];
+    setupImgView.backgroundColor = [UIColor clearColor];
+    setupImgView.image = [UIImage imageNamed:@"bookCover1.png"];
+    setupImgView.userInteractionEnabled = NO;
+    self.bookImgView = setupImgView;
+    [self addSubview:self.bookImgView];
     
     
-
+    UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(53, 113, 215, 100)];
+    [tf addTarget:self.viewController action:@selector(enteredNewOpponentName:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    tf.font = [UIFont fontWithName:@"Helvetica" size:30.0f];
+    if(!newBook)
+    {
+        tf.text = [self.opponent name];
+    }
+    else
+    {
+        tf.placeholder = @"Opponent...";
+    }
+    
+    
+    self.textField = tf;
+    
+    [self addSubview:self.textField];
+    
+    
+    
+    
+    if (newBook) {
+        [self showPlusButton];
+        self.textField.alpha = 0;
+        
+    }
+    else
+    {
+        
+        [self showConfigAndDate:[self.opponent date]];
+        
+        
+        
+    }
+    
+    
     
     
     
@@ -129,7 +134,7 @@
     {
         UIButton *psb = [[UIButton alloc]initWithFrame:CGRectMake(110, 182, 101, 95)];
         psb.backgroundColor = [UIColor clearColor];
-        [psb addTarget:self.viewController action:@selector(plusSignPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [psb addTarget:self action:@selector(hidePlusButton) forControlEvents:UIControlEventTouchUpInside];
         self.plusSignButton = psb;
         [self addSubview:self.plusSignButton];
         
@@ -168,7 +173,7 @@
                          self.plusSignImageView.frame = CGRectMake(self.plusSignImageView.frame.origin.x + (self.plusSignImageView.frame.size.width / 2), self.plusSignImageView.frame.origin.y + (self.plusSignImageView.frame.size.height /2) , 0, 0);
                      }completion:nil];
     
-    
+    self.textField.alpha = 1;
     self.plusSignImageView.alpha = 0;
     self.plusSignButton.alpha = 0;
     self.plusSignImageView = nil;
@@ -194,8 +199,8 @@
         [setupConfigButton setEnabled:YES];
         self.configButton = setupConfigButton;
         [self addSubview:self.configButton];
- 
-    
+        
+        
     }
     
     
@@ -204,20 +209,29 @@
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(139, 352, 129, 21)];
         label.textAlignment = UITextAlignmentRight;
         label.font = [UIFont fontWithName:@"Helvetica" size:19.0f];
-      
+        
         NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM / DD / YYYY"];
-        if(date == nil)
+        
+        if (opponent == nil)
         {
-            label.text = [dateFormatter stringFromDate:[NSDate date]];
+            if(date == nil)
+            {
+                label.text = [dateFormatter stringFromDate:[NSDate date]];
+            }
+            else
+            {
+                label.text = [dateFormatter stringFromDate:date];
+            }
         }
-        else
+        else 
         {
-            label.text = [dateFormatter stringFromDate:date];
+            label.text = [dateFormatter stringFromDate:[opponent date]];    
         }
         
         self.dateLabel = label;
         [self addSubview:self.dateLabel];
+        
     }
     
 }
