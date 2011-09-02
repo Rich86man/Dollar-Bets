@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class BookViewController;
-
+@class Opponent;
 
 @interface BookSettingsView : UIView
 {
@@ -17,13 +17,13 @@
     UIButton *backButton;
     UIImageView *bookImageView;
     BookViewController *viewController;
-    
+    Opponent * opponent;
     
 }
 @property (strong, nonatomic)UIButton *deleteButton;
 @property (strong, nonatomic)UIButton *backButton;
 @property (strong, nonatomic)UIImageView *bookImageView;
 @property (strong, nonatomic)BookViewController *viewController;
-
+@property (strong, nonatomic)Opponent *opponent;
 
 @end

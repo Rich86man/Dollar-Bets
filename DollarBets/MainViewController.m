@@ -8,55 +8,40 @@
 
 #import "MainViewController.h"
 #import "BookViewController.h"
+#import "RootViewController.h"
+#import "BookFrontView.h"
+#import "RootContainerViewController.h"
 #import "Opponent.h"
+#import "Bet.h"
 #import <CoreGraphics/CoreGraphics.h>
 
 static NSUInteger kNumberOfPages = 10;
 
 
 @interface MainViewController (PrivateMethods)
-- (void)loadScrollViewWithPage:(int)page isAddBook:(bool)newBook;
+- (void)loadScrollViewWithPage:(int)page;
 - (void)scrollViewDidScroll:(UIScrollView *)sender;
 @end
 
 
 
 @implementation MainViewController
-@synthesize mainScrollView,pageControl, books;
+@synthesize mainScrollView, books;
 @synthesize context;
 @synthesize opponents;
+@synthesize parent;
+
 
 
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt
 {
-    
     self =  [self initWithNibName:nil bundle:nil];
-    
-    self.context = cntxt;
-    
-    
-    
-    return self;
-    
-    
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if(self)
+    {
+        self.context = cntxt;
     }
     return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -67,10 +52,12 @@ static NSUInteger kNumberOfPages = 10;
 	// Do any additional setup after loading the view, typically from a nib.
     
     // Set up the backround 
-    UIImage *pattern = [UIImage imageNamed:@"pattern8.png"];
+    UIImage *pattern = [UIImage imageNamed:@"padded.png"];
     
     self.mainScrollView.backgroundColor = [UIColor colorWithPatternImage:pattern];
     self.mainScrollView.pagingEnabled = YES;
+    [self.mainScrollView setUserInteractionEnabled:YES];
+    [self.view setUserInteractionEnabled:YES];
     
     
     // view controllers are created lazily
@@ -82,6 +69,7 @@ static NSUInteger kNumberOfPages = 10;
     }
     self.books = controllers;
     
+    self.opponents = [[NSMutableArray alloc] init];
     
     [self retrieveOpponents];
     
@@ -89,12 +77,14 @@ static NSUInteger kNumberOfPages = 10;
     
     
     
-    for (int i = 0; i < [self.opponents count]; i++) {
-        [self loadScrollViewWithPage:i isAddBook:NO];
+    for (int i = 0; i < [self.opponents count] && i < 2; i++) {
+        [self loadScrollViewWithPage:i ];
     }
     
+    
+    
     NSLog(@"%i",[self.opponents count]);
-    [self loadScrollViewWithPage:[self.opponents count] isAddBook:YES];
+    //[self loadScrollViewWithPage:[self.opponents count] ];
     
     
     
@@ -110,6 +100,15 @@ static NSUInteger kNumberOfPages = 10;
     // e.g. self.myOutlet = nil;
 }
 
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -119,31 +118,38 @@ static NSUInteger kNumberOfPages = 10;
 
 
 
+
 #pragma mark - Scroll View Functions
 
-- (void)loadScrollViewWithPage:(int)page isAddBook:(bool)newBook
+- (void)loadScrollViewWithPage:(int)page
 {
     if (page < 0)
         return;
-    if (page > ([opponents count] + 1))
+    if (page > [opponents count] )
         return;
     
+    if (page == [books count] - 2) 
+        [books addObject:[NSNull null]];
     
     
     BookViewController *controller = [books objectAtIndex:page];
     if ((NSNull *)controller == [NSNull null])
     {   
-        if (newBook) 
+        if (page == [self.opponents count]) 
         {
-            controller = [[BookViewController alloc] initAsAddBook];
+            controller = [[BookViewController alloc] initWithOpponent:nil];
         }
         else
         {
             controller = [[BookViewController alloc] initWithOpponent:[self.opponents objectAtIndex:page]];
         }
+        
         controller.delegate = self;
+        [controller.view setUserInteractionEnabled:YES];
         [books replaceObjectAtIndex:page withObject:controller];
-        controller.debugLabel.text =  [NSString stringWithFormat:@"page : %i\tbooks index : %i",page, [self.books indexOfObject:controller]];
+        controller.debugLabel.text =  [NSString stringWithFormat:@"page : %i\tbooks index : %i",page, [self.books indexOfObject:controller]];        
+        
+        
     }
     
     // add the controller's view to the scroll view
@@ -153,13 +159,13 @@ static NSUInteger kNumberOfPages = 10;
         frame.origin.x = frame.size.width * page;
         frame.origin.y = 0;
         controller.view.frame = frame;
+        //[self addChildViewController:controller];
+        
+        
+        
         [self.mainScrollView addSubview:controller.view];
         
     }
-    
-    
-    
-    
     
 }
 
@@ -168,125 +174,118 @@ static NSUInteger kNumberOfPages = 10;
     // We don't want a "feedback loop" between the UIPageControl and the scroll delegate in
     // which a scroll event generated from the user hitting the page control triggers updates from
     // the delegate method. We use a boolean to disable the delegate logic when the page control is used.
-    if (pageControlUsed)
-    {
-        // do nothing - the scroll was initiated from the page control, not the user dragging
-        return;
-    }
+    
 	
     // Switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = mainScrollView.frame.size.width;
     int page = floor((mainScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    pageControl.currentPage = page;
-    /* 
-     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-     [self loadScrollViewWithPage:page - 1 isAddBook:NO];
-     [self loadScrollViewWithPage:page isAddBook:NO];
-     if (page + 1 < [books count])
-     {
-     [self loadScrollViewWithPage:page + 1 isAddBook:NO];
-     }
-     */
     
+    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    [self loadScrollViewWithPage:page - 1 ];
+    [self loadScrollViewWithPage:page ];
+    [self loadScrollViewWithPage:page + 1 ];
     
     // A possible optimization would be to unload the views+controllers which are no longer visible
     
+    if (page > 1 && (NSNull *)[books objectAtIndex:page -2 ] != [NSNull null])
+    {
+        BookViewController *tempBook = [books objectAtIndex:page -2];
+        if (tempBook.view.superview != nil)
+        {
+            [tempBook.view removeFromSuperview];
+           //[tempBook removeFromParentViewController];
+        }
+        [books replaceObjectAtIndex:page -2 withObject:[NSNull null]];
+        
+    }
+    if (page < [self.opponents count] -1 && (NSNull *)[books objectAtIndex:page +2] !=[NSNull null] )
+    {
+        BookViewController *tempBook = [books objectAtIndex:page +2];
+        if (tempBook.view.superview != nil)
+        {
+            [tempBook.view removeFromSuperview];
+            //[tempBook removeFromParentViewController];
+        }
+        [books replaceObjectAtIndex:page + 2 withObject:[NSNull null]];
+    }
     
     
 }
 
-// At the begin of scroll dragging, reset the boolean used when scrolls originate from the UIPageControl
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    pageControlUsed = NO;
-}
 
-// At the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    pageControlUsed = NO;
-}
-
-- (IBAction)changePage:(id)sender
-{
-    int page = pageControl.currentPage;
-	
-    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-    [self loadScrollViewWithPage:page - 1 isAddBook:NO];
-    [self loadScrollViewWithPage:page isAddBook:NO];
-    [self loadScrollViewWithPage:page + 1 isAddBook:NO];
-    
-	// update the scroll view to the appropriate page
-    CGRect frame = mainScrollView.frame;
-    frame.origin.x = frame.size.width * page;
-    frame.origin.y = 0;
-    [mainScrollView scrollRectToVisible:frame animated:YES];
-    
-	// Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
-    pageControlUsed = YES;
-}
-
-
--(void)addNewBook
-{
-    
-    NSLog(@"The delegate worked!!");
-    [self resizeScrollView];
-    
-    [self loadScrollViewWithPage:[self.opponents count] isAddBook:YES];
-    
-    
-}
-
--(void)removeBook
-{
-    NSLog(@"RemoveButton Pressed");
-    
-}
+#pragma mark - Special BookScrollView Functions
 
 -(void)resizeScrollView
 {
     self.mainScrollView.contentSize = CGSizeMake(320 * ([opponents count] + 1), self.mainScrollView.frame.size.height);
-    
-    
 }
+
+
+
+#pragma mark - BookViewController Delegate Functions
 
 -(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *)cont
 {
-    //NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    //[dateFormatter setDateFormat:@"MM/DD/YYYY"];
     
     Opponent *newOpponent = [NSEntityDescription insertNewObjectForEntityForName:@"Opponent" inManagedObjectContext:self.context];
-    
-    
     
     newOpponent.name = oppName;
     newOpponent.date = [NSDate date];
     
     
-    
-    //newOpponent.date = [dateFormatter stringFromDate:[NSDate date]];
-    
     NSError *error =  nil;
-    
-    
-    
     [context save:&error];
-    
     
     if(error)
     {
         NSLog(@"%@\n", [error  description]);
     }
-    
+    [self.opponents addObject:newOpponent];
     cont.opponent = newOpponent;
-    [cont setDateLabel:newOpponent.date];
-    [cont showConfigAndDate];
+    // [cont setDateLabel:newOpponent.date];
+    ///[cont showConfigAndDate];
+    [cont refreshFrontView];
     
+    // [self retrieveOpponents];
     
-    [self retrieveOpponents];
-    [self addNewBook];
+    [self resizeScrollView];
     
+    if ([newOpponent.name isEqualToString:@"test"]) {
+        
+        NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM / DD / YYYY"];
+        
+
+        
+        Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet1.date = [NSDate date];
+        newBet1.amount = [NSNumber numberWithInt:5];
+        newBet1.report = @"A couple of hotdogs";
+        newBet1.opponent = newOpponent;
+        
+        Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet2.date = [dateFormatter dateFromString:@"05 / 12 / 2011"];
+        newBet2.amount = [NSNumber numberWithInt:12];
+        newBet2.report = @"Tijuana Flatts";
+        newBet2.opponent = newOpponent;
+        
+        
+        Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet3.date = [dateFormatter dateFromString:@"01 / 21 / 2010"];
+        newBet3.amount = [NSNumber numberWithInt:3];
+        newBet3.report = @"lunch money";
+        newBet3.opponent = newOpponent;
+        
+        
+        [context save:&error];
+        
+        if(error)
+        {
+            NSLog(@"%@\n", [error  description]);
+        }
+
+        
+    }
     
 }
 
@@ -295,8 +294,6 @@ static NSUInteger kNumberOfPages = 10;
 {
     CGRect bookFrame = sender.view.frame;
     
-    
-    //   animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_4_0);
     
     
     
@@ -308,21 +305,17 @@ static NSUInteger kNumberOfPages = 10;
                          sender.view.alpha = 0;
                      }    
                      completion:^(BOOL finished){
-                       
+                         
                          [sender.view removeFromSuperview];
                          sender.view.frame = CGRectMake(bookFrame.origin.x   , 480, bookFrame.size.width, bookFrame.size.height);    
                      }];
     
     
     
-    
-    
-    
-    
-    
     if([self deleteOpponent:sender.opponent])
     {
         NSUInteger index = [books indexOfObject:sender];
+        [self loadScrollViewWithPage:index + 1 ];
         
         for (BookViewController *book in books) {
             NSUInteger bookIndex = [books indexOfObject:book];
@@ -340,7 +333,7 @@ static NSUInteger kNumberOfPages = 10;
                                      book.view.frame = frame;                         
                                  }    
                                  completion:nil];
-
+                
             }
         }
         
@@ -352,74 +345,114 @@ static NSUInteger kNumberOfPages = 10;
         
     }
     
-    
-    
-}
-
--(bool)deleteOpponent:(Opponent *)opp
-{
-    
-    [self.context deleteObject:opp];
-    NSError *error = nil;
-    [self.context save:&error];
-    if(error)
-    {  
-        NSLog(@"%@\n", [error  description]);
-        return NO;
-    }
-    else
-    {
-        NSMutableArray *tempOpponentsArray = [[NSMutableArray alloc]initWithArray:opponents];    
-        [tempOpponentsArray removeObject:opp];
-        self.opponents = [NSArray arrayWithArray:tempOpponentsArray];
-        return YES;
-    }
-    
-    
-    
+    [self resizeScrollView];
     
 }
 
--(void)retrieveOpponents
+-(void)didSelectBook:(BookViewController *)sender
 {
-    
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Opponent"];
-    
-    
-    // Set example predicate and sort orderings...
     /*
+    RootViewController *root = [[RootViewController alloc]init];
+    
+    [self presentViewController:root animated:NO completion:nil];
+    
+    [UIView transitionWithView:root.view 
+                      duration:0.8f 
+                       options:UIViewAnimationCurveEaseInOut 
+                    animations:^{
+                        sender.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];
+                    } completion:nil];
+        
+    
+    
+    [self transitionFromViewController:self 
+                      toViewController:root 
+                              duration:1.0f 
+                               options:UIViewAnimationCurveEaseInOut 
+                            animations:^{
+                                sender.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];}
+                            completion:nil ];
+    
+    */
+    NSLog(@"MainViewController : didSelectBook:");
+    
+    
+    [UIView animateWithDuration:1.0f 
+                          delay:0.0f 
+                        options:UIViewAnimationOptionCurveLinear animations:^{
+                            sender.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];
+                        } completion:^(BOOL finished){  
+                            [self.parent OpenBookWithOpponent:[sender opponent]];
+                        } ];
+    
+
+
+}
+ 
+ 
+ 
+ 
+#pragma mark - Manged Object Functions
+ 
+ -(bool)deleteOpponent:(Opponent *)opp
+ {
+     
+     [self.context deleteObject:opp];
+     NSError *error = nil;
+     [self.context save:&error];
+     if(error)
+     {  
+         NSLog(@"%@\n", [error  description]);
+         return NO;
+     }
+     else
+     {
+         [self.opponents removeObject:opp];        
+         return YES;
+     }
+     
+ }
+ 
+ -(void)retrieveOpponents
+ {
+     
+     
+     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Opponent"];
+     
+     
+     // Set example predicate and sort orderings...
+     
      NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
      
      [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-     */      
-    NSError *error = nil;
-    NSArray *array = [self.context executeFetchRequest:request error:&error];
-    
-    if(error)
-    {   NSLog(@"%@\n", [error  description]);   }
-    
-    if (array == nil)
-    {   opponents = [NSArray arrayWithObject:@"empty"]; }
-    
-    opponents = array;
-    
-    //-------Delete all --------
-    /*
-     for (NSManagedObject *opp in opponents) {
-     [self.context deleteObject:opp ];
-     }
      
-     [self.context save:nil];
-     */
-    //  NSLog(@"%@",[opponents description]);
-    
-}
-
-
-
-
-
-
-
-@end
+     NSError *error = nil;
+     NSArray *array = [self.context executeFetchRequest:request error:&error];
+     
+     if(error)
+     {   NSLog(@"%@\n", [error  description]);   }
+     
+     if (array == nil)
+     {   array = [NSArray arrayWithObject:@"empty"]; }
+     
+     opponents = [array mutableCopy];
+     
+     //-------Delete all --------
+     /*
+      for (NSManagedObject *opp in opponents) {
+      [self.context deleteObject:opp ];
+      }
+      
+      [self.context save:nil];
+      */
+     //  NSLog(@"%@",[opponents description]);
+     
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ @end

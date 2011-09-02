@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class MainViewController;
+@class RootContainerViewController;
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) MainViewController *mainViewController;
+@property (strong, nonatomic) RootContainerViewController *rootContainerViewController;
 
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

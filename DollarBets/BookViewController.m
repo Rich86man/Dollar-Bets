@@ -14,6 +14,7 @@
 
 @interface BookViewController(PrivateMethods)
 -(void)setup;
+- (void)myTransitionDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
 @end    
 
 @implementation BookViewController
@@ -33,7 +34,7 @@
     [self setContainerView:nil];
     [self setOpponent:nil];
     
-    
+    /*  --------DEBUG LABEL---------*/
     UILabel *dl = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, 320, 30)];
     dl.font = [UIFont fontWithName:@"STHeitiJ-Light" size:20.0f];
     dl.textAlignment = UITextAlignmentCenter;
@@ -47,23 +48,12 @@
     if (self = [super init])
     {
         [self setup];
-        newBook = NO;
         self.opponent = opp;
     }    
     
     
     return self;
     
-}
-
--(id)initAsAddBook
-{
-    if (self = [super init])
-    {   [self setup];
-        newBook = YES;
-    }
-    
-   return self;
 }
 
 
@@ -77,22 +67,19 @@
     UIView *localContainerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
 	self.containerView = localContainerView;
     self.containerView.backgroundColor = [UIColor clearColor];
-      [self.containerView addSubview:self.debugLabel];
+    self.containerView.userInteractionEnabled = YES;
+
+    /*  --------DEBUG LABEL---------*/
+    [self.containerView addSubview:self.debugLabel];
     
-    BookFrontView *bfw = [[BookFrontView alloc] initWithFrame:self.containerView.frame asNewBook:newBook];
-    bfw.opponent = self.opponent;
+    BookFrontView *bfw = [[BookFrontView alloc] initWithFrame:self.containerView.frame ];
     bfw.viewController = self;
     bfw.backgroundColor = [UIColor clearColor];
-    
-
-    
-    frontViewIsVisible = YES;
-  
+    bfw.userInteractionEnabled = YES;
     self.frontView = bfw;
     [self.containerView addSubview:self.frontView];
-    [self.frontView setNeedsLayout];
     
-   // self.view = containerView;
+    frontViewIsVisible = YES;
     
     
     BookSettingsView *bsw = [[BookSettingsView alloc] initWithFrame:self.containerView.frame];
@@ -100,7 +87,6 @@
     bsw.backgroundColor = [UIColor clearColor];
     self.backView = bsw;
     
-  
     
     self.view = self.containerView;
     
@@ -127,35 +113,15 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
 
 
-
-
--(IBAction)plusSignPressed:(id)sender
-{
-
-   
-    
-    [delegate addNewBook];
-
-    
-  
-}
 
 -(void)enteredNewOpponentName:(UITextField *)sender
 { 
-
-    
     [delegate opponentCreatedWithName:[sender text] by:self];
-    
 }
 
-- (IBAction)configButtonPressed:(id)sender 
+- (void)configButtonSelected:(id)sender 
 {
     [self flipCurrentView];    
 }
@@ -168,28 +134,26 @@
 -(void)deleteButtonSelected:(id)sender
 {
     NSLog(@"DeleteButtonSelected:");
-        
     [self.delegate deleteThisBook:self];
 }
--(void)setDateLabel:(NSDate *)date
-{
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM / DD / YYYY"];
-    if(date == nil)
-    {
-        frontView.dateLabel.text = [dateFormatter stringFromDate:[NSDate date]];
-    }
-    else 
-    {
-        frontView.dateLabel.text = [dateFormatter stringFromDate:date];
-    }
 
+-(void)didDoubleClick
+{   NSLog(@"BookViewController : didDoubleClick");
+    [self.delegate didSelectBook:self];
 }
 
--(void)showConfigAndDate
+-(void)didLongPress:(UILongPressGestureRecognizer *)sender
 {
-    [self.frontView showConfigAndDate:nil];
+   [self.delegate didSelectBook:self];
+    
 }
+
+-(void)refreshFrontView
+{
+    [self.frontView refresh];
+}
+
+
 
 - (void)flipCurrentView {
 
@@ -236,10 +200,7 @@
 {
     // re-enable user interaction when the flip is completed.
 	self.containerView.userInteractionEnabled = YES;
-	
-
 }
-
 
 
 

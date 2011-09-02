@@ -11,7 +11,7 @@
 @implementation BookSettingsView
 @synthesize deleteButton, backButton, bookImageView;
 @synthesize viewController;
-
+@synthesize opponent;
 
 
 - (id)initWithFrame:(CGRect)frame

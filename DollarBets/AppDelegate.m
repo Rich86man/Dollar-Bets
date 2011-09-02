@@ -7,13 +7,12 @@
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
-
+#import "RootContainerViewController.h"
 @implementation AppDelegate
 
 
 @synthesize window = _window;
-@synthesize mainViewController = _mainViewController;
+@synthesize rootContainerViewController = _rootContainerViewController;
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
@@ -61,9 +60,9 @@
     
     
         
-    self.mainViewController = [[MainViewController alloc] initWithManagedObjectContext:[self managedObjectContext]];
+    self.rootContainerViewController = [[RootContainerViewController alloc] initWithManagedObjectContext:[self managedObjectContext]];
     
-    self.window.rootViewController = self.mainViewController;
+    self.window.rootViewController = self.rootContainerViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

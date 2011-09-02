@@ -19,7 +19,6 @@
     UIButton *plusSignButton;
     UIButton *configButton;
     UITextField *opponentTextField;
-    BOOL newBook;
     BOOL frontViewIsVisible;
     
     
@@ -32,15 +31,15 @@
 @property (strong, nonatomic) UIImageView *plusSignImageView;
 @property (strong, nonatomic) UIButton *plusSignButton;
 @property (strong, nonatomic) UIButton *configButton;
-@property (strong,nonatomic) Opponent *opponent;
+
 
 @property (strong, nonatomic)BookViewController *viewController;
 
 
--(id)initWithFrame:(CGRect)frame asNewBook:(BOOL)isNewBook;
 
 -(void)showPlusButton;
 -(void)hidePlusButton;
--(void)showConfigAndDate:(NSDate *)date;
+-(void)showConfigAndDate;
+-(void)refresh;
 
 @end

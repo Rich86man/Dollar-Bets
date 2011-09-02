@@ -8,32 +8,28 @@
 
 #import <UIKit/UIKit.h>
 #import "BookViewController.h"
+@class RootContainerViewController;
 
 @interface MainViewController : UIViewController <UIScrollViewDelegate, BookViewControllerDelegate> {
     UIScrollView *mainScrollView;
-    NSMutableArray *books;
-    UIPageControl *pageControl;
-    bool pageControlUsed;
     NSManagedObjectContext *context;
-    
-    NSArray *opponents;
-    
+    NSMutableArray *opponents;
+    NSMutableArray *books;
+    RootContainerViewController *parent;
     
 }
 
-@property (strong, nonatomic) IBOutlet UIScrollView *mainScrollView;
-@property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
+@property (strong, nonatomic) UIScrollView *mainScrollView;
+@property (strong, nonatomic) NSMutableArray *opponents;
 @property (strong, nonatomic) NSMutableArray *books;
 @property (strong, nonatomic) NSManagedObjectContext *context;
-@property (strong, nonatomic) NSArray *opponents;
-
+@property (strong, nonatomic) RootContainerViewController *parent;
 
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt;
--(void)addNewBook;
+
 -(void)retrieveOpponents;
 -(void)resizeScrollView;
--(void)removeBook;
 -(bool)deleteOpponent:(Opponent *)opp;
 
 

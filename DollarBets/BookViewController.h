@@ -8,23 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "Opponent.h"
-#import "BookSettingsViewController.h"
+//#import "BookSettingsViewController.h"
 
 @class BookFrontView;
 @class BookSettingsView;
 @class BookViewController;
+@class Opponent;
 
 @protocol BookViewControllerDelegate <NSObject>
 
--(void)addNewBook;
 -(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *) cont;
 -(void)deleteThisBook:(BookViewController *)sender;
+-(void)didSelectBook:(BookViewController *)sender;
 
 @end
 
 
-@interface BookViewController : UIViewController {
-    BOOL newBook;
+@interface BookViewController : UIViewController<UIGestureRecognizerDelegate> {
+
     BOOL frontViewIsVisible;
     
     UILabel * debugLabel;
@@ -38,8 +39,8 @@
 
 }
 @property (assign)BOOL frontViewIsVisible;
-@property (strong, nonatomic) Opponent * opponent;
-@property (strong, nonatomic) UIView *containerView;
+@property (strong, nonatomic)Opponent *opponent;
+@property (strong, nonatomic)UIView *containerView;
 @property (strong, nonatomic)id delegate;
 @property (strong, nonatomic)BookFrontView *frontView;
 @property (strong, nonatomic)BookSettingsView *backView;
@@ -47,31 +48,16 @@
 
 @property (strong, nonatomic)UILabel *debugLabel;
 
-
-
-- (void)flipCurrentView;
-- (void)myTransitionDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
-
--(void)deleteButtonSelected:(id)sender;
-
-
-
-
-
-
-
-
-
-
--(id)initAsAddBook;
 -(id)initWithOpponent:(Opponent *)opp;
--(IBAction)plusSignPressed:(id)sender;
--(void)enteredNewOpponentName:(UITextField *)sender;
-- (IBAction)configButtonPressed:(id)sender;
--(void)backButtonSelected:(id)sender;
--(void)setDateLabel:(NSDate *)date;
--(void)showConfigAndDate;
 
+-(void)configButtonSelected:(id)sender;
+-(void)backButtonSelected:(id)sender;
+-(void)deleteButtonSelected:(id)sender;
+-(void)enteredNewOpponentName:(UITextField *)sender;
+-(void)didDoubleClick;
+
+-(void)flipCurrentView;
+-(void)refreshFrontView;
 
 
 
