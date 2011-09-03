@@ -45,7 +45,6 @@
 						<string key="NSFrame">{{20, 0}, {280, 46}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:121</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -113,10 +112,6 @@
 					</object>
 				</object>
 				<int key="IBUIContentMode">4</int>
-				<object class="IBUISimulatedSizeMetrics" key="IBUISimulatedDestinationMetrics">
-					<string key="IBUISimulatedSizeMetricsClass">IBUISimulatedFreeformSizeMetricsSentinel</string>
-					<string key="IBUIDisplayName">Freeform</string>
-				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 		</object>

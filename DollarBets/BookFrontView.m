@@ -86,6 +86,7 @@
         if(self.viewController.opponent != nil)
         {
             tf.text = [self.viewController.opponent name];
+            tf.userInteractionEnabled =  NO;
         }
         else
         {

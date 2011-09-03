@@ -148,7 +148,7 @@ static NSUInteger kNumberOfPages = 10;
         [controller.view setUserInteractionEnabled:YES];
         [books replaceObjectAtIndex:page withObject:controller];
         controller.debugLabel.text =  [NSString stringWithFormat:@"page : %i\tbooks index : %i",page, [self.books indexOfObject:controller]];        
-        
+       // controller.debugLabel.text =  [NSString stringWithFormat:@"%d = 4 - 5     %d = 5 - 4", (4 - 5 ), ( 5 - 4)];
         
     }
     
