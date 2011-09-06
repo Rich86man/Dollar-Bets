@@ -27,7 +27,7 @@
 @synthesize tableOfContentsHeader = _tableOfContentsHeader;
 @synthesize graphsHeader = _graphsHeader;
 @synthesize quickAddView = _quickAddView;
-@synthesize refreshArrow;
+
 @synthesize bet;
 
 
@@ -53,7 +53,7 @@
     NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
     
     self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
-    [self.tableView addSubview:self.quickAddView.view];
+   
     isQuickAdding = NO;
     isDragging = NO;
     
@@ -135,17 +135,7 @@
 }
 
 
--(QuickAddViewController *)quickAddView
-{
-    if(!_quickAddView)
-    {
-        QuickAddViewController *qav = [[QuickAddViewController alloc] initWithOpponent:self.opponent];
-        qav.view.frame = CGRectMake(0, 0 - REFRESH_HEADER_HEIGHT, 320, REFRESH_HEADER_HEIGHT);
-  
-        _quickAddView = qav;
-    }
-    return _quickAddView;
-}
+
 
 - (void)viewDidUnload
 {
@@ -223,8 +213,8 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPat{
-    NSLog(@"didselect row");
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"didselect row [%d, %d]", indexPath.section, indexPath.row);
     
 }
 
@@ -257,103 +247,11 @@
 
 
 #pragma mark - ScrollViewDelegate Functions
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (isQuickAdding) return;
-    isDragging = YES;
-}
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (isQuickAdding) 
-    {
-        // Update the content inset, good for section headers
-        if (scrollView.contentOffset.y > 0)
-        {
-            self.tableView.contentInset = UIEdgeInsetsZero;
-        }
-        else if (scrollView.contentOffset.y >= -REFRESH_HEADER_HEIGHT)
-        {
-            self.tableView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-        }
-    
-    } 
-    else if (isDragging && scrollView.contentOffset.y < 0) 
-    {
-        // Update the arrow direction and label
-        [UIView beginAnimations:nil context:NULL];
-        if (scrollView.contentOffset.y < -REFRESH_HEADER_HEIGHT) 
-        {
-            // User is scrolling above the header
-            
-            //NSLog(@"1");
-            
-            
-        } else { // User is scrolling somewhere within the header
-            
-            //NSLog(@"2");
-        }
-        [UIView commitAnimations];
-    }
+ 
 }
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (isQuickAdding) return;
-    isDragging = NO;
-    if (scrollView.contentOffset.y <= -REFRESH_HEADER_HEIGHT) {
-        // Released above the header
-        [self startLoading];
-    }
-}
-
-- (void)startLoading {
-    isQuickAdding = YES;
-    
-    // Show the header
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    self.tableView.contentInset = UIEdgeInsetsMake(REFRESH_HEADER_HEIGHT, 0, 0, 0);
-    
-    refreshArrow.hidden = YES;
-    
-    [UIView commitAnimations];
-    
-    // Refresh action!
-    [self refresh];
-}
-
-- (void)stopLoading {
-    isQuickAdding = NO;
-    
-    // Hide the header
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationDidStopSelector:@selector(stopLoadingComplete:finished:context:)];
-    self.tableView.contentInset = UIEdgeInsetsZero;
-    
-    
-    //CATransform3DMakeRotation(MY_PI * 2, 0, 0, 1);
-    [UIView commitAnimations];
-}
-
-- (void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    // Reset the header
-    
-    refreshArrow.hidden = NO;
-    
-}
-
-- (void)refresh {
-    // This is just a demo. Override this method with your custom reload action.
-    // Don't forget to call stopLoading at the end.
-   // [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0];
-    
-    NSLog(@"Refresh");
-}
-
-#pragma mark - QuickAdd functions
-
-
-
 
 
 

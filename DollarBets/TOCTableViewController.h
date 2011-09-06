@@ -11,7 +11,7 @@
 #import "Bet.h"
 
 
-@interface TOCTableViewController : UITableViewController<UITextFieldDelegate, UITableViewDelegate> {
+@interface TOCTableViewController : UIViewController<UITextFieldDelegate, UITableViewDelegate, UIScrollViewDelegate> {
     // Custom Headers
     UIView *tableOfContentsHeader;
     UIView *graphsHeader;    
@@ -19,6 +19,7 @@
     
     // Quick add View
     UIView *quickAddView;
+    UIView *overlayView;
     UITextField *amountTextField;
     UITextView *descriptionTextView;
 	UIImageView *refreshArrow;
@@ -32,11 +33,15 @@
     NSArray *bets;
 
     
+    UITableView *tableView;
 }
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+
 @property (strong, nonatomic) UIView *tableOfContentsHeader;
 @property (strong, nonatomic) UIView *graphsHeader;
 
 @property (strong, nonatomic) IBOutlet UIView *quickAddView;
+@property (strong, nonatomic) IBOutlet UIView *overlayView;
 @property (strong, nonatomic) IBOutlet UITextField *amountTextField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 
@@ -48,10 +53,7 @@
 
 
 // Quick add Functions
--(void)startLoading;
--(void)stopLoading;
--(void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
--(void)refresh;
+
 
 
 @end

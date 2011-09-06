@@ -8,9 +8,11 @@
 
 #import "TOCTableViewController.h"
 
-#define QUICKADD_HEIGHT 100.0f
+
 
 @implementation TOCTableViewController
+@synthesize overlayView;
+@synthesize tableView;
 
 @synthesize tableOfContentsHeader = _tableOfContentsHeader, graphsHeader = _graphsHeader;
 @synthesize quickAddView, amountTextField, descriptionTextView, refreshArrow, quickBet;
@@ -18,9 +20,9 @@
 
 
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -42,30 +44,19 @@
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    self.clearsSelectionOnViewWillAppear = YES;
+   
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
     
     NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
     
     self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
-    self.quickAddView.frame = CGRectMake(0, 0 - QUICKADD_HEIGHT, 320, QUICKADD_HEIGHT);
+
     self.quickAddView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"black_denim.png"]];
-    [self.tableView addSubview:self.quickAddView];
+
     
     
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(keyboardWillShow:) 
-                                                 name:UIKeyboardDidShowNotification 
-                                               object:nil];     
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(keyboardDidShow:) 
-                                                 name:UIKeyboardDidShowNotification 
-                                               object:nil];     
-    
-    self.tableView.contentOffset = CGPointMake(<#CGFloat x#>, <#CGFloat y#>)
-    
+      
     isQuickAdding = NO;
     isDragging = NO;
 }
@@ -77,6 +68,8 @@
     [self setTableOfContentsHeader:nil];
     [self setGraphsHeader:nil];
     [self setDescriptionTextView:nil];
+    [self setTableView:nil];
+    [self setOverlayView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -184,7 +177,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     switch (section) {
         case 0:
-            return self.tableOfContentsHeader.frame.size.height + 10;
+            return self.tableOfContentsHeader.frame.size.height + 20;
             break;
         case 1:
             return self.graphsHeader.frame.size.height + 10;
@@ -206,123 +199,50 @@
 
 
 #pragma mark - ScrollViewDelegate Functions
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (isQuickAdding) return;
-    isDragging = YES;
+
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    
-   // if (self.tableView.contentOffset.y < -130.0f)
-     //   self.tableView.contentOffset = CGPointMake(-100.0f, 0);
-    
-    if (isQuickAdding) 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+
+    if( scrollView.contentOffset.y <= 0.0f && scrollView.contentOffset.y > -100.0f)
     {
-        // Update the content inset, good for section headers
-       
-        NSLog(@"is QA : %@ scrollview.contentoffset.y : %f", isQuickAdding ? @"yes" : @"no",  scrollView.contentOffset.y );
-        if (scrollView.contentOffset.y > 0)
+        CGFloat offset =   scrollView.contentOffset.y;
+        
+        self.quickAddView.frame = CGRectMake(0, 0, 320, -offset);
+        if (offset > -90)
+        self.overlayView.alpha = -offset / 100;
+        
+        
+    }
+    
+}
+
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    
+    if (scrollView.contentOffset.y < -100.0f && !isQuickAdding)
+    {
+        scrollView.contentInset = UIEdgeInsetsMake(100.0, 0, 0, 0 );
+        isQuickAdding = YES;
+    }
+    
+        if (scrollView.contentOffset.y < -150.0f && isQuickAdding)
         {
-
-            self.tableView.contentInset = UIEdgeInsetsZero;
+             scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
+            isQuickAdding = NO;
         }
-        else if (scrollView.contentOffset.y >= -QUICKADD_HEIGHT)
-        {
-            self.tableView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-        }
-        NSLog(@"scrollviewContentInsets.top : %f .bottom : %f", scrollView.contentInset.top, scrollView.contentInset.bottom);
-    } 
-    else if (isDragging && scrollView.contentOffset.y < 0) 
-    {
-    
-    }
-    else 
-    {
-            NSLog(@"is QA : %@ scrollview.contentoffset.y : %f", isQuickAdding ? @"yes" : @"no",  scrollView.contentOffset.y );    }
-    
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (isQuickAdding) return;
-    isDragging = NO;
-    if (scrollView.contentOffset.y <= -QUICKADD_HEIGHT) {
-        // Released above the header
-        [self startLoading];
-    }
-}
-
-#pragma mark - QuickAdd Functions
-- (void)startLoading {
-    
-    if(!isQuickAdding){
-    isQuickAdding = YES;
-    
-    // Show the header
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    self.tableView.contentInset = UIEdgeInsetsMake(QUICKADD_HEIGHT, 0, 0, 0);
-    
-    refreshArrow.hidden = YES;
-    
-    [UIView commitAnimations];
-    
-    // Refresh action!
-    [self refresh];
-    }
-}
-
-- (void)stopLoading {
-    isQuickAdding = NO;
-    
-    // Hide the header
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationDidStopSelector:@selector(stopLoadingComplete:finished:context:)];
-    self.tableView.contentInset = UIEdgeInsetsZero;
-    
-    
-    //CATransform3DMakeRotation(MY_PI * 2, 0, 0, 1);
-    [UIView commitAnimations];
-}
-
-- (void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    // Reset the header
-    
-    refreshArrow.hidden = NO;
-    
-}
-
-- (void)refresh {
-    // This is just a demo. Override this method with your custom reload action.
-    // Don't forget to call stopLoading at the end.
-    // [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0];
-    
-    NSLog(@"Refresh");
-    
-    self.quickBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[opponent managedObjectContext]];
-    self.quickBet.date = [NSDate date];
-    self.quickBet.opponent = self.opponent;
     
     
     
 }
-
 
 #pragma mark - TextView Delegate Functions
-- (void)keyboardWillShow:(NSNotification *)note {
-    
-    //self.tableView.contentOffset = CGPointMake(0, -100);
-    
-}
-
-- (void)keyboardDidShow:(NSNotification *)note {
-    
-    self.tableView.contentOffset = CGPointMake(0, -100);
-    
-}
-
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
@@ -377,89 +297,89 @@
 }
 
 
- #pragma mark - TextField Delegate Functions
- -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
- {
- return YES;
- }
- 
- -(void)textFieldDidBeginEditing:(UITextField *)textField
- {
- 
- }
- 
- -(void)textFieldDidEndEditing:(UITextField *)textField
- {
- NSNumberFormatter *numFormat =  [[NSNumberFormatter alloc] init];
- 
- NSNumber *number = [numFormat numberFromString:amountTextField.text];
- 
- if(number == nil)
- {
- 
- textField.font = [UIFont systemFontOfSize:14.0f];
- textField.text = @"Must Be a Valid Number";
- textField.textColor = [UIColor redColor];
- textField.alpha = 0;
- 
- [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionAutoreverse animations:^{
- textField.alpha = 1;
- }completion:^(BOOL finished){
- self.amountTextField.text = @"";
- self.amountTextField.font = [UIFont fontWithName:@"STHeitiJ-Light" size:14.0f];
- self.amountTextField.textColor = [UIColor blackColor];
- self.amountTextField.alpha = 1;
- 
- 
- 
- 
- }];
- 
- }
- else
- {
- [quickBet setAmount:number];
- }
- }
- 
- 
- -(BOOL)textFieldShouldReturn:(UITextField *)textField
- {
- 
- 
- if([self.descriptionTextView.text isEqualToString:@""])
- {
- [self.descriptionTextView becomeFirstResponder];
- }
- [self.amountTextField resignFirstResponder];
- 
- 
- return YES;
- }
- -(BOOL)textFieldShouldEndEditing:(UITextField *)textField
- {
- return YES;
- }
- 
- 
- -(BOOL)saveQuickBet
- {
- 
- NSError *error =  nil;
- [self.opponent.managedObjectContext save:&error];
- 
- if(error)
- {
- NSLog(@"%@\n", [error  description]);
- return NO;
- }
- else 
- return YES;
- 
- 
- 
- }
- 
+#pragma mark - TextField Delegate Functions
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSNumberFormatter *numFormat =  [[NSNumberFormatter alloc] init];
+    
+    NSNumber *number = [numFormat numberFromString:amountTextField.text];
+    
+    if(number == nil)
+    {
+        
+        textField.font = [UIFont systemFontOfSize:14.0f];
+        textField.text = @"Must Be a Valid Number";
+        textField.textColor = [UIColor redColor];
+        textField.alpha = 0;
+        
+        [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionAutoreverse animations:^{
+            textField.alpha = 1;
+        }completion:^(BOOL finished){
+            self.amountTextField.text = @"";
+            self.amountTextField.font = [UIFont fontWithName:@"STHeitiJ-Light" size:14.0f];
+            self.amountTextField.textColor = [UIColor blackColor];
+            self.amountTextField.alpha = 1;
+            
+            
+            
+            
+        }];
+        
+    }
+    else
+    {
+        [quickBet setAmount:number];
+    }
+}
+
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    
+    if([self.descriptionTextView.text isEqualToString:@""])
+    {
+        [self.descriptionTextView becomeFirstResponder];
+    }
+    [self.amountTextField resignFirstResponder];
+    
+    
+    return YES;
+}
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+
+-(BOOL)saveQuickBet
+{
+    
+    NSError *error =  nil;
+    [self.opponent.managedObjectContext save:&error];
+    
+    if(error)
+    {
+        NSLog(@"%@\n", [error  description]);
+        return NO;
+    }
+    else 
+        return YES;
+    
+    
+    
+}
+
 
 #pragma mark - Custom Headers
 
