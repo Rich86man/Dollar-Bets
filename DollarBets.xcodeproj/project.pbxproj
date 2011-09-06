@@ -35,6 +35,8 @@
 		FA45BA461402A2EC00C02A78 /* BookCoverFull.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA451402A2EC00C02A78 /* BookCoverFull.png */; };
 		FA49231114129495000E160D /* QuickAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA49230F14129495000E160D /* QuickAddViewController.m */; };
 		FA49231214129495000E160D /* QuickAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA49231014129495000E160D /* QuickAddViewController.xib */; };
+		FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4D38861413FAEE003064BC /* TOCTableViewController.m */; };
+		FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4D38871413FAEE003064BC /* TOCTableViewController.xib */; };
 		FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6ADA331402A9FF007E6CB1 /* BookViewController.m */; };
 		FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA371402AA99007E6CB1 /* bookCover1.png */; };
 		FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA391402B023007E6CB1 /* plusSign.png */; };
@@ -96,6 +98,9 @@
 		FA49230E14129495000E160D /* QuickAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickAddViewController.h; sourceTree = "<group>"; };
 		FA49230F14129495000E160D /* QuickAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickAddViewController.m; sourceTree = "<group>"; };
 		FA49231014129495000E160D /* QuickAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuickAddViewController.xib; sourceTree = "<group>"; };
+		FA4D38851413FAEE003064BC /* TOCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCTableViewController.h; sourceTree = "<group>"; };
+		FA4D38861413FAEE003064BC /* TOCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCTableViewController.m; sourceTree = "<group>"; };
+		FA4D38871413FAEE003064BC /* TOCTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOCTableViewController.xib; sourceTree = "<group>"; };
 		FA6ADA321402A9FF007E6CB1 /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookViewController.h; sourceTree = "<group>"; };
 		FA6ADA331402A9FF007E6CB1 /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookViewController.m; sourceTree = "<group>"; };
 		FA6ADA371402AA99007E6CB1 /* bookCover1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookCover1.png; sourceTree = "<group>"; };
@@ -144,6 +149,7 @@
 		FA1D8B19140C176E00C4DD59 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				FA4D38831413FAC4003064BC /* TOCTablViewController */,
 				FABD460C14100EE900A0683A /* TableOfContents */,
 				FA1D8B0C140C176600C4DD59 /* RootViewController.h */,
 				FA1D8B0D140C176600C4DD59 /* RootViewController.m */,
@@ -272,6 +278,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		FA4D38831413FAC4003064BC /* TOCTablViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FABD461414105B9300A0683A /* TableViewCell.xib */,
+				FA4D38851413FAEE003064BC /* TOCTableViewController.h */,
+				FA4D38861413FAEE003064BC /* TOCTableViewController.m */,
+				FA4D38871413FAEE003064BC /* TOCTableViewController.xib */,
+			);
+			name = TOCTablViewController;
+			sourceTree = "<group>";
+		};
 		FA6ADA2B1402A983007E6CB1 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,7 +324,6 @@
 				FABD460E14100F0D00A0683A /* TableOfContents.m */,
 				FABD460F14100F0D00A0683A /* TableOfContents.xib */,
 				FABD46121410489B00A0683A /* TableOfContentsHeaderView.xib */,
-				FABD461414105B9300A0683A /* TableViewCell.xib */,
 			);
 			name = TableOfContents;
 			sourceTree = "<group>";
@@ -389,6 +405,7 @@
 				FA399B3514117108003548BF /* arrow.png in Resources */,
 				FA399B3D14117E04003548BF /* black_denim.png in Resources */,
 				FA49231214129495000E160D /* QuickAddViewController.xib in Resources */,
+				FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +431,7 @@
 				FA1D8B26140C2F8300C4DD59 /* RootContainerViewController.m in Sources */,
 				FABD461014100F0D00A0683A /* TableOfContents.m in Sources */,
 				FA49231114129495000E160D /* QuickAddViewController.m in Sources */,
+				FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

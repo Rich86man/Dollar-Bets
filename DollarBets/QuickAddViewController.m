@@ -20,9 +20,13 @@
     self = [super init];
     if (self) {
         self.opponent = opp;
-        self.bet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[opponent managedObjectContext]];
-        bet.date = [NSDate date];
-        bet.opponent = opp;
+        //self.bet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[opponent managedObjectContext]];
+   //     self.bet = [NSEntityDescription entityForName:@"Bet"inManagedObjectContext:[opponent managedObjectContext]];
+        
+       // self.bet [
+        
+     //   bet.date = [NSDate date];
+        //bet.opponent = opp;
     
     
     }
