@@ -41,6 +41,9 @@
 		FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA371402AA99007E6CB1 /* bookCover1.png */; };
 		FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA391402B023007E6CB1 /* plusSign.png */; };
 		FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */; };
+		FA724B141416A36200D112B9 /* statusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA724B131416A36200D112B9 /* statusBarView.m */; };
+		FA724B191416BBF500D112B9 /* SaveButtonSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA724B171416BBF500D112B9 /* SaveButtonSelected.png */; };
+		FA724B1A1416BBF500D112B9 /* SaveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FA724B181416BBF500D112B9 /* SaveButton.png */; };
 		FAB9D59014047943000F4FC0 /* Opponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB9D58F14047943000F4FC0 /* Opponent.m */; };
 		FABD4600140FFF9D00A0683A /* paper_3.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FA140FFF9D00A0683A /* paper_3.png */; };
 		FABD4601140FFF9D00A0683A /* beige_paper.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FB140FFF9D00A0683A /* beige_paper.png */; };
@@ -106,6 +109,10 @@
 		FA6ADA371402AA99007E6CB1 /* bookCover1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookCover1.png; sourceTree = "<group>"; };
 		FA6ADA391402B023007E6CB1 /* plusSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusSign.png; sourceTree = "<group>"; };
 		FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FA724B121416A36200D112B9 /* statusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statusBarView.h; sourceTree = "<group>"; };
+		FA724B131416A36200D112B9 /* statusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = statusBarView.m; sourceTree = "<group>"; };
+		FA724B171416BBF500D112B9 /* SaveButtonSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SaveButtonSelected.png; sourceTree = "<group>"; };
+		FA724B181416BBF500D112B9 /* SaveButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SaveButton.png; sourceTree = "<group>"; };
 		FAB9D58E14047943000F4FC0 /* Opponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Opponent.h; sourceTree = "<group>"; };
 		FAB9D58F14047943000F4FC0 /* Opponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Opponent.m; sourceTree = "<group>"; };
 		FABD45FA140FFF9D00A0683A /* paper_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_3.png; sourceTree = "<group>"; };
@@ -142,6 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				FA1D8B19140C176E00C4DD59 /* Pages */,
+				FA724B121416A36200D112B9 /* statusBarView.h */,
+				FA724B131416A36200D112B9 /* statusBarView.m */,
 			);
 			name = OpenBook;
 			sourceTree = "<group>";
@@ -259,6 +268,8 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FA724B171416BBF500D112B9 /* SaveButtonSelected.png */,
+				FA724B181416BBF500D112B9 /* SaveButton.png */,
 				FABD46061410073E00A0683A /* NewbookCover.png */,
 				FABD45FD140FFF9D00A0683A /* handmadepaper.png */,
 				FABD45F8140FFF6700A0683A /* testpatterns */,
@@ -406,6 +417,8 @@
 				FA399B3D14117E04003548BF /* black_denim.png in Resources */,
 				FA49231214129495000E160D /* QuickAddViewController.xib in Resources */,
 				FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */,
+				FA724B191416BBF500D112B9 /* SaveButtonSelected.png in Resources */,
+				FA724B1A1416BBF500D112B9 /* SaveButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +445,7 @@
 				FABD461014100F0D00A0683A /* TableOfContents.m in Sources */,
 				FA49231114129495000E160D /* QuickAddViewController.m in Sources */,
 				FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */,
+				FA724B141416A36200D112B9 /* statusBarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

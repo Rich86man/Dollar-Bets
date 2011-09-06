@@ -7,11 +7,23 @@
 //
 
 #import "TOCTableViewController.h"
+#import "statusBarView.h"
 
+#define SAVE_BUTTON_HEIGHT 75.0f
+#define SAVE_BUTTON_WIDTH 221.0f
+#define QUICKVIEW_DEFAULT_HEIGHT 100.0f
 
+@interface TOCTableViewController (PrivateMethods)
+-(void)addSaveButton;
+-(void)removeSaveButton;
+-(void)resizeQuickView:(BOOL)isOpening;
+-(BOOL)saveQuickBet;
+@end
 
 @implementation TOCTableViewController
+@synthesize saveButton;
 @synthesize overlayView;
+@synthesize statusBar;
 @synthesize tableView;
 
 @synthesize tableOfContentsHeader = _tableOfContentsHeader, graphsHeader = _graphsHeader;
@@ -25,6 +37,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+      
+                         
     }
     return self;
 }
@@ -44,19 +59,19 @@
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-   
     
+    self.quickBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[self.opponent managedObjectContext]];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
     
     NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
     
     self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
-
+    self.view.backgroundColor = [UIColor clearColor];
     self.quickAddView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"black_denim.png"]];
-
+    self.statusBar.backgroundColor = [UIColor clearColor];
+    self.statusBar.centerLabel.text = @"Quick Add";
     
     
-      
     isQuickAdding = NO;
     isDragging = NO;
 }
@@ -70,6 +85,8 @@
     [self setDescriptionTextView:nil];
     [self setTableView:nil];
     [self setOverlayView:nil];
+    [self setStatusBar:nil];
+    [self setSaveButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -208,14 +225,14 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-
+    
     if( scrollView.contentOffset.y <= 0.0f && scrollView.contentOffset.y > -100.0f)
     {
         CGFloat offset =   scrollView.contentOffset.y;
         
         self.quickAddView.frame = CGRectMake(0, 0, 320, -offset);
-        if (offset > -90)
-        self.overlayView.alpha = -offset / 100;
+        if (offset > -90 && offset < 0)
+            self.overlayView.alpha = -offset / 100;
         
         
     }
@@ -230,13 +247,25 @@
     {
         scrollView.contentInset = UIEdgeInsetsMake(100.0, 0, 0, 0 );
         isQuickAdding = YES;
+        [self resizeQuickView:YES];
     }
     
-        if (scrollView.contentOffset.y < -150.0f && isQuickAdding)
-        {
-             scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
-            isQuickAdding = NO;
-        }
+    if (scrollView.contentOffset.y < -160.0f && isQuickAdding)
+    {
+   
+        //[self removeSaveButton];
+        //self.quickAddView.frame = self.quickAddView.frame = CGRectMake(0, 0, 320, 100);
+        
+        [UIView  animateWithDuration:0.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^{
+                 scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
+            scrollView.contentOffset = CGPointMake(0, 0);
+            self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
+        }completion:nil];
+        
+        
+        
+        isQuickAdding = NO;
+    }
     
     
     
@@ -262,11 +291,19 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     
+    if([textView.text isEqualToString:@""])
+    {
+        [self removeSaveButton];
+    }
+
     
     if(textView.contentSize.height > descriptionTextView.frame.size.height)
     {
         CGRect newTextFrame = descriptionTextView.frame;
         CGRect newViewFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y, self.quickAddView.frame.size.width, self.quickAddView.frame.size.height + ( textView.contentSize.height -descriptionTextView.frame.size.height ));    
+        CGRect newOverlayFrame = CGRectMake(self.overlayView.frame.origin.x, self.overlayView.frame.origin.y + ( textView.contentSize.height -descriptionTextView.frame.size.height ), self.overlayView.frame.size.width , self.overlayView.frame.size.height);
+        
+        
         
         newTextFrame.size.height = textView.contentSize.height;
         
@@ -274,7 +311,7 @@
         [UIView animateWithDuration:0.02f animations:^{
             descriptionTextView.frame = newTextFrame;
             self.quickAddView.frame = newViewFrame;
-            
+            self.overlayView.frame = newOverlayFrame;
         }];
         
     }
@@ -282,19 +319,42 @@
     {
         CGRect newTextFrame = descriptionTextView.frame;
         CGRect newViewFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y, self.quickAddView.frame.size.width, self.quickAddView.frame.size.height - ( descriptionTextView.frame.size.height - textView.contentSize.height));    
-        
+        CGRect newOverlayFrame = CGRectMake(self.overlayView.frame.origin.x, self.overlayView.frame.origin.y - ( descriptionTextView.frame.size.height - textView.contentSize.height ), self.overlayView.frame.size.width , self.overlayView.frame.size.height);
         newTextFrame.size.height = textView.contentSize.height;
         
         
         [UIView animateWithDuration:0.02f animations:^{
             descriptionTextView.frame = newTextFrame;
             self.quickAddView.frame = newViewFrame;
+            self.overlayView.frame = newOverlayFrame;
             
         }];
     }
     
     
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range 
+ replacementText:(NSString *)text
+{    
+    
+    // Any new character added is passed in as the "text" parameter
+    if ([text isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textView resignFirstResponder];
+        
+        if (![self.amountTextField.text isEqualToString:@""])
+        {
+                 [self addSaveButton];
+        }
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    return TRUE;
+}
+
 
 
 #pragma mark - TextField Delegate Functions
@@ -310,36 +370,45 @@
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    NSNumberFormatter *numFormat =  [[NSNumberFormatter alloc] init];
+    if([textField.text isEqualToString:@""])
+    {
+        [self removeSaveButton];
+    }
     
-    NSNumber *number = [numFormat numberFromString:amountTextField.text];
-    
-    if(number == nil)
+    else 
     {
         
-        textField.font = [UIFont systemFontOfSize:14.0f];
-        textField.text = @"Must Be a Valid Number";
-        textField.textColor = [UIColor redColor];
-        textField.alpha = 0;
+        NSNumberFormatter *numFormat =  [[NSNumberFormatter alloc] init];
         
-        [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionAutoreverse animations:^{
-            textField.alpha = 1;
-        }completion:^(BOOL finished){
-            self.amountTextField.text = @"";
-            self.amountTextField.font = [UIFont fontWithName:@"STHeitiJ-Light" size:14.0f];
-            self.amountTextField.textColor = [UIColor blackColor];
-            self.amountTextField.alpha = 1;
-            
-            
-            
-            
-        }];
+        NSNumber *number = [numFormat numberFromString:amountTextField.text];
         
+        if(number == nil)
+        {
+            textField.font = [UIFont systemFontOfSize:14.0f];
+            textField.text = @"Must Be a Valid Number";
+            textField.textColor = [UIColor redColor];
+            textField.alpha = 0;
+            
+            [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionAutoreverse animations:^{
+                textField.alpha = 1;
+            }completion:^(BOOL finished){
+                self.amountTextField.text = @"";
+                self.amountTextField.font = [UIFont fontWithName:@"STHeitiJ-Light" size:14.0f];
+                self.amountTextField.textColor = [UIColor blackColor];
+                self.amountTextField.alpha = 1;
+                
+                
+                
+                
+            }];
+            
+        }
+        else
+        {
+            [quickBet setAmount:number];
+        }
     }
-    else
-    {
-        [quickBet setAmount:number];
-    }
+    
 }
 
 
@@ -351,6 +420,11 @@
     {
         [self.descriptionTextView becomeFirstResponder];
     }
+    else 
+    {
+        [self addSaveButton];
+    }
+    
     [self.amountTextField resignFirstResponder];
     
     
@@ -361,6 +435,110 @@
     return YES;
 }
 
+
+
+
+#pragma mark - Quick Add Functions
+
+-(void)resizeQuickView:(BOOL)isOpening
+{
+    
+    if (isOpening) {
+        
+
+        
+        
+        CGRect newQuickViewFrame = CGRectMake(0, 0, 320, QUICKVIEW_DEFAULT_HEIGHT + self.descriptionTextView.frame.size.height + saveButton.frame.size.height - 21 );
+        
+        [UIView animateWithDuration:0.5f animations:^{
+            self.quickAddView.frame = newQuickViewFrame;
+        }];
+        
+        
+    }
+    
+    
+    
+    
+}
+
+-(void)addSaveButton
+{
+        if (self.saveButton.alpha == 0)
+        {
+        CGRect newQuickAddFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y , self.quickAddView.frame.size.width, self.quickAddView.frame.size.height + SAVE_BUTTON_HEIGHT + 10);
+        CGRect newSaveButtonFrame = CGRectMake( (self.quickAddView.frame.size.width - SAVE_BUTTON_WIDTH) / 2, newQuickAddFrame.size.height - SAVE_BUTTON_HEIGHT - 10,SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT);
+        self.saveButton.frame = newSaveButtonFrame;
+        CGFloat alphaValue = 1;
+        
+        
+        [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^() {
+            self.quickAddView.frame = newQuickAddFrame;
+            self.saveButton.alpha = alphaValue;
+            
+        } completion:nil];
+        }
+           
+    
+}
+
+-(void)removeSaveButton{
+    
+    if(self.saveButton.alpha == 1)
+    {
+        CGRect newQuickAddFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y , self.quickAddView.frame.size.width, self.quickAddView.frame.size.height - SAVE_BUTTON_HEIGHT + 10);
+        CGRect newSaveButtonFrame = CGRectMake(0,0,0,0);
+        self.saveButton.frame = newSaveButtonFrame;
+        CGFloat alphaValue = 0;
+        
+        [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^() {
+            self.quickAddView.frame = newQuickAddFrame;
+            self.saveButton.alpha = alphaValue;
+            
+        } completion:nil];
+    }
+    
+}
+
+
+- (IBAction)save:(UIButton *)sender {
+    if([self saveQuickBet])
+    {
+        
+        [self removeSaveButton];
+        self.amountTextField.text = @"";
+        self.descriptionTextView.text = @"";
+        
+        
+        [UIView  animateWithDuration:0.5f delay:0.5f options:UIViewAnimationCurveEaseInOut animations:^{
+
+            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
+            self.tableView.contentOffset = CGPointMake(0, 0); 
+            self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
+        }completion:nil];
+        
+        
+        
+        isQuickAdding = NO;
+        
+        
+        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+        self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+        
+        
+        
+        self.quickBet = nil;
+        self.quickBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[self.opponent managedObjectContext]];
+        
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.bets count] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        
+        
+        
+    }
+
+    
+}
 
 -(BOOL)saveQuickBet
 {
@@ -390,7 +568,7 @@
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 40, 320, 100)];
         view.backgroundColor = [UIColor clearColor];
         
-        UILabel *tl = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 280, 46)];    
+        UILabel *tl = [[UILabel alloc]initWithFrame:CGRectMake(20, 20, 280, 46)];    
         tl.backgroundColor = [UIColor clearColor];
         tl.font = [UIFont fontWithName:@"STHeitiJ-Light" size:40.0f];
         tl.text = @"Table of";

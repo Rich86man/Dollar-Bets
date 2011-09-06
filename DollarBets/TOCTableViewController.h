@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Opponent.h"
 #import "Bet.h"
+@class statusBarView;
 
-
-@interface TOCTableViewController : UIViewController<UITextFieldDelegate, UITableViewDelegate, UIScrollViewDelegate> {
+@interface TOCTableViewController : UIViewController<UITextFieldDelegate, UITableViewDelegate, UIScrollViewDelegate, UITextViewDelegate> {
     // Custom Headers
     UIView *tableOfContentsHeader;
     UIView *graphsHeader;    
@@ -20,8 +20,10 @@
     // Quick add View
     UIView *quickAddView;
     UIView *overlayView;
+    statusBarView *statusBar;
     UITextField *amountTextField;
     UITextView *descriptionTextView;
+    UIButton *saveButton;
 	UIImageView *refreshArrow;
     BOOL isQuickAdding;
     BOOL isDragging;
@@ -42,8 +44,10 @@
 
 @property (strong, nonatomic) IBOutlet UIView *quickAddView;
 @property (strong, nonatomic) IBOutlet UIView *overlayView;
+@property (strong, nonatomic) IBOutlet statusBarView *statusBar;
 @property (strong, nonatomic) IBOutlet UITextField *amountTextField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (strong, nonatomic) IBOutlet UIButton *saveButton;
 
 @property (nonatomic, retain) UIImageView *refreshArrow;
 @property (strong, nonatomic) Bet *quickBet;
@@ -52,8 +56,12 @@
 @property (strong, nonatomic) NSArray *bets;
 
 
+
+
+
 // Quick add Functions
 
+- (IBAction)save:(UIButton *)sender;
 
 
 @end

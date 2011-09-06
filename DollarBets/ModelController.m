@@ -7,7 +7,7 @@
 //
 
 #import "ModelController.h"
-#import "TableOfContents.h"
+
 #import "TOCTableViewController.h"
 #import "DataViewController.h"
 
@@ -50,16 +50,11 @@
     
     if (index == 0)
     {
-        TableOfContents *toc = [[TableOfContents alloc]init];
-        toc.opponent = self.opponent;
-        return toc;
-    }
-    else if (index == 1)
-    {
         TOCTableViewController *toc = [[TOCTableViewController alloc]initWithNibName:@"TOCTableViewController" bundle:nil];
         toc.opponent = self.opponent;
         return toc;
     }
+
     
     
     // Create a new view controller and pass suitable data.
@@ -80,12 +75,9 @@
      Return the index of the given data view controller.
      For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
      */
-    if ([viewController isKindOfClass:[TableOfContents class]] )
-    {
-        return 0;
-    }
+
     if ( [viewController isKindOfClass:[TOCTableViewController class]])
-        return 1;
+        return 0;
     return [self.pageData indexOfObject:[(DataViewController *)viewController dataObject]];
 }
 
