@@ -56,7 +56,7 @@
 		FABD461014100F0D00A0683A /* TableOfContents.m in Sources */ = {isa = PBXBuildFile; fileRef = FABD460E14100F0D00A0683A /* TableOfContents.m */; };
 		FABD461114100F0D00A0683A /* TableOfContents.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABD460F14100F0D00A0683A /* TableOfContents.xib */; };
 		FABD46131410489B00A0683A /* TableOfContentsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABD46121410489B00A0683A /* TableOfContentsHeaderView.xib */; };
-		FABD461514105B9400A0683A /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABD461414105B9300A0683A /* TableViewCell.xib */; };
+		FADC500214181A08008F8C4E /* TOCBetsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -127,7 +127,8 @@
 		FABD460E14100F0D00A0683A /* TableOfContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableOfContents.m; sourceTree = "<group>"; };
 		FABD460F14100F0D00A0683A /* TableOfContents.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableOfContents.xib; sourceTree = "<group>"; };
 		FABD46121410489B00A0683A /* TableOfContentsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableOfContentsHeaderView.xib; sourceTree = "<group>"; };
-		FABD461414105B9300A0683A /* TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		FADC500014181A07008F8C4E /* TOCBetsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCBetsTableViewCell.h; sourceTree = "<group>"; };
+		FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCBetsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,10 +293,11 @@
 		FA4D38831413FAC4003064BC /* TOCTablViewController */ = {
 			isa = PBXGroup;
 			children = (
-				FABD461414105B9300A0683A /* TableViewCell.xib */,
 				FA4D38851413FAEE003064BC /* TOCTableViewController.h */,
 				FA4D38861413FAEE003064BC /* TOCTableViewController.m */,
 				FA4D38871413FAEE003064BC /* TOCTableViewController.xib */,
+				FADC500014181A07008F8C4E /* TOCBetsTableViewCell.h */,
+				FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */,
 			);
 			name = TOCTablViewController;
 			sourceTree = "<group>";
@@ -411,7 +413,6 @@
 				FABD460B14100E7D00A0683A /* TableOfContentsMockup.png in Resources */,
 				FABD461114100F0D00A0683A /* TableOfContents.xib in Resources */,
 				FABD46131410489B00A0683A /* TableOfContentsHeaderView.xib in Resources */,
-				FABD461514105B9400A0683A /* TableViewCell.xib in Resources */,
 				FA399ABD14114731003548BF /* quickAdd.png in Resources */,
 				FA399B3514117108003548BF /* arrow.png in Resources */,
 				FA399B3D14117E04003548BF /* black_denim.png in Resources */,
@@ -446,6 +447,7 @@
 				FA49231114129495000E160D /* QuickAddViewController.m in Sources */,
 				FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */,
 				FA724B141416A36200D112B9 /* statusBarView.m in Sources */,
+				FADC500214181A08008F8C4E /* TOCBetsTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

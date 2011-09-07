@@ -20,6 +20,7 @@
     // Quick add View
     UIView *quickAddView;
     UIView *overlayView;
+    UILabel *overlayLabel;
     statusBarView *statusBar;
     UITextField *amountTextField;
     UITextView *descriptionTextView;
@@ -35,6 +36,8 @@
     NSArray *bets;
 
     
+    
+    
     UITableView *tableView;
 }
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -44,6 +47,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *quickAddView;
 @property (strong, nonatomic) IBOutlet UIView *overlayView;
+@property (strong, nonatomic) IBOutlet UILabel *overlayLabel;
 @property (strong, nonatomic) IBOutlet statusBarView *statusBar;
 @property (strong, nonatomic) IBOutlet UITextField *amountTextField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
@@ -54,6 +58,7 @@
 
 @property (strong, nonatomic) Opponent *opponent;
 @property (strong, nonatomic) NSArray *bets;
+
 
 
 
