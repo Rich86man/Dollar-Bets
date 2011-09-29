@@ -9,8 +9,8 @@
 #import "RootViewController.h"
 
 #import "ModelController.h"
+#import "TOCTableViewController.h"
 
-#import "DataViewController.h"
 
 @interface RootViewController ()
 @property (readonly, strong, nonatomic) ModelController *modelController;
@@ -37,24 +37,33 @@
     // Configure the page view controller and add it as a child view controller.
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
-
+    
     UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
+    TOCTableViewController *toc =  (TOCTableViewController *)startingViewController;
+    toc.tableView.delegate = self;
+    
     NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
+    
+    
+    
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
-
+    
     self.pageViewController.dataSource = self.modelController;
-
+    
     [self addChildViewController:self.pageViewController];
     [self.view addSubview:self.pageViewController.view];
-
+    
     // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
     CGRect pageViewRect = self.view.bounds;
     self.pageViewController.view.frame = pageViewRect;
-
+    
     [self.pageViewController didMoveToParentViewController:self];    
-
+    
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    
+    
+    
 }
 
 - (void)viewDidUnload
@@ -97,19 +106,34 @@
      In more complex implementations, the model controller may be passed to the view controller.
      */
     if (!_modelController) {
-        _modelController = [[ModelController alloc] init];
-        _modelController.opponent = self.opponent;
+        _modelController = [[ModelController alloc] initWithOpponent:self.opponent];
     }
     return _modelController;
+}
+
+-(void)didSelectPage:(int)index
+{
+    
+    
+    
+    UIViewController *selectedPage = [self.modelController viewControllerAtIndex:index];
+    NSArray *viewControllers = [NSArray arrayWithObject:selectedPage];
+    
+    
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
+    
+    
+    
 }
 
 #pragma mark - UIPageViewController delegate methods
 
 /*
-- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
-{
-    
-}
+ - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+ {
+ 
+ 
+ }
  */
 
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
@@ -118,7 +142,7 @@
     UIViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
     NSArray *viewControllers = [NSArray arrayWithObject:currentViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
-
+    
     self.pageViewController.doubleSided = NO;
     return UIPageViewControllerSpineLocationMin;
 }

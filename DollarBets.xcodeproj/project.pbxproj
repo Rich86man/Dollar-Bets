@@ -9,10 +9,8 @@
 /* Begin PBXBuildFile section */
 		FA03E8061408481B00DA2345 /* BookSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA03E8051408481B00DA2345 /* BookSettingsView.m */; };
 		FA1D8B14140C176600C4DD59 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B0D140C176600C4DD59 /* RootViewController.m */; };
-		FA1D8B15140C176600C4DD59 /* DataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B0F140C176600C4DD59 /* DataViewController.m */; };
 		FA1D8B16140C176600C4DD59 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B11140C176600C4DD59 /* ModelController.m */; };
 		FA1D8B17140C176600C4DD59 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1D8B12140C176600C4DD59 /* RootViewController.xib */; };
-		FA1D8B18140C176600C4DD59 /* DataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1D8B13140C176600C4DD59 /* DataViewController.xib */; };
 		FA1D8B26140C2F8300C4DD59 /* RootContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B25140C2F8300C4DD59 /* RootContainerViewController.m */; };
 		FA2486CD14071C1000AC31BE /* config-wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2486CC14071C1000AC31BE /* config-wheel.png */; };
 		FA2486D114071DE700AC31BE /* bookCoverFlipped.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2486D014071DE700AC31BE /* bookCoverFlipped.png */; };
@@ -33,17 +31,23 @@
 		FA45BA421401E6C900C02A78 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA401401E6C900C02A78 /* MainViewController.xib */; };
 		FA45BA441401E91E00C02A78 /* pattern8.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA431401E91E00C02A78 /* pattern8.png */; };
 		FA45BA461402A2EC00C02A78 /* BookCoverFull.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA451402A2EC00C02A78 /* BookCoverFull.png */; };
-		FA49231114129495000E160D /* QuickAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA49230F14129495000E160D /* QuickAddViewController.m */; };
-		FA49231214129495000E160D /* QuickAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA49231014129495000E160D /* QuickAddViewController.xib */; };
 		FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4D38861413FAEE003064BC /* TOCTableViewController.m */; };
 		FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4D38871413FAEE003064BC /* TOCTableViewController.xib */; };
 		FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6ADA331402A9FF007E6CB1 /* BookViewController.m */; };
-		FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA371402AA99007E6CB1 /* bookCover1.png */; };
 		FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6ADA391402B023007E6CB1 /* plusSign.png */; };
 		FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */; };
 		FA724B141416A36200D112B9 /* statusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA724B131416A36200D112B9 /* statusBarView.m */; };
 		FA724B191416BBF500D112B9 /* SaveButtonSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA724B171416BBF500D112B9 /* SaveButtonSelected.png */; };
 		FA724B1A1416BBF500D112B9 /* SaveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FA724B181416BBF500D112B9 /* SaveButton.png */; };
+		FA748488141EB8DD006695C2 /* paperMain2.png in Resources */ = {isa = PBXBuildFile; fileRef = FA748486141EB8DD006695C2 /* paperMain2.png */; };
+		FA748489141EB8DD006695C2 /* ptop2.png in Resources */ = {isa = PBXBuildFile; fileRef = FA748487141EB8DD006695C2 /* ptop2.png */; };
+		FA748491141EC931006695C2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA748490141EC931006695C2 /* MapKit.framework */; };
+		FA870BF11434F2E7004A7127 /* oneDollar.png in Resources */ = {isa = PBXBuildFile; fileRef = FA870BF01434F2E7004A7127 /* oneDollar.png */; };
+		FA870BF41434F46B004A7127 /* LocNotRecorded.png in Resources */ = {isa = PBXBuildFile; fileRef = FA870BF31434F46B004A7127 /* LocNotRecorded.png */; };
+		FA870BF61434F683004A7127 /* fiveDollar.png in Resources */ = {isa = PBXBuildFile; fileRef = FA870BF51434F683004A7127 /* fiveDollar.png */; };
+		FAB474DA14194E730000075F /* BetPage.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB474D814194E730000075F /* BetPage.m */; };
+		FAB474DB14194E730000075F /* BetPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB474D914194E730000075F /* BetPage.xib */; };
+		FAB474E6141A88710000075F /* paperTop.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB474E5141A88710000075F /* paperTop.png */; };
 		FAB9D59014047943000F4FC0 /* Opponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB9D58F14047943000F4FC0 /* Opponent.m */; };
 		FABD4600140FFF9D00A0683A /* paper_3.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FA140FFF9D00A0683A /* paper_3.png */; };
 		FABD4601140FFF9D00A0683A /* beige_paper.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FB140FFF9D00A0683A /* beige_paper.png */; };
@@ -53,9 +57,6 @@
 		FABD4605140FFF9D00A0683A /* padded.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FF140FFF9D00A0683A /* padded.png */; };
 		FABD46071410073F00A0683A /* NewbookCover.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD46061410073E00A0683A /* NewbookCover.png */; };
 		FABD460B14100E7D00A0683A /* TableOfContentsMockup.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD460A14100E7D00A0683A /* TableOfContentsMockup.png */; };
-		FABD461014100F0D00A0683A /* TableOfContents.m in Sources */ = {isa = PBXBuildFile; fileRef = FABD460E14100F0D00A0683A /* TableOfContents.m */; };
-		FABD461114100F0D00A0683A /* TableOfContents.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABD460F14100F0D00A0683A /* TableOfContents.xib */; };
-		FABD46131410489B00A0683A /* TableOfContentsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABD46121410489B00A0683A /* TableOfContentsHeaderView.xib */; };
 		FADC500214181A08008F8C4E /* TOCBetsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -64,12 +65,9 @@
 		FA03E8051408481B00DA2345 /* BookSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookSettingsView.m; sourceTree = "<group>"; };
 		FA1D8B0C140C176600C4DD59 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		FA1D8B0D140C176600C4DD59 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		FA1D8B0E140C176600C4DD59 /* DataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataViewController.h; sourceTree = "<group>"; };
-		FA1D8B0F140C176600C4DD59 /* DataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataViewController.m; sourceTree = "<group>"; };
 		FA1D8B10140C176600C4DD59 /* ModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
 		FA1D8B11140C176600C4DD59 /* ModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
 		FA1D8B12140C176600C4DD59 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
-		FA1D8B13140C176600C4DD59 /* DataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataViewController.xib; sourceTree = "<group>"; };
 		FA1D8B24140C2F8300C4DD59 /* RootContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootContainerViewController.h; sourceTree = "<group>"; };
 		FA1D8B25140C2F8300C4DD59 /* RootContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootContainerViewController.m; sourceTree = "<group>"; };
 		FA2486CC14071C1000AC31BE /* config-wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "config-wheel.png"; sourceTree = "<group>"; };
@@ -98,21 +96,27 @@
 		FA45BA401401E6C900C02A78 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		FA45BA431401E91E00C02A78 /* pattern8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern8.png; sourceTree = "<group>"; };
 		FA45BA451402A2EC00C02A78 /* BookCoverFull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BookCoverFull.png; sourceTree = "<group>"; };
-		FA49230E14129495000E160D /* QuickAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickAddViewController.h; sourceTree = "<group>"; };
-		FA49230F14129495000E160D /* QuickAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickAddViewController.m; sourceTree = "<group>"; };
-		FA49231014129495000E160D /* QuickAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuickAddViewController.xib; sourceTree = "<group>"; };
 		FA4D38851413FAEE003064BC /* TOCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCTableViewController.h; sourceTree = "<group>"; };
 		FA4D38861413FAEE003064BC /* TOCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCTableViewController.m; sourceTree = "<group>"; };
 		FA4D38871413FAEE003064BC /* TOCTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOCTableViewController.xib; sourceTree = "<group>"; };
 		FA6ADA321402A9FF007E6CB1 /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookViewController.h; sourceTree = "<group>"; };
 		FA6ADA331402A9FF007E6CB1 /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookViewController.m; sourceTree = "<group>"; };
-		FA6ADA371402AA99007E6CB1 /* bookCover1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookCover1.png; sourceTree = "<group>"; };
 		FA6ADA391402B023007E6CB1 /* plusSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusSign.png; sourceTree = "<group>"; };
 		FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FA724B121416A36200D112B9 /* statusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statusBarView.h; sourceTree = "<group>"; };
 		FA724B131416A36200D112B9 /* statusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = statusBarView.m; sourceTree = "<group>"; };
 		FA724B171416BBF500D112B9 /* SaveButtonSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SaveButtonSelected.png; sourceTree = "<group>"; };
 		FA724B181416BBF500D112B9 /* SaveButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SaveButton.png; sourceTree = "<group>"; };
+		FA748486141EB8DD006695C2 /* paperMain2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paperMain2.png; sourceTree = "<group>"; };
+		FA748487141EB8DD006695C2 /* ptop2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ptop2.png; sourceTree = "<group>"; };
+		FA748490141EC931006695C2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		FA870BF01434F2E7004A7127 /* oneDollar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oneDollar.png; sourceTree = "<group>"; };
+		FA870BF31434F46B004A7127 /* LocNotRecorded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocNotRecorded.png; sourceTree = "<group>"; };
+		FA870BF51434F683004A7127 /* fiveDollar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fiveDollar.png; sourceTree = "<group>"; };
+		FAB474D714194E730000075F /* BetPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BetPage.h; sourceTree = "<group>"; };
+		FAB474D814194E730000075F /* BetPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BetPage.m; sourceTree = "<group>"; };
+		FAB474D914194E730000075F /* BetPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BetPage.xib; sourceTree = "<group>"; };
+		FAB474E5141A88710000075F /* paperTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paperTop.png; sourceTree = "<group>"; };
 		FAB9D58E14047943000F4FC0 /* Opponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Opponent.h; sourceTree = "<group>"; };
 		FAB9D58F14047943000F4FC0 /* Opponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Opponent.m; sourceTree = "<group>"; };
 		FABD45FA140FFF9D00A0683A /* paper_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_3.png; sourceTree = "<group>"; };
@@ -123,10 +127,6 @@
 		FABD45FF140FFF9D00A0683A /* padded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = padded.png; sourceTree = "<group>"; };
 		FABD46061410073E00A0683A /* NewbookCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewbookCover.png; sourceTree = "<group>"; };
 		FABD460A14100E7D00A0683A /* TableOfContentsMockup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TableOfContentsMockup.png; sourceTree = "<group>"; };
-		FABD460D14100F0D00A0683A /* TableOfContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableOfContents.h; sourceTree = "<group>"; };
-		FABD460E14100F0D00A0683A /* TableOfContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableOfContents.m; sourceTree = "<group>"; };
-		FABD460F14100F0D00A0683A /* TableOfContents.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableOfContents.xib; sourceTree = "<group>"; };
-		FABD46121410489B00A0683A /* TableOfContentsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableOfContentsHeaderView.xib; sourceTree = "<group>"; };
 		FADC500014181A07008F8C4E /* TOCBetsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCBetsTableViewCell.h; sourceTree = "<group>"; };
 		FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCBetsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA748491141EC931006695C2 /* MapKit.framework in Frameworks */,
 				FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */,
 				FA45BA211401E66E00C02A78 /* UIKit.framework in Frameworks */,
 				FA45BA231401E66E00C02A78 /* Foundation.framework in Frameworks */,
@@ -159,16 +160,13 @@
 		FA1D8B19140C176E00C4DD59 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				FAB474D614194E4D0000075F /* Bet Page */,
 				FA4D38831413FAC4003064BC /* TOCTablViewController */,
-				FABD460C14100EE900A0683A /* TableOfContents */,
 				FA1D8B0C140C176600C4DD59 /* RootViewController.h */,
 				FA1D8B0D140C176600C4DD59 /* RootViewController.m */,
-				FA1D8B0E140C176600C4DD59 /* DataViewController.h */,
-				FA1D8B0F140C176600C4DD59 /* DataViewController.m */,
 				FA1D8B10140C176600C4DD59 /* ModelController.h */,
 				FA1D8B11140C176600C4DD59 /* ModelController.m */,
 				FA1D8B12140C176600C4DD59 /* RootViewController.xib */,
-				FA1D8B13140C176600C4DD59 /* DataViewController.xib */,
 			);
 			name = Pages;
 			sourceTree = "<group>";
@@ -205,16 +203,6 @@
 			name = "Book Views";
 			sourceTree = "<group>";
 		};
-		FA399B3B14117C26003548BF /* QuickAddView */ = {
-			isa = PBXGroup;
-			children = (
-				FA49230E14129495000E160D /* QuickAddViewController.h */,
-				FA49230F14129495000E160D /* QuickAddViewController.m */,
-				FA49231014129495000E160D /* QuickAddViewController.xib */,
-			);
-			name = QuickAddView;
-			sourceTree = "<group>";
-		};
 		FA437B8114046ED200CD43EF /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +234,7 @@
 		FA45BA1F1401E66E00C02A78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA748490141EC931006695C2 /* MapKit.framework */,
 				FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */,
 				FA45BA201401E66E00C02A78 /* UIKit.framework */,
 				FA45BA221401E66E00C02A78 /* Foundation.framework */,
@@ -257,8 +246,8 @@
 		FA45BA261401E66E00C02A78 /* DollarBets */ = {
 			isa = PBXGroup;
 			children = (
-				FA1D8B27140C2F9A00C4DD59 /* RootContainer */,
 				FA437B8114046ED200CD43EF /* Managed Objects */,
+				FA1D8B27140C2F9A00C4DD59 /* RootContainer */,
 				FA45BA2F1401E66E00C02A78 /* AppDelegate.h */,
 				FA45BA301401E66E00C02A78 /* AppDelegate.m */,
 				FA45BA271401E66E00C02A78 /* Supporting Files */,
@@ -269,16 +258,17 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FA724B171416BBF500D112B9 /* SaveButtonSelected.png */,
-				FA724B181416BBF500D112B9 /* SaveButton.png */,
+				FA74848F141EC8FA006695C2 /* Paper */,
+				FA74848E141EC8CE006695C2 /* Save Button */,
 				FABD46061410073E00A0683A /* NewbookCover.png */,
-				FABD45FD140FFF9D00A0683A /* handmadepaper.png */,
 				FABD45F8140FFF6700A0683A /* testpatterns */,
 				FA2486D014071DE700AC31BE /* bookCoverFlipped.png */,
+				FA870BF31434F46B004A7127 /* LocNotRecorded.png */,
+				FA870BF01434F2E7004A7127 /* oneDollar.png */,
+				FA870BF51434F683004A7127 /* fiveDollar.png */,
 				FA2486CC14071C1000AC31BE /* config-wheel.png */,
 				FA437B7514045B5C00CD43EF /* TextEditField.png */,
 				FA6ADA391402B023007E6CB1 /* plusSign.png */,
-				FA6ADA371402AA99007E6CB1 /* bookCover1.png */,
 				FA45BA451402A2EC00C02A78 /* BookCoverFull.png */,
 				FA45BA431401E91E00C02A78 /* pattern8.png */,
 				FA45BA321401E66E00C02A78 /* DollarBets.xcdatamodeld */,
@@ -313,6 +303,35 @@
 			name = MainScreen;
 			sourceTree = "<group>";
 		};
+		FA74848E141EC8CE006695C2 /* Save Button */ = {
+			isa = PBXGroup;
+			children = (
+				FA724B171416BBF500D112B9 /* SaveButtonSelected.png */,
+				FA724B181416BBF500D112B9 /* SaveButton.png */,
+			);
+			name = "Save Button";
+			sourceTree = "<group>";
+		};
+		FA74848F141EC8FA006695C2 /* Paper */ = {
+			isa = PBXGroup;
+			children = (
+				FABD45FD140FFF9D00A0683A /* handmadepaper.png */,
+				FA748486141EB8DD006695C2 /* paperMain2.png */,
+				FA748487141EB8DD006695C2 /* ptop2.png */,
+			);
+			name = Paper;
+			sourceTree = "<group>";
+		};
+		FAB474D614194E4D0000075F /* Bet Page */ = {
+			isa = PBXGroup;
+			children = (
+				FAB474D714194E730000075F /* BetPage.h */,
+				FAB474D814194E730000075F /* BetPage.m */,
+				FAB474D914194E730000075F /* BetPage.xib */,
+			);
+			name = "Bet Page";
+			sourceTree = "<group>";
+		};
 		FABD45F8140FFF6700A0683A /* testpatterns */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,6 +339,7 @@
 				FA399B3414117108003548BF /* arrow.png */,
 				FA399ABC14114730003548BF /* quickAdd.png */,
 				FABD460A14100E7D00A0683A /* TableOfContentsMockup.png */,
+				FAB474E5141A88710000075F /* paperTop.png */,
 				FABD45FA140FFF9D00A0683A /* paper_3.png */,
 				FABD45FB140FFF9D00A0683A /* beige_paper.png */,
 				FABD45FC140FFF9D00A0683A /* black-Linen.png */,
@@ -327,18 +347,6 @@
 				FABD45FF140FFF9D00A0683A /* padded.png */,
 			);
 			name = testpatterns;
-			sourceTree = "<group>";
-		};
-		FABD460C14100EE900A0683A /* TableOfContents */ = {
-			isa = PBXGroup;
-			children = (
-				FA399B3B14117C26003548BF /* QuickAddView */,
-				FABD460D14100F0D00A0683A /* TableOfContents.h */,
-				FABD460E14100F0D00A0683A /* TableOfContents.m */,
-				FABD460F14100F0D00A0683A /* TableOfContents.xib */,
-				FABD46121410489B00A0683A /* TableOfContentsHeaderView.xib */,
-			);
-			name = TableOfContents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -396,13 +404,11 @@
 				FA45BA421401E6C900C02A78 /* MainViewController.xib in Resources */,
 				FA45BA441401E91E00C02A78 /* pattern8.png in Resources */,
 				FA45BA461402A2EC00C02A78 /* BookCoverFull.png in Resources */,
-				FA6ADA381402AA99007E6CB1 /* bookCover1.png in Resources */,
 				FA6ADA3A1402B023007E6CB1 /* plusSign.png in Resources */,
 				FA437B7614045B5C00CD43EF /* TextEditField.png in Resources */,
 				FA2486CD14071C1000AC31BE /* config-wheel.png in Resources */,
 				FA2486D114071DE700AC31BE /* bookCoverFlipped.png in Resources */,
 				FA1D8B17140C176600C4DD59 /* RootViewController.xib in Resources */,
-				FA1D8B18140C176600C4DD59 /* DataViewController.xib in Resources */,
 				FABD4600140FFF9D00A0683A /* paper_3.png in Resources */,
 				FABD4601140FFF9D00A0683A /* beige_paper.png in Resources */,
 				FABD4602140FFF9D00A0683A /* black-Linen.png in Resources */,
@@ -411,15 +417,19 @@
 				FABD4605140FFF9D00A0683A /* padded.png in Resources */,
 				FABD46071410073F00A0683A /* NewbookCover.png in Resources */,
 				FABD460B14100E7D00A0683A /* TableOfContentsMockup.png in Resources */,
-				FABD461114100F0D00A0683A /* TableOfContents.xib in Resources */,
-				FABD46131410489B00A0683A /* TableOfContentsHeaderView.xib in Resources */,
 				FA399ABD14114731003548BF /* quickAdd.png in Resources */,
 				FA399B3514117108003548BF /* arrow.png in Resources */,
 				FA399B3D14117E04003548BF /* black_denim.png in Resources */,
-				FA49231214129495000E160D /* QuickAddViewController.xib in Resources */,
 				FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */,
 				FA724B191416BBF500D112B9 /* SaveButtonSelected.png in Resources */,
 				FA724B1A1416BBF500D112B9 /* SaveButton.png in Resources */,
+				FAB474DB14194E730000075F /* BetPage.xib in Resources */,
+				FAB474E6141A88710000075F /* paperTop.png in Resources */,
+				FA748488141EB8DD006695C2 /* paperMain2.png in Resources */,
+				FA748489141EB8DD006695C2 /* ptop2.png in Resources */,
+				FA870BF11434F2E7004A7127 /* oneDollar.png in Resources */,
+				FA870BF41434F46B004A7127 /* LocNotRecorded.png in Resources */,
+				FA870BF61434F683004A7127 /* fiveDollar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,14 +450,12 @@
 				FA2486F214083E1C00AC31BE /* BookFrontView.m in Sources */,
 				FA03E8061408481B00DA2345 /* BookSettingsView.m in Sources */,
 				FA1D8B14140C176600C4DD59 /* RootViewController.m in Sources */,
-				FA1D8B15140C176600C4DD59 /* DataViewController.m in Sources */,
 				FA1D8B16140C176600C4DD59 /* ModelController.m in Sources */,
 				FA1D8B26140C2F8300C4DD59 /* RootContainerViewController.m in Sources */,
-				FABD461014100F0D00A0683A /* TableOfContents.m in Sources */,
-				FA49231114129495000E160D /* QuickAddViewController.m in Sources */,
 				FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */,
 				FA724B141416A36200D112B9 /* statusBarView.m in Sources */,
 				FADC500214181A08008F8C4E /* TOCBetsTableViewCell.m in Sources */,
+				FAB474DA14194E730000075F /* BetPage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

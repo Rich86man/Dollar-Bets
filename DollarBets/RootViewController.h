@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Opponent.h"
-@interface RootViewController : UIViewController <UIPageViewControllerDelegate>
+#import "TOCTableViewController.h"
+@interface RootViewController : UIViewController <UIPageViewControllerDelegate, UITableViewDelegate, TOCTableViewControllerDelegate>
 {
     Opponent *opponent;
 

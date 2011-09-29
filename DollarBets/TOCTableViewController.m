@@ -28,6 +28,7 @@
 @end
 
 @implementation TOCTableViewController
+@synthesize delegate;
 @synthesize saveButton;
 @synthesize overlayView;
 @synthesize overlayLabel;
@@ -40,25 +41,6 @@
 
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
-        
-        
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 #pragma mark - View lifecycle
 
@@ -81,6 +63,7 @@
     
     isQuickAdding = NO;
     isDragging = NO;
+    
 }
 
 - (void)viewDidUnload
@@ -198,7 +181,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"didselect IndexPath: %@", [indexPath description]);
+    NSUInteger index = indexPath.row + 1;
+    [self.delegate didSelectPage:index];
 }
+
 
 
 #pragma mark - ScrollViewDelegate Functions

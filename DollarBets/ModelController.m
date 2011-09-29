@@ -7,10 +7,8 @@
 //
 
 #import "ModelController.h"
-
 #import "TOCTableViewController.h"
-#import "DataViewController.h"
-
+#import "BetPage.h"
 
 
 /*
@@ -23,20 +21,25 @@
  */
 
 @interface ModelController()
-@property (readonly, strong, nonatomic) NSArray *pageData;
+@property (strong, nonatomic) NSArray *bets;
 @end
 
 @implementation ModelController
 @synthesize opponent;
-@synthesize pageData = _pageData;
+@synthesize bets;
+@synthesize controllers;
 
-- (id)init
+- (id)initWithOpponent:(Opponent *)opp
 {
     self = [super init];
     if (self) {
         // Create the data model.
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        _pageData = [[dateFormatter monthSymbols] copy];
+        self.opponent = opp;
+        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+        self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+    
+        
+        
     }
     return self;
 }
@@ -44,7 +47,7 @@
 - (UIViewController *)viewControllerAtIndex:(NSUInteger)index
 {   
     // Return the data view controller for the given index.
-    if (([self.pageData count] == 0) || (index >= [self.pageData count])) {
+    if ( index > [self.bets count] ) {
         return nil;
     }
     
@@ -55,18 +58,21 @@
         return toc;
     }
 
-    
-    
+    BetPage *betPage = [[BetPage alloc] initWithBet:[self.bets objectAtIndex:index -1]];    
+    return betPage;
+
+    /*
     // Create a new view controller and pass suitable data.
     DataViewController *dataViewController = [[DataViewController alloc] initWithNibName:@"DataViewController" bundle:nil];
     dataViewController.dataObject = [self.pageData objectAtIndex:index];
-    
+    return dataViewController;
+     */
     
      
     
     
     
-    return dataViewController;
+
 }
 
 - (NSUInteger)indexOfViewController:(UIViewController *)viewController
@@ -75,17 +81,18 @@
      Return the index of the given data view controller.
      For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
      */
-
+    
+    
     if ( [viewController isKindOfClass:[TOCTableViewController class]])
         return 0;
-    return [self.pageData indexOfObject:[(DataViewController *)viewController dataObject]];
+    return [self.bets indexOfObject:[(BetPage *)viewController bet]] + 1;
 }
 
 #pragma mark - Page View Controller Data Source
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    NSUInteger index = [self indexOfViewController:(DataViewController *)viewController];
+    NSUInteger index = [self indexOfViewController:viewController];
     if ((index == 0) || (index == NSNotFound)) {
         return nil;
     }
@@ -96,13 +103,13 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSUInteger index = [self indexOfViewController:(DataViewController *)viewController];
+    NSUInteger index = [self indexOfViewController:viewController];
     if (index == NSNotFound) {
         return nil;
     }
     
     index++;
-    if (index == [self.pageData count]) {
+    if (index > [self.bets count]) {
         return nil;
     }
     return [self viewControllerAtIndex:index];

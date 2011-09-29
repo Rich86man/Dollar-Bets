@@ -14,8 +14,13 @@
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
 {
     Opponent *opponent;
+    NSMutableArray *controllers;
 }
 @property (strong, nonatomic)Opponent *opponent;
+@property (strong, nonatomic)NSMutableArray *controllers;
+
+-(id)initWithOpponent:(Opponent *)opp;
+
 - (UIViewController *)viewControllerAtIndex:(NSUInteger)index;
 - (NSUInteger)indexOfViewController:(UIViewController *)viewController;
 @end

@@ -11,6 +11,12 @@
 #import "Bet.h"
 @class statusBarView;
 
+@protocol TOCTableViewControllerDelegate <NSObject>
+
+-(void)didSelectPage:(int)index;
+
+@end
+
 @interface TOCTableViewController : UIViewController<UITextFieldDelegate, UITableViewDelegate, UIScrollViewDelegate, UITextViewDelegate> {
     // Custom Headers
     UIView *tableOfContentsHeader;
@@ -40,6 +46,7 @@
     
     UITableView *tableView;
 }
+@property (assign)id delegate;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) UIView *tableOfContentsHeader;
