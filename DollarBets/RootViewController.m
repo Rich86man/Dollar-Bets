@@ -39,8 +39,7 @@
     self.pageViewController.delegate = self;
     
     UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
-    TOCTableViewController *toc =  (TOCTableViewController *)startingViewController;
-    toc.tableView.delegate = self;
+
     
     NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
     
@@ -107,6 +106,7 @@
      */
     if (!_modelController) {
         _modelController = [[ModelController alloc] initWithOpponent:self.opponent];
+        _modelController.rvc = self;
     }
     return _modelController;
 }
@@ -115,6 +115,7 @@
 {
     
     
+    NSLog(@"didSelectPage:%i",index);
     
     UIViewController *selectedPage = [self.modelController viewControllerAtIndex:index];
     NSArray *viewControllers = [NSArray arrayWithObject:selectedPage];

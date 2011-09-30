@@ -18,6 +18,7 @@
 }
 @property (strong, nonatomic)Opponent *opponent;
 @property (strong, nonatomic)NSMutableArray *controllers;
+@property (assign) id rvc;
 
 -(id)initWithOpponent:(Opponent *)opp;
 

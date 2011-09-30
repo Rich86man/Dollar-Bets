@@ -28,6 +28,7 @@
 @synthesize opponent;
 @synthesize bets;
 @synthesize controllers;
+@synthesize rvc;
 
 - (id)initWithOpponent:(Opponent *)opp
 {
@@ -55,6 +56,7 @@
     {
         TOCTableViewController *toc = [[TOCTableViewController alloc]initWithNibName:@"TOCTableViewController" bundle:nil];
         toc.opponent = self.opponent;
+        toc.delegate = self.rvc;
         return toc;
     }
 
