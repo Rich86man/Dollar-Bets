@@ -16,5 +16,7 @@
 }
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) Opponent *opponent;
+@property (strong, nonatomic) IBOutlet UIView *pageArea;
+@property (strong, nonatomic) IBOutlet UIView *pageArea2;
 
 @end

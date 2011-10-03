@@ -556,6 +556,7 @@
     newBet.amount = [numFormat numberFromString:amountTextField.text];
     newBet.report = self.descriptionTextView.text;
     newBet.date = [NSDate date];
+    newBet.didWin = [NSNumber numberWithInt:2];
     
     
     

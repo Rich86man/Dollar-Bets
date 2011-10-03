@@ -21,6 +21,8 @@
 @synthesize pageViewController = _pageViewController;
 @synthesize modelController = _modelController;
 @synthesize opponent;
+@synthesize pageArea = _pageArea;
+@synthesize pageArea2 = _pageArea2;
 
 - (void)didReceiveMemoryWarning
 {
@@ -59,7 +61,8 @@
     [self.pageViewController didMoveToParentViewController:self];    
     
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
-    self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    self.pageArea.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    self.pageArea2.gestureRecognizers = self.pageViewController.gestureRecognizers;
     
     
     
@@ -67,6 +70,8 @@
 
 - (void)viewDidUnload
 {
+    [self setPageArea:nil];
+    [self setPageArea2:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
