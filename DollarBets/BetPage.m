@@ -14,7 +14,9 @@
 @interface BetPage(PrivateMethods)
 -(void)setUpMap;
 -(void)setUpDollars;
--(void)setUpAmountLabel;
+
+
+
 
 
 @end
@@ -27,13 +29,10 @@
 @synthesize dateLabel;
 @synthesize descriptionTextView;
 @synthesize amountLabel;
+@synthesize pageNumberLabel;
 @synthesize editButton;
-@synthesize keyboardToolbar;
-@synthesize choosePhotoView;
-@synthesize chooseAmountView;
-@synthesize imagePicker;
-@synthesize cameraBarButton;
-@synthesize amountPicker;
+
+@synthesize delegate;
 
 
 -(id)initWithBet:(Bet *)aBet
@@ -49,23 +48,7 @@
 }
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
-    }
-    return self;
-}
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 #pragma mark - View lifecycle
 
@@ -73,14 +56,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperBackround.png"]];
+    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperTile.png"]];
     self.titleLabel.text = self.bet.opponent.name;
     
-    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-        self.cameraBarButton = nil;
+    
     
     [self setUpAmountLabel];
-  
+    
     
     self.descriptionTextView.text = self.bet.report;
     
@@ -90,51 +72,19 @@
     
     self.dateLabel.text = [df stringFromDate:self.bet.date];
     
-    /*
-     MKCoordinateRegion newRegion;
-     // newRegion.center.latitude = [self.bet.latitude doubleValue];
-     //newRegion.center.longitude = [self.bet.longitude doubleValue];
-     newRegion.center.latitude = 37.37;
-     newRegion.center.longitude = -96.24;
-     newRegion.span.latitudeDelta = 28.49;
-     newRegion.span.longitudeDelta = 31.025;    
-     [self.mapView setRegion:newRegion animated:NO];
-     */
+    self.descriptionTextView.contentOffset = CGPointMake(0, 0);
+    
+    
+    if (self.descriptionTextView.contentSize.height > 301)
+    {
+        CGRect frame = self.scrollView.frame;
+        frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height );//- 302); 
+                self.scrollView.frame = frame;
+    }
+    
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)keyboardWillShow:(NSNotification *)notification {
-    
-
-        
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    CGRect frame = self.keyboardToolbar.frame;
-    frame.origin.y = self.view.frame.size.height - 260.0;
-    self.keyboardToolbar.frame = frame;
-    
-    [UIView commitAnimations];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification 
-{
-
-}
 
 -(void)setUpAmountLabel
 {
@@ -222,13 +172,8 @@
     [self setDescriptionTextView:nil];
     [self setAmountLabel:nil];
     [self setEditButton:nil];
-
-    [self setKeyboardToolbar:nil];
-    [self setChoosePhotoView:nil];
-
-    [self setCameraBarButton:nil];
-    [self setAmountPicker:nil];
-    [self setChooseAmountView:nil];
+    
+    [self setPageNumberLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -251,199 +196,80 @@
     [self.descriptionTextView setEditable:YES];
     [self.descriptionTextView becomeFirstResponder];
     
-    editState = 0;
+    self.editButton.alpha = 0;
+    
+    [self.delegate didSelectEdit:self];
+
     
     
 }
 
-- (IBAction)amountBarButtonSelected:(id)sender 
-{
-    switch (editState) {
-        case 0:
-            
-            self.choosePhotoView.frame = CGRectMake(0, 240, 320, 240);
-            if(self.descriptionTextView.isFirstResponder)
-                [self.descriptionTextView resignFirstResponder]; 
-            
-            break;
-        case 2:
-            
-            self.chooseAmountView.frame = self.choosePhotoView.frame;
-            self.choosePhotoView.frame = CGRectMake(0, 240, 320, 0);
-            
-        default:
-            break;
-    }
-    
-    
-
-    
-    
-    editState = 1;
-    
-    
-}
-
-- (IBAction)photoBarButtonSelected:(id)sender 
-{
-    switch (editState) {
-        case 0:
-            
-            self.choosePhotoView.frame = CGRectMake(0, 240, 320, 240);
-            if(self.descriptionTextView.isFirstResponder)
-                [self.descriptionTextView resignFirstResponder]; 
-            
-            break;
-            case 1:
-            
-            
-            self.choosePhotoView.frame = self.chooseAmountView.frame;
-            self.chooseAmountView.frame = CGRectMake(0, 240, 320, 0);
-            
-            
-        default:
-            break;
-    }
+#pragma mark - TextViewDelegateFunctions
+/*
+ - (BOOL)textViewShouldBeginEditing:(UITextView *)textView;
+ - (BOOL)textViewShouldEndEditing:(UITextView *)textView;
  
-    
+  
  
-       editState = 2;
-}
+ 
+ - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+ - (void)textViewDidChangeSelection:(UITextView *)textView;
+ 
+ */
 
-- (IBAction)locationBarButtonSelected:(id)sender 
+- (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    editState = 3;
-}
-
-- (IBAction)doneBarButtonSelected:(id)sender 
-{
-    
-    if(self.descriptionTextView.isFirstResponder)
-        [self.descriptionTextView resignFirstResponder];
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    CGRect frame = self.keyboardToolbar.frame;
-    frame.origin.y = self.view.frame.size.height;
-    self.keyboardToolbar.frame = frame;
-    switch (editState) {
-        case 1:
-            self.chooseAmountView.frame = CGRectMake(0, 280, 320, DEFAULT_KEYBOARD_SIZE);
-            break;
-        case 2:
-            self.choosePhotoView.frame = CGRectMake(0, 280, 320, DEFAULT_KEYBOARD_SIZE);
-            break;
-        default:
-            break;
+    if (textView.contentSize.height - self.scrollView.contentOffset.y > 60.0f) {
+        
+        [UIView animateWithDuration:0.1f animations:^{
+            self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 60));
+        }];
     }
     
-    [UIView commitAnimations];
-
-    self.bet.report = self.descriptionTextView.text;
-    
-    
-    
 }
 
-- (IBAction)takeNewPhotoSelected:(id)sender 
+
+- (void)textViewDidChange:(UITextView *)textView
 {
-    self.imagePicker = [[UIImagePickerController alloc] init];
+    NSLog(@"ContentSize w:%f, h:%f",textView.contentSize.width,  textView.contentSize.height);
+    NSLog(@"ScrollViewOffset :%@", self.scrollView.contentOffset);
     
-    [self.imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+    if (textView.contentSize.height - self.scrollView.contentOffset.y > 60.0f) {
+       
+        [UIView animateWithDuration:0.1f animations:^{
+            self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 60));
+        }];
+    }
     
-    [self presentModalViewController:self.imagePicker animated:YES];
     
     
-
+    
 }
-
-
-- (IBAction)chooseFromLibrarySelected:(id)sender 
+- (void)textViewDidEndEditing:(UITextView *)textView
 {
-    self.imagePicker = [[UIImagePickerController alloc] init];
     
-    [self.imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    [UIView animateWithDuration:0.3f animations:^{
+        self.scrollView.contentOffset = CGPointMake(0, 0);
+    }];
     
-    [self presentModalViewController:self.imagePicker animated:YES];
-
+    
+    self.descriptionTextView.contentOffset = CGPointMake(0, 0);
+    
+    if (self.descriptionTextView.contentSize.height > 301)
+    {
+        CGRect frame = self.scrollView.frame;
+        frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height - 302); 
+        self.scrollView.frame = frame;
+    }
+    
+    
 }
 
-#pragma mark -
-#pragma mark UIImagePickerControllerDelegate
 
-// this get called when an image has been chosen from the library or taken from the camera
-//
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    
-    self.bet.picture =  UIImagePNGRepresentation(image);
-    
-    
-    [self.descriptionTextView becomeFirstResponder];
-    self.choosePhotoView.frame = CGRectMake(0, 480, 320, 0);
-    
-    
+    NSLog(@"ScrollViewWillBeginDraggin");
 }
-
-
-#pragma mark - UIPickerControl delegate Fucntions
-
-
-
-// returns the number of 'columns' to display.
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-// returns the # of rows in each component..
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return 20;
-    
-}
-
-
-
-
-
-
-// these methods return either a plain UIString, or a view (e.g UILabel) to display the row for the component.
-// for the view versions, we cache any hidden and thus unused views and pass them back for reuse. 
-// If you return back a different object, the old one will be released. the view will be centered in the row rect  
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
-{
-    return @"Amount";
-}
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
-{
-    UILabel *tempLabel = [[UILabel alloc]init];
-    tempLabel.text  = [NSString stringWithFormat:@"%i",row];
-    
-    
-    
-    return tempLabel;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    self.bet.amount = [NSNumber numberWithInteger:row];
-    [self setUpAmountLabel ];
-    
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 @end

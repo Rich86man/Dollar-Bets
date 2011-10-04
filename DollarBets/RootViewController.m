@@ -10,19 +10,31 @@
 
 #import "ModelController.h"
 #import "TOCTableViewController.h"
+#import "BetPage.h"
 
+#define DEFAULT_KEYBOARD_HEIGHT 240
 
 @interface RootViewController ()
 @property (readonly, strong, nonatomic) ModelController *modelController;
+-(void)disablePageViewGestures:(bool)disable;
+
 @end
 
 @implementation RootViewController
 
+
 @synthesize pageViewController = _pageViewController;
 @synthesize modelController = _modelController;
 @synthesize opponent;
-@synthesize pageArea = _pageArea;
-@synthesize pageArea2 = _pageArea2;
+@synthesize currentPageBeingEdited;
+
+@synthesize keyboardToolbar;
+@synthesize cameraBarButton;
+@synthesize chooseAmountView;
+@synthesize amountPicker;
+@synthesize imagePicker;
+@synthesize choosePhotoView;
+@synthesize choosePhotoImageView;
 
 - (void)didReceiveMemoryWarning
 {
@@ -41,7 +53,8 @@
     self.pageViewController.delegate = self;
     
     UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
-
+    
+    
     
     NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
     
@@ -52,7 +65,9 @@
     self.pageViewController.dataSource = self.modelController;
     
     [self addChildViewController:self.pageViewController];
+    //[self.view insertSubview:self.pageViewController.view atIndex:3];
     [self.view addSubview:self.pageViewController.view];
+    [self.view sendSubviewToBack:self.pageViewController.view];
     
     // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
     CGRect pageViewRect = self.view.bounds;
@@ -60,47 +75,42 @@
     
     [self.pageViewController didMoveToParentViewController:self];    
     
+    /*
+    for (UIGestureRecognizer* gesture  in self.pageViewController.gestureRecognizers) {
+        [gestureRecognizers addObject:gesture];
+       
+        
+    }
+    */
+    
+    
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
-    self.pageArea.gestureRecognizers = self.pageViewController.gestureRecognizers;
-    self.pageArea2.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    //self.modelController.gestureRecognizers = self.pageViewController.gestureRecognizers;
     
     
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        [self.cameraBarButton setEnabled:NO];
+    
+    self.imagePicker.delegate = self;
+    
+    editState = 0;
+    [self disablePageViewGestures:NO];
     
 }
 
 - (void)viewDidUnload
 {
-    [self setPageArea:nil];
-    [self setPageArea2:nil];
+    
+    [self setKeyboardToolbar:nil];
+    [self setChooseAmountView:nil];
+    [self setChoosePhotoView:nil];
+    [self setAmountPicker:nil];
+    [self setCameraBarButton:nil];
+    [self setChoosePhotoImageView:nil];
+
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 - (ModelController *)modelController
@@ -116,6 +126,27 @@
     return _modelController;
 }
 
+-(void)disablePageViewGestures:(_Bool)disable   
+{
+    if(disable)
+    {
+        for (UIGestureRecognizer *gesture in self.pageViewController.gestureRecognizers) {
+            [gesture setEnabled:NO];
+        }
+        
+
+    }
+    else if(!disable)
+    {
+        for (UIGestureRecognizer *gesture in self.pageViewController.gestureRecognizers) {
+            [gesture setEnabled:YES];
+        }
+        
+
+        
+    }
+    
+}
 -(void)didSelectPage:(int)index
 {
     
@@ -152,5 +183,273 @@
     self.pageViewController.doubleSided = NO;
     return UIPageViewControllerSpineLocationMin;
 }
+
+#pragma mark - Custom Keyboard stuff
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    
+    CGRect frame = self.keyboardToolbar.frame;
+    frame.origin.y = self.view.frame.size.height - 260.0;
+    self.keyboardToolbar.frame = frame;
+    
+    [UIView commitAnimations];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification 
+{
+    
+}
+
+#pragma mark - BetPage Delegate functions
+
+-(void)didSelectEdit:(BetPage *)onPage
+{
+    self.currentPageBeingEdited = onPage;
+    [self.amountPicker selectRow:[self.currentPageBeingEdited.bet.amount integerValue] inComponent:0 animated:NO];
+    self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
+    [self disablePageViewGestures:YES];
+   /*
+    CGRect frame = self.currentPageBeingEdited.view.frame;
+   
+    frame.origin.x = frame.origin.x - 45;
+    frame.origin.y = frame.origin.y - 45;
+    
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        self.currentPageBeingEdited.view.frame = frame;
+        
+    }];
+    */
+    
+}
+
+
+
+
+
+- (IBAction)amountButtonSelected:(id)sender 
+{
+    switch (editState) {
+        case 0:
+            
+            self.chooseAmountView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
+            if(self.currentPageBeingEdited.descriptionTextView.isFirstResponder)
+                [self.currentPageBeingEdited.descriptionTextView resignFirstResponder]; 
+            
+            break;
+        case 2:
+            
+            self.chooseAmountView.frame = self.choosePhotoView.frame;
+            self.choosePhotoView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+            
+        default:
+            break;
+    }
+    
+    editState = 1;
+    
+}
+
+- (IBAction)cameraButtonSelected:(id)sender 
+{
+    switch (editState) {
+        case 0:
+            self.choosePhotoView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
+            if(self.currentPageBeingEdited.descriptionTextView.isFirstResponder)
+                [self.currentPageBeingEdited.descriptionTextView resignFirstResponder]; 
+            
+            break;
+        case 1:
+            self.choosePhotoView.frame = self.chooseAmountView.frame;
+            self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+            
+        default:
+            break;
+    }
+    
+    
+    
+    editState = 2;
+}
+
+- (IBAction)doneButtonSelected:(id)sender 
+{
+    
+    [self.currentPageBeingEdited.descriptionTextView setEditable:NO];  
+    
+    CGRect frame = self.keyboardToolbar.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        
+        
+        switch (editState) {
+            case 0:
+                if(self.currentPageBeingEdited.descriptionTextView.isFirstResponder)
+                    [self.currentPageBeingEdited.descriptionTextView resignFirstResponder]; 
+                
+                break;
+            case 1:
+                self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+                break;
+            case 2:
+                self.choosePhotoView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+                break;
+            default:
+                break;
+        }
+        
+        self.keyboardToolbar.frame = frame;
+        
+        
+        
+        
+        
+    }completion:^(BOOL finished){
+        
+        
+        self.currentPageBeingEdited.bet.report = self.currentPageBeingEdited.descriptionTextView.text;
+        self.currentPageBeingEdited.editButton.alpha = 1;    
+
+    }];
+    /*
+    CGRect pageFrame = self.currentPageBeingEdited.view.frame;
+    pageFrame.origin.x = pageFrame.origin.x + 45;
+    pageFrame.origin.y = pageFrame.origin.y + 45;
+    
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        self.currentPageBeingEdited.view.frame = pageFrame;
+        
+    }];
+    */
+    
+    
+    [self disablePageViewGestures:NO];
+    
+    NSError *error =  nil;
+    [self.currentPageBeingEdited.bet.managedObjectContext save:&error];
+    
+    if(error)
+    {
+        NSLog(@"%@\n", [error  description]);
+    }
+    
+ 
+    editState = 0;
+}
+
+- (IBAction)newPhotoButttonSelected:(id)sender 
+{
+    self.imagePicker = [[UIImagePickerController alloc] init];
+    
+    [self.imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+    
+    [self presentModalViewController:self.imagePicker animated:YES];
+    
+
+}
+
+- (IBAction)photoLibraryButtonSelected:(id)sender 
+{
+    self.imagePicker = [[UIImagePickerController alloc] init];
+    
+    [self.imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    
+    [self presentModalViewController:self.imagePicker animated:YES];
+
+}
+
+
+#pragma mark -
+#pragma mark UIImagePickerControllerDelegate
+
+// this get called when an image has been chosen from the library or taken from the camera
+//
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    self.choosePhotoImageView.image = image;
+    
+    self.currentPageBeingEdited.bet.picture =  UIImagePNGRepresentation(image);
+    
+    
+    [self.currentPageBeingEdited.descriptionTextView becomeFirstResponder];
+    self.choosePhotoView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+    
+    
+       
+}
+
+#pragma mark - UIPickerControl delegate Fucntions
+
+
+
+// returns the number of 'columns' to display.
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+// returns the # of rows in each component..
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return 20;
+    
+}
+
+
+
+
+
+
+// these methods return either a plain UIString, or a view (e.g UILabel) to display the row for the component.
+// for the view versions, we cache any hidden and thus unused views and pass them back for reuse. 
+// If you return back a different object, the old one will be released. the view will be centered in the row rect  
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+{
+    return @"Amount";
+}
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    UILabel *tempLabel = [[UILabel alloc]init];
+    tempLabel.text  = [NSString stringWithFormat:@"%i",row];
+    
+    
+    
+    return tempLabel;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    self.currentPageBeingEdited.bet.amount = [NSNumber numberWithInteger:row];
+    [self.currentPageBeingEdited setUpAmountLabel];
+    
+}
+
+
+
+
+
+
 
 @end

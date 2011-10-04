@@ -29,6 +29,7 @@
 @synthesize bets;
 @synthesize controllers;
 @synthesize rvc;
+@synthesize gestureRecognizers;
 
 - (id)initWithOpponent:(Opponent *)opp
 {
@@ -60,7 +61,12 @@
         return toc;
     }
 
-    BetPage *betPage = [[BetPage alloc] initWithBet:[self.bets objectAtIndex:index -1]];    
+    BetPage *betPage = [[BetPage alloc] initWithBet:[self.bets objectAtIndex:index -1]]; 
+    betPage.delegate = rvc;
+    betPage.pageNumberLabel.text = [NSString stringWithFormat:@"%i",index];
+    
+    
+   // betPage.scrollView.gestureRecognizers = self.gestureRecognizers;
     return betPage;
 
     /*

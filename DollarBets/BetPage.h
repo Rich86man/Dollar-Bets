@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "Bet.h"
+@class BetPage;
+@protocol BetPageControllerDelegate <NSObject>
 
-@interface BetPage : UIViewController <MKMapViewDelegate,UIImagePickerControllerDelegate, UIGestureRecognizerDelegate,UIPickerViewDataSource, UIPickerViewDelegate,UITextViewDelegate>
+-(void)didSelectEdit:(BetPage *)onPage;
+
+@end
+
+@interface BetPage : UIViewController < UITextViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate>
 {
     Bet *bet;
     UIScrollView *scrollView;
@@ -19,41 +25,31 @@
     UIImageView *dollarImageView;
     UIImageView *mapViewCoverUpImageView;
     UITextView *descriptionTextView;
-    MKMapView *mapView;
-    UIImagePickerController *imagePicker;
+
+  
     int editState;
+
     
 
 }
+@property (assign)id delegate;
 @property (strong, nonatomic) Bet *bet;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UILabel *amountLabel;
+@property (strong, nonatomic) IBOutlet UILabel *pageNumberLabel;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
-@property (strong, nonatomic) IBOutlet UIToolbar *keyboardToolbar;
-@property (strong, nonatomic) IBOutlet UIView *choosePhotoView;
-@property (strong, nonatomic) IBOutlet UIView *chooseAmountView;
-@property (strong, nonatomic) UIImagePickerController *imagePicker;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *cameraBarButton;
-@property (strong, nonatomic) IBOutlet UIPickerView *amountPicker;
+
 
 
 
 
 -(id)initWithBet:(Bet*)aBet;
+-(void)setUpAmountLabel;
 
 - (IBAction)editButtonSelected:(id)sender;
-- (IBAction)amountBarButtonSelected:(id)sender;
-- (IBAction)photoBarButtonSelected:(id)sender;
-- (IBAction)locationBarButtonSelected:(id)sender;
-
-
-- (IBAction)doneBarButtonSelected:(id)sender;
-
-- (IBAction)takeNewPhotoSelected:(id)sender;
-- (IBAction)chooseFromLibrarySelected:(id)sender;
 
 @end
 

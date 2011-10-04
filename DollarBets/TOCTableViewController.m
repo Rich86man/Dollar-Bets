@@ -99,7 +99,7 @@
             return [self.bets count];
             break;
         case 1:
-            return 6;
+            return 0;
             break;
             
         default:
@@ -152,7 +152,7 @@
         return self.tableOfContentsHeader;
     }
     else if (section == 1)    { 
-        return self.graphsHeader;        
+       // return self.graphsHeader;        
         
     }
     

@@ -9,14 +9,41 @@
 #import <UIKit/UIKit.h>
 #import "Opponent.h"
 #import "TOCTableViewController.h"
-@interface RootViewController : UIViewController <UIPageViewControllerDelegate, UITableViewDelegate, TOCTableViewControllerDelegate>
+#import "BetPage.h"
+
+
+@interface RootViewController : UIViewController <UINavigationControllerDelegate, UIPageViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UIImagePickerControllerDelegate, TOCTableViewControllerDelegate, BetPageControllerDelegate>
 {
     Opponent *opponent;
-
+    BetPage *currentPageBeingEdited;
+    UIImagePickerController *imagePicker;
+    int editState;
+    NSMutableArray *gestureRecognizers;
+    
+    
 }
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) Opponent *opponent;
-@property (strong, nonatomic) IBOutlet UIView *pageArea;
-@property (strong, nonatomic) IBOutlet UIView *pageArea2;
+@property (strong, nonatomic) BetPage *currentPageBeingEdited;
+@property (strong, nonatomic) UIImagePickerController *imagePicker;
+
+@property (strong, nonatomic) IBOutlet UIToolbar *keyboardToolbar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *cameraBarButton;
+@property (strong, nonatomic) IBOutlet UIView *chooseAmountView;
+@property (strong, nonatomic) IBOutlet UIPickerView *amountPicker;
+
+@property (strong, nonatomic) IBOutlet UIView *choosePhotoView;
+@property (strong, nonatomic) IBOutlet UIImageView *choosePhotoImageView;
+
+
+- (IBAction)amountButtonSelected:(id)sender;
+- (IBAction)cameraButtonSelected:(id)sender;
+- (IBAction)doneButtonSelected:(id)sender;
+
+- (IBAction)newPhotoButttonSelected:(id)sender;
+- (IBAction)photoLibraryButtonSelected:(id)sender;
+
+
+
 
 @end

@@ -15,10 +15,12 @@
 {
     Opponent *opponent;
     NSMutableArray *controllers;
+    NSArray *gestureRecognizers;
 }
 @property (strong, nonatomic)Opponent *opponent;
 @property (strong, nonatomic)NSMutableArray *controllers;
 @property (assign) id rvc;
+@property (strong, nonatomic)NSArray *gestureRecognizers;
 
 -(id)initWithOpponent:(Opponent *)opp;
 
