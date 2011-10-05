@@ -36,7 +36,7 @@
 @synthesize tableView;
 
 @synthesize tableOfContentsHeader = _tableOfContentsHeader, graphsHeader = _graphsHeader;
-@synthesize quickAddView, amountTextField, descriptionTextView, refreshArrow, quickBet;
+@synthesize quickAddView, amountTextField, descriptionTextView, refreshArrow, bet;
 @synthesize opponent, bets;
 
 

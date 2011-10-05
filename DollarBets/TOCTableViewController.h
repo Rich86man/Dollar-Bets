@@ -14,6 +14,7 @@
 @protocol TOCTableViewControllerDelegate <NSObject>
 
 -(void)didSelectPage:(int)index;
+-(void)didBeginQuickEdit:(id)sender;
 
 @end
 
@@ -34,7 +35,7 @@
 	UIImageView *refreshArrow;
     BOOL isQuickAdding;
     BOOL isDragging;
-    Bet *quickBet;
+    Bet *bet;
     
     
     // Managed Objects
@@ -61,7 +62,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
 
 @property (nonatomic, retain) UIImageView *refreshArrow;
-@property (strong, nonatomic) Bet *quickBet;
+@property (strong, nonatomic) Bet *bet;
 
 @property (strong, nonatomic) Opponent *opponent;
 @property (strong, nonatomic) NSArray *bets;

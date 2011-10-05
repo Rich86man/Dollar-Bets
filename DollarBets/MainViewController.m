@@ -21,6 +21,7 @@ static NSUInteger kNumberOfPages = 10;
 @interface MainViewController (PrivateMethods)
 - (void)loadScrollViewWithPage:(int)page;
 - (void)scrollViewDidScroll:(UIScrollView *)sender;
+-(void) easterEgg:(Opponent *)newOpponent;
 @end
 
 
@@ -51,11 +52,7 @@ static NSUInteger kNumberOfPages = 10;
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    // Set up the backround 
-    UIImage *pattern = [UIImage imageNamed:@"padded.png"];
-    
-    self.mainScrollView.backgroundColor = [UIColor colorWithPatternImage:pattern];
-    self.mainScrollView.pagingEnabled = YES;
+    self.mainScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]];
     [self.mainScrollView setUserInteractionEnabled:YES];
     [self.view setUserInteractionEnabled:YES];
     
@@ -148,7 +145,7 @@ static NSUInteger kNumberOfPages = 10;
         [controller.view setUserInteractionEnabled:YES];
         [books replaceObjectAtIndex:page withObject:controller];
         controller.debugLabel.text =  [NSString stringWithFormat:@"page : %i\tbooks index : %i",page, [self.books indexOfObject:controller]];        
-       // controller.debugLabel.text =  [NSString stringWithFormat:@"%d = 4 - 5     %d = 5 - 4", (4 - 5 ), ( 5 - 4)];
+        // controller.debugLabel.text =  [NSString stringWithFormat:@"%d = 4 - 5     %d = 5 - 4", (4 - 5 ), ( 5 - 4)];
         
     }
     
@@ -193,7 +190,7 @@ static NSUInteger kNumberOfPages = 10;
         if (tempBook.view.superview != nil)
         {
             [tempBook.view removeFromSuperview];
-           //[tempBook removeFromParentViewController];
+            //[tempBook removeFromParentViewController];
         }
         [books replaceObjectAtIndex:page -2 withObject:[NSNull null]];
         
@@ -250,42 +247,7 @@ static NSUInteger kNumberOfPages = 10;
     
     [self resizeScrollView];
     
-    if ([newOpponent.name isEqualToString:@"test"]) {
-        
-        NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM / DD / YYYY"];
-        
-
-        
-        Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet1.date = [NSDate date];
-        newBet1.amount = [NSNumber numberWithInt:5];
-        newBet1.report = @"A couple of hotdogs";
-        newBet1.opponent = newOpponent;
-        
-        Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet2.date = [dateFormatter dateFromString:@"05 / 12 / 2011"];
-        newBet2.amount = [NSNumber numberWithInt:12];
-        newBet2.report = @"Tijuana Flatts";
-        newBet2.opponent = newOpponent;
-        
-        
-        Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet3.date = [dateFormatter dateFromString:@"01 / 21 / 2010"];
-        newBet3.amount = [NSNumber numberWithInt:3];
-        newBet3.report = @"lunch money";
-        newBet3.opponent = newOpponent;
-        
-        
-        [context save:&error];
-        
-        if(error)
-        {
-            NSLog(@"%@\n", [error  description]);
-        }
-
-        
-    }
+    [self easterEgg:newOpponent];
     
 }
 
@@ -352,28 +314,28 @@ static NSUInteger kNumberOfPages = 10;
 -(void)didSelectBook:(BookViewController *)sender
 {
     /*
-    RootViewController *root = [[RootViewController alloc]init];
-    
-    [self presentViewController:root animated:NO completion:nil];
-    
-    [UIView transitionWithView:root.view 
-                      duration:0.8f 
-                       options:UIViewAnimationCurveEaseInOut 
-                    animations:^{
-                        sender.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];
-                    } completion:nil];
-        
-    
-    
-    [self transitionFromViewController:self 
-                      toViewController:root 
-                              duration:1.0f 
-                               options:UIViewAnimationCurveEaseInOut 
-                            animations:^{
-                                sender.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];}
-                            completion:nil ];
-    
-    */
+     RootViewController *root = [[RootViewController alloc]init];
+     
+     [self presentViewController:root animated:NO completion:nil];
+     
+     [UIView transitionWithView:root.view 
+     duration:0.8f 
+     options:UIViewAnimationCurveEaseInOut 
+     animations:^{
+     sender.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];
+     } completion:nil];
+     
+     
+     
+     [self transitionFromViewController:self 
+     toViewController:root 
+     duration:1.0f 
+     options:UIViewAnimationCurveEaseInOut 
+     animations:^{
+     sender.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];}
+     completion:nil ];
+     
+     */
     NSLog(@"MainViewController : didSelectBook:");
     
     
@@ -385,74 +347,366 @@ static NSUInteger kNumberOfPages = 10;
                             [self.parent OpenBookWithOpponent:[sender opponent]];
                         } ];
     
-
-
+    
+    
 }
- 
- 
- 
- 
+
+
+
+
 #pragma mark - Manged Object Functions
- 
- -(bool)deleteOpponent:(Opponent *)opp
- {
-     
-     [self.context deleteObject:opp];
-     NSError *error = nil;
-     [self.context save:&error];
-     if(error)
-     {  
-         NSLog(@"%@\n", [error  description]);
-         return NO;
-     }
-     else
-     {
-         [self.opponents removeObject:opp];        
-         return YES;
-     }
-     
- }
- 
- -(void)retrieveOpponents
- {
-     
-     
-     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Opponent"];
-     
-     
-     // Set example predicate and sort orderings...
-     
-     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
-     
-     [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-     
-     NSError *error = nil;
-     NSArray *array = [self.context executeFetchRequest:request error:&error];
-     
-     if(error)
-     {   NSLog(@"%@\n", [error  description]);   }
-     
-     if (array == nil)
-     {   array = [NSArray arrayWithObject:@"empty"]; }
-     
-     opponents = [array mutableCopy];
-     
-     //-------Delete all --------
-     /*
-      for (NSManagedObject *opp in opponents) {
-      [self.context deleteObject:opp ];
-      }
-      
-      [self.context save:nil];
-      */
-     //  NSLog(@"%@",[opponents description]);
-     
- }
- 
- 
- 
- 
- 
- 
- 
- @end
+
+-(bool)deleteOpponent:(Opponent *)opp
+{
+    
+    [self.context deleteObject:opp];
+    NSError *error = nil;
+    [self.context save:&error];
+    if(error)
+    {  
+        NSLog(@"%@\n", [error  description]);
+        return NO;
+    }
+    else
+    {
+        [self.opponents removeObject:opp];        
+        return YES;
+    }
+    
+}
+
+-(void)retrieveOpponents
+{
+    
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Opponent"];
+    
+    
+    // Set example predicate and sort orderings...
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+    
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    NSError *error = nil;
+    NSArray *array = [self.context executeFetchRequest:request error:&error];
+    
+    if(error)
+    {   NSLog(@"%@\n", [error  description]);   }
+    
+    if (array == nil)
+    {   array = [NSArray arrayWithObject:@"empty"]; }
+    
+    opponents = [array mutableCopy];
+    
+    //-------Delete all --------
+    /*
+    for (NSManagedObject *opp in opponents) {
+        [self.context deleteObject:opp ];
+    }
+    
+    [self.context save:nil];
+    */
+    //  NSLog(@"%@",[opponents description]);
+    
+}
+
+
+-(void)easterEgg:(Opponent *)newOpponent
+{
+    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM / DD / YYYY"];
+    
+    
+    
+    if ([newOpponent.name isEqualToString:@"test"]) {
+        
+        
+        
+        
+        Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet1.date = [NSDate date];
+        newBet1.amount = [NSNumber numberWithInt:5];
+        newBet1.report = @"A couple of hotdogs";
+        newBet1.opponent = newOpponent;
+        
+        Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet2.date = [dateFormatter dateFromString:@"05 / 12 / 2011"];
+        newBet2.amount = [NSNumber numberWithInt:12];
+        newBet2.report = @"Tijuana Flatts";
+        newBet2.opponent = newOpponent;
+        
+        
+        Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet3.date = [dateFormatter dateFromString:@"01 / 21 / 2010"];
+        newBet3.amount = [NSNumber numberWithInt:3];
+        newBet3.report = @"lunch money";
+        newBet3.opponent = newOpponent;
+        
+        NSError *error =  nil;
+        
+        [context save:&error];
+        
+        if(error)
+        {
+            NSLog(@"%@\n", [error  description]);
+        }
+        
+        
+    }
+    else if ([newOpponent.name isEqualToString:@"Johnny Curry"])
+    {
+        Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet1.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
+        newBet1.amount = [NSNumber numberWithInt:5];
+        newBet1.report = @"Will at least 3 people at this party know about the North Korea Missle incident";
+        newBet1.didWin = [NSNumber numberWithInt:0];
+        newBet1.opponent = newOpponent;
+        
+        Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet2.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
+        newBet2.amount = [NSNumber numberWithInt:1];
+        newBet2.report = @"Will Hannah walk out of the Complex in the next 20 min";
+        newBet2.didWin = [NSNumber numberWithInt:0];
+        newBet2.opponent = newOpponent;
+        
+        
+        Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet3.date = [dateFormatter dateFromString:@"04 / 21 / 2010"];
+        newBet3.amount = [NSNumber numberWithInt:1];
+        newBet3.report = @"Were Helicopters around in ww2";
+        newBet3.didWin = [NSNumber numberWithInt:1];
+        newBet3.opponent = newOpponent;
+        
+        
+        Bet *newBet4 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet4.date = [dateFormatter dateFromString:@"03 / 11 / 2010"];
+        newBet4.amount = [NSNumber numberWithInt:1];
+        newBet4.report = @"They said Chewie in that movie, not Chewit";
+        newBet4.didWin = [NSNumber numberWithInt:0];
+        newBet4.opponent = newOpponent;
+        
+        Bet *newBet5 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet5.date = [dateFormatter dateFromString:@"03 / 10 / 2010"];
+        newBet5.amount = [NSNumber numberWithInt:1];
+        newBet5.report = @"Something about Banjo Kazooie";
+        newBet5.didWin = [NSNumber numberWithInt:0];
+        newBet5.opponent = newOpponent;
+        
+        Bet *newBet6 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet6.date = [dateFormatter dateFromString:@"02 / 23 / 2010"];
+        newBet6.amount = [NSNumber numberWithInt:1];
+        newBet6.report = @"Captain would beat Chuckie in beerpong";
+        newBet6.didWin = [NSNumber numberWithInt:0];
+        newBet6.opponent = newOpponent;
+        
+        Bet *newBet7 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet7.date = [dateFormatter dateFromString:@"02 / 21 / 2010"];
+        newBet7.amount = [NSNumber numberWithInt:1];
+        newBet7.report = @"Something having to do with Tania Raymond";
+        newBet7.didWin = [NSNumber numberWithInt:0];
+        newBet7.opponent = newOpponent;
+        
+        newOpponent.name = @"Captain";
+        
+        NSError *error =  nil;
+        
+        [context save:&error];
+        
+        if(error)
+        {
+            NSLog(@"%@\n", [error  description]);
+        }
+        
+        
+    }
+    else if ([newOpponent.name isEqualToString:@"Matt Carmichael"])
+    {
+        Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet1.date = [dateFormatter dateFromString:@"10 / 12 / 2010"];
+        newBet1.amount = [NSNumber numberWithInt:2];
+        newBet1.report = @"Coins are Magnetic";
+        newBet1.didWin = [NSNumber numberWithInt:0];
+        newBet1.opponent = newOpponent;
+        
+        Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet2.date = [dateFormatter dateFromString:@"11 / 22 / 2010"];
+        newBet2.amount = [NSNumber numberWithInt:1];
+        newBet2.report = @"Beer Pong Shot";
+        newBet2.didWin = [NSNumber numberWithInt:0];
+        newBet2.opponent = newOpponent;
+        
+        
+        Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet3.date = [dateFormatter dateFromString:@"11 / 22 / 2010"];
+        newBet3.amount = [NSNumber numberWithInt:1];
+        newBet3.report = @"Beer Pong Shot";
+        newBet3.didWin = [NSNumber numberWithInt:1];
+        newBet3.opponent = newOpponent;
+        
+        
+        Bet *newBet4 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet4.date = [dateFormatter dateFromString:@"01 / 14 / 2011"];
+        newBet4.amount = [NSNumber numberWithInt:1];
+        newBet4.report = @"Beer Pong Behind the Back shot";
+        newBet4.didWin = [NSNumber numberWithInt:0];
+        newBet4.opponent = newOpponent;
+        
+        Bet *newBet5 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet5.date = [dateFormatter dateFromString:@"04 / 09 / 2011"];
+        newBet5.amount = [NSNumber numberWithInt:1];
+        newBet5.report = @"Can Captain catch a frog?";
+        newBet5.didWin = [NSNumber numberWithInt:0];
+        newBet5.opponent = newOpponent;
+        
+        Bet *newBet6 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet6.date = [dateFormatter dateFromString:@"04 / 09 / 2011"];
+        newBet6.amount = [NSNumber numberWithInt:1];
+        newBet6.report = @"Can Carmichael catch a frog";
+        newBet6.didWin = [NSNumber numberWithInt:0];
+        newBet6.opponent = newOpponent;
+        
+        newOpponent.name = @"Captain";
+        
+        NSError *error =  nil;
+        
+        [context save:&error];
+        
+        if(error)
+        {
+            NSLog(@"%@\n", [error  description]);
+        }
+        
+        
+    }
+    else if ([newOpponent.name isEqualToString:@"Konrad Gungor"])
+    {
+        Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet1.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
+        newBet1.amount = [NSNumber numberWithInt:1];
+        newBet1.report = @"Martone can fit through those bars";
+        newBet1.didWin = [NSNumber numberWithInt:0];
+        newBet1.opponent = newOpponent;
+        
+        Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet2.date = [dateFormatter dateFromString:@"11 / 12 / 2010"];
+        newBet2.amount = [NSNumber numberWithInt:1];
+        newBet2.report = @"Will the night nole drop us off at the strip";
+        newBet2.didWin = [NSNumber numberWithInt:0];
+        newBet2.opponent = newOpponent;
+        
+        
+        Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet3.date = [dateFormatter dateFromString:@"11 / 12 / 2010"];
+        newBet3.amount = [NSNumber numberWithInt:1];
+        newBet3.report = @"Beer pong shot";
+        newBet3.didWin = [NSNumber numberWithInt:0];
+        newBet3.opponent = newOpponent;
+        
+        
+        
+        newOpponent.name = @"Captain";
+        
+        NSError *error =  nil;
+        
+        [context save:&error];
+        
+        if(error)
+        {
+            NSLog(@"%@\n", [error  description]);
+        }
+        
+        
+    }  else if ([newOpponent.name isEqualToString:@"Mary Thomas"])
+    {
+        Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet1.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
+        newBet1.amount = [NSNumber numberWithInt:1];
+        newBet1.report = @"Richard will die at least 15 in this game";
+        newBet1.didWin = [NSNumber numberWithInt:0];
+        newBet1.opponent = newOpponent;
+        
+        Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet2.date = [dateFormatter dateFromString:@"01 / 12 / 2011"];
+        newBet2.amount = [NSNumber numberWithInt:1];
+        newBet2.report = @"Unkown reason!!";
+        newBet2.didWin = [NSNumber numberWithInt:1];
+        newBet2.opponent = newOpponent;
+        
+        
+        Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet3.date = [dateFormatter dateFromString:@"01 / 21 / 2011"];
+        newBet3.amount = [NSNumber numberWithInt:1];
+        newBet3.report = @"Richard will mess up a check";
+        newBet3.didWin = [NSNumber numberWithInt:0];
+        newBet3.opponent = newOpponent;
+        
+        
+        Bet *newBet4 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet4.date = [dateFormatter dateFromString:@"03 / 11 / 2011"];
+        newBet4.amount = [NSNumber numberWithInt:1];
+        newBet4.report = @"Cat Cora will win in this iron chef";
+        newBet4.didWin = [NSNumber numberWithInt:1];
+        newBet4.opponent = newOpponent;
+        
+        Bet *newBet5 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet5.date = [dateFormatter dateFromString:@"04 / 10 / 2011"];
+        newBet5.amount = [NSNumber numberWithInt:1];
+        newBet5.report = @"Game of BattleShip";
+        newBet5.didWin = [NSNumber numberWithInt:1];
+        newBet5.opponent = newOpponent;
+              
+        newOpponent.name = @"Richard";
+        
+        NSError *error =  nil;
+        
+        [context save:&error];
+        
+        if(error)
+        {
+            NSLog(@"%@\n", [error  description]);
+        }
+        
+        
+    }
+    else if ([newOpponent.name isEqualToString:@"Carlos Gardinali"])
+    {
+        Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet1.date = [dateFormatter dateFromString:@"10 / 10 / 2010"];
+        newBet1.amount = [NSNumber numberWithInt:1];
+        newBet1.report = @"Jersey Shore will change their cast up";
+        newBet1.didWin = [NSNumber numberWithInt:1];
+        newBet1.opponent = newOpponent;
+        
+        Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
+        newBet2.date = [dateFormatter dateFromString:@"01 / 12 / 2011"];
+        newBet2.amount = [NSNumber numberWithInt:1];
+        newBet2.report = @"There's gunna be a nutshot in this montage";
+        newBet2.didWin = [NSNumber numberWithInt:0];
+        newBet2.opponent = newOpponent;
+        
+        newOpponent.name = @"Captain";
+        
+        NSError *error =  nil;
+        
+        [context save:&error];
+        
+        if(error)
+        {
+            NSLog(@"%@\n", [error  description]);
+        }
+        
+        
+    }
+
+
+
+
+    
+    
+}
+
+
+
+
+@end

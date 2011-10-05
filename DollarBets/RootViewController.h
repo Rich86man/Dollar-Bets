@@ -15,7 +15,7 @@
 @interface RootViewController : UIViewController <UINavigationControllerDelegate, UIPageViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UIImagePickerControllerDelegate, TOCTableViewControllerDelegate, BetPageControllerDelegate>
 {
     Opponent *opponent;
-    BetPage *currentPageBeingEdited;
+    id currentPageBeingEdited;
     UIImagePickerController *imagePicker;
     int editState;
     NSMutableArray *gestureRecognizers;
@@ -27,6 +27,7 @@
 @property (strong, nonatomic) BetPage *currentPageBeingEdited;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 
+//@property (strong, nonatomic) id currentPageBeingEdited;
 @property (strong, nonatomic) IBOutlet UIToolbar *keyboardToolbar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cameraBarButton;
 @property (strong, nonatomic) IBOutlet UIView *chooseAmountView;
@@ -35,14 +36,18 @@
 @property (strong, nonatomic) IBOutlet UIView *choosePhotoView;
 @property (strong, nonatomic) IBOutlet UIImageView *choosePhotoImageView;
 
+@property (strong, nonatomic) IBOutlet UIView *chooseDidWinView;
+@property (strong, nonatomic) IBOutlet UIImageView *didWinImageView;
 
 - (IBAction)amountButtonSelected:(id)sender;
 - (IBAction)cameraButtonSelected:(id)sender;
 - (IBAction)doneButtonSelected:(id)sender;
+- (IBAction)ribbonBarButtonSelected:(id)sender;
 
 - (IBAction)newPhotoButttonSelected:(id)sender;
 - (IBAction)photoLibraryButtonSelected:(id)sender;
 
+- (IBAction)didWinButtonPresses:(id)sender;
 
 
 
