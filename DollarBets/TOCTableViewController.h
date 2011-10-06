@@ -15,6 +15,8 @@
 
 -(void)didSelectPage:(int)index;
 -(void)didBeginQuickEdit:(id)sender;
+-(void)readyToSave:(bool)ready;
+-(void)savedQuickBet;
 
 @end
 
@@ -60,6 +62,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *amountTextField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
+@property (strong, nonatomic) IBOutlet UILabel *amountLabel;
 
 @property (nonatomic, retain) UIImageView *refreshArrow;
 @property (strong, nonatomic) Bet *bet;
@@ -69,7 +72,7 @@
 
 
 
-
+-(void)setUpAmountLabel;
 
 
 // Quick add Functions

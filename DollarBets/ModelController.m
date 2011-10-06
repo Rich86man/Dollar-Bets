@@ -63,7 +63,7 @@
 
     BetPage *betPage = [[BetPage alloc] initWithBet:[self.bets objectAtIndex:index -1]]; 
     betPage.delegate = rvc;
-    betPage.pageNumberLabel.text = [NSString stringWithFormat:@"%i",index];
+    betPage.pageNum = [NSNumber numberWithInt:index];;
     
     
    // betPage.scrollView.gestureRecognizers = self.gestureRecognizers;

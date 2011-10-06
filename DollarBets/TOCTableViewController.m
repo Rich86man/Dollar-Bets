@@ -30,6 +30,7 @@
 @implementation TOCTableViewController
 @synthesize delegate;
 @synthesize saveButton;
+@synthesize amountLabel;
 @synthesize overlayView;
 @synthesize overlayLabel;
 @synthesize statusBar;
@@ -66,6 +67,8 @@
     
 }
 
+
+
 - (void)viewDidUnload
 {
     [self setQuickAddView:nil];
@@ -78,6 +81,8 @@
     [self setStatusBar:nil];
     [self setSaveButton:nil];
     [self setOverlayLabel:nil];
+    [self setAmountLabel:nil];
+    [self setBet:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -166,11 +171,11 @@
             return self.tableOfContentsHeader.frame.size.height;
             break;
         case 1:
-            return self.graphsHeader.frame.size.height;
-            break;
+            //return self.graphsHeader.frame.size.height;
+            //break;
             
         default:
-            return 40.0f;
+            return 0.0f;
             break;
     }
     
@@ -194,11 +199,13 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
-    if( scrollView.contentOffset.y <= 0.0f && scrollView.contentOffset.y > -100.0f && !isQuickAdding)
+    if( scrollView.contentOffset.y <= -1.0f && scrollView.contentOffset.y > -122.0f && !isQuickAdding)
     {
         CGFloat offset =   scrollView.contentOffset.y;
-        
+
         self.quickAddView.frame = CGRectMake(0, 0, 320, -offset);
+        
+        
                 if (offset > -90 && offset < 0)
             self.overlayView.alpha = -offset / 100;
         
@@ -211,33 +218,55 @@
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     // If you pull past 100px Begin Quick adding
-    if (scrollView.contentOffset.y < -100.0f && !isQuickAdding)
+    if (scrollView.contentOffset.y < -122.0f && !isQuickAdding)
     {
         self.overlayLabel.text = @"Pull Down To Cancel";
-        scrollView.contentInset = UIEdgeInsetsMake(100.0, 0, 0, 0 );
+        scrollView.contentInset = UIEdgeInsetsMake(122.0, 0, 0, 0 );
         isQuickAdding = YES;
+        [self.delegate didBeginQuickEdit:self];
+        if(!self.bet)
+        {
+            self.bet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.opponent.managedObjectContext];
+            self.bet.opponent = self.opponent;
+            self.bet.didWin = [NSNumber numberWithInt:2];
+            self.bet.amount = [NSNumber numberWithInt:1];
+            self.bet.date = [NSDate date];
+            
+            
+        }
+        
         [self resizeQuickView];
         
     }
     // If they are currently quickadding and they pull past 160 px, cancel quick add.
     if (scrollView.contentOffset.y < -160.0f && isQuickAdding)
     {
+        isQuickAdding = NO;
         
         //[self removeSaveButton];
         //self.quickAddView.frame = self.quickAddView.frame = CGRectMake(0, 0, 320, 100);
+        [self.delegate savedQuickBet];
         
-        [UIView  animateWithDuration:3.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^{
+        [UIView  animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
+                          animations:^{
             scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
-            scrollView.contentOffset = CGPointMake(0, 0);
-            self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
+            //scrollView.contentOffset = CGPointMake(0, 0);
+            //self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
         }completion:^(BOOL finished){        
             self.overlayLabel.text = @"Pull Down To Add New";
             
         }];
         
+       // scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
+        //[scrollView setContentInset:UIEdgeInsetsZero];
+        //[scrollView setContentOffset:CGPointMake(0, 1.0f) animated:YES];
+       // [scrollView setContentInset:UIEdgeInsetsZero];
+        //scrollView.contentOffset = CGPointMake(0, 0);
+       self.overlayLabel.text = @"Pull Down To Add New";
         
         
-        isQuickAdding = NO;
+        
+        
     }
     
     
@@ -256,7 +285,7 @@
     {
         [self removeSaveButton];
     }
-    else if (![self.amountTextField.text isEqualToString:@""])
+    else 
     {
         [self addSaveButton];
     }
@@ -313,7 +342,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range 
  replacementText:(NSString *)text
 {    
-    
+   /* 
     // Any new character added is passed in as the "text" parameter
     if ([text isEqualToString:@"\n"]) {
         // Be sure to test for equality using the "isEqualToString" message
@@ -325,9 +354,14 @@
     }
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;
+*/
+    return YES;
 }
 
-
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    self.bet.report = self.descriptionTextView.text;
+}
 
 #pragma mark - TextField Delegate Functions
 
@@ -413,7 +447,7 @@
         [self addSaveButton];
     }
     
-    [self.amountTextField resignFirstResponder];
+    //[self.amountTextField resignFirstResponder];
     
     
     return YES;
@@ -438,17 +472,30 @@
         self.saveButton.frame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y, SAVE_BUTTON_WIDTH, 0);
     }
     
+
+   //CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountLabel.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING + saveButton.frame.size.height + (self.saveButton.alpha == 1 ? SAVE_BUTTON_BOTTOM_PADDING : 0) );
     
-    CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountTextField.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING + saveButton.frame.size.height + (self.saveButton.alpha == 1 ? SAVE_BUTTON_BOTTOM_PADDING : 0) );
+    CGRect newQuickViewFrame = CGRectMake(0, 0, 0, 0);
+    
+    if (self.saveButton.alpha == 0.0f)
+        newQuickViewFrame = CGRectMake(0, 0, 320, self.descriptionTextView.frame.origin.y + self.descriptionTextView.frame.size.height + PADDING);
+    else
+        newQuickViewFrame = CGRectMake(0, 0, 320, self.saveButton.frame.origin.y + self.saveButton.frame.size.height + PADDING);
+    
+   CGRect newOverlayFrame = self.overlayLabel.frame;
+    newOverlayFrame.origin.y = newQuickViewFrame.size.height + PADDING;
     
     
+    /*
     [UIView animateWithDuration:0.5f animations:^{
-        self.quickAddView.frame = newQuickViewFrame;
+    self.quickAddView.frame = newQuickViewFrame;    
     }];
-    
-    
-    
-    
+    */
+  [UIView animateWithDuration:0.3f
+                        delay:0.0f
+                      options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                          self.quickAddView.frame = newQuickViewFrame;
+                          self.overlayLabel.frame = newOverlayFrame; } completion:nil];
     
 }
 
@@ -456,7 +503,7 @@
 {
     if (self.saveButton.alpha == 0)
     {        
-        
+        /*
         CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y + self.descriptionTextView.frame.size.height - 31, SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT);
         
         CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountTextField.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING + newSaveButtonFrame.size.height + SAVE_BUTTON_BOTTOM_PADDING);   
@@ -471,8 +518,13 @@
             self.saveButton.alpha = alphaValue;
             
         } completion:nil];
-    }
+    */
+        self.saveButton.alpha = 1;
+        [self resizeQuickView];
+         }
+  
     
+   // [self.delegate readyToSave:YES];
     
 }
 
@@ -481,7 +533,7 @@
     if(self.saveButton.alpha == 1)
     {
         
-        
+        /*
         CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y, SAVE_BUTTON_WIDTH, 0);
         CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountTextField.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING);   
         
@@ -495,8 +547,13 @@
             
             
         } completion:nil];
-    }
+   */
+        
+        self.saveButton.alpha = 0;
+        [self resizeQuickView];
+         }
     
+    //[self.delegate readyToSave:NO];
 }
 
 
@@ -513,7 +570,7 @@
     {
         
         [self removeSaveButton];
-        self.amountTextField.text = @"";
+        self.amountLabel.text = @"";
         self.descriptionTextView.text = @"";
         self.overlayLabel.text = @"Pull Down To Add New";
         
@@ -538,14 +595,14 @@
         
         NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
         self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
-        
+        [self.delegate savedQuickBet];
     }
     
     
 }
 
 -(BOOL)saveQuickBet
-{
+{/*
     NSNumberFormatter *numFormat =  [[NSNumberFormatter alloc] init];
     
     
@@ -562,6 +619,9 @@
     
     NSError *error =  nil;
     [newBet.managedObjectContext save:&error];
+   */
+    NSError *error =  nil;
+    [self.bet.managedObjectContext save:&error];
     
     if(error)
     {
@@ -649,7 +709,30 @@
 }
 
 
-
+-(void)setUpAmountLabel
+{
+    UILabel *label = self.amountLabel;
+    
+    
+    switch ([self.bet.didWin intValue]) {
+        case 0:
+            label.text = [NSString stringWithFormat:@"- $%i",[self.bet.amount intValue]];
+            label.textColor = [UIColor redColor];
+            break;
+        case 1:
+            label.text = [NSString stringWithFormat:@"+ $%i",[self.bet.amount intValue]];
+            label.textColor = [UIColor greenColor];
+            break;
+        case 2:
+            label.text = [NSString stringWithFormat:@"-/+ $%i",[self.bet.amount intValue]];
+            label.textColor = [UIColor grayColor];
+            break;
+        default:
+            break;
+    }
+    
+    
+}
 
 
 

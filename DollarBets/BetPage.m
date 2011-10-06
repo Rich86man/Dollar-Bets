@@ -31,6 +31,9 @@
 @synthesize amountLabel;
 @synthesize pageNumberLabel;
 @synthesize editButton;
+@synthesize pageNum;
+@synthesize photoButton;
+@synthesize tweetButton;
 
 @synthesize delegate;
 
@@ -40,8 +43,7 @@
     self = [super init];
     if (self) {
         // Custom initialization
-        self.bet = aBet;
-        
+        self.bet = aBet;       
     }
     return self;
     
@@ -59,7 +61,7 @@
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperTile.png"]];
     self.titleLabel.text = self.bet.opponent.name;
     
-    
+    self.pageNumberLabel.text = [self.pageNum stringValue];
     
     [self setUpAmountLabel];
     
@@ -81,6 +83,15 @@
         frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height );//- 302); 
                 self.scrollView.frame = frame;
     }
+    
+    if(self.bet.picture)
+        [self.photoButton setEnabled:YES];
+    else
+        [self.photoButton setEnabled:NO];
+    
+    
+    
+    
     
     
 }
@@ -174,6 +185,9 @@
     [self setEditButton:nil];
     
     [self setPageNumberLabel:nil];
+
+    [self setPhotoButton:nil];
+    [self setTweetButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -202,6 +216,16 @@
 
     
     
+}
+
+- (IBAction)photoButtonSelected:(id)sender 
+{
+    [self.delegate didSelectphoto:self];
+}
+
+- (IBAction)tweetButtonSelected:(id)sender 
+{
+    [self.delegate didSelectTweet:self];
 }
 
 #pragma mark - TextViewDelegateFunctions

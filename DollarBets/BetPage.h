@@ -13,6 +13,10 @@
 @protocol BetPageControllerDelegate <NSObject>
 
 -(void)didSelectEdit:(BetPage *)onPage;
+-(void)didSelectphoto:(BetPage *)onPage;
+-(void)didSelectTweet:(BetPage *)onPage;
+
+
 
 @end
 
@@ -25,7 +29,7 @@
     UIImageView *dollarImageView;
     UIImageView *mapViewCoverUpImageView;
     UITextView *descriptionTextView;
-
+    NSNumber * pageNum;
   
     int editState;
 
@@ -39,9 +43,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UILabel *amountLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *pageNumberLabel;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
-
+@property (strong,nonatomic) NSNumber* pageNum;
+@property (strong, nonatomic) IBOutlet UIButton *photoButton;
+@property (strong, nonatomic) IBOutlet UIButton *tweetButton;
 
 
 
@@ -50,6 +57,8 @@
 -(void)setUpAmountLabel;
 
 - (IBAction)editButtonSelected:(id)sender;
+- (IBAction)photoButtonSelected:(id)sender;
+- (IBAction)tweetButtonSelected:(id)sender;
 
 @end
 

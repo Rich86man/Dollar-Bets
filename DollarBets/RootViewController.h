@@ -12,7 +12,7 @@
 #import "BetPage.h"
 
 
-@interface RootViewController : UIViewController <UINavigationControllerDelegate, UIPageViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UIImagePickerControllerDelegate, TOCTableViewControllerDelegate, BetPageControllerDelegate>
+@interface RootViewController : UIViewController <UINavigationControllerDelegate, UIPageViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, TOCTableViewControllerDelegate, BetPageControllerDelegate>
 {
     Opponent *opponent;
     id currentPageBeingEdited;
@@ -30,11 +30,13 @@
 //@property (strong, nonatomic) id currentPageBeingEdited;
 @property (strong, nonatomic) IBOutlet UIToolbar *keyboardToolbar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cameraBarButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
 @property (strong, nonatomic) IBOutlet UIView *chooseAmountView;
 @property (strong, nonatomic) IBOutlet UIPickerView *amountPicker;
 
 @property (strong, nonatomic) IBOutlet UIView *choosePhotoView;
 @property (strong, nonatomic) IBOutlet UIImageView *choosePhotoImageView;
+@property (strong, nonatomic) IBOutlet UIButton *removePhotoButton;
 
 @property (strong, nonatomic) IBOutlet UIView *chooseDidWinView;
 @property (strong, nonatomic) IBOutlet UIImageView *didWinImageView;
@@ -44,8 +46,10 @@
 - (IBAction)doneButtonSelected:(id)sender;
 - (IBAction)ribbonBarButtonSelected:(id)sender;
 
-- (IBAction)newPhotoButttonSelected:(id)sender;
-- (IBAction)photoLibraryButtonSelected:(id)sender;
+- (IBAction)chooseNewButtonSelected:(id)sender;
+
+- (IBAction)deletePhotoButtonSelected:(id)sender;
+
 
 - (IBAction)didWinButtonPresses:(id)sender;
 

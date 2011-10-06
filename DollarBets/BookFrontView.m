@@ -69,9 +69,13 @@
         //UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self.viewController action:@selector(handleTapGesture:)];
         //[doubleTap setNumberOfTapsRequired:3];
         ///doubleTap.delegate = self.viewController;
-        UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self.viewController action:@selector(didLongPress:)];
-        [longPressGesture setMinimumPressDuration:2.0];
-        [setupImgView addGestureRecognizer:longPressGesture];
+        //UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self.viewController action:@selector(didLongPress:)];
+        //[longPressGesture setMinimumPressDuration:2.0];
+        //[setupImgView addGestureRecognizer:longPressGesture];
+        
+        UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self.viewController action:@selector(didLongPress:)];
+        [doubleTap setNumberOfTapsRequired:2];
+        [setupImgView addGestureRecognizer:doubleTap];
         self.bookImgView = setupImgView;
         
     }

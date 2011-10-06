@@ -10,6 +10,7 @@
 
 #import "ModelController.h"
 #import "TOCTableViewController.h"
+#import "ModalImageViewController.h"
 #import "BetPage.h"
 
 #define DEFAULT_KEYBOARD_HEIGHT 240
@@ -23,6 +24,7 @@
 @implementation RootViewController
 
 
+
 @synthesize pageViewController = _pageViewController;
 @synthesize modelController = _modelController;
 @synthesize opponent;
@@ -30,11 +32,13 @@
 
 @synthesize keyboardToolbar;
 @synthesize cameraBarButton;
+@synthesize doneBarButton;
 @synthesize chooseAmountView;
 @synthesize amountPicker;
 @synthesize imagePicker;
 @synthesize choosePhotoView;
 @synthesize choosePhotoImageView;
+@synthesize removePhotoButton;
 @synthesize chooseDidWinView;
 @synthesize didWinImageView;
 
@@ -90,13 +94,20 @@
     //self.modelController.gestureRecognizers = self.pageViewController.gestureRecognizers;
     
     
-    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-        [self.cameraBarButton setEnabled:NO];
+  
     
     self.imagePicker.delegate = self;
     
     editState = 0;
     [self disablePageViewGestures:NO];
+    
+    UIColor *pattern = [UIColor colorWithPatternImage:[UIImage imageNamed:@"crissXcross.png"]];
+    
+    self.chooseAmountView.backgroundColor = pattern;
+    self.choosePhotoView.backgroundColor = pattern;
+
+                        
+    
     
 }
 
@@ -112,6 +123,8 @@
     
     [self setDidWinImageView:nil];
     [self setChooseDidWinView:nil];
+    [self setDoneBarButton:nil];
+    [self setRemovePhotoButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -157,7 +170,9 @@
 -(void)didBeginQuickEdit:(id)sender
 {
     self.currentPageBeingEdited = sender;
-    [self.amountPicker selectRow:0 inComponent:0 animated:NO];
+    [self.amountPicker selectRow:1 inComponent:0 animated:NO];
+//  self.doneBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(doneButtonSelected:)]; 
+    
     
     // Need a blank image here
     //self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
@@ -183,6 +198,20 @@
     
     
 }
+
+-(void)readyToSave:(_Bool)ready
+{
+
+        self.doneBarButton.enabled = ready;
+
+    
+}
+
+-(void)savedQuickBet
+{
+    [self disablePageViewGestures:NO];
+}
+
 
 #pragma mark - UIPageViewController delegate methods
 
@@ -248,6 +277,8 @@
     [self.amountPicker selectRow:[self.currentPageBeingEdited.bet.amount integerValue] inComponent:0 animated:NO];
     self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
     [self disablePageViewGestures:YES];
+    //self.doneBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonSelected:)];
+    
     /*
      CGRect frame = self.currentPageBeingEdited.view.frame;
      
@@ -263,6 +294,20 @@
     
 }
 
+-(void)didSelectphoto:(BetPage *)onPage
+{
+    ModalImageViewController *modal = [[ModalImageViewController alloc]initWithImageData:onPage.bet.picture];
+    
+    [self presentModalViewController:modal animated:YES];
+    
+    
+}
+
+-(void)didSelectTweet:(BetPage *)onPage
+{
+    
+    
+}
 
 
 
@@ -308,6 +353,10 @@
             self.choosePhotoView.frame = self.chooseAmountView.frame;
             self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
             break;
+            case 2:
+            self.choosePhotoView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
+            break;
+            
         case 3:
             self.choosePhotoView.frame = self.chooseDidWinView.frame;
             self.chooseDidWinView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
@@ -321,11 +370,57 @@
     editState = 2;
 }
 
+- (IBAction)ribbonBarButtonSelected:(id)sender 
+{
+    
+    switch ([self.currentPageBeingEdited.bet.didWin intValue]) {
+        case 0:
+            self.didWinImageView.image = [UIImage imageNamed:@"winNoOn.png"];
+            break;
+        case 1:
+            self.didWinImageView.image = [UIImage imageNamed:@"winYesOn.png"];
+            break;
+        case 2:
+        default:
+            self.didWinImageView.image = [UIImage imageNamed:@"winUndecidedOn.png"];
+            break;
+    }
+    
+    
+    
+    
+    
+    
+    switch (editState) {
+        case 0:
+            self.chooseDidWinView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
+            if(self.currentPageBeingEdited.descriptionTextView.isFirstResponder)
+                [self.currentPageBeingEdited.descriptionTextView resignFirstResponder]; 
+            break;
+        case 1:
+            self.chooseDidWinView.frame = self.chooseAmountView.frame;
+            self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+            break;
+        case 2:
+            self.chooseDidWinView.frame = self.choosePhotoView.frame;
+            self.choosePhotoView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+            break;
+        default:
+            break;
+    }
+    
+    
+    
+    editState = 3;
+    
+    
+}
+
+
 - (IBAction)doneButtonSelected:(id)sender 
 {
     
-    [self.currentPageBeingEdited.descriptionTextView setEditable:NO];  
-    
+       
     CGRect frame = self.keyboardToolbar.frame;
     frame.origin.y = self.view.frame.size.height;
     
@@ -360,8 +455,30 @@
     }completion:^(BOOL finished){
         
         
-        self.currentPageBeingEdited.bet.report = self.currentPageBeingEdited.descriptionTextView.text;
-        self.currentPageBeingEdited.editButton.alpha = 1;    
+                
+        if([self.currentPageBeingEdited respondsToSelector:@selector(setEditButton:)])
+        {
+            [self.currentPageBeingEdited.descriptionTextView setEditable:NO];  
+
+            self.currentPageBeingEdited.bet.report = self.currentPageBeingEdited.descriptionTextView.text;
+                    self.currentPageBeingEdited.editButton.alpha = 1;  
+            
+            [self disablePageViewGestures:NO];
+            
+            NSError *error =  nil;
+            [self.currentPageBeingEdited.bet.managedObjectContext save:&error];
+            
+            if(error)
+            {
+                NSLog(@"%@\n", [error  description]);
+            }
+            
+
+            
+            
+        }
+        
+
         
     }];
     /*
@@ -376,87 +493,34 @@
      }];
      */
     
-    
-    [self disablePageViewGestures:NO];
-    
-    NSError *error =  nil;
-    [self.currentPageBeingEdited.bet.managedObjectContext save:&error];
-    
-    if(error)
-    {
-        NSLog(@"%@\n", [error  description]);
-    }
-    
-    
+      
     editState = 0;
 }
 
-- (IBAction)ribbonBarButtonSelected:(id)sender 
+
+- (IBAction)chooseNewButtonSelected:(id)sender 
 {
-    
-    switch ([self.currentPageBeingEdited.bet.didWin intValue]) {
-        case 0:
-            self.didWinImageView.image = [UIImage imageNamed:@"winNoOn.png"];
-            break;
-        case 1:
-            self.didWinImageView.image = [UIImage imageNamed:@"winYesOn.png"];
-            break;
-        case 2:
-            self.didWinImageView.image = [UIImage imageNamed:@"winUndecidedOn.png"];
-            break;
-        default:
-            break;
-    }
-    
-    
+    self.imagePicker = [[UIImagePickerController alloc] init];
+    [self.imagePicker setDelegate:self];
+    self.imagePicker.allowsEditing = YES;
 
     
-    
-    
-    switch (editState) {
-        case 0:
-            self.chooseDidWinView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
-            if(self.currentPageBeingEdited.descriptionTextView.isFirstResponder)
-                [self.currentPageBeingEdited.descriptionTextView resignFirstResponder]; 
-            break;
-        case 1:
-            self.chooseDidWinView.frame = self.chooseAmountView.frame;
-            self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
-            break;
-        case 2:
-            self.chooseDidWinView.frame = self.choosePhotoImageView.frame;
-            self.choosePhotoImageView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
-            break;
-        default:
-            break;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"Cancel"
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"Take photo", @"Choose Existing", nil];
+        [actionSheet showInView:self.view];
+    } else {
+        self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;     
+        [self presentModalViewController:self.imagePicker animated:YES];
     }
-    
-    
-    
-    editState = 3;
-
     
 }
 
-- (IBAction)newPhotoButttonSelected:(id)sender 
-{
-    self.imagePicker = [[UIImagePickerController alloc] init];
-    
-    [self.imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
-    
-    [self presentModalViewController:self.imagePicker animated:YES];
-    
-    
-}
 
-- (IBAction)photoLibraryButtonSelected:(id)sender 
-{
-    self.imagePicker = [[UIImagePickerController alloc] init];
-    
-    [self.imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    
-    [self presentModalViewController:self.imagePicker animated:YES];
-    
+- (IBAction)deletePhotoButtonSelected:(id)sender {
 }
 
 - (IBAction)didWinButtonPresses:(id)sender 
@@ -490,7 +554,6 @@
     
 }
 
-
 #pragma mark -
 #pragma mark UIImagePickerControllerDelegate
 
@@ -498,18 +561,37 @@
 //
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    self.choosePhotoImageView.image = image;
     
-    self.currentPageBeingEdited.bet.picture =  UIImagePNGRepresentation(image);
+    UIImage *newImage = [info valueForKey:UIImagePickerControllerEditedImage];
+    if(!newImage)
+        newImage = [info valueForKey:UIImagePickerControllerOriginalImage];
+
+    
+    void (^myBlock) () = ^{
+    self.currentPageBeingEdited.bet.picture =  UIImagePNGRepresentation(newImage);
+            self.choosePhotoImageView.image = newImage;
+    };
+    
+    myBlock();
     
     
-    [self.currentPageBeingEdited.descriptionTextView becomeFirstResponder];
-    self.choosePhotoView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+
+    //[self.currentPageBeingEdited.descriptionTextView becomeFirstResponder];
+    self.choosePhotoView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
     
-    
+  //  self.imagePicker = nil;
+  //  [self cameraButtonSelected:self];
+    [self.currentPageBeingEdited.photoButton setEnabled:YES];
+    [self.imagePicker dismissModalViewControllerAnimated:YES];
     
 }
+
+- (void)imagePickerControllerDidCancel: (UIImagePickerController *)picker
+{
+    // in case of cancel, get rid of picker
+    [self.imagePicker dismissModalViewControllerAnimated:YES];
+}
+
 
 #pragma mark - UIPickerControl delegate Fucntions
 
@@ -557,6 +639,17 @@
     
 }
 
+#pragma mark - ActionSheet delegate functions
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    } else if (buttonIndex == 1) {
+        self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;     
+    }
+    
+    [self presentModalViewController:self.imagePicker animated:YES];
+  
+}
 
 
 
