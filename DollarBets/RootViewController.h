@@ -18,7 +18,10 @@
     id currentPageBeingEdited;
     UIImagePickerController *imagePicker;
     int editState;
+    int twitterKeyboard;
     NSMutableArray *gestureRecognizers;
+    
+    
     
     
 }
@@ -40,6 +43,8 @@
 
 @property (strong, nonatomic) IBOutlet UIView *chooseDidWinView;
 @property (strong, nonatomic) IBOutlet UIImageView *didWinImageView;
+
+
 
 - (IBAction)amountButtonSelected:(id)sender;
 - (IBAction)cameraButtonSelected:(id)sender;

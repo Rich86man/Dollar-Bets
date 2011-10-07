@@ -12,11 +12,15 @@
 #import "TOCTableViewController.h"
 #import "ModalImageViewController.h"
 #import "BetPage.h"
+#import "Twitter/Twitter.h"
+
 
 #define DEFAULT_KEYBOARD_HEIGHT 240
 
 @interface RootViewController ()
 @property (readonly, strong, nonatomic) ModelController *modelController;
+
+
 -(void)disablePageViewGestures:(bool)disable;
 
 @end
@@ -41,6 +45,8 @@
 @synthesize removePhotoButton;
 @synthesize chooseDidWinView;
 @synthesize didWinImageView;
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -99,6 +105,8 @@
     self.imagePicker.delegate = self;
     
     editState = 0;
+    twitterKeyboard = 0;
+    
     [self disablePageViewGestures:NO];
     
     UIColor *pattern = [UIColor colorWithPatternImage:[UIImage imageNamed:@"crissXcross.png"]];
@@ -252,8 +260,13 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    
+    NSLog(@"keyboard Size height = %f  width = %f",keyboardSize.height, keyboardSize.width);
+                                                                         
+                                                                         
+    if(twitterKeyboard == 0)
+    {
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
     
@@ -262,6 +275,7 @@
     self.keyboardToolbar.frame = frame;
     
     [UIView commitAnimations];
+    }
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification 
@@ -277,20 +291,7 @@
     [self.amountPicker selectRow:[self.currentPageBeingEdited.bet.amount integerValue] inComponent:0 animated:NO];
     self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
     [self disablePageViewGestures:YES];
-    //self.doneBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonSelected:)];
-    
-    /*
-     CGRect frame = self.currentPageBeingEdited.view.frame;
-     
-     frame.origin.x = frame.origin.x - 45;
-     frame.origin.y = frame.origin.y - 45;
-     
-     
-     [UIView animateWithDuration:0.3f animations:^{
-     self.currentPageBeingEdited.view.frame = frame;
-     
-     }];
-     */
+
     
 }
 
@@ -305,6 +306,23 @@
 
 -(void)didSelectTweet:(BetPage *)onPage
 {
+    twitterKeyboard = 1;
+    TWTweetComposeViewController *tweet = [[TWTweetComposeViewController alloc]init];
+    [tweet setCompletionHandler:^(TWTweetComposeViewControllerResult result){
+        
+        twitterKeyboard = 0;
+        [tweet dismissModalViewControllerAnimated:YES];
+    } ];
+    
+    NSString *tweetString = [NSString stringWithFormat:@"%@ bet me $%@ that:%@",onPage.bet.opponent.name , [onPage.bet.amount stringValue],onPage.bet.report];
+    
+    
+    [tweet setInitialText:tweetString];
+    
+    if(onPage.bet.picture)
+        [tweet addImage:[UIImage imageWithData:onPage.bet.picture]];
+    
+    [self presentModalViewController:tweet animated:YES];
     
     
 }

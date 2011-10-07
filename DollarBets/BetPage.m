@@ -8,7 +8,7 @@
 
 #import "BetPage.h"
 #import "Opponent.h"
-
+#import "Twitter/Twitter.h"
 #define DEFAULT_KEYBOARD_SIZE 220.0f
 
 @interface BetPage(PrivateMethods)
@@ -61,7 +61,7 @@
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperTile.png"]];
     self.titleLabel.text = self.bet.opponent.name;
     
-    self.pageNumberLabel.text = [self.pageNum stringValue];
+    self.pageNumberLabel.text = self.pageNum;
     
     [self setUpAmountLabel];
     
@@ -89,7 +89,10 @@
     else
         [self.photoButton setEnabled:NO];
     
-    
+    if([TWTweetComposeViewController canSendTweet])
+        [self.tweetButton setEnabled:YES];
+    else
+        [self.tweetButton setEnabled:NO];
     
     
     

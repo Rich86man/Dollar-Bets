@@ -57,7 +57,7 @@
     
     self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
     self.view.backgroundColor = [UIColor clearColor];
-    self.quickAddView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"black_denim.png"]];
+    self.quickAddView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"crissXcross.png"]];
     self.statusBar.backgroundColor = [UIColor clearColor];
     self.statusBar.centerLabel.text = @"Quick Add";
     
@@ -658,7 +658,12 @@
         tl1.text = @"Contents";
         tl1.textColor = [UIColor lightGrayColor];
         tl1.textAlignment = UITextAlignmentCenter;
+    /*    
+        UIButton *homeButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 60, 37)];
+    
+        [homeButton setImage:[UIImage imageNamed:@"homeButton.png" forState:UIControlStateNormal]];
         
+      */  
         
         
         [view addSubview:tl];

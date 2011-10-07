@@ -35,6 +35,7 @@
 		FA399ABD14114731003548BF /* quickAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = FA399ABC14114730003548BF /* quickAdd.png */; };
 		FA399B3514117108003548BF /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FA399B3414117108003548BF /* arrow.png */; };
 		FA399B3D14117E04003548BF /* black_denim.png in Resources */ = {isa = PBXBuildFile; fileRef = FA399B3C14117E04003548BF /* black_denim.png */; };
+		FA3BB30D143FC00C00299FE3 /* bookFront.png in Resources */ = {isa = PBXBuildFile; fileRef = FA3BB30C143FC00C00299FE3 /* bookFront.png */; };
 		FA437B7D14046EBC00CD43EF /* Bet.m in Sources */ = {isa = PBXBuildFile; fileRef = FA437B7C14046EBC00CD43EF /* Bet.m */; };
 		FA45BA211401E66E00C02A78 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA45BA201401E66E00C02A78 /* UIKit.framework */; };
 		FA45BA231401E66E00C02A78 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA45BA221401E66E00C02A78 /* Foundation.framework */; };
@@ -57,8 +58,9 @@
 		FA724B1A1416BBF500D112B9 /* SaveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FA724B181416BBF500D112B9 /* SaveButton.png */; };
 		FA748488141EB8DD006695C2 /* paperMain2.png in Resources */ = {isa = PBXBuildFile; fileRef = FA748486141EB8DD006695C2 /* paperMain2.png */; };
 		FA748489141EB8DD006695C2 /* ptop2.png in Resources */ = {isa = PBXBuildFile; fileRef = FA748487141EB8DD006695C2 /* ptop2.png */; };
-		FA748491141EC931006695C2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA748490141EC931006695C2 /* MapKit.framework */; };
 		FA870BF41434F46B004A7127 /* LocNotRecorded.png in Resources */ = {isa = PBXBuildFile; fileRef = FA870BF31434F46B004A7127 /* LocNotRecorded.png */; };
+		FAB2E3CE143D735E00066844 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB2E3CD143D735E00066844 /* Twitter.framework */; };
+		FAB2E3D1143D816100066844 /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB2E3D0143D816100066844 /* homeButton.png */; };
 		FAB474DA14194E730000075F /* BetPage.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB474D814194E730000075F /* BetPage.m */; };
 		FAB474DB14194E730000075F /* BetPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB474D914194E730000075F /* BetPage.xib */; };
 		FAB474E6141A88710000075F /* paperTop.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB474E5141A88710000075F /* paperTop.png */; };
@@ -112,6 +114,7 @@
 		FA399ABC14114730003548BF /* quickAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quickAdd.png; sourceTree = "<group>"; };
 		FA399B3414117108003548BF /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		FA399B3C14117E04003548BF /* black_denim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black_denim.png; sourceTree = "<group>"; };
+		FA3BB30C143FC00C00299FE3 /* bookFront.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookFront.png; sourceTree = "<group>"; };
 		FA437B7B14046EBC00CD43EF /* Bet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bet.h; sourceTree = "<group>"; };
 		FA437B7C14046EBC00CD43EF /* Bet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bet.m; sourceTree = "<group>"; };
 		FA45BA1C1401E66E00C02A78 /* DollarBets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DollarBets.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +148,8 @@
 		FA748487141EB8DD006695C2 /* ptop2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ptop2.png; sourceTree = "<group>"; };
 		FA748490141EC931006695C2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FA870BF31434F46B004A7127 /* LocNotRecorded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocNotRecorded.png; sourceTree = "<group>"; };
+		FAB2E3CD143D735E00066844 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		FAB2E3D0143D816100066844 /* homeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeButton.png; sourceTree = "<group>"; };
 		FAB474D714194E730000075F /* BetPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BetPage.h; sourceTree = "<group>"; };
 		FAB474D814194E730000075F /* BetPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BetPage.m; sourceTree = "<group>"; };
 		FAB474D914194E730000075F /* BetPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BetPage.xib; sourceTree = "<group>"; };
@@ -171,7 +176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA748491141EC931006695C2 /* MapKit.framework in Frameworks */,
+				FAB2E3CE143D735E00066844 /* Twitter.framework in Frameworks */,
 				FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */,
 				FA45BA211401E66E00C02A78 /* UIKit.framework in Frameworks */,
 				FA45BA231401E66E00C02A78 /* Foundation.framework in Frameworks */,
@@ -279,6 +284,7 @@
 		FA45BA1F1401E66E00C02A78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAB2E3CD143D735E00066844 /* Twitter.framework */,
 				FA748490141EC931006695C2 /* MapKit.framework */,
 				FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */,
 				FA45BA201401E66E00C02A78 /* UIKit.framework */,
@@ -303,8 +309,10 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FA3BB30C143FC00C00299FE3 /* bookFront.png */,
 				FA215D8B143D46B3001919C4 /* tweetIcon.png */,
 				FA215D7B143D2F1A001919C4 /* chooseNew.png */,
+				FAB2E3D0143D816100066844 /* homeButton.png */,
 				FA215D7C143D2F1B001919C4 /* chooseNewSelected.png */,
 				FA215D79143D286A001919C4 /* crissXcross.png */,
 				FA215D75143D26C9001919C4 /* poloroidBig.png */,
@@ -507,6 +515,8 @@
 				FA215D7E143D2F1D001919C4 /* chooseNewSelected.png in Resources */,
 				FA215D8A143D44DC001919C4 /* ModalImageViewController.xib in Resources */,
 				FA215D8C143D46B4001919C4 /* tweetIcon.png in Resources */,
+				FAB2E3D1143D816100066844 /* homeButton.png in Resources */,
+				FA3BB30D143FC00C00299FE3 /* bookFront.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

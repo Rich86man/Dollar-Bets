@@ -60,9 +60,9 @@
     
     if(self.bookImgView == nil)
     {
-        UIImageView *setupImgView = [[UIImageView alloc]initWithFrame:CGRectMake(27, 64, 267, 331)];
+        UIImageView *setupImgView = [[UIImageView alloc]initWithFrame:CGRectMake(31, 64, 265, 362)];
         setupImgView.backgroundColor = [UIColor clearColor];
-        setupImgView.image = [UIImage imageNamed:@"NewbookCover.png"];
+        setupImgView.image = [UIImage imageNamed:@"bookFront.png"];
     
         setupImgView.userInteractionEnabled = YES;
 
@@ -84,7 +84,7 @@
     
     if(self.textField == nil)
     {
-        UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(53, 113, 215, 100)];
+        UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(80, 113, 215, 100)];
         [tf addTarget:self.viewController action:@selector(enteredNewOpponentName:) forControlEvents:UIControlEventEditingDidEndOnExit];
         tf.font = [UIFont fontWithName:@"Helvetica" size:30.0f];
         if(self.viewController.opponent != nil)
@@ -183,9 +183,9 @@
     if(self.configButton == nil)
     {
         UIButton *setupConfigButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        setupConfigButton.frame  = CGRectMake(45, 320, 29, 29);
+        setupConfigButton.frame  = CGRectMake(75, 377, 25, 25);
         setupConfigButton.backgroundColor = [UIColor clearColor];
-        [setupConfigButton setImage:[UIImage imageNamed:@"config-wheel.png"] forState:UIControlStateNormal];
+       // [setupConfigButton setImage:[UIImage imageNamed:@"config-wheel.png"] forState:UIControlStateNormal];
         [setupConfigButton addTarget:self.viewController action:@selector(configButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
         [setupConfigButton setEnabled:YES];
         self.configButton = setupConfigButton;
@@ -194,12 +194,13 @@
     
     if(self.dateLabel == nil)
     {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(139, 352, 129, 21)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(139, 330, 129, 21)];
+        label.backgroundColor = [UIColor clearColor];
         label.textAlignment = UITextAlignmentRight;
         label.font = [UIFont fontWithName:@"Helvetica" size:19.0f];
         
         NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM / DD / YYYY"];
+        [dateFormatter setDateFormat:@"MM / dd / YYYY"];
         
         if (self.viewController.opponent != nil)
         {
