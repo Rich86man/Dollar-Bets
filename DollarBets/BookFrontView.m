@@ -188,7 +188,8 @@
        // [setupConfigButton setImage:[UIImage imageNamed:@"config-wheel.png"] forState:UIControlStateNormal];
         [setupConfigButton addTarget:self.viewController action:@selector(configButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
         [setupConfigButton setEnabled:YES];
-        self.configButton = setupConfigButton;
+        self.configButton = setupConfigButton;  
+        self.bookImgView.image = [UIImage imageNamed:@"bookFrontWithConfig.png"];
     }
     [self addSubview:self.configButton];
     

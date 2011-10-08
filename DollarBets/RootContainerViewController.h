@@ -25,6 +25,6 @@
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt;
 
 -(void)OpenBookWithOpponent:(Opponent *)opp;
-
+-(void)closeBook;
 
 @end

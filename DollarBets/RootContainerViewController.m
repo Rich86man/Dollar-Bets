@@ -76,6 +76,7 @@
 
     self.rootViewController = [[RootViewController alloc] init];
     self.rootViewController.opponent = opp;
+    self.rootViewController.delegate = self;
     
     
 //    [UIView transitionFromView:self.mainViewController.view toView:self.rootViewController.view duration:0.5f options:UIViewAnimationTransitionFlipFromLeft completion:nil];
@@ -97,7 +98,18 @@
 
 
 
-
+-(void)closeBook
+{
+    
+    [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionCurlDown animations:^{
+        [self.view addSubview:self.mainViewController.view];
+        
+    } completion:nil];
+    
+    
+    [self.rootViewController.view removeFromSuperview];
+    
+}
 
 
 

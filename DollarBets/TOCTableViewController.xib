@@ -240,19 +240,17 @@
 							<object class="IBUIButton" id="1052847115">
 								<reference key="NSNextResponder" ref="328706891"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{50, 122}, {221, 0}}</string>
+								<string key="NSFrame">{{21, 122}, {279, 0}}</string>
 								<reference key="NSSuperview" ref="328706891"/>
 								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:186</string>
 								<bool key="IBUIOpaque">NO</bool>
-								<float key="IBUIAlpha">0.0</float>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<int key="IBUIButtonType">1</int>
 								<string key="IBUITitleShadowOffset">{1, 2}</string>
 								<string key="IBUISelectedTitle">Save</string>
-								<string key="IBUINormalTitle">Save</string>
 								<reference key="IBUIHighlightedTitleColor" ref="270372832"/>
 								<object class="NSColor" key="IBUISelectedTitleColor" id="528762167">
 									<int key="NSColorSpace">3</int>
@@ -264,15 +262,15 @@
 								</object>
 								<reference key="IBUISelectedTitleShadowColor" ref="930537628"/>
 								<reference key="IBUINormalTitleShadowColor" ref="528762167"/>
-								<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage" id="329053365">
+								<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage" id="773739711">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">quickSaveButton.png</string>
+								</object>
+								<object class="NSCustomResource" key="IBUISelectedBackgroundImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">SaveButtonSelected.png</string>
 								</object>
-								<reference key="IBUISelectedBackgroundImage" ref="329053365"/>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">SaveButton.png</string>
-								</object>
+								<reference key="IBUINormalBackgroundImage" ref="773739711"/>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<string key="name">Helvetica-Bold</string>
 									<string key="family">Helvetica</string>
@@ -515,10 +513,10 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="750560134"/>
-							<reference ref="1052847115"/>
 							<reference ref="682199467"/>
 							<reference ref="1040785539"/>
 							<reference ref="145098956"/>
+							<reference ref="1052847115"/>
 						</object>
 						<reference key="parent" ref="759907890"/>
 					</object>
@@ -606,7 +604,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<real value="1"/>
+					<real value="0.0"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
@@ -638,13 +636,13 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>SaveButton.png</string>
 				<string>SaveButtonSelected.png</string>
+				<string>quickSaveButton.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{443, 150}</string>
-				<string>{443, 150}</string>
+				<string>{279, 45}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">931</string>

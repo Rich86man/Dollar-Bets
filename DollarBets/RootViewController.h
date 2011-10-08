@@ -25,10 +25,12 @@
     
     
 }
+@property (assign)id delegate;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) Opponent *opponent;
 @property (strong, nonatomic) BetPage *currentPageBeingEdited;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
+@property (strong, nonatomic) IBOutlet UIButton *homeButton;
 
 //@property (strong, nonatomic) id currentPageBeingEdited;
 @property (strong, nonatomic) IBOutlet UIToolbar *keyboardToolbar;
@@ -42,7 +44,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *removePhotoButton;
 
 @property (strong, nonatomic) IBOutlet UIView *chooseDidWinView;
-@property (strong, nonatomic) IBOutlet UIImageView *didWinImageView;
+
 
 
 
@@ -57,7 +59,10 @@
 
 
 - (IBAction)didWinButtonPresses:(id)sender;
+- (IBAction)homeButtonSelected:(id)sender;
 
+
+-(void)showHomeButton:(bool)on;
 
 
 @end

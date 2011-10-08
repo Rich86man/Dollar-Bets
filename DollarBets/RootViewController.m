@@ -13,6 +13,7 @@
 #import "ModalImageViewController.h"
 #import "BetPage.h"
 #import "Twitter/Twitter.h"
+#import "RootContainerViewController.h"
 
 
 #define DEFAULT_KEYBOARD_HEIGHT 240
@@ -40,11 +41,13 @@
 @synthesize chooseAmountView;
 @synthesize amountPicker;
 @synthesize imagePicker;
+@synthesize homeButton;
 @synthesize choosePhotoView;
 @synthesize choosePhotoImageView;
 @synthesize removePhotoButton;
 @synthesize chooseDidWinView;
-@synthesize didWinImageView;
+@synthesize delegate;
+
 
 
 
@@ -113,7 +116,8 @@
     
     self.chooseAmountView.backgroundColor = pattern;
     self.choosePhotoView.backgroundColor = pattern;
-
+    self.chooseDidWinView.backgroundColor = pattern;
+    
                         
     
     
@@ -128,11 +132,10 @@
     [self setAmountPicker:nil];
     [self setCameraBarButton:nil];
     [self setChoosePhotoImageView:nil];
-    
-    [self setDidWinImageView:nil];
     [self setChooseDidWinView:nil];
     [self setDoneBarButton:nil];
     [self setRemovePhotoButton:nil];
+    [self setHomeButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -169,6 +172,40 @@
         
         
         
+    }
+    
+}
+
+-(void)showHomeButton:(_Bool)on
+{
+    
+    if(on && self.homeButton.frame.origin.y <= 0)
+    {
+        [UIView animateWithDuration:0.03f
+                              delay:0.0f
+                            options:UIViewAnimationCurveEaseIn
+                         animations:^{
+                             self.homeButton.frame = CGRectMake(20, 61, 44, 61);
+                         } completion:nil];
+        
+    }
+   else  if(!on && self.homeButton.frame.origin.y > 1)
+    {
+        [UIView animateWithDuration:0.03f
+                              delay:0.0f
+                            options:UIViewAnimationCurveEaseIn
+                         animations:^{
+                             self.homeButton.frame = CGRectMake(20, -61, 44, 61);
+                         } completion:nil];
+        
+    }
+    else if (self.homeButton.frame.origin.y <= 0){
+        [UIView animateWithDuration:0.03f
+                              delay:0.0f
+                            options:UIViewAnimationCurveEaseIn
+                         animations:^{
+                             self.homeButton.frame = CGRectMake(20, 61, 44, 61);
+                         } completion:nil];
     }
     
 }
@@ -390,20 +427,7 @@
 
 - (IBAction)ribbonBarButtonSelected:(id)sender 
 {
-    
-    switch ([self.currentPageBeingEdited.bet.didWin intValue]) {
-        case 0:
-            self.didWinImageView.image = [UIImage imageNamed:@"winNoOn.png"];
-            break;
-        case 1:
-            self.didWinImageView.image = [UIImage imageNamed:@"winYesOn.png"];
-            break;
-        case 2:
-        default:
-            self.didWinImageView.image = [UIImage imageNamed:@"winUndecidedOn.png"];
-            break;
-    }
-    
+
     
     
     
@@ -548,27 +572,18 @@
     
     if (![betOutcome isEqualToNumber:self.currentPageBeingEdited.bet.didWin]) {
         
-        
-        switch ([betOutcome intValue]) {
-            case 0:
-                self.didWinImageView.image = [UIImage imageNamed:@"winNoOn.png"];
-                break;
-            case 1:
-                self.didWinImageView.image = [UIImage imageNamed:@"winYesOn.png"];
-                break;
-            case 2:
-                self.didWinImageView.image = [UIImage imageNamed:@"winUndecidedOn.png"];
-                break;
-            default:
-                break;
-        }
-        
-        
+  
         self.currentPageBeingEdited.bet.didWin = betOutcome;
         [self.currentPageBeingEdited setUpAmountLabel];
     }
     
     
+    
+}
+
+- (IBAction)homeButtonSelected:(id)sender 
+{
+    [self.delegate closeBook];
     
 }
 

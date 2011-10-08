@@ -11,9 +11,9 @@
 #import "TOCBetsTableViewCell.h"
 
 
-#define SAVE_BUTTON_HEIGHT 75.0f
-#define SAVE_BUTTON_WIDTH 221.0f
-#define SAVE_BUTTON_DEFAULT_ORIGIN_X 50.0f
+#define SAVE_BUTTON_HEIGHT 45.0f
+#define SAVE_BUTTON_WIDTH 275.0f
+#define SAVE_BUTTON_DEFAULT_ORIGIN_X 21.0f
 #define SAVE_BUTTON_DEFAULT_ORIGIN_Y 122.0f
 #define QUICKVIEW_DEFAULT_HEIGHT 122.0f
 #define SAVE_BUTTON_BOTTOM_PADDING 10.0f
@@ -61,6 +61,10 @@
     self.statusBar.backgroundColor = [UIColor clearColor];
     self.statusBar.centerLabel.text = @"Quick Add";
     
+
+
+    
+    NSTimer *newtimer = [NSTimer timerWithTimeInterval:3.0 target:self.delegate selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
     
     isQuickAdding = NO;
     isDragging = NO;
