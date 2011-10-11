@@ -62,7 +62,7 @@
     {
         UIImageView *setupImgView = [[UIImageView alloc]initWithFrame:CGRectMake(31, 64, 265, 362)];
         setupImgView.backgroundColor = [UIColor clearColor];
-        setupImgView.image = [UIImage imageNamed:@"bookFront.png"];
+        setupImgView.image = [UIImage imageNamed:@"book.png"];
     
         setupImgView.userInteractionEnabled = YES;
 
@@ -189,7 +189,7 @@
         [setupConfigButton addTarget:self.viewController action:@selector(configButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
         [setupConfigButton setEnabled:YES];
         self.configButton = setupConfigButton;  
-        self.bookImgView.image = [UIImage imageNamed:@"bookFrontWithConfig.png"];
+        self.bookImgView.image = [UIImage imageNamed:@"bookWithRibbon.png"];
     }
     [self addSubview:self.configButton];
     

@@ -23,11 +23,14 @@
 
 
 -(void)disablePageViewGestures:(bool)disable;
+-(void)showBetPageOverlay;
+-(void)hideBetPageOverlay;
 
 @end
 
 @implementation RootViewController
-
+@synthesize rightArrow;
+@synthesize leftArrow;
 
 
 @synthesize pageViewController = _pageViewController;
@@ -46,6 +49,9 @@
 @synthesize choosePhotoImageView;
 @synthesize removePhotoButton;
 @synthesize chooseDidWinView;
+@synthesize betOverlayView;
+@synthesize betPageBackButton;
+@synthesize betPageEditButton;
 @synthesize delegate;
 
 
@@ -68,12 +74,7 @@
     self.pageViewController.delegate = self;
     
     UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
-    
-    
-    
     NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
-    
-    
     
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
     
@@ -136,6 +137,11 @@
     [self setDoneBarButton:nil];
     [self setRemovePhotoButton:nil];
     [self setHomeButton:nil];
+    [self setBetOverlayView:nil];
+    [self setBetPageBackButton:nil];
+    [self setBetPageEditButton:nil];
+    [self setRightArrow:nil];
+    [self setLeftArrow:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -179,19 +185,19 @@
 -(void)showHomeButton:(_Bool)on
 {
     
-    if(on && self.homeButton.frame.origin.y <= 0)
+    if(on && self.homeButton.frame.origin.y < 0)
     {
-        [UIView animateWithDuration:0.03f
+        [UIView animateWithDuration:1.0f
                               delay:0.0f
                             options:UIViewAnimationCurveEaseIn
                          animations:^{
-                             self.homeButton.frame = CGRectMake(20, 61, 44, 61);
+                             self.homeButton.frame = CGRectMake(20, 0, 44, 61);
                          } completion:nil];
         
     }
-   else  if(!on && self.homeButton.frame.origin.y > 1)
+   else  if(!on && self.homeButton.frame.origin.y == 0)
     {
-        [UIView animateWithDuration:0.03f
+        [UIView animateWithDuration:0.05f
                               delay:0.0f
                             options:UIViewAnimationCurveEaseIn
                          animations:^{
@@ -200,11 +206,11 @@
         
     }
     else if (self.homeButton.frame.origin.y <= 0){
-        [UIView animateWithDuration:0.03f
+        [UIView animateWithDuration:1.0f
                               delay:0.0f
                             options:UIViewAnimationCurveEaseIn
                          animations:^{
-                             self.homeButton.frame = CGRectMake(20, 61, 44, 61);
+                             self.homeButton.frame = CGRectMake(20, 0, 44, 61);
                          } completion:nil];
     }
     
@@ -279,6 +285,18 @@
     return UIPageViewControllerSpineLocationMin;
 }
 
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    /*
+    NSLog(@"didFinishAnimating :  %@\ttransitionCompleted : %@", finished ? @"yes" : @"no",completed ? @"yes" : @"no");
+    
+    for (UIViewController *vc in previousViewControllers) {
+        NSLog(@"\t%@",[vc description]);
+    }
+     */
+    
+}
+
 #pragma mark - Custom Keyboard stuff
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -322,15 +340,11 @@
 
 #pragma mark - BetPage Delegate functions
 
--(void)didSelectEdit:(BetPage *)onPage
+-(void)betPageWillAppear:(BetPage *)betPage
 {
-    self.currentPageBeingEdited = onPage;
-    [self.amountPicker selectRow:[self.currentPageBeingEdited.bet.amount integerValue] inComponent:0 animated:NO];
-    self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
-    [self disablePageViewGestures:YES];
-
-    
+    self.currentPageBeingEdited = betPage;
 }
+
 
 -(void)didSelectphoto:(BetPage *)onPage
 {
@@ -364,8 +378,16 @@
     
 }
 
+-(void)didTapPage:(BetPage *)onPage
+{
+    
+    if (self.betOverlayView.alpha == 0)
+        [self showBetPageOverlay];
+    else
+        [self hideBetPageOverlay];
+}
 
-
+#pragma mark - Custom Keyboard delegate
 
 - (IBAction)amountButtonSelected:(id)sender 
 {
@@ -587,6 +609,23 @@
     
 }
 
+- (IBAction)betPageBackButtonPressed:(id)sender 
+{
+    UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
+    NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
+
+}
+
+- (IBAction)betPageEditButtonSelected:(id)sender 
+{
+    [self.amountPicker selectRow:[self.currentPageBeingEdited.bet.amount integerValue] inComponent:0 animated:NO];
+    self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
+    [self disablePageViewGestures:YES];
+    [self.currentPageBeingEdited editButtonSelected];
+    
+}
+
 #pragma mark -
 #pragma mark UIImagePickerControllerDelegate
 
@@ -685,7 +724,54 @@
 }
 
 
+-(void)showBetPageOverlay
+{
+    
+    if(self.betPageBackButton.alpha < 1.0f)
+    {
+    
+        
+        [UIView animateWithDuration:1.0f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             [self.betPageBackButton setAlpha:1.0f];
+                             [self.betPageEditButton setAlpha:1.0f];
+                             [self.rightArrow setAlpha:1.0f];
+                             [self.leftArrow setAlpha:1.0f];
+                             [self.betOverlayView setAlpha:1.0f];
+                             
+                         }
+                         completion:nil];
 
+    
+    }
+    
+}
+
+
+-(void)hideBetPageOverlay
+{
+    if(self.betPageBackButton.alpha > 0.0f)
+    {
+        
+        
+        [UIView animateWithDuration:0.05f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             [self.betPageBackButton setAlpha:0.0f];
+                             [self.betPageEditButton setAlpha:0.0f];
+                             [self.rightArrow setAlpha:0.0f];
+                             [self.leftArrow setAlpha:0.0f];
+                             [self.betOverlayView setAlpha:0.0f];                             
+                         }
+                         completion:nil];
+        
+        
+    }
+    
+}
 
 
 

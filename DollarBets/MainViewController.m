@@ -342,7 +342,7 @@ static NSUInteger kNumberOfPages = 10;
     [UIView animateWithDuration:1.0f 
                           delay:0.0f 
                         options:UIViewAnimationOptionCurveLinear animations:^{
-                            sender.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];
+                            sender.view.frame = [[UIScreen mainScreen] bounds];
                         } completion:^(BOOL finished){  
                             [self.parent OpenBookWithOpponent:[sender opponent]];
                         } ];

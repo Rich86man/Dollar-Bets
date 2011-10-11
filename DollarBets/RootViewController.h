@@ -45,8 +45,13 @@
 
 @property (strong, nonatomic) IBOutlet UIView *chooseDidWinView;
 
+@property (strong, nonatomic) IBOutlet UIView *betOverlayView;
 
+@property (strong, nonatomic) IBOutlet UIButton *betPageBackButton;
+@property (strong, nonatomic) IBOutlet UIButton *betPageEditButton;
 
+@property (strong, nonatomic) IBOutlet UIImageView *rightArrow;
+@property (strong, nonatomic) IBOutlet UIImageView *leftArrow;
 
 - (IBAction)amountButtonSelected:(id)sender;
 - (IBAction)cameraButtonSelected:(id)sender;
@@ -61,8 +66,14 @@
 - (IBAction)didWinButtonPresses:(id)sender;
 - (IBAction)homeButtonSelected:(id)sender;
 
+- (IBAction)betPageBackButtonPressed:(id)sender;
+- (IBAction)betPageEditButtonSelected:(id)sender;
 
 -(void)showHomeButton:(bool)on;
+
+-(void)hideBetPageOverlay;
+
+
 
 
 @end

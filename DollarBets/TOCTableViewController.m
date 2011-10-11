@@ -9,6 +9,7 @@
 #import "TOCTableViewController.h"
 #import "statusBarView.h"
 #import "TOCBetsTableViewCell.h"
+#import "RootViewController.h"
 
 
 #define SAVE_BUTTON_HEIGHT 45.0f
@@ -39,7 +40,7 @@
 @synthesize tableOfContentsHeader = _tableOfContentsHeader, graphsHeader = _graphsHeader;
 @synthesize quickAddView, amountTextField, descriptionTextView, refreshArrow, bet;
 @synthesize opponent, bets;
-
+@synthesize myHomeButtonTimer;
 
 
 
@@ -64,14 +65,25 @@
 
 
     
-    NSTimer *newtimer = [NSTimer timerWithTimeInterval:3.0 target:self.delegate selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
-    
+  
     isQuickAdding = NO;
     isDragging = NO;
     
 }
 
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self.delegate selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self.myHomeButtonTimer invalidate];
+
+    [self.delegate showHomeButton:NO];
+    
+}
 
 - (void)viewDidUnload
 {
@@ -90,6 +102,12 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+-(NSString *)description
+{
+ 
+    return @"TableOfContents Page";
 }
 
 
@@ -238,7 +256,8 @@
             
             
         }
-        
+        [self.delegate showHomeButton:NO];
+        [self.myHomeButtonTimer invalidate];
         [self resizeQuickView];
         
     }
@@ -267,6 +286,7 @@
        // [scrollView setContentInset:UIEdgeInsetsZero];
         //scrollView.contentOffset = CGPointMake(0, 0);
        self.overlayLabel.text = @"Pull Down To Add New";
+        self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self.delegate selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
         
         
         
@@ -659,7 +679,7 @@
         UILabel *tl1 = [[UILabel alloc]initWithFrame:CGRectMake(20, 49, 280, 51)];    
         tl1.backgroundColor = [UIColor clearColor];
         tl1.font = [UIFont fontWithName:@"STHeitiJ-Light" size:40.0f];
-        tl1.text = @"Contents";
+        tl1.text = @"Bets";
         tl1.textColor = [UIColor lightGrayColor];
         tl1.textAlignment = UITextAlignmentCenter;
     /*    
@@ -742,7 +762,6 @@
     
     
 }
-
 
 
 

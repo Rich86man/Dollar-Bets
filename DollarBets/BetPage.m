@@ -9,6 +9,7 @@
 #import "BetPage.h"
 #import "Opponent.h"
 #import "Twitter/Twitter.h"
+#import "RootViewController.h"
 #define DEFAULT_KEYBOARD_SIZE 220.0f
 
 @interface BetPage(PrivateMethods)
@@ -34,7 +35,8 @@
 @synthesize pageNum;
 @synthesize photoButton;
 @synthesize tweetButton;
-
+@synthesize gestureView;
+@synthesize gestureViewTwo;
 @synthesize delegate;
 
 
@@ -58,7 +60,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paperTile.png"]];
+    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"PaperBackround.png"]];
     self.titleLabel.text = self.bet.opponent.name;
     
     self.pageNumberLabel.text = self.pageNum;
@@ -93,8 +95,15 @@
         [self.tweetButton setEnabled:YES];
     else
         [self.tweetButton setEnabled:NO];
+
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapPage)];
+    [tap setNumberOfTapsRequired:1];
     
+ //   [self.gestureView setGestureRecognizers:[NSArray arrayWithObject:tap]];
+   // [self.scrollView addGestureRecognizer:tap];
+    [self.gestureView addGestureRecognizer:tap];
+    [self.gestureViewTwo addGestureRecognizer:tap];
       
 }
 
@@ -124,7 +133,27 @@
     
 }
 
+-(NSString *)description
+{
+    NSMutableString *desc = [[NSMutableString alloc]init];
 
+    [desc appendString:@"Bet Page "];
+    [desc appendFormat:@"with index:  %@   ",self.pageNumberLabel.text ];
+    [desc appendFormat:@"and bet name : %@ ", self.bet.report];
+    return [NSString stringWithString:desc];
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+    [self.delegate betPageWillAppear:self];    
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self.delegate hideBetPageOverlay];
+}
 
 /*
  -(void)setUpMap
@@ -190,6 +219,8 @@
 
     [self setPhotoButton:nil];
     [self setTweetButton:nil];
+    [self setGestureView:nil];
+    [self setGestureViewTwo:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -207,17 +238,11 @@
 
 
 
-- (IBAction)editButtonSelected:(id)sender 
+- (void)editButtonSelected
 {
+   
     [self.descriptionTextView setEditable:YES];
     [self.descriptionTextView becomeFirstResponder];
-    
-    self.editButton.alpha = 0;
-    
-    [self.delegate didSelectEdit:self];
-
-    
-    
 }
 
 - (IBAction)photoButtonSelected:(id)sender 
@@ -245,10 +270,10 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if (textView.contentSize.height - self.scrollView.contentOffset.y > 60.0f) {
+    if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
         
         [UIView animateWithDuration:0.1f animations:^{
-            self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 60));
+            self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
         }];
     }
     
@@ -260,10 +285,10 @@
     NSLog(@"ContentSize w:%f, h:%f",textView.contentSize.width,  textView.contentSize.height);
     NSLog(@"ScrollViewOffset :%@", self.scrollView.contentOffset);
     
-    if (textView.contentSize.height - self.scrollView.contentOffset.y > 60.0f) {
+    if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
        
         [UIView animateWithDuration:0.1f animations:^{
-            self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 60));
+            self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
         }];
     }
     
@@ -295,6 +320,16 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     NSLog(@"ScrollViewWillBeginDraggin");
+}
+
+
+-(void)didTapPage
+{
+
+    
+    [self.delegate didTapPage:self];
+    NSLog(@"did Tap Page");
+    
 }
 
 

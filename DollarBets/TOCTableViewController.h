@@ -38,13 +38,12 @@
     BOOL isQuickAdding;
     BOOL isDragging;
     Bet *bet;
-    
-    
+
     // Managed Objects
     Opponent *opponent;
     NSArray *bets;
 
-    
+    NSTimer *myHomeButtonTimer;
     
     
     UITableView *tableView;
@@ -69,6 +68,7 @@
 
 @property (strong, nonatomic) Opponent *opponent;
 @property (strong, nonatomic) NSArray *bets;
+@property (strong, nonatomic) NSTimer *myHomeButtonTimer;
 
 
 
@@ -78,6 +78,7 @@
 // Quick add Functions
 
 - (IBAction)save:(UIButton *)sender;
+
 
 
 @end

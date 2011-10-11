@@ -12,9 +12,13 @@
 @class BetPage;
 @protocol BetPageControllerDelegate <NSObject>
 
--(void)didSelectEdit:(BetPage *)onPage;
+-(void)betPageWillAppear:(BetPage *)betPage;
+
+
 -(void)didSelectphoto:(BetPage *)onPage;
 -(void)didSelectTweet:(BetPage *)onPage;
+
+-(void)didTapPage:(BetPage *)onPage;
 
 
 
@@ -32,6 +36,7 @@
     NSString * pageNum;
   
     int editState;
+
 
     
 
@@ -51,14 +56,18 @@
 @property (strong, nonatomic) IBOutlet UIButton *tweetButton;
 
 
+@property (strong, nonatomic) IBOutlet UIView *gestureView;
+@property (strong, nonatomic) IBOutlet UIView *gestureViewTwo;
 
 
 -(id)initWithBet:(Bet*)aBet;
 -(void)setUpAmountLabel;
 
-- (IBAction)editButtonSelected:(id)sender;
+- (void)editButtonSelected;
 - (IBAction)photoButtonSelected:(id)sender;
 - (IBAction)tweetButtonSelected:(id)sender;
+
+-(void)didTapPage;
 
 @end
 
