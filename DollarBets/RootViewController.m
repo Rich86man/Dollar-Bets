@@ -24,7 +24,7 @@
 
 -(void)disablePageViewGestures:(bool)disable;
 -(void)showBetPageOverlay;
--(void)hideBetPageOverlay;
+-(void)hideBetPageOverlay:(NSInteger)duration;
 
 @end
 
@@ -317,16 +317,14 @@
     
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    NSLog(@"keyboard Size height = %f  width = %f",keyboardSize.height, keyboardSize.width);
-                                                                         
-                                                                         
+                                                                             
     if(twitterKeyboard == 0)
     {
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
     
     CGRect frame = self.keyboardToolbar.frame;
-    frame.origin.y = self.view.frame.size.height - 260.0;
+    frame.origin.y = self.view.frame.size.height -keyboardSize.height -44;
     self.keyboardToolbar.frame = frame;
     
     [UIView commitAnimations];
@@ -384,7 +382,7 @@
     if (self.betOverlayView.alpha == 0)
         [self showBetPageOverlay];
     else
-        [self hideBetPageOverlay];
+        [self hideBetPageOverlay:1.0f];
 }
 
 #pragma mark - Custom Keyboard delegate
@@ -413,6 +411,8 @@
             break;
     }
     
+    [self.currentPageBeingEdited.amountTextView becomeFirstResponder];
+    
     editState = 1;
     
 }
@@ -429,6 +429,8 @@
         case 1:
             self.choosePhotoView.frame = self.chooseAmountView.frame;
             self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+            if(self.currentPageBeingEdited.amountTextView.isFirstResponder)
+                [self.currentPageBeingEdited.amountTextView resignFirstResponder]; 
             break;
             case 2:
             self.choosePhotoView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
@@ -464,6 +466,9 @@
         case 1:
             self.chooseDidWinView.frame = self.chooseAmountView.frame;
             self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+            if(self.currentPageBeingEdited.amountTextView.isFirstResponder)
+                [self.currentPageBeingEdited.amountTextView resignFirstResponder]; 
+
             break;
         case 2:
             self.chooseDidWinView.frame = self.choosePhotoView.frame;
@@ -499,6 +504,9 @@
                 break;
             case 1:
                 self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
+                if(self.currentPageBeingEdited.amountTextView.isFirstResponder)
+                    [self.currentPageBeingEdited.amountTextView resignFirstResponder]; 
+
                 break;
             case 2:
                 self.choosePhotoView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
@@ -610,10 +618,10 @@
 }
 
 - (IBAction)betPageBackButtonPressed:(id)sender 
-{
+{   [self hideBetPageOverlay:0.0];
     UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
     NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:NULL];
 
 }
 
@@ -750,13 +758,13 @@
 }
 
 
--(void)hideBetPageOverlay
+-(void)hideBetPageOverlay:(NSInteger)duration
 {
     if(self.betPageBackButton.alpha > 0.0f)
     {
         
         
-        [UIView animateWithDuration:0.05f
+        [UIView animateWithDuration:duration
                               delay:0.0f
                             options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{

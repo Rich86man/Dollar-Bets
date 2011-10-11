@@ -17,21 +17,20 @@
 @end
 
 @implementation BookFrontView
-@synthesize textField, bookImgView, dateLabel;
-@synthesize configButton, plusSignButton, plusSignImageView;
+@synthesize nameTextField, bookImgView, dateLabel;
+@synthesize configButton, plusSignButton;
 @synthesize viewController;
-
+@synthesize nameLabel;
 
 -(void)setupView
 {
     
     self.bookImgView = nil;
     self.configButton = nil;
-    self.textField = nil;
+    self.nameTextField = nil;
     self.dateLabel = nil;
     self.plusSignButton = nil;
-    self.plusSignImageView = nil;
-
+    
     
     
 }
@@ -81,25 +80,45 @@
     }
     [self addSubview:self.bookImgView];
     
-    
-    if(self.textField == nil)
+    if(!self.nameLabel)
     {
-        UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(80, 113, 215, 100)];
-        [tf addTarget:self.viewController action:@selector(enteredNewOpponentName:) forControlEvents:UIControlEventEditingDidEndOnExit];
-        tf.font = [UIFont fontWithName:@"Helvetica" size:30.0f];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(80, 80, 215, 100)];
+        label.font =[UIFont fontWithName:@"STHeitiJ-Light" size:30.0f];
+        label.backgroundColor = [UIColor clearColor];
+        [label setContentMode:UIViewContentModeCenter];
+        [label setAdjustsFontSizeToFitWidth:YES];
+
         if(self.viewController.opponent != nil)
         {
-            tf.text = [self.viewController.opponent name];
-            tf.userInteractionEnabled =  NO;
+            label.text = [self.viewController.opponent name];
+            label.userInteractionEnabled =  NO;
         }
         else
         {
-            tf.placeholder = @"Opponent...";
+            label.text = @"Opponent...";
         }
+        self.nameLabel = label;
+
         
-        self.textField = tf;
     }
-    [self addSubview:self.textField];
+    [self addSubview:self.nameLabel];
+   
+    
+    
+    if(self.nameTextField == nil)
+    {
+        UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(80, 80, 215, 100)];
+        [tf setContentMode:UIViewContentModeCenter];
+        [tf setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+        [tf setAdjustsFontSizeToFitWidth:YES];
+        tf.backgroundColor = [UIColor clearColor];
+        tf.delegate = self.viewController;
+        tf.font = [UIFont fontWithName:@"STHeitiJ-Light" size:30.0f];
+       
+              
+        self.nameTextField = tf;
+    }
+    [self addSubview:self.nameTextField];
     
     
     
@@ -123,18 +142,18 @@
 -(void)showPlusButton
 {
     
-    if(self.plusSignImageView == nil)
-    {
-        UIImageView *psiv = [[UIImageView alloc]initWithFrame:CGRectMake(125, 194, 71, 71)];
-        psiv.image = [UIImage imageNamed:@"plusSign.png"];
-        self.plusSignImageView = psiv;
-    }
-    [self addSubview:self.plusSignImageView];
-    
+
     
     if(self.plusSignButton == nil)
     {
-        UIButton *psb = [[UIButton alloc]initWithFrame:CGRectMake(110, 182, 101, 95)];
+        
+        UIButton *psb = [UIButton buttonWithType:UIButtonTypeCustom];
+        [psb setFrame:CGRectMake(115, 170, 100, 100)];
+        [psb setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateNormal];
+                [psb setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateSelected];
+                [psb setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateHighlighted];
+        [psb setAdjustsImageWhenDisabled:NO];
+        [psb setAdjustsImageWhenHighlighted:NO];
         psb.backgroundColor = [UIColor clearColor];
         [psb addTarget:self action:@selector(hidePlusButton) forControlEvents:UIControlEventTouchUpInside];
         self.plusSignButton = psb;
@@ -145,13 +164,13 @@
                           delay:0 
                         options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse | UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
                      animations:^{ 
-                         self.plusSignImageView.alpha = 0.0f;
-                         //self.plusSignImageView.frame = CGRectMake(self.plusSignImageView.frame.origin.x, self.plusSignImageView.frame.origin.y, self.plusSignImageView.frame.size.width + 2, self.plusSignImageView.frame.size.height + 2);
-                         self.plusSignImageView.transform = CGAffineTransformMakeScale(0.8f, 0.8f);
+                         self.plusSignButton.alpha = 0.0f;
+                         self.plusSignButton.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
+                       
                      }    
                      completion:nil];   
     
-    self.textField.alpha = 0;
+    self.nameTextField.alpha = 0;
 }
 
 
@@ -165,14 +184,12 @@
                           delay:0.0
                         options:UIViewAnimationCurveEaseIn 
                      animations:^{
-                         self.plusSignImageView.frame = CGRectMake(self.plusSignImageView.frame.origin.x + (self.plusSignImageView.frame.size.width / 2), self.plusSignImageView.frame.origin.y + (self.plusSignImageView.frame.size.height /2) , 0, 0);
+                         self.plusSignButton.frame = CGRectMake(self.plusSignButton.frame.origin.x + (self.plusSignButton.frame.size.width / 2), self.plusSignButton.frame.origin.y + (self.plusSignButton.frame.size.height / 2) , 0, 0);
                      }completion:nil];
     
-    self.plusSignImageView.alpha = 0;
     self.plusSignButton.alpha = 0;
-    self.plusSignImageView = nil;
     self.plusSignButton = nil;
-    self.textField.alpha = 1;
+    self.nameTextField.alpha = 1;
 
     
     
@@ -228,7 +245,7 @@
     else if(self.viewController.opponent != nil)
     {
         [self hidePlusButton];
-        self.textField.text = [self.viewController.opponent name];
+        self.nameTextField.text = [self.viewController.opponent name];
         [self showConfigAndDate];
     }
     

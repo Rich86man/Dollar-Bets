@@ -17,4 +17,6 @@
 @dynamic picture;
 @dynamic bets;
 
+
+
 @end

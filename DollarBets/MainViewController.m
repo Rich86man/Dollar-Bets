@@ -15,12 +15,12 @@
 #import "Bet.h"
 #import <CoreGraphics/CoreGraphics.h>
 
-static NSUInteger kNumberOfPages = 10;
 
 
 @interface MainViewController (PrivateMethods)
-- (void)loadScrollViewWithPage:(int)page;
-- (void)scrollViewDidScroll:(UIScrollView *)sender;
+-(void)setupSlider;
+-(void)loadScrollViewWithPage:(int)page;
+-(void)scrollViewDidScroll:(UIScrollView *)sender;
 -(void) easterEgg:(Opponent *)newOpponent;
 @end
 
@@ -31,7 +31,7 @@ static NSUInteger kNumberOfPages = 10;
 @synthesize context;
 @synthesize opponents;
 @synthesize parent;
-
+@synthesize sliderPageControl;
 
 
 
@@ -60,30 +60,22 @@ static NSUInteger kNumberOfPages = 10;
     // view controllers are created lazily
     // in the meantime, load the array with placeholders which will be replaced on demand
     NSMutableArray *controllers = [[NSMutableArray alloc] init];
-    for (unsigned i = 0; i < kNumberOfPages; i++)
+    for (unsigned i = 0; i < 10; i++)
     {
 		[controllers addObject:[NSNull null]];
     }
     self.books = controllers;
     
-    self.opponents = [[NSMutableArray alloc] init];
     
-    [self retrieveOpponents];
-    
+    self.opponents = [self retrieveOpponents];    
     [self resizeScrollView];
-    
-    
-    
+
     for (int i = 0; i < [self.opponents count] && i < 2; i++) {
         [self loadScrollViewWithPage:i ];
     }
     
-    
-    
-    NSLog(@"%i",[self.opponents count]);
-    //[self loadScrollViewWithPage:[self.opponents count] ];
-    
-    
+    [self setupSlider];
+      
     
     
     
@@ -114,7 +106,20 @@ static NSUInteger kNumberOfPages = 10;
 
 
 
+-(void)setupSlider
+{
+    self.sliderPageControl = [[SliderPageControl  alloc] initWithFrame:CGRectMake(0,[self.view bounds].size.height-20,[self.view bounds].size.width,20)];
+    [self.sliderPageControl addTarget:self action:@selector(onPageChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.sliderPageControl setDelegate:self];
+    [self.sliderPageControl setShowsHint:YES];
+    [self.view addSubview:self.sliderPageControl];
+    
+    [self.sliderPageControl setNumberOfPages:[self.opponents count] + 1];
+    [self.sliderPageControl setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
+    
+    [self changeToPage:1 animated:NO];
 
+}
 
 #pragma mark - Scroll View Functions
 
@@ -183,7 +188,7 @@ static NSUInteger kNumberOfPages = 10;
     [self loadScrollViewWithPage:page + 1 ];
     
     // A possible optimization would be to unload the views+controllers which are no longer visible
-    
+    [sliderPageControl setCurrentPage:page animated:YES];
     if (page > 1 && (NSNull *)[books objectAtIndex:page -2 ] != [NSNull null])
     {
         BookViewController *tempBook = [books objectAtIndex:page -2];
@@ -209,6 +214,15 @@ static NSUInteger kNumberOfPages = 10;
     
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView_
+{
+	pageControlUsed = NO;
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView_
+{
+	pageControlUsed = NO;
+}
 
 #pragma mark - Special BookScrollView Functions
 
@@ -375,9 +389,9 @@ static NSUInteger kNumberOfPages = 10;
     
 }
 
--(void)retrieveOpponents
+-(NSMutableArray *)retrieveOpponents
 {
-    
+
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Opponent"];
     
@@ -397,7 +411,9 @@ static NSUInteger kNumberOfPages = 10;
     if (array == nil)
     {   array = [NSArray arrayWithObject:@"empty"]; }
     
-    opponents = [array mutableCopy];
+
+    
+    
     
     //-------Delete all --------
     /*
@@ -409,7 +425,47 @@ static NSUInteger kNumberOfPages = 10;
     */
     //  NSLog(@"%@",[opponents description]);
     
+    return [array mutableCopy];
 }
+
+#pragma mark sliderPageControlDelegate
+
+- (NSString *)sliderPageController:(id)controller hintTitleForPage:(NSInteger)page
+{
+    if(page == [self.opponents count])
+    {
+        return @"Create New";
+    }
+    
+    Opponent *currentOpponent = [self.opponents objectAtIndex:page];
+
+	return currentOpponent.name;
+}
+
+- (void)onPageChanged:(id)sender
+{
+	pageControlUsed = YES;
+	[self slideToCurrentPage:YES];
+	
+}
+
+- (void)slideToCurrentPage:(bool)animated 
+{
+	int page = sliderPageControl.currentPage;
+	
+    CGRect frame = mainScrollView.frame;
+    frame.origin.x = frame.size.width * page;
+    frame.origin.y = 0;
+    [self.mainScrollView scrollRectToVisible:frame animated:animated]; 
+}
+
+- (void)changeToPage:(int)page animated:(BOOL)animated
+{
+	[sliderPageControl setCurrentPage:page animated:YES];
+	[self slideToCurrentPage:animated];
+}
+
+
 
 
 -(void)easterEgg:(Opponent *)newOpponent

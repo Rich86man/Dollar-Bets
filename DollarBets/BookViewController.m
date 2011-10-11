@@ -133,8 +133,19 @@
 
 -(void)deleteButtonSelected:(id)sender
 {
-    NSLog(@"DeleteButtonSelected:");
-    [self.delegate deleteThisBook:self];
+    switch ([sender tag]) {
+        case 0:
+            [self.backView showPopOver];
+            [self.backView.deleteButton setSelected:YES];
+            break;
+        case 1:
+            [self.delegate deleteThisBook:self];
+            [self.backView.deleteButton setSelected:NO];
+            break;
+        default:
+            break;
+    }
+    
 }
 
 -(void)didDoubleClick
@@ -204,9 +215,36 @@
 
 
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+    if(!frontViewIsVisible && self.backView.popOver.alpha == 1.0f)
+    {
+        [self.backView hidePopOver];
+        [self.backView.deleteButton setSelected:NO];
+        
+    }
+}
 
+#pragma mark - TextField Delegate Functions
+-(void)textFieldDidBeginEditing:(UITextField *)textField 
+{
+    self.frontView.nameLabel.alpha = 0.0f;
+    
+}
 
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.frontView.nameLabel.text = textField.text;
+    self.frontView.nameLabel.alpha = 1.0f;
+    textField.text = @"";
+    [textField resignFirstResponder];
+}
 
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 
 @end

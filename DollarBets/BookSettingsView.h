@@ -18,12 +18,17 @@
     UIImageView *bookImageView;
     BookViewController *viewController;
     Opponent * opponent;
-    
+    UIView *popOver;
+    UIButton *deleteDoubleCheck;
 }
 @property (strong, nonatomic)UIButton *deleteButton;
 @property (strong, nonatomic)UIButton *backButton;
 @property (strong, nonatomic)UIImageView *bookImageView;
 @property (strong, nonatomic)BookViewController *viewController;
 @property (strong, nonatomic)Opponent *opponent;
+@property (strong, nonatomic)UIView *popOver;
+@property (strong, nonatomic)UIButton *deleteDoubleCheck;
 
+-(void)showPopOver;
+-(void)hidePopOver;
 @end

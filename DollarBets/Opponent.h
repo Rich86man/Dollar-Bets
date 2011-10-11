@@ -21,6 +21,7 @@
 
 @interface Opponent (CoreDataGeneratedAccessors)
 
+
 - (void)addBetsObject:(Bet *)value;
 - (void)removeBetsObject:(Bet *)value;
 - (void)addBets:(NSSet *)values;

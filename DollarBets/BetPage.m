@@ -29,6 +29,7 @@
 @synthesize titleLabel;
 @synthesize dateLabel;
 @synthesize descriptionTextView;
+@synthesize amountTextView;
 @synthesize amountLabel;
 @synthesize pageNumberLabel;
 @synthesize editButton;
@@ -83,7 +84,7 @@
     {
         CGRect frame = self.scrollView.frame;
         frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height );//- 302); 
-                self.scrollView.frame = frame;
+        self.scrollView.frame = frame;
     }
     
     if(self.bet.picture)
@@ -95,16 +96,16 @@
         [self.tweetButton setEnabled:YES];
     else
         [self.tweetButton setEnabled:NO];
-
+    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapPage)];
     [tap setNumberOfTapsRequired:1];
     
- //   [self.gestureView setGestureRecognizers:[NSArray arrayWithObject:tap]];
-   // [self.scrollView addGestureRecognizer:tap];
+    //   [self.gestureView setGestureRecognizers:[NSArray arrayWithObject:tap]];
+    // [self.scrollView addGestureRecognizer:tap];
     [self.gestureView addGestureRecognizer:tap];
     [self.gestureViewTwo addGestureRecognizer:tap];
-      
+    
 }
 
 
@@ -136,7 +137,7 @@
 -(NSString *)description
 {
     NSMutableString *desc = [[NSMutableString alloc]init];
-
+    
     [desc appendString:@"Bet Page "];
     [desc appendFormat:@"with index:  %@   ",self.pageNumberLabel.text ];
     [desc appendFormat:@"and bet name : %@ ", self.bet.report];
@@ -216,11 +217,12 @@
     [self setEditButton:nil];
     
     [self setPageNumberLabel:nil];
-
+    
     [self setPhotoButton:nil];
     [self setTweetButton:nil];
     [self setGestureView:nil];
     [self setGestureViewTwo:nil];
+    [self setAmountTextView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -240,7 +242,7 @@
 
 - (void)editButtonSelected
 {
-   
+    
     [self.descriptionTextView setEditable:YES];
     [self.descriptionTextView becomeFirstResponder];
 }
@@ -260,7 +262,7 @@
  - (BOOL)textViewShouldBeginEditing:(UITextView *)textView;
  - (BOOL)textViewShouldEndEditing:(UITextView *)textView;
  
-  
+ 
  
  
  - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
@@ -270,62 +272,67 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
-        
-        [UIView animateWithDuration:0.1f animations:^{
-            self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
-        }];
+    if(textView.tag == 0)
+    {
+        if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
+            
+            [UIView animateWithDuration:0.1f animations:^{
+                self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
+            }];
+        }
     }
-    
 }
 
 
 - (void)textViewDidChange:(UITextView *)textView
-{
-    NSLog(@"ContentSize w:%f, h:%f",textView.contentSize.width,  textView.contentSize.height);
-    NSLog(@"ScrollViewOffset :%@", self.scrollView.contentOffset);
-    
-    if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
-       
-        [UIView animateWithDuration:0.1f animations:^{
-            self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
-        }];
+{    
+    if(textView.tag == 0)
+    {
+        if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
+            
+            [UIView animateWithDuration:0.1f animations:^{
+                self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
+            }];
+        }
     }
-    
-    
-    
+    else
+    {
+        NSNumberFormatter *nf = [[NSNumberFormatter alloc]init];
+    self.bet.amount = [nf numberFromString:self.amountTextView.text];
+        [self setUpAmountLabel];
+
+    }
     
 }
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        self.scrollView.contentOffset = CGPointMake(0, 0);
-    }];
-    
-    
-    self.descriptionTextView.contentOffset = CGPointMake(0, 0);
-    
-    if (self.descriptionTextView.contentSize.height > 301)
+    if(textView.tag == 0)
     {
-        CGRect frame = self.scrollView.frame;
-        frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height - 302); 
-        self.scrollView.frame = frame;
+        [UIView animateWithDuration:0.3f animations:^{
+            self.scrollView.contentOffset = CGPointMake(0, 0);
+        }];
+        
+        
+        self.descriptionTextView.contentOffset = CGPointMake(0, 0);
+        
+        if (self.descriptionTextView.contentSize.height > 301)
+        {
+            CGRect frame = self.scrollView.frame;
+            frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height - 302); 
+            self.scrollView.frame = frame;
+        }
     }
     
     
 }
 
+#pragma mark - TextFieldDelegate 
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    NSLog(@"ScrollViewWillBeginDraggin");
-}
 
 
 -(void)didTapPage
 {
-
+    
     
     [self.delegate didTapPage:self];
     NSLog(@"did Tap Page");

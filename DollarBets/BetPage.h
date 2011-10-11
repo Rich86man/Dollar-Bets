@@ -47,6 +47,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (strong, nonatomic) IBOutlet UITextView *amountTextView;
+
 @property (strong, nonatomic) IBOutlet UILabel *amountLabel;
 
 @property (strong, nonatomic) IBOutlet UILabel *pageNumberLabel;

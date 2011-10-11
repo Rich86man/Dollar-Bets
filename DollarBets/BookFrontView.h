@@ -14,23 +14,23 @@
 @interface BookFrontView : UIView
 {
     UIImageView *bookImgView;
-    UITextField *textField;
+    UITextField *nameTextField;
     UILabel *dateLabel;
     UIButton *plusSignButton;
     UIButton *configButton;
     UITextField *opponentTextField;
     BOOL frontViewIsVisible;
-    
+    UILabel *nameLabel;
     
     BookViewController *viewController;
     
 }
 @property (strong, retain) UIImageView *bookImgView;
-@property (strong, retain) UITextField *textField;
+@property (strong, retain) UITextField *nameTextField;
 @property (strong, retain) UILabel *dateLabel;
-@property (strong, nonatomic) UIImageView *plusSignImageView;
 @property (strong, nonatomic) UIButton *plusSignButton;
 @property (strong, nonatomic) UIButton *configButton;
+@property (strong, nonatomic) UILabel *nameLabel;
 
 
 @property (strong, nonatomic)BookViewController *viewController;

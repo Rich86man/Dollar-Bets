@@ -30,6 +30,7 @@
 
 @implementation TOCTableViewController
 @synthesize delegate;
+@synthesize amountTextView;
 @synthesize saveButton;
 @synthesize amountLabel;
 @synthesize overlayView;
@@ -62,10 +63,10 @@
     self.statusBar.backgroundColor = [UIColor clearColor];
     self.statusBar.centerLabel.text = @"Quick Add";
     
-
-
     
-  
+    
+    
+    
     isQuickAdding = NO;
     isDragging = NO;
     
@@ -80,7 +81,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self.myHomeButtonTimer invalidate];
-
+    
     [self.delegate showHomeButton:NO];
     
 }
@@ -99,6 +100,7 @@
     [self setOverlayLabel:nil];
     [self setAmountLabel:nil];
     [self setBet:nil];
+    [self setAmountTextView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -106,7 +108,7 @@
 
 -(NSString *)description
 {
- 
+    
     return @"TableOfContents Page";
 }
 
@@ -179,7 +181,7 @@
         return self.tableOfContentsHeader;
     }
     else if (section == 1)    { 
-       // return self.graphsHeader;        
+        // return self.graphsHeader;        
         
     }
     
@@ -224,11 +226,11 @@
     if( scrollView.contentOffset.y <= -1.0f && scrollView.contentOffset.y > -122.0f && !isQuickAdding)
     {
         CGFloat offset =   scrollView.contentOffset.y;
-
+        
         self.quickAddView.frame = CGRectMake(0, 0, 320, -offset);
         
         
-                if (offset > -90 && offset < 0)
+        if (offset > -90 && offset < 0)
             self.overlayView.alpha = -offset / 100;
         
         
@@ -272,20 +274,20 @@
         
         [UIView  animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
                           animations:^{
-            scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
-            //scrollView.contentOffset = CGPointMake(0, 0);
-            //self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
-        }completion:^(BOOL finished){        
-            self.overlayLabel.text = @"Pull Down To Add New";
-            
-        }];
+                              scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
+                              //scrollView.contentOffset = CGPointMake(0, 0);
+                              //self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
+                          }completion:^(BOOL finished){        
+                              self.overlayLabel.text = @"Pull Down To Add New";
+                              
+                          }];
         
-       // scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
+        // scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
         //[scrollView setContentInset:UIEdgeInsetsZero];
         //[scrollView setContentOffset:CGPointMake(0, 1.0f) animated:YES];
-       // [scrollView setContentInset:UIEdgeInsetsZero];
+        // [scrollView setContentInset:UIEdgeInsetsZero];
         //scrollView.contentOffset = CGPointMake(0, 0);
-       self.overlayLabel.text = @"Pull Down To Add New";
+        self.overlayLabel.text = @"Pull Down To Add New";
         self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self.delegate selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
         
         
@@ -305,86 +307,98 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     
-    if([textView.text isEqualToString:@""])
+    if(textView.tag == 0)
     {
-        [self removeSaveButton];
+        if([textView.text isEqualToString:@""])
+        {
+            [self removeSaveButton];
+        }
+        else 
+        {
+            [self addSaveButton];
+        }
+        
+        
+        if(textView.contentSize.height > descriptionTextView.frame.size.height)
+        {
+            NSLog(@"New descriptionTextView.contentSize.height = %f",textView.contentSize.height);
+            CGRect newTextFrame = descriptionTextView.frame;
+            CGRect newViewFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y, self.quickAddView.frame.size.width, self.quickAddView.frame.size.height + ( textView.contentSize.height -descriptionTextView.frame.size.height ));    
+            CGRect newOverlayFrame = CGRectMake(self.overlayView.frame.origin.x, self.overlayView.frame.origin.y + ( textView.contentSize.height -descriptionTextView.frame.size.height ), self.overlayView.frame.size.width , self.overlayView.frame.size.height);
+            
+            CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, self.saveButton.frame.origin.y + ( textView.contentSize.height -descriptionTextView.frame.size.height ), SAVE_BUTTON_WIDTH, self.saveButton.frame.size.height);
+            
+            
+            
+            
+            newTextFrame.size.height = textView.contentSize.height;
+            
+            
+            [UIView animateWithDuration:0.02f animations:^{
+                descriptionTextView.frame = newTextFrame;
+                self.quickAddView.frame = newViewFrame;
+                self.overlayView.frame = newOverlayFrame;
+                self.saveButton.frame = newSaveButtonFrame;
+            }];
+            
+        }
+        else if(textView.contentSize.height < descriptionTextView.frame.size.height)
+        {
+            NSLog(@"New descriptionTextView.contentSize.height = %f",textView.contentSize.height);
+            CGRect newTextFrame = descriptionTextView.frame;
+            CGRect newViewFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y, self.quickAddView.frame.size.width, self.quickAddView.frame.size.height - ( descriptionTextView.frame.size.height - textView.contentSize.height));    
+            CGRect newOverlayFrame = CGRectMake(self.overlayView.frame.origin.x, self.overlayView.frame.origin.y - ( descriptionTextView.frame.size.height - textView.contentSize.height ), self.overlayView.frame.size.width , self.overlayView.frame.size.height);
+            
+            CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, self.saveButton.frame.origin.y - ( descriptionTextView.frame.size.height - textView.contentSize.height ), SAVE_BUTTON_WIDTH, self.saveButton.frame.size.height);
+            
+            
+            
+            newTextFrame.size.height = textView.contentSize.height;
+            
+            
+            [UIView animateWithDuration:0.02f animations:^{
+                descriptionTextView.frame = newTextFrame;
+                self.quickAddView.frame = newViewFrame;
+                self.overlayView.frame = newOverlayFrame;
+                self.saveButton.frame = newSaveButtonFrame;
+            }];
+        }
     }
-    else 
+    else
     {
-        [self addSaveButton];
-    }
-    
-    
-    if(textView.contentSize.height > descriptionTextView.frame.size.height)
-    {
-        NSLog(@"New descriptionTextView.contentSize.height = %f",textView.contentSize.height);
-        CGRect newTextFrame = descriptionTextView.frame;
-        CGRect newViewFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y, self.quickAddView.frame.size.width, self.quickAddView.frame.size.height + ( textView.contentSize.height -descriptionTextView.frame.size.height ));    
-        CGRect newOverlayFrame = CGRectMake(self.overlayView.frame.origin.x, self.overlayView.frame.origin.y + ( textView.contentSize.height -descriptionTextView.frame.size.height ), self.overlayView.frame.size.width , self.overlayView.frame.size.height);
-        
-        CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, self.saveButton.frame.origin.y + ( textView.contentSize.height -descriptionTextView.frame.size.height ), SAVE_BUTTON_WIDTH, self.saveButton.frame.size.height);
-        
-        
-        
-        
-        newTextFrame.size.height = textView.contentSize.height;
-        
-        
-        [UIView animateWithDuration:0.02f animations:^{
-            descriptionTextView.frame = newTextFrame;
-            self.quickAddView.frame = newViewFrame;
-            self.overlayView.frame = newOverlayFrame;
-            self.saveButton.frame = newSaveButtonFrame;
-        }];
+        NSNumberFormatter *nf = [[NSNumberFormatter alloc]init];
+        self.bet.amount = [nf numberFromString:self.amountTextView.text];
+        [self setUpAmountLabel];
         
     }
-    else if(textView.contentSize.height < descriptionTextView.frame.size.height)
-    {
-        NSLog(@"New descriptionTextView.contentSize.height = %f",textView.contentSize.height);
-        CGRect newTextFrame = descriptionTextView.frame;
-        CGRect newViewFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y, self.quickAddView.frame.size.width, self.quickAddView.frame.size.height - ( descriptionTextView.frame.size.height - textView.contentSize.height));    
-        CGRect newOverlayFrame = CGRectMake(self.overlayView.frame.origin.x, self.overlayView.frame.origin.y - ( descriptionTextView.frame.size.height - textView.contentSize.height ), self.overlayView.frame.size.width , self.overlayView.frame.size.height);
-        
-        CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, self.saveButton.frame.origin.y - ( descriptionTextView.frame.size.height - textView.contentSize.height ), SAVE_BUTTON_WIDTH, self.saveButton.frame.size.height);
-        
-        
-        
-        newTextFrame.size.height = textView.contentSize.height;
-        
-        
-        [UIView animateWithDuration:0.02f animations:^{
-            descriptionTextView.frame = newTextFrame;
-            self.quickAddView.frame = newViewFrame;
-            self.overlayView.frame = newOverlayFrame;
-            self.saveButton.frame = newSaveButtonFrame;
-        }];
-    }
-    
     
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range 
  replacementText:(NSString *)text
 {    
-   /* 
-    // Any new character added is passed in as the "text" parameter
-    if ([text isEqualToString:@"\n"]) {
-        // Be sure to test for equality using the "isEqualToString" message
-        [textView resignFirstResponder];
-        
-        
-        // Return FALSE so that the final '\n' character doesn't get added
-        return FALSE;
-    }
-    // For any other character return TRUE so that the text gets added to the view
-    return TRUE;
-*/
+    /* 
+     // Any new character added is passed in as the "text" parameter
+     if ([text isEqualToString:@"\n"]) {
+     // Be sure to test for equality using the "isEqualToString" message
+     [textView resignFirstResponder];
+     
+     
+     // Return FALSE so that the final '\n' character doesn't get added
+     return FALSE;
+     }
+     // For any other character return TRUE so that the text gets added to the view
+     return TRUE;
+     */
     return YES;
 }
 
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
-    self.bet.report = self.descriptionTextView.text;
+    if (textView.tag == 0) {
+        self.bet.report = self.descriptionTextView.text;
+    }
+    
 }
 
 #pragma mark - TextField Delegate Functions
@@ -496,8 +510,8 @@
         self.saveButton.frame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y, SAVE_BUTTON_WIDTH, 0);
     }
     
-
-   //CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountLabel.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING + saveButton.frame.size.height + (self.saveButton.alpha == 1 ? SAVE_BUTTON_BOTTOM_PADDING : 0) );
+    
+    //CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountLabel.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING + saveButton.frame.size.height + (self.saveButton.alpha == 1 ? SAVE_BUTTON_BOTTOM_PADDING : 0) );
     
     CGRect newQuickViewFrame = CGRectMake(0, 0, 0, 0);
     
@@ -506,20 +520,20 @@
     else
         newQuickViewFrame = CGRectMake(0, 0, 320, self.saveButton.frame.origin.y + self.saveButton.frame.size.height + PADDING);
     
-   CGRect newOverlayFrame = self.overlayLabel.frame;
+    CGRect newOverlayFrame = self.overlayLabel.frame;
     newOverlayFrame.origin.y = newQuickViewFrame.size.height + PADDING;
     
     
     /*
-    [UIView animateWithDuration:0.5f animations:^{
-    self.quickAddView.frame = newQuickViewFrame;    
-    }];
-    */
-  [UIView animateWithDuration:0.3f
-                        delay:0.0f
-                      options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                          self.quickAddView.frame = newQuickViewFrame;
-                          self.overlayLabel.frame = newOverlayFrame; } completion:nil];
+     [UIView animateWithDuration:0.5f animations:^{
+     self.quickAddView.frame = newQuickViewFrame;    
+     }];
+     */
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                            self.quickAddView.frame = newQuickViewFrame;
+                            self.overlayLabel.frame = newOverlayFrame; } completion:nil];
     
 }
 
@@ -528,27 +542,27 @@
     if (self.saveButton.alpha == 0)
     {        
         /*
-        CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y + self.descriptionTextView.frame.size.height - 31, SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT);
-        
-        CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountTextField.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING + newSaveButtonFrame.size.height + SAVE_BUTTON_BOTTOM_PADDING);   
-        
-        self.saveButton.frame = newSaveButtonFrame;
-        CGFloat alphaValue = 1;
-        
-        
-        [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^() {
-            self.saveButton.frame = newSaveButtonFrame;
-            self.quickAddView.frame = newQuickViewFrame;
-            self.saveButton.alpha = alphaValue;
-            
-        } completion:nil];
-    */
+         CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y + self.descriptionTextView.frame.size.height - 31, SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT);
+         
+         CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountTextField.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING + newSaveButtonFrame.size.height + SAVE_BUTTON_BOTTOM_PADDING);   
+         
+         self.saveButton.frame = newSaveButtonFrame;
+         CGFloat alphaValue = 1;
+         
+         
+         [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^() {
+         self.saveButton.frame = newSaveButtonFrame;
+         self.quickAddView.frame = newQuickViewFrame;
+         self.saveButton.alpha = alphaValue;
+         
+         } completion:nil];
+         */
         self.saveButton.alpha = 1;
         [self resizeQuickView];
-         }
-  
+    }
     
-   // [self.delegate readyToSave:YES];
+    
+    // [self.delegate readyToSave:YES];
     
 }
 
@@ -558,24 +572,24 @@
     {
         
         /*
-        CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y, SAVE_BUTTON_WIDTH, 0);
-        CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountTextField.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING);   
-        
-        
-        CGFloat alphaValue = 0;
-        
-        [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^() {
-            self.quickAddView.frame = newQuickViewFrame;
-            self.saveButton.frame = newSaveButtonFrame;
-            self.saveButton.alpha = alphaValue;
-            
-            
-        } completion:nil];
-   */
+         CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y, SAVE_BUTTON_WIDTH, 0);
+         CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountTextField.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING);   
+         
+         
+         CGFloat alphaValue = 0;
+         
+         [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^() {
+         self.quickAddView.frame = newQuickViewFrame;
+         self.saveButton.frame = newSaveButtonFrame;
+         self.saveButton.alpha = alphaValue;
+         
+         
+         } completion:nil];
+         */
         
         self.saveButton.alpha = 0;
         [self resizeQuickView];
-         }
+    }
     
     //[self.delegate readyToSave:NO];
 }
@@ -627,23 +641,23 @@
 
 -(BOOL)saveQuickBet
 {/*
-    NSNumberFormatter *numFormat =  [[NSNumberFormatter alloc] init];
-    
-    
-    
-    
-    Bet *newBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[self.opponent managedObjectContext]];
-    newBet.opponent = self.opponent;
-    newBet.amount = [numFormat numberFromString:amountTextField.text];
-    newBet.report = self.descriptionTextView.text;
-    newBet.date = [NSDate date];
-    newBet.didWin = [NSNumber numberWithInt:2];
-    
-    
-    
-    NSError *error =  nil;
-    [newBet.managedObjectContext save:&error];
-   */
+  NSNumberFormatter *numFormat =  [[NSNumberFormatter alloc] init];
+  
+  
+  
+  
+  Bet *newBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[self.opponent managedObjectContext]];
+  newBet.opponent = self.opponent;
+  newBet.amount = [numFormat numberFromString:amountTextField.text];
+  newBet.report = self.descriptionTextView.text;
+  newBet.date = [NSDate date];
+  newBet.didWin = [NSNumber numberWithInt:2];
+  
+  
+  
+  NSError *error =  nil;
+  [newBet.managedObjectContext save:&error];
+  */
     NSError *error =  nil;
     [self.bet.managedObjectContext save:&error];
     
@@ -682,12 +696,12 @@
         tl1.text = @"Bets";
         tl1.textColor = [UIColor lightGrayColor];
         tl1.textAlignment = UITextAlignmentCenter;
-    /*    
-        UIButton *homeButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 60, 37)];
-    
-        [homeButton setImage:[UIImage imageNamed:@"homeButton.png" forState:UIControlStateNormal]];
-        
-      */  
+        /*    
+         UIButton *homeButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 60, 37)];
+         
+         [homeButton setImage:[UIImage imageNamed:@"homeButton.png" forState:UIControlStateNormal]];
+         
+         */  
         
         
         [view addSubview:tl];

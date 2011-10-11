@@ -24,7 +24,7 @@
 @end
 
 
-@interface BookViewController : UIViewController<UIGestureRecognizerDelegate> {
+@interface BookViewController : UIViewController<UIGestureRecognizerDelegate, UITextFieldDelegate> {
 
     BOOL frontViewIsVisible;
     
