@@ -153,7 +153,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [self.delegate hideBetPageOverlay];
+    [self.delegate hideBetPageOverlay:0.0];
 }
 
 /*

@@ -75,14 +75,14 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self.delegate selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
+    self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(timerFired) userInfo:nil repeats:NO];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self.myHomeButtonTimer invalidate];
     
-    [self.delegate showHomeButton:NO];
+    [self.delegate hideHomeButton:0.0f];
     
 }
 
@@ -112,7 +112,10 @@
     return @"TableOfContents Page";
 }
 
-
+-(void)timerFired
+{
+    [self.delegate showHomeButton:nil];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -612,19 +615,13 @@
         self.descriptionTextView.text = @"";
         self.overlayLabel.text = @"Pull Down To Add New";
         
+        
         [UIView  animateWithDuration:0.5f delay:0.5f options:UIViewAnimationCurveEaseInOut animations:^{
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
             self.tableView.contentOffset = CGPointMake(0, 0); 
             self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
             self.overlayView.alpha = 0;
-        }completion:^(BOOL finished){
-            
-            [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.bets count] -1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView endUpdates];
-            
-            
-        }];
+        }completion:nil];
         
         
         
@@ -633,6 +630,9 @@
         
         NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
         self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.bets count] -1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
         [self.delegate savedQuickBet];
     }
     

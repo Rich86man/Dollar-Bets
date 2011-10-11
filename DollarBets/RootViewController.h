@@ -21,7 +21,7 @@
     int twitterKeyboard;
     NSMutableArray *gestureRecognizers;
     
-    
+    bool isHomeButtonHidden;
     
     
 }
@@ -41,6 +41,8 @@
 
 @property (strong, nonatomic) IBOutlet UIView *choosePhotoView;
 @property (strong, nonatomic) IBOutlet UIImageView *choosePhotoImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *choosePhotoPoloroidImageView;
+@property (strong, nonatomic) IBOutlet UIButton *chooseNewPhotoButton;
 @property (strong, nonatomic) IBOutlet UIButton *removePhotoButton;
 
 @property (strong, nonatomic) IBOutlet UIView *chooseDidWinView;
@@ -69,9 +71,10 @@
 - (IBAction)betPageBackButtonPressed:(id)sender;
 - (IBAction)betPageEditButtonSelected:(id)sender;
 
--(void)showHomeButton:(bool)on;
+-(void)showHomeButton:(NSInteger)duration;
+-(void)hideHomeButton:(NSInteger)duration;
 
--(void)hideBetPageOverlay;
+-(void)hideBetPageOverlay:(NSInteger)duration;
 
 
 

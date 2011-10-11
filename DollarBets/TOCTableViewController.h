@@ -79,6 +79,7 @@
 // Quick add Functions
 
 - (IBAction)save:(UIButton *)sender;
+-(void)timerFired;
 
 
 

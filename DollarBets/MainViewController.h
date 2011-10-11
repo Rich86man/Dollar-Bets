@@ -11,7 +11,7 @@
 #import "SliderPageControl.h"
 @class RootContainerViewController;
 
-@interface MainViewController : UIViewController <UIScrollViewDelegate, BookViewControllerDelegate, SliderPageControlDelegate> {
+@interface MainViewController : UI ViewController <UIScrollViewDelegate, BookViewControllerDelegate, SliderPageControlDelegate> {
     UIScrollView *mainScrollView;
     NSManagedObjectContext *context;
     NSMutableArray *opponents;

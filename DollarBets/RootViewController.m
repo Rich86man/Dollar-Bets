@@ -24,7 +24,7 @@
 
 -(void)disablePageViewGestures:(bool)disable;
 -(void)showBetPageOverlay;
--(void)hideBetPageOverlay:(NSInteger)duration;
+//-(void)hideBetPageOverlay:(NSInteger)duration;
 
 @end
 
@@ -47,6 +47,8 @@
 @synthesize homeButton;
 @synthesize choosePhotoView;
 @synthesize choosePhotoImageView;
+@synthesize choosePhotoPoloroidImageView;
+@synthesize chooseNewPhotoButton;
 @synthesize removePhotoButton;
 @synthesize chooseDidWinView;
 @synthesize betOverlayView;
@@ -104,13 +106,13 @@
     //self.modelController.gestureRecognizers = self.pageViewController.gestureRecognizers;
     
     
-  
+    
     
     self.imagePicker.delegate = self;
     
     editState = 0;
     twitterKeyboard = 0;
-    
+    isHomeButtonHidden = YES;
     [self disablePageViewGestures:NO];
     
     UIColor *pattern = [UIColor colorWithPatternImage:[UIImage imageNamed:@"crissXcross.png"]];
@@ -119,7 +121,7 @@
     self.choosePhotoView.backgroundColor = pattern;
     self.chooseDidWinView.backgroundColor = pattern;
     
-                        
+    
     
     
 }
@@ -142,6 +144,8 @@
     [self setBetPageEditButton:nil];
     [self setRightArrow:nil];
     [self setLeftArrow:nil];
+    [self setChoosePhotoPoloroidImageView:nil];
+    [self setChooseNewPhotoButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -163,16 +167,18 @@
 -(void)disablePageViewGestures:(_Bool)disable   
 {
     if(disable)
-    {
+    {NSLog(@"Disabling Gestures");
         for (UIGestureRecognizer *gesture in self.pageViewController.gestureRecognizers) {
+            if([gesture isEnabled])
             [gesture setEnabled:NO];
         }
         
         
     }
     else if(!disable)
-    {
+    {NSLog(@"Enabling Gestures");
         for (UIGestureRecognizer *gesture in self.pageViewController.gestureRecognizers) {
+            if(![gesture isEnabled])
             [gesture setEnabled:YES];
         }
         
@@ -182,12 +188,16 @@
     
 }
 
--(void)showHomeButton:(_Bool)on
+-(void)showHomeButton:(NSInteger)duration
 {
-    
-    if(on && self.homeButton.frame.origin.y < 0)
+    if(!duration)
     {
-        [UIView animateWithDuration:1.0f
+        duration = 1.0f;
+    }
+
+    if(isHomeButtonHidden)
+    {
+        [UIView animateWithDuration:duration
                               delay:0.0f
                             options:UIViewAnimationCurveEaseIn
                          animations:^{
@@ -195,9 +205,20 @@
                          } completion:nil];
         
     }
-   else  if(!on && self.homeButton.frame.origin.y == 0)
+    
+    isHomeButtonHidden = NO;
+}
+
+-(void)hideHomeButton:(NSInteger)duration
+{
+    if (!duration) {
+        duration = 0.05f;
+    }
+    
+    
+    if(!isHomeButtonHidden)
     {
-        [UIView animateWithDuration:0.05f
+        [UIView animateWithDuration:duration
                               delay:0.0f
                             options:UIViewAnimationCurveEaseIn
                          animations:^{
@@ -205,15 +226,8 @@
                          } completion:nil];
         
     }
-    else if (self.homeButton.frame.origin.y <= 0){
-        [UIView animateWithDuration:1.0f
-                              delay:0.0f
-                            options:UIViewAnimationCurveEaseIn
-                         animations:^{
-                             self.homeButton.frame = CGRectMake(20, 0, 44, 61);
-                         } completion:nil];
-    }
-    
+
+    isHomeButtonHidden = YES;
 }
 
 #pragma mark - TOCTableViewController Delegate Functions
@@ -222,13 +236,13 @@
 {
     self.currentPageBeingEdited = sender;
     [self.amountPicker selectRow:1 inComponent:0 animated:NO];
-//  self.doneBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(doneButtonSelected:)]; 
+    //  self.doneBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(doneButtonSelected:)]; 
     
     
     // Need a blank image here
     //self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
     [self disablePageViewGestures:YES];
-
+    
     
     
     
@@ -252,9 +266,9 @@
 
 -(void)readyToSave:(_Bool)ready
 {
-
-        self.doneBarButton.enabled = ready;
-
+    
+    self.doneBarButton.enabled = ready;
+    
     
 }
 
@@ -288,11 +302,11 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     /*
-    NSLog(@"didFinishAnimating :  %@\ttransitionCompleted : %@", finished ? @"yes" : @"no",completed ? @"yes" : @"no");
-    
-    for (UIViewController *vc in previousViewControllers) {
-        NSLog(@"\t%@",[vc description]);
-    }
+     NSLog(@"didFinishAnimating :  %@\ttransitionCompleted : %@", finished ? @"yes" : @"no",completed ? @"yes" : @"no");
+     
+     for (UIViewController *vc in previousViewControllers) {
+     NSLog(@"\t%@",[vc description]);
+     }
      */
     
 }
@@ -317,17 +331,17 @@
     
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-                                                                             
+    
     if(twitterKeyboard == 0)
     {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    CGRect frame = self.keyboardToolbar.frame;
-    frame.origin.y = self.view.frame.size.height -keyboardSize.height -44;
-    self.keyboardToolbar.frame = frame;
-    
-    [UIView commitAnimations];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3];
+        
+        CGRect frame = self.keyboardToolbar.frame;
+        frame.origin.y = self.view.frame.size.height -keyboardSize.height -44;
+        self.keyboardToolbar.frame = frame;
+        
+        [UIView commitAnimations];
     }
 }
 
@@ -419,6 +433,12 @@
 
 - (IBAction)cameraButtonSelected:(id)sender 
 {
+    if (self.currentPageBeingEdited.bet.picture)
+        self.removePhotoButton.alpha = 1.0f;
+    else
+        self.removePhotoButton.alpha = 0.0f;
+    
+    
     switch (editState) {
         case 0:
             self.choosePhotoView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
@@ -432,7 +452,7 @@
             if(self.currentPageBeingEdited.amountTextView.isFirstResponder)
                 [self.currentPageBeingEdited.amountTextView resignFirstResponder]; 
             break;
-            case 2:
+        case 2:
             self.choosePhotoView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
             break;
             
@@ -451,7 +471,7 @@
 
 - (IBAction)ribbonBarButtonSelected:(id)sender 
 {
-
+    
     
     
     
@@ -468,7 +488,7 @@
             self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
             if(self.currentPageBeingEdited.amountTextView.isFirstResponder)
                 [self.currentPageBeingEdited.amountTextView resignFirstResponder]; 
-
+            
             break;
         case 2:
             self.chooseDidWinView.frame = self.choosePhotoView.frame;
@@ -489,7 +509,7 @@
 - (IBAction)doneButtonSelected:(id)sender 
 {
     
-       
+    
     CGRect frame = self.keyboardToolbar.frame;
     frame.origin.y = self.view.frame.size.height;
     
@@ -506,7 +526,7 @@
                 self.chooseAmountView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
                 if(self.currentPageBeingEdited.amountTextView.isFirstResponder)
                     [self.currentPageBeingEdited.amountTextView resignFirstResponder]; 
-
+                
                 break;
             case 2:
                 self.choosePhotoView.frame = CGRectMake(0, 480, 320, DEFAULT_KEYBOARD_HEIGHT);
@@ -527,13 +547,13 @@
     }completion:^(BOOL finished){
         
         
-                
+        
         if([self.currentPageBeingEdited respondsToSelector:@selector(setEditButton:)])
         {
             [self.currentPageBeingEdited.descriptionTextView setEditable:NO];  
-
+            
             self.currentPageBeingEdited.bet.report = self.currentPageBeingEdited.descriptionTextView.text;
-                    self.currentPageBeingEdited.editButton.alpha = 1;  
+            self.currentPageBeingEdited.editButton.alpha = 1;  
             
             [self disablePageViewGestures:NO];
             
@@ -545,12 +565,12 @@
                 NSLog(@"%@\n", [error  description]);
             }
             
-
+            
             
             
         }
         
-
+        
         
     }];
     /*
@@ -565,7 +585,7 @@
      }];
      */
     
-      
+    
     editState = 0;
 }
 
@@ -575,7 +595,7 @@
     self.imagePicker = [[UIImagePickerController alloc] init];
     [self.imagePicker setDelegate:self];
     self.imagePicker.allowsEditing = YES;
-
+    
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -592,7 +612,49 @@
 }
 
 
-- (IBAction)deletePhotoButtonSelected:(id)sender {
+- (IBAction)deletePhotoButtonSelected:(id)sender 
+{
+                             self.removePhotoButton.alpha = 0.0f;
+    CGRect oldChoosePhotoPoloroidImageViewFrame = self.choosePhotoPoloroidImageView.frame;
+    CGRect oldChoosePhotoImageViewFrame = self.choosePhotoImageView.frame;
+    CGRect oldChooseNewPhotoButtonFrame = self.chooseNewPhotoButton.frame;
+
+    
+    CGRect newChoosePhotoPoloroidImageViewFrame = self.choosePhotoPoloroidImageView.frame;
+    CGRect newChoosePhotoImageViewFrame = self.choosePhotoImageView.frame;
+    CGRect newChooseNewPhotoButtonFrame = self.chooseNewPhotoButton.frame;
+    
+    newChoosePhotoPoloroidImageViewFrame.origin.y = 420;
+    newChoosePhotoImageViewFrame.origin.y = 420;
+    newChooseNewPhotoButtonFrame.origin.y = 420;
+    
+    
+    
+    [UIView animateWithDuration:1.0f
+                          delay:0.0f
+                        options:UIViewAnimationCurveLinear
+                     animations:^{
+                         self.choosePhotoPoloroidImageView.frame = newChoosePhotoPoloroidImageViewFrame;
+                         self.choosePhotoImageView.frame = newChoosePhotoImageViewFrame;
+                         self.chooseNewPhotoButton.frame = newChooseNewPhotoButtonFrame;
+                     }
+                     completion:^(BOOL finished)
+     {
+         self.currentPageBeingEdited.bet.picture = nil;
+         self.choosePhotoImageView.image = nil;
+         
+         [UIView animateWithDuration:1.0f
+                               delay:0.5f
+                             options:UIViewAnimationCurveLinear
+                          animations:^{
+                              self.choosePhotoPoloroidImageView.frame = oldChoosePhotoPoloroidImageViewFrame;
+                              self.choosePhotoImageView.frame = oldChoosePhotoImageViewFrame;
+                              self.chooseNewPhotoButton.frame = oldChooseNewPhotoButtonFrame;
+
+                          }
+                          completion:nil];
+         
+     }];
 }
 
 - (IBAction)didWinButtonPresses:(id)sender 
@@ -602,7 +664,7 @@
     
     if (![betOutcome isEqualToNumber:self.currentPageBeingEdited.bet.didWin]) {
         
-  
+        
         self.currentPageBeingEdited.bet.didWin = betOutcome;
         [self.currentPageBeingEdited setUpAmountLabel];
     }
@@ -622,7 +684,7 @@
     UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
     NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:NULL];
-
+    
 }
 
 - (IBAction)betPageEditButtonSelected:(id)sender 
@@ -645,24 +707,27 @@
     UIImage *newImage = [info valueForKey:UIImagePickerControllerEditedImage];
     if(!newImage)
         newImage = [info valueForKey:UIImagePickerControllerOriginalImage];
-
+    
     
     void (^myBlock) () = ^{
-    self.currentPageBeingEdited.bet.picture =  UIImagePNGRepresentation(newImage);
-            self.choosePhotoImageView.image = newImage;
+        self.currentPageBeingEdited.bet.picture =  UIImagePNGRepresentation(newImage);
+        self.choosePhotoImageView.image = newImage;
+        self.removePhotoButton.alpha = 1.0;
     };
     
     myBlock();
     
     
-
+    
     //[self.currentPageBeingEdited.descriptionTextView becomeFirstResponder];
     self.choosePhotoView.frame = CGRectMake(0, 240, 320, DEFAULT_KEYBOARD_HEIGHT);
     
-  //  self.imagePicker = nil;
-  //  [self cameraButtonSelected:self];
+    //  self.imagePicker = nil;
+    //  [self cameraButtonSelected:self];
+        [self.imagePicker dismissModalViewControllerAnimated:YES];
+    if([self.currentPageBeingEdited respondsToSelector:@selector(setPhotoButton:)])
     [self.currentPageBeingEdited.photoButton setEnabled:YES];
-    [self.imagePicker dismissModalViewControllerAnimated:YES];
+
     
 }
 
@@ -728,7 +793,7 @@
     }
     
     [self presentModalViewController:self.imagePicker animated:YES];
-  
+    
 }
 
 
@@ -737,7 +802,7 @@
     
     if(self.betPageBackButton.alpha < 1.0f)
     {
-    
+        
         
         [UIView animateWithDuration:1.0f
                               delay:0.0f
@@ -751,8 +816,8 @@
                              
                          }
                          completion:nil];
-
-    
+        
+        
     }
     
 }
