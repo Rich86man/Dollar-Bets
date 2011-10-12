@@ -6,6 +6,7 @@
 //  Copyright (c) 2011 Home. All rights reserved.
 //
 
+#import <CoreGraphics/CoreGraphics.h>
 #import "MainViewController.h"
 #import "BookViewController.h"
 #import "RootViewController.h"
@@ -13,21 +14,22 @@
 #import "RootContainerViewController.h"
 #import "Opponent.h"
 #import "Bet.h"
-#import <CoreGraphics/CoreGraphics.h>
+
 
 
 
 @interface MainViewController (PrivateMethods)
--(void)setupSlider;
 -(void)loadScrollViewWithPage:(int)page;
 -(void)scrollViewDidScroll:(UIScrollView *)sender;
+-(NSInteger)currentPage;
 -(void) easterEgg:(Opponent *)newOpponent;
 @end
 
 
 
 @implementation MainViewController
-@synthesize mainScrollView, books;
+@synthesize scrollView;
+@synthesize books;
 @synthesize context;
 @synthesize opponents;
 @synthesize parent;
@@ -35,9 +37,11 @@
 
 
 
+#pragma mark - View lifecycle
+
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt
 {
-    self =  [self initWithNibName:nil bundle:nil];
+    self =  [self init];
     if(self)
     {
         self.context = cntxt;
@@ -45,65 +49,45 @@
     return self;
 }
 
-#pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    /* Retreive all Opponents to help setup the Controller */
+    self.opponents = [self retrieveOpponents];  
+    [self resizeScrollView];    // Resize to fit number of Opponents
+                                // + 1 for the add page 
+    
+    /* ScrollView Setup */
+    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]];
 
-    
-    self.mainScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]];
-    [self.mainScrollView setUserInteractionEnabled:YES];
-    [self.view setUserInteractionEnabled:YES];
-    
-    
-    // view controllers are created lazily
-    // in the meantime, load the array with placeholders which will be replaced on demand
+    /* view controllers are created lazily
+       in the meantime, load the array with placeholders which will be replaced on demand */
     NSMutableArray *controllers = [[NSMutableArray alloc] init];
-    for (unsigned i = 0; i < 10; i++)
+    for (unsigned i = 0; i < [self.opponents count] + 1; i++)
     {
 		[controllers addObject:[NSNull null]];
     }
     self.books = controllers;
     
-    
-    self.opponents = [self retrieveOpponents];    
-    [self resizeScrollView];
-
-    for (int i = 0; i < [self.opponents count] && i < 2; i++) {
+    /* Load the first few Book Covers on the ScrollView */
+    for (int i = 0; i < [self.opponents count] && i < 3; i++) {
         [self loadScrollViewWithPage:i ];
     }
     
+    
     [self setupSlider];
-      
-    
-    
-    
 }
+
 
 - (void)viewDidUnload
 {
-    [self setMainScrollView:nil];
+    [self setScrollView:nil];
+    [self setBooks:nil];
+    [self setOpponents:nil];
+    [self setSliderPageControl:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 
 
 -(void)setupSlider
@@ -118,25 +102,33 @@
     [self.sliderPageControl setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
     
     [self changeToPage:1 animated:NO];
-
 }
 
-#pragma mark - Scroll View Functions
 
+
+#pragma mark - Scroll View Functions
+/*
+ This function is a modified function from an Apple example named : ScrollViewWithPaging
+ The purpose of this funtion is to supply the Page-enabled ScrollView with new viewcontrollers
+*/
 - (void)loadScrollViewWithPage:(int)page
-{
-    if (page < 0)
+{   
+    /* if the page being requested is out of bounds, leave the function */
+    if (page < 0 || page > [opponents count] )
         return;
-    if (page > [opponents count] )
-        return;
-    
+    /*************************************************************************************************
     if (page == [books count] - 2) 
         [books addObject:[NSNull null]];
+    **************************************************************************************************/
     
-    
+    /* We will take our lazily loaded controllers, test for null and init
+       new Book View controllers to supply to the ScrollView */
     BookViewController *controller = [books objectAtIndex:page];
     if ((NSNull *)controller == [NSNull null])
     {   
+        /* If the requested page is equal to the number of opponents
+           the correct page to supply is an add new page. 
+           Initing with a nil opponent causes it to be set up as an add new page */
         if (page == [self.opponents count]) 
         {
             controller = [[BookViewController alloc] initWithOpponent:nil];
@@ -147,48 +139,72 @@
         }
         
         controller.delegate = self;
-        [controller.view setUserInteractionEnabled:YES];
         [books replaceObjectAtIndex:page withObject:controller];
         controller.debugLabel.text =  [NSString stringWithFormat:@"page : %i\tbooks index : %i",page, [self.books indexOfObject:controller]];        
-        // controller.debugLabel.text =  [NSString stringWithFormat:@"%d = 4 - 5     %d = 5 - 4", (4 - 5 ), ( 5 - 4)];
-        
     }
     
-    // add the controller's view to the scroll view
+    /* Add the controller's view to the scroll view */
     if (controller.view.superview == nil)
     {   
-        CGRect frame = mainScrollView.frame;
+        CGRect frame = scrollView.frame;
         frame.origin.x = frame.size.width * page;
         frame.origin.y = 0;
         controller.view.frame = frame;
-        //[self addChildViewController:controller];
-        
-        
-        
-        [self.mainScrollView addSubview:controller.view];
-        
+        [self.scrollView addSubview:controller.view];
     }
     
 }
 
+/*
+ This function is a modified function from an Apple example named : ScrollViewWithPaging
+ This scrollView delegate function determines which page the the scrollView is on
+ and loads the viewcontrollers to the left and right to make the user expierience seamless.
+ The example function did not include the section where pages are being nulled out. 
+ This was done for memory savings and to allow infinite pages without slow down.
+ */
 - (void)scrollViewDidScroll:(UIScrollView *)sender
 {
-    // We don't want a "feedback loop" between the UIPageControl and the scroll delegate in
-    // which a scroll event generated from the user hitting the page control triggers updates from
-    // the delegate method. We use a boolean to disable the delegate logic when the page control is used.
+    NSUInteger page = [self currentPage];
     
-	
-    // Switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = mainScrollView.frame.size.width;
-    int page = floor((mainScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    /* load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling) */
+    [self loadScrollViewWithPage:page - 1];
+    [self loadScrollViewWithPage:page];
+    [self loadScrollViewWithPage:page + 1];
     
-    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-    [self loadScrollViewWithPage:page - 1 ];
-    [self loadScrollViewWithPage:page ];
-    [self loadScrollViewWithPage:page + 1 ];
-    
-    // A possible optimization would be to unload the views+controllers which are no longer visible
+    /* update our sliderControl */
     [sliderPageControl setCurrentPage:page animated:YES];
+    
+    // Apple : A possible optimization would be to unload the views+controllers which are no longer visible
+    /* Me    : We Shall */
+
+    for (NSUInteger i = 0; i < [books count]; i++)
+    {
+        if( i == page - 1 || i == page || i == page + 1)
+        {
+            /* ignore the pages currently surrounding the page in view */
+        }
+        else
+        {
+            if ((NSNull*)[books objectAtIndex:i] != [NSNull null]) 
+            {
+                BookViewController *testBook = [books objectAtIndex:i];
+              
+                if (testBook.view.superview != nil ) 
+                {
+                    [testBook.view removeFromSuperview];
+                }
+                [books replaceObjectAtIndex:i withObject:[NSNull null]];
+                
+            }  
+            
+            
+            
+        }
+            
+    }
+    
+
+/*
     if (page > 1 && (NSNull *)[books objectAtIndex:page -2 ] != [NSNull null])
     {
         BookViewController *tempBook = [books objectAtIndex:page -2];
@@ -211,7 +227,7 @@
         [books replaceObjectAtIndex:page + 2 withObject:[NSNull null]];
     }
     
-    
+  */  
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView_
@@ -224,13 +240,21 @@
 	pageControlUsed = NO;
 }
 
+
 #pragma mark - Special BookScrollView Functions
 
 -(void)resizeScrollView
 {
-    self.mainScrollView.contentSize = CGSizeMake(320 * ([opponents count] + 1), self.mainScrollView.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake(320 * ([opponents count] + 1), self.scrollView.frame.size.height);
 }
 
+-(NSInteger)currentPage
+{
+    CGFloat pageWidth = scrollView.frame.size.width;
+    int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+
+    return page;
+}
 
 
 #pragma mark - BookViewController Delegate Functions
@@ -298,7 +322,7 @@
             
             if ( bookIndex > index && (NSNull *)book != [NSNull null] )
             {
-                CGRect frame = mainScrollView.frame;
+                CGRect frame = scrollView.frame;
                 frame.origin.x = 320 * (bookIndex - 1);
                 frame.origin.y = 0;
                 
@@ -453,10 +477,10 @@
 {
 	int page = sliderPageControl.currentPage;
 	
-    CGRect frame = mainScrollView.frame;
+    CGRect frame = scrollView.frame;
     frame.origin.x = frame.size.width * page;
     frame.origin.y = 0;
-    [self.mainScrollView scrollRectToVisible:frame animated:animated]; 
+    [self.scrollView scrollRectToVisible:frame animated:animated]; 
 }
 
 - (void)changeToPage:(int)page animated:(BOOL)animated

@@ -11,8 +11,8 @@
 #import "SliderPageControl.h"
 @class RootContainerViewController;
 
-@interface MainViewController : UI ViewController <UIScrollViewDelegate, BookViewControllerDelegate, SliderPageControlDelegate> {
-    UIScrollView *mainScrollView;
+@interface MainViewController : UIViewController <UIScrollViewDelegate, BookViewControllerDelegate, SliderPageControlDelegate> {
+    UIScrollView *scrollView;
     NSManagedObjectContext *context;
     NSMutableArray *opponents;
     NSMutableArray *books;
@@ -21,23 +21,25 @@
     bool pageControlUsed;
     
 }
-
-@property (strong, nonatomic) UIScrollView *mainScrollView;
+@property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) NSMutableArray *opponents;
 @property (strong, nonatomic) NSMutableArray *books;
 @property (strong, nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) RootContainerViewController *parent;
 @property (strong, nonatomic) SliderPageControl *sliderPageControl;
 
+/* MainViewController Funtions */
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt;
-
--(NSMutableArray *)retrieveOpponents;
 -(void)resizeScrollView;
+
+/* Managed Object Functions */
+-(NSMutableArray *)retrieveOpponents;
 -(bool)deleteOpponent:(Opponent *)opp;
 
-
-- (void)slideToCurrentPage:(bool)animated;
-- (void)changeToPage:(int)page animated:(BOOL)animated;
+/*Slider Page Control Helper Functions*/
+-(void)slideToCurrentPage:(bool)animated;
+-(void)changeToPage:(int)page animated:(BOOL)animated;
+-(void)setupSlider;
 
 
 @end
