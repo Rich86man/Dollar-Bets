@@ -13,118 +13,100 @@
 #import "BookSettingsView.h"
 
 @interface BookViewController(PrivateMethods)
--(void)setup;
-- (void)myTransitionDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
+-(void)setupDebugLabel;
 @end    
 
 @implementation BookViewController
 @synthesize frontView, backView;
 @synthesize delegate;
 @synthesize opponent;
-@synthesize frontViewIsVisible;
 @synthesize containerView;
 
 @synthesize debugLabel;
-
-
--(void)setup
-{
-    [self setFrontView:nil];
-    [self setBackView:nil];
-    [self setContainerView:nil];
-    [self setOpponent:nil];
-    
-    /*  --------DEBUG LABEL---------*/
-    UILabel *dl = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, 320, 30)];
-    dl.font = [UIFont fontWithName:@"STHeitiJ-Light" size:20.0f];
-    dl.textAlignment = UITextAlignmentCenter;
-    self.debugLabel = dl;
-    
-
-}
 
 -(id)initWithOpponent:(Opponent *)opp
 {
     if (self = [super init])
     {
-        [self setup];
+        [self setFrontView:nil];
+        [self setBackView:nil];
+        [self setContainerView:nil];
+        [self setOpponent:nil];
         self.opponent = opp;
     }    
-    
-    
     return self;
-    
 }
 
 
+-(void)setupDebugLabel
+{
+    /*  --------DEBUG LABEL---------*/
+    UILabel *dl = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, 320, 30)];
+    dl.font = [UIFont fontWithName:@"STHeitiJ-Light" size:20.0f];
+    dl.textAlignment = UITextAlignmentCenter;
+    self.debugLabel = dl;
+}
+
 
 #pragma mark - View lifecycle
+
 - (void)loadView
 {
     [super loadView];
-    // Do any additional setup after loading the view from its nib.
-    
+  //  self.view = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+    /*
     UIView *localContainerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
 	self.containerView = localContainerView;
     self.containerView.backgroundColor = [UIColor clearColor];
-    self.containerView.userInteractionEnabled = YES;
+    */
 
     /*  --------DEBUG LABEL---------*/
     [self.containerView addSubview:self.debugLabel];
     
-    BookFrontView *bfw = [[BookFrontView alloc] initWithFrame:self.containerView.frame ];
+    BookFrontView *bfw = [[BookFrontView alloc] initWithFrame:self.view.frame ];
     bfw.viewController = self;
-    bfw.backgroundColor = [UIColor clearColor];
-    bfw.userInteractionEnabled = YES;
     self.frontView = bfw;
-    [self.containerView addSubview:self.frontView];
     
-    frontViewIsVisible = YES;
-    
-    
-    BookSettingsView *bsw = [[BookSettingsView alloc] initWithFrame:self.containerView.frame];
+    BookSettingsView *bsw = [[BookSettingsView alloc] initWithFrame:self.view.frame];
     bsw.viewController = self;
     bsw.backgroundColor = [UIColor clearColor];
     self.backView = bsw;
     
-    
-    self.view = self.containerView;
-    
-   
+   // self.view = self.containerView;
 }
 
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self.view setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.frontView];
+    frontViewIsVisible = YES;
 }
+
 
 - (void)viewDidUnload
 {
-    NSLog(@"%@: viewDidUnload",[self.debugLabel.text substringToIndex:8] );
-    
     [self setFrontView:nil];
     [self setBackView:nil];
     [self setContainerView:nil];
     [self setOpponent:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 
-
-
+/* Button methods */
 - (void)configButtonSelected:(id)sender 
 {
     [self flipCurrentView];    
 }
 
+
 -(void)backButtonSelected:(id)sender
 {
     [self flipCurrentView];
 }
+
 
 -(void)deleteButtonSelected:(id)sender
 {
@@ -140,19 +122,14 @@
         default:
             break;
     }
-    
 }
 
+
 -(void)didDoubleClick
-{   NSLog(@"BookViewController : didDoubleClick");
+{
     [self.delegate didSelectBook:self];
 }
 
--(void)didLongPress:(UILongPressGestureRecognizer *)sender
-{
-   [self.delegate didSelectBook:self];
-    
-}
 
 -(void)refreshFrontView
 {
@@ -160,64 +137,45 @@
 }
 
 
-
-- (void)flipCurrentView {
-
-	
-	// disable user interaction during the flip
-	self.view.userInteractionEnabled = NO;
-	
-	
-	// setup the animation group
-	[UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.75];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(myTransitionDidStop:finished:context:)];
-	
-	// swap the views and transition
+- (void)flipCurrentView 
+{
+  // disable user interaction during the flip
+  self.view.userInteractionEnabled = NO;
+  
+    
+    // swap the views and transition
     if (frontViewIsVisible == YES) 
     {
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.view cache:NO];
-        [self.frontView removeFromSuperview];
-        [self.view addSubview:self.backView];
-        
-    } 
-    else 
-    {
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:NO];
-        [self.backView removeFromSuperview];
-        [self.view addSubview:self.frontView];
-    
+        [UIView transitionFromView:self.frontView
+                            toView:self.backView
+                          duration:0.75f
+                           options:UIViewAnimationOptionTransitionFlipFromRight
+                        completion:^(BOOL finished){
+                        	self.view.userInteractionEnabled = YES;
+                        }];
     }
-	[UIView commitAnimations];
-	
-	
-	[UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.75];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(myTransitionDidStop:finished:context:)];
+    else
+    {
+        [UIView transitionFromView:self.backView
+                            toView:self.frontView
+                          duration:0.75f
+                           options:UIViewAnimationOptionTransitionFlipFromLeft
+                        completion:^(BOOL finished){
+                        	self.view.userInteractionEnabled = YES;
+                        }];
+    }
     
-	[UIView commitAnimations];
-	frontViewIsVisible=!frontViewIsVisible;
-}
-
-
-- (void)myTransitionDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
-{
-    // re-enable user interaction when the flip is completed.
-	self.containerView.userInteractionEnabled = YES;
+    frontViewIsVisible=!frontViewIsVisible;
 }
 
 
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
     if(!frontViewIsVisible && self.backView.popOver.alpha == 1.0f)
     {
         [self.backView hidePopOver];
         [self.backView.deleteButton setSelected:NO];
-        
     }
 }
 
@@ -225,7 +183,6 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField 
 {
     self.frontView.nameLabel.alpha = 0.0f;
-    
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField

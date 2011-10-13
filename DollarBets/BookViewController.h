@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Opponent.h"
-//#import "BookSettingsViewController.h"
+
 
 @class BookFrontView;
 @class BookSettingsView;
@@ -16,37 +16,31 @@
 @class Opponent;
 
 @protocol BookViewControllerDelegate <NSObject>
-
--(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *) book;
+-(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *)book;
 -(void)deleteThisBook:(BookViewController *)book;
 -(void)didSelectBook:(BookViewController *)book;
-
 @end
 
 
-@interface BookViewController : UIViewController<UIGestureRecognizerDelegate, UITextFieldDelegate> {
+@interface BookViewController : UIViewController <UIGestureRecognizerDelegate, UITextFieldDelegate> {
 
-    BOOL frontViewIsVisible;
-    
+    bool frontViewIsVisible;
     UILabel * debugLabel;
     
+    UIView *containerView;	
     BookFrontView *frontView;
     BookSettingsView *backView;
 
-    UIView *containerView;	
-    
-    id<BookViewControllerDelegate> delegate;
 
 }
 @property (assign)BOOL frontViewIsVisible;
 @property (strong, nonatomic)Opponent *opponent;
 @property (strong, nonatomic)UIView *containerView;
-@property (strong, nonatomic)id delegate;
 @property (strong, nonatomic)BookFrontView *frontView;
 @property (strong, nonatomic)BookSettingsView *backView;
-
-
 @property (strong, nonatomic)UILabel *debugLabel;
+@property (assign)id delegate;
+
 
 -(id)initWithOpponent:(Opponent *)opp;
 

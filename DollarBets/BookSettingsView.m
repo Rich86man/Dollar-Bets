@@ -20,11 +20,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.deleteButton = nil;
-        self.backButton = nil;
-        self.bookImageView = nil;
-        
-        
+        [self setDeleteButton:nil]; ;
+        [self setBackButton:nil];
+        [self setBookImageView:nil];
     }
     return self;
 }

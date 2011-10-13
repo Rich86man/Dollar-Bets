@@ -101,7 +101,7 @@
     [self.sliderPageControl setNumberOfPages:[self.opponents count] + 1];
     [self.sliderPageControl setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
     
-    [self changeToPage:1 animated:NO];
+    [self changeToPage:0 animated:NO];
 }
 
 
@@ -229,6 +229,7 @@
 -(void)resizeScrollView
 {
     self.bookScrollView.contentSize = CGSizeMake(320 * ([opponents count] + 1), self.bookScrollView.frame.size.height);
+    [self.sliderPageControl setNumberOfPages:[self.opponents count] + 1];
 }
 
 
@@ -302,34 +303,7 @@
                              [bookToDelete.view removeFromSuperview];
                          }];
         self.opponents = [Opponent allOponentsSortedBy:@"date"];
-        // NSUInteger index = [books indexOfObject:book];
         
-        /* load scrollView with the page to the right of the one deleted */
-        //[self loadScrollViewWithPage:index + 1 ];
-        
-        /* For each of the remaining bookViewControllers, shift thier frame to the right */
-        /*
-         for (BookViewController *book in books) 
-         {
-         NSUInteger bookIndex = [books indexOfObject:book];
-         
-         if ( bookIndex > index && (NSNull *)book != [NSNull null] )
-         {
-         CGRect frame = bookScrollView.frame;
-         frame.origin.x = 320 * (bookIndex - 1);
-         frame.origin.y = 0;
-         
-         [UIView animateWithDuration:0.8f 
-         delay:0 
-         options:UIViewAnimationCurveEaseIn 
-         animations:^{ 
-         book.view.frame = frame;                         
-         }    
-         completion:nil];
-         
-         }
-         }
-         */
         /* Shift the next books' frame left to replace the one deleted */
         NSUInteger indexOfBookOnTheRight = [books indexOfObject:bookToDelete] + 1;
         BookViewController *bookOnTheRight = [books objectAtIndex:indexOfBookOnTheRight];
@@ -345,76 +319,59 @@
                          completion:nil];
         
         [books removeObject:bookToDelete];
-        
         [self loadScrollViewWithPage:[books indexOfObject:bookOnTheRight] + 1 ];
-        [self loadScrollViewWithPage:[books indexOfObject:bookOnTheRight] - 1 ];
     }
     /* Finally, since we have a new amount of books, resize the scroll view */
+    
     [self resizeScrollView];
 }
 
+
+/* 
+ didSelectBook - Gets called when a user opens a book
+ The purpose of this function is to expand the bookcover
+ and pass control over to the parent view controller. 
+ */
 -(void)didSelectBook:(BookViewController *)book
 {
-    /*
-     RootViewController *root = [[RootViewController alloc]init];
-     
-     [self presentViewController:root animated:NO completion:nil];
-     
-     [UIView transitionWithView:root.view 
-     duration:0.8f 
-     options:UIViewAnimationCurveEaseInOut 
-     animations:^{
-     book.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];
-     } completion:nil];
-     
-     
-     
-     [self transitionFromViewController:self 
-     toViewController:root 
-     duration:1.0f 
-     options:UIViewAnimationCurveEaseInOut 
-     animations:^{
-     book.frontView.bookImgView.frame = [[UIScreen mainScreen] bounds];}
-     completion:nil ];
-     
-     */
     NSLog(@"MainViewController : didSelectBook:");
     
     
     [UIView animateWithDuration:1.0f 
                           delay:0.0f 
-                        options:UIViewAnimationOptionCurveLinear animations:^{
-                            book.view.transform = CGAffineTransformMakeScale(1.5f, 1.5f);
-                            //book.view.frame = [[UIScreen mainScreen] bounds];
-                        } completion:^(BOOL finished){  
-                            [self.parent OpenBook:book];
-                        } ];
-    
-    
-    
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         book.view.transform = CGAffineTransformMakeScale(1.5f, 1.5f);
+                     }
+                     completion:^(BOOL finished){  
+                         [self.parent OpenBook:book];
+                     } ];
 }
 
-
+/* 
+ Slider page Control delegate Functions
+ These functions are needed by the Slider Page control 
+ on the bottom of the page
+ */
 #pragma mark sliderPageControlDelegate
 
+/* Returns the Title for the OverlayView when Choosing by SlideControl */
 - (NSString *)sliderPageController:(id)controller hintTitleForPage:(NSInteger)page
 {
-    if(page == [self.opponents count])
-    {
+    if( page == [self.opponents count] )
         return @"Create New";
-    }
     
     Opponent *currentOpponent = [self.opponents objectAtIndex:page];
-    
-	return currentOpponent.name;
+    return currentOpponent.name;
 }
+
 
 - (void)onPageChanged:(id)sender
 {
 	pageControlUsed = YES;
-	[self slideToCurrentPage:YES];
-	
+	[self slideToCurrentPage:YES];	
 }
+
 
 - (void)slideToCurrentPage:(bool)animated 
 {
@@ -426,11 +383,13 @@
     [self.bookScrollView scrollRectToVisible:frame animated:animated]; 
 }
 
+
 - (void)changeToPage:(int)page animated:(BOOL)animated
 {
 	[sliderPageControl setCurrentPage:page animated:YES];
 	[self slideToCurrentPage:animated];
 }
+
 
 #pragma mark - UIAlertViewDelegate functions
 
@@ -443,7 +402,12 @@
     }
 }
 
-
+/* 
+ The easteregg function
+ If someone that I know downloads the app and puts their own name 
+ as a new opponent, on the book, then it will load that book with all 
+ of the bets they have had with me and the name will change to my name
+ */
 -(void)easterEgg:(Opponent *)newOpponent
 {
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
@@ -451,42 +415,7 @@
     
     
     
-    if ([newOpponent.name isEqualToString:@"test"]) {
-        
-        
-        
-        
-        Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet1.date = [NSDate date];
-        newBet1.amount = [NSNumber numberWithInt:5];
-        newBet1.report = @"A couple of hotdogs";
-        newBet1.opponent = newOpponent;
-        
-        Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet2.date = [dateFormatter dateFromString:@"05 / 12 / 2011"];
-        newBet2.amount = [NSNumber numberWithInt:12];
-        newBet2.report = @"Tijuana Flatts";
-        newBet2.opponent = newOpponent;
-        
-        
-        Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet3.date = [dateFormatter dateFromString:@"01 / 21 / 2010"];
-        newBet3.amount = [NSNumber numberWithInt:3];
-        newBet3.report = @"lunch money";
-        newBet3.opponent = newOpponent;
-        
-        NSError *error =  nil;
-        
-        [context save:&error];
-        
-        if(error)
-        {
-            NSLog(@"%@\n", [error  description]);
-        }
-        
-        
-    }
-    else if ([newOpponent.name isEqualToString:@"Johnny Curry"])
+    if ([newOpponent.name isEqualToString:@"Johnny Curry"])
     {
         Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
         newBet1.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
@@ -540,17 +469,7 @@
         newBet7.opponent = newOpponent;
         
         newOpponent.name = @"Captain";
-        
-        NSError *error =  nil;
-        
-        [context save:&error];
-        
-        if(error)
-        {
-            NSLog(@"%@\n", [error  description]);
-        }
-        
-        
+        [newOpponent save];
     }
     else if ([newOpponent.name isEqualToString:@"Matt Carmichael"])
     {
@@ -599,16 +518,7 @@
         newBet6.opponent = newOpponent;
         
         newOpponent.name = @"Captain";
-        
-        NSError *error =  nil;
-        
-        [context save:&error];
-        
-        if(error)
-        {
-            NSLog(@"%@\n", [error  description]);
-        }
-        
+        [newOpponent save];
         
     }
     else if ([newOpponent.name isEqualToString:@"Konrad Gungor"])
@@ -638,18 +548,10 @@
         
         
         newOpponent.name = @"Captain";
+        [newOpponent save];
         
-        NSError *error =  nil;
-        
-        [context save:&error];
-        
-        if(error)
-        {
-            NSLog(@"%@\n", [error  description]);
-        }
-        
-        
-    }  else if ([newOpponent.name isEqualToString:@"Mary Thomas"])
+    }  
+    else if ([newOpponent.name isEqualToString:@"Mary Thomas"])
     {
         Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
         newBet1.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
@@ -688,18 +590,8 @@
         newBet5.didWin = [NSNumber numberWithInt:1];
         newBet5.opponent = newOpponent;
         
-        newOpponent.name = @"Richard";
-        
-        NSError *error =  nil;
-        
-        [context save:&error];
-        
-        if(error)
-        {
-            NSLog(@"%@\n", [error  description]);
-        }
-        
-        
+        newOpponent.name = @"Richard Kirk";
+        [newOpponent save];        
     }
     else if ([newOpponent.name isEqualToString:@"Carlos Gardinali"])
     {
@@ -718,24 +610,9 @@
         newBet2.opponent = newOpponent;
         
         newOpponent.name = @"Captain";
-        
-        NSError *error =  nil;
-        
-        [context save:&error];
-        
-        if(error)
-        {
-            NSLog(@"%@\n", [error  description]);
-        }
-        
-        
+        [newOpponent save];
     }
-    
-    
-    
-    
-    
-    
+
 }
 
 

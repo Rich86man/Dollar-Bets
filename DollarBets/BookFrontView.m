@@ -22,18 +22,6 @@
 @synthesize viewController;
 @synthesize nameLabel;
 
--(void)setupView
-{
-    
-    self.bookImgView = nil;
-    self.configButton = nil;
-    self.nameTextField = nil;
-    self.dateLabel = nil;
-    self.plusSignButton = nil;
-    
-    
-    
-}
 
 -(id)initWithFrame:(CGRect)frame
 {
@@ -41,7 +29,16 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        [self setupView];
+        
+        self.bookImgView = nil;
+        self.configButton = nil;
+        self.nameTextField = nil;
+        self.dateLabel = nil;
+        self.plusSignButton = nil;
+        
+        
+        
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -186,11 +183,11 @@
                      animations:^{
                          self.plusSignButton.frame = CGRectMake(self.plusSignButton.frame.origin.x + (self.plusSignButton.frame.size.width / 2), self.plusSignButton.frame.origin.y + (self.plusSignButton.frame.size.height / 2) , 0, 0);
                      }completion:nil];
-    
+    self.nameTextField.placeholder = @"Opponent...";
     self.plusSignButton.alpha = 0;
     self.plusSignButton = nil;
     self.nameTextField.alpha = 1;
-
+   [self.nameTextField becomeFirstResponder];
     
     
 }
