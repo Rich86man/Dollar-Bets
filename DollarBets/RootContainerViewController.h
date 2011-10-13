@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
 #import "RootViewController.h"
-#import "Opponent.h"
+#import "BookViewController.h"
 
 @interface RootContainerViewController : UIViewController
 {
@@ -24,7 +24,7 @@
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt;
 
--(void)OpenBookWithOpponent:(Opponent *)opp;
+-(void)OpenBook:(BookViewController *)book;
 -(void)closeBook;
 
 @end

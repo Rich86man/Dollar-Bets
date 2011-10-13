@@ -116,11 +116,6 @@
 
 
 
--(void)enteredNewOpponentName:(UITextField *)sender
-{ 
-    [delegate opponentCreatedWithName:[sender text] by:self];
-}
-
 - (void)configButtonSelected:(id)sender 
 {
     [self flipCurrentView];    
@@ -239,6 +234,7 @@
     self.frontView.nameLabel.alpha = 1.0f;
     textField.text = @"";
     [textField resignFirstResponder];
+    [delegate opponentCreatedWithName:frontView.nameLabel.text by:self];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

@@ -21,6 +21,11 @@
 
 @interface Opponent (CoreDataGeneratedAccessors)
 
++(NSArray *)allOponentsSortedBy:(NSString *)sortDescriptor;
++(void)deleteAll;
++(bool)deleteOpponent:(Opponent *)opp;
+
+-(bool)save;
 
 - (void)addBetsObject:(Bet *)value;
 - (void)removeBetsObject:(Bet *)value;

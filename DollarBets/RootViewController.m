@@ -55,6 +55,7 @@
 @synthesize betPageBackButton;
 @synthesize betPageEditButton;
 @synthesize delegate;
+@synthesize currentBook;
 
 
 
@@ -74,9 +75,9 @@
     // Configure the page view controller and add it as a child view controller.
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
-    
-    UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
-    NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
+    self.opponent = self.currentBook.opponent;
+    //UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
+    NSArray *viewControllers = [NSArray arrayWithObjects:self.currentBook,nil];
     
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
     
@@ -121,10 +122,17 @@
     self.choosePhotoView.backgroundColor = pattern;
     self.chooseDidWinView.backgroundColor = pattern;
     
+    UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
+    [self.pageViewController setViewControllers:[NSArray arrayWithObject:startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished){
+            currentBook.view.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+        
+    }];
     
     
     
 }
+
+
 
 - (void)viewDidUnload
 {

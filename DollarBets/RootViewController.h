@@ -10,6 +10,7 @@
 #import "Opponent.h"
 #import "TOCTableViewController.h"
 #import "BetPage.h"
+#import "BookViewController.h"
 
 
 @interface RootViewController : UIViewController <UINavigationControllerDelegate, UIPageViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, TOCTableViewControllerDelegate, BetPageControllerDelegate>
@@ -28,6 +29,7 @@
 @property (assign)id delegate;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) Opponent *opponent;
+@property (strong, nonatomic) BookViewController *currentBook;
 @property (strong, nonatomic) BetPage *currentPageBeingEdited;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) IBOutlet UIButton *homeButton;

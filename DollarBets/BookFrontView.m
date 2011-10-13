@@ -95,7 +95,7 @@
         }
         else
         {
-            label.text = @"Opponent...";
+            label.text = @"";
         }
         self.nameLabel = label;
 
@@ -164,7 +164,7 @@
                           delay:0 
                         options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse | UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
                      animations:^{ 
-                         self.plusSignButton.alpha = 0.0f;
+                         self.plusSignButton.alpha = 0.1f;
                          self.plusSignButton.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
                        
                      }    

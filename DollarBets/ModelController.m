@@ -111,15 +111,21 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
+    if ([viewController respondsToSelector:@selector(refreshFrontView)]) {
+        return [self viewControllerAtIndex:0];
+    }
+    
     NSUInteger index = [self indexOfViewController:viewController];
     if (index == NSNotFound) {
         return nil;
     }
     
-    index++;
+        index++;
+
     if (index > [self.bets count]) {
         return nil;
     }
+    
     return [self viewControllerAtIndex:index];
 }
 

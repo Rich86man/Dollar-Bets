@@ -114,7 +114,7 @@
 
 -(void)timerFired
 {
-    [self.delegate showHomeButton:nil];
+    [self.delegate showHomeButton:1.0];
 }
 #pragma mark - Table view data source
 

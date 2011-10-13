@@ -11,18 +11,18 @@
 #import "SliderPageControl.h"
 @class RootContainerViewController;
 
-@interface MainViewController : UIViewController <UIScrollViewDelegate, BookViewControllerDelegate, SliderPageControlDelegate> {
-    UIScrollView *scrollView;
+@interface MainViewController : UIViewController <UIScrollViewDelegate, BookViewControllerDelegate, SliderPageControlDelegate, UIAlertViewDelegate> {
+    UIScrollView *bookScrollView;
     NSManagedObjectContext *context;
-    NSMutableArray *opponents;
+    NSArray *opponents;
     NSMutableArray *books;
     RootContainerViewController *parent;
     SliderPageControl *sliderPageControl;
     bool pageControlUsed;
     
 }
-@property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) NSMutableArray *opponents;
+@property (strong, nonatomic) UIScrollView *bookScrollView;
+@property (strong, nonatomic) NSArray *opponents;
 @property (strong, nonatomic) NSMutableArray *books;
 @property (strong, nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) RootContainerViewController *parent;
@@ -31,10 +31,6 @@
 /* MainViewController Funtions */
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt;
 -(void)resizeScrollView;
-
-/* Managed Object Functions */
--(NSMutableArray *)retrieveOpponents;
--(bool)deleteOpponent:(Opponent *)opp;
 
 /*Slider Page Control Helper Functions*/
 -(void)slideToCurrentPage:(bool)animated;

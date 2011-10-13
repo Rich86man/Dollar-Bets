@@ -17,9 +17,9 @@
 
 @protocol BookViewControllerDelegate <NSObject>
 
--(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *) cont;
--(void)deleteThisBook:(BookViewController *)sender;
--(void)didSelectBook:(BookViewController *)sender;
+-(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *) book;
+-(void)deleteThisBook:(BookViewController *)book;
+-(void)didSelectBook:(BookViewController *)book;
 
 @end
 
@@ -53,7 +53,7 @@
 -(void)configButtonSelected:(id)sender;
 -(void)backButtonSelected:(id)sender;
 -(void)deleteButtonSelected:(id)sender;
--(void)enteredNewOpponentName:(UITextField *)sender;
+
 -(void)didDoubleClick;
 
 -(void)flipCurrentView;

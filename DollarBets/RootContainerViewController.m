@@ -70,20 +70,20 @@
     // e.g. self.myOutlet = nil;
 }
 
--(void)OpenBookWithOpponent:(Opponent *)opp
+-(void)OpenBook:(BookViewController *)book
 {
     NSLog(@"RootContainerViewController : OpenBookWithOpponent:");
 
     self.rootViewController = [[RootViewController alloc] init];
-    self.rootViewController.opponent = opp;
+    self.rootViewController.currentBook = book;
     self.rootViewController.delegate = self;
     
     
 //    [UIView transitionFromView:self.mainViewController.view toView:self.rootViewController.view duration:0.5f options:UIViewAnimationTransitionFlipFromLeft completion:nil];
-    
+    [book.view removeFromSuperview];
       
     
-    [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionCurlUp animations:^{
+    [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionNone animations:^{
         [self.view addSubview:self.rootViewController.view];
 
     } completion:nil];
