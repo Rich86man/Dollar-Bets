@@ -15,7 +15,7 @@
 @protocol TOCTableViewControllerDelegate <NSObject>
 
 -(void)didSelectPage:(int)index;
--(void)didBeginQuickEdit:(id)sender;
+-(void)didBeginQuickAdd:(id)sender;
 -(void)readyToSave:(bool)ready;
 -(void)savedQuickBet;
 

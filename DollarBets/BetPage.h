@@ -24,7 +24,7 @@
 
 @end
 
-@interface BetPage : UIViewController < UITextViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate>
+@interface BetPage : UIViewController < UITextViewDelegate, UIGestureRecognizerDelegate , UIScrollViewDelegate>
 {
     Bet *bet;
     UIScrollView *scrollView;
@@ -52,7 +52,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *amountLabel;
 
 @property (strong, nonatomic) IBOutlet UILabel *pageNumberLabel;
-@property (strong, nonatomic) IBOutlet UIButton *editButton;
+
 @property (strong,nonatomic) NSString* pageNum;
 @property (strong, nonatomic) IBOutlet UIButton *photoButton;
 @property (strong, nonatomic) IBOutlet UIButton *tweetButton;

@@ -168,6 +168,7 @@
 {
     self.frontView.nameLabel.text = textField.text;
     self.frontView.nameLabel.alpha = 1.0f;
+    [self.frontView hidePlusButton];
     textField.text = @"";
     [textField resignFirstResponder];
     [delegate opponentCreatedWithName:frontView.nameLabel.text by:self];

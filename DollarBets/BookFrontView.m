@@ -10,6 +10,7 @@
 #import "BookViewController.h"
 #import "Opponent.h"
 
+#define RGB256_TO_COL(col) ((col) / 255.0f)
 
 @implementation BookFrontView
 @synthesize nameTextField, bookImgView, dateLabel;
@@ -49,6 +50,7 @@
     {
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(80, 60, 215, 100)];
         [label setFont:[UIFont fontWithName:@"STHeitiJ-Light" size:30.0f]];
+        [label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(171) green:RGB256_TO_COL(170) blue:RGB256_TO_COL(79) alpha:1.0]];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setContentMode:UIViewContentModeCenter];
         [label setAdjustsFontSizeToFitWidth:YES];
@@ -79,6 +81,8 @@
         [textField setBackgroundColor:[UIColor clearColor]];
         [textField setDelegate:self.viewController];
         [textField setFont:[UIFont fontWithName:@"STHeitiJ-Light" size:30.0f]];
+        [textField setTextColor:[UIColor colorWithRed:RGB256_TO_COL(171) green:RGB256_TO_COL(170) blue:RGB256_TO_COL(79) alpha:1.0]];
+
 
         self.nameTextField = textField;
     }

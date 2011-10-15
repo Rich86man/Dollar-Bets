@@ -58,7 +58,8 @@
 		FA671A661443FC8500E876F8 /* chooseNewSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA671A651443FC8500E876F8 /* chooseNewSelected.png */; };
 		FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6ADA331402A9FF007E6CB1 /* BookViewController.m */; };
 		FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */; };
-		FA724B141416A36200D112B9 /* statusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA724B131416A36200D112B9 /* statusBarView.m */; };
+		FAAC98401449F77600AD3CC5 /* betNavBar.png in Resources */ = {isa = PBXBuildFile; fileRef = FAAC983E1449F77600AD3CC5 /* betNavBar.png */; };
+		FAAC98421449F79800AD3CC5 /* betNavBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAAC98411449F79800AD3CC5 /* betNavBar@2x.png */; };
 		FAB06B2E14439DB900F81678 /* book.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B2D14439DB900F81678 /* book.png */; };
 		FAB06B6414439DDC00F81678 /* black_denim.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B3014439DDB00F81678 /* black_denim.png */; };
 		FAB06B6514439DDC00F81678 /* black-Linen.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B3114439DDB00F81678 /* black-Linen.png */; };
@@ -191,9 +192,9 @@
 		FA6ADA321402A9FF007E6CB1 /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookViewController.h; sourceTree = "<group>"; };
 		FA6ADA331402A9FF007E6CB1 /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookViewController.m; sourceTree = "<group>"; };
 		FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		FA724B121416A36200D112B9 /* statusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statusBarView.h; sourceTree = "<group>"; };
-		FA724B131416A36200D112B9 /* statusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = statusBarView.m; sourceTree = "<group>"; };
 		FA748490141EC931006695C2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		FAAC983E1449F77600AD3CC5 /* betNavBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = betNavBar.png; sourceTree = "<group>"; };
+		FAAC98411449F79800AD3CC5 /* betNavBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "betNavBar@2x.png"; sourceTree = "<group>"; };
 		FAB06B2D14439DB900F81678 /* book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = book.png; sourceTree = "<group>"; };
 		FAB06B3014439DDB00F81678 /* black_denim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black_denim.png; sourceTree = "<group>"; };
 		FAB06B3114439DDB00F81678 /* black-Linen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black-Linen.png"; sourceTree = "<group>"; };
@@ -302,8 +303,6 @@
 			isa = PBXGroup;
 			children = (
 				FA1D8B19140C176E00C4DD59 /* Pages */,
-				FA724B121416A36200D112B9 /* statusBarView.h */,
-				FA724B131416A36200D112B9 /* statusBarView.m */,
 			);
 			name = OpenBook;
 			sourceTree = "<group>";
@@ -311,6 +310,7 @@
 		FA1D8B19140C176E00C4DD59 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				FA215D85143D44B3001919C4 /* Modal ImageViewController */,
 				FA4D38831413FAC4003064BC /* Table Of Contents */,
 				FAB474D614194E4D0000075F /* Bet Page */,
 				FA1D8B0C140C176600C4DD59 /* RootViewController.h */,
@@ -420,6 +420,8 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FAAC983E1449F77600AD3CC5 /* betNavBar.png */,
+				FAAC98411449F79800AD3CC5 /* betNavBar@2x.png */,
 				FA0D32D61444DDC900E4755C /* Slider Page Control  */,
 				FA671A651443FC8500E876F8 /* chooseNewSelected.png */,
 				FA671A621443FC1F00E876F8 /* chooseNew.png */,
@@ -557,7 +559,6 @@
 		FAB474D614194E4D0000075F /* Bet Page */ = {
 			isa = PBXGroup;
 			children = (
-				FA215D85143D44B3001919C4 /* Modal ImageViewController */,
 				FAB474D714194E730000075F /* BetPage.h */,
 				FAB474D814194E730000075F /* BetPage.m */,
 				FAB474D914194E730000075F /* BetPage.xib */,
@@ -722,6 +723,8 @@
 				FA0D32D51444DBFF00E4755C /* sliderPageControlBg@2x.png in Resources */,
 				FA0D32DD1444EAB300E4755C /* paperTop.png in Resources */,
 				FA0D32DE1444EAB300E4755C /* paperTop@2x.png in Resources */,
+				FAAC98401449F77600AD3CC5 /* betNavBar.png in Resources */,
+				FAAC98421449F79800AD3CC5 /* betNavBar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,7 +747,6 @@
 				FA1D8B16140C176600C4DD59 /* ModelController.m in Sources */,
 				FA1D8B26140C2F8300C4DD59 /* RootContainerViewController.m in Sources */,
 				FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */,
-				FA724B141416A36200D112B9 /* statusBarView.m in Sources */,
 				FADC500214181A08008F8C4E /* TOCBetsTableViewCell.m in Sources */,
 				FAB474DA14194E730000075F /* BetPage.m in Sources */,
 				FA215D89143D44DC001919C4 /* ModalImageViewController.m in Sources */,

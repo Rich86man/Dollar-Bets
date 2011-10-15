@@ -33,7 +33,7 @@
 @synthesize amountTextView;
 @synthesize amountLabel;
 @synthesize pageNumberLabel;
-@synthesize editButton;
+
 @synthesize pageNum;
 @synthesize photoButton;
 @synthesize tweetButton;
@@ -232,8 +232,7 @@
     [self setDateLabel:nil];
     [self setDescriptionTextView:nil];
     [self setAmountLabel:nil];
-    [self setEditButton:nil];
-    
+
     [self setPageNumberLabel:nil];
     
     [self setPhotoButton:nil];
@@ -344,7 +343,27 @@
     
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch 
+{
+    
+    
+    
+    if (touch.view == self.photoButton) {
+        
+        return NO;
+    }
+    return YES;
+}
+
 #pragma mark - TextFieldDelegate 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+   
+    NSSet *arr = [event touchesForView:self.photoButton];
+    
+    if ([arr count] == 0)
+        [super touchesBegan:touches withEvent:event];
+}
 
 
 

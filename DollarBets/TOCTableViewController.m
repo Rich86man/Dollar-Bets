@@ -202,7 +202,7 @@
         self.overlayLabel.text = @"Pull Down To Cancel";
         scrollView.contentInset = UIEdgeInsetsMake(122.0, 0, 0, 0 );
         isQuickAdding = YES;
-        [self.delegate didBeginQuickEdit:self];
+        [self.delegate didBeginQuickAdd:self];
         if(!self.quickBet)
         {
             self.quickBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.opponent.managedObjectContext];

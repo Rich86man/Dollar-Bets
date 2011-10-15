@@ -80,8 +80,8 @@
 
     self.rootViewController = [[RootViewController alloc] init];
     self.rootViewController.delegate = self;
+
     
-   //  [book.view setAutoresizingMask:UIViewAutoresizingNone];
     
     [UIView animateWithDuration:1.0f 
                           delay:0.0f 
