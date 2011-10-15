@@ -8,7 +8,7 @@
 
 #import "Bet.h"
 #import "Opponent.h"
-
+#import "AppDelegate.h"
 
 @implementation Bet
 
@@ -20,5 +20,19 @@
 @dynamic picture;
 @dynamic report;
 @dynamic opponent;
+
+-(bool)save
+{
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    
+    NSError *error = nil;
+    [context save:&error];
+    if(error)
+    {   
+        NSLog(@"%@\n", [error  description]);   
+        return NO;
+    }
+    return YES;
+}
 
 @end

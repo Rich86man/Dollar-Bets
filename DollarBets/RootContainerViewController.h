@@ -16,6 +16,7 @@
     NSManagedObjectContext *context;
     MainViewController *mainViewController;
     RootViewController *rootViewController;
+    CGRect aFrame;
 }
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
@@ -25,6 +26,6 @@
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)cntxt;
 
 -(void)OpenBook:(BookViewController *)book;
--(void)closeBook;
+-(void)closeBook:(BookViewController *)book;
 
 @end

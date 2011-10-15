@@ -10,78 +10,46 @@
 #import "BookViewController.h"
 #import "Opponent.h"
 
-@interface BookFrontView (PrivateMethods)
-
-
-
-@end
 
 @implementation BookFrontView
 @synthesize nameTextField, bookImgView, dateLabel;
-@synthesize configButton, plusSignButton;
+@synthesize configButton, addNewButton;
 @synthesize viewController;
 @synthesize nameLabel;
 
 
 -(id)initWithFrame:(CGRect)frame
 {
-    
     self = [super initWithFrame:frame];
-    
-    if (self) {
-        
-        self.bookImgView = nil;
-        self.configButton = nil;
-        self.nameTextField = nil;
-        self.dateLabel = nil;
-        self.plusSignButton = nil;
-        
-        
-        
+    if (self) 
+    {
         self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
 
-
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
-    
-    self.backgroundColor = [UIColor clearColor];
-    
-    if(self.bookImgView == nil)
+    if(!self.bookImgView)
     {
-        UIImageView *setupImgView = [[UIImageView alloc]initWithFrame:CGRectMake(31, 64, 265, 362)];
-        setupImgView.backgroundColor = [UIColor clearColor];
-        setupImgView.image = [UIImage imageNamed:@"book.png"];
-    
-        setupImgView.userInteractionEnabled = YES;
-
-        //UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self.viewController action:@selector(handleTapGesture:)];
-        //[doubleTap setNumberOfTapsRequired:3];
-        ///doubleTap.delegate = self.viewController;
-        //UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self.viewController action:@selector(didLongPress:)];
-        //[longPressGesture setMinimumPressDuration:2.0];
-        //[setupImgView addGestureRecognizer:longPressGesture];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(31, 44, 265, 362)];
+        [imageView setBackgroundColor:[UIColor clearColor]];
+        [imageView setImage:[UIImage imageNamed:@"book.png"]];
+        [imageView setUserInteractionEnabled:YES];
         
-        UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self.viewController action:@selector(didLongPress:)];
+        UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self.viewController action:@selector(didDoubleClick)];
         [doubleTap setNumberOfTapsRequired:2];
-        [setupImgView addGestureRecognizer:doubleTap];
-        self.bookImgView = setupImgView;
-        
+        [imageView addGestureRecognizer:doubleTap];
+        self.bookImgView = imageView;
     }
     [self addSubview:self.bookImgView];
     
     if(!self.nameLabel)
     {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(80, 80, 215, 100)];
-        label.font =[UIFont fontWithName:@"STHeitiJ-Light" size:30.0f];
-        label.backgroundColor = [UIColor clearColor];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(80, 60, 215, 100)];
+        [label setFont:[UIFont fontWithName:@"STHeitiJ-Light" size:30.0f]];
+        [label setBackgroundColor:[UIColor clearColor]];
         [label setContentMode:UIViewContentModeCenter];
         [label setAdjustsFontSizeToFitWidth:YES];
 
@@ -95,124 +63,100 @@
             label.text = @"";
         }
         self.nameLabel = label;
-
+        
         
     }
     [self addSubview:self.nameLabel];
-   
+    
     
     
     if(self.nameTextField == nil)
     {
-        UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(80, 80, 215, 100)];
-        [tf setContentMode:UIViewContentModeCenter];
-        [tf setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
-        [tf setAdjustsFontSizeToFitWidth:YES];
-        tf.backgroundColor = [UIColor clearColor];
-        tf.delegate = self.viewController;
-        tf.font = [UIFont fontWithName:@"STHeitiJ-Light" size:30.0f];
-       
-              
-        self.nameTextField = tf;
+        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(80, 60, 215, 100)];
+        [textField setContentMode:UIViewContentModeCenter];
+        [textField setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+        [textField setAdjustsFontSizeToFitWidth:YES];
+        [textField setBackgroundColor:[UIColor clearColor]];
+        [textField setDelegate:self.viewController];
+        [textField setFont:[UIFont fontWithName:@"STHeitiJ-Light" size:30.0f]];
+
+        self.nameTextField = textField;
     }
     [self addSubview:self.nameTextField];
-    
-    
-    
     
     if (self.viewController.opponent == nil) 
     {
         [self showPlusButton];
+        self.nameTextField.alpha = 0;
     }
     else
     {
         [self showConfigAndDate];
     }
     
-    
-    
-    
-    
 }
 
 
 -(void)showPlusButton
 {
-    
-
-    
-    if(self.plusSignButton == nil)
+    if(self.addNewButton == nil)
     {
-        
-        UIButton *psb = [UIButton buttonWithType:UIButtonTypeCustom];
-        [psb setFrame:CGRectMake(115, 170, 100, 100)];
-        [psb setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateNormal];
-                [psb setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateSelected];
-                [psb setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateHighlighted];
-        [psb setAdjustsImageWhenDisabled:NO];
-        [psb setAdjustsImageWhenHighlighted:NO];
-        psb.backgroundColor = [UIColor clearColor];
-        [psb addTarget:self action:@selector(hidePlusButton) forControlEvents:UIControlEventTouchUpInside];
-        self.plusSignButton = psb;
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setFrame:CGRectMake(115, 150, 100, 100)];
+        [button setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateSelected];
+        [button setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateHighlighted];
+        [button setAdjustsImageWhenDisabled:NO];
+        [button setAdjustsImageWhenHighlighted:NO];
+        [button setBackgroundColor:[UIColor clearColor]];
+        [button addTarget:self.viewController action:@selector(addNewButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        self.addNewButton = button;
     }
-    [self addSubview:self.plusSignButton];
+    [self addSubview:self.addNewButton];
     
     [UIView animateWithDuration:1.2 
                           delay:0 
                         options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse | UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
                      animations:^{ 
-                         self.plusSignButton.alpha = 0.1f;
-                         self.plusSignButton.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
-                       
+                         self.addNewButton.alpha = 0.1f;
+                         self.addNewButton.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
+                         
                      }    
                      completion:nil];   
-    
-    self.nameTextField.alpha = 0;
 }
-
-
 
 
 -(void)hidePlusButton
 {
-    
-    
     [UIView animateWithDuration:1.0 
                           delay:0.0
                         options:UIViewAnimationCurveEaseIn 
                      animations:^{
-                         self.plusSignButton.frame = CGRectMake(self.plusSignButton.frame.origin.x + (self.plusSignButton.frame.size.width / 2), self.plusSignButton.frame.origin.y + (self.plusSignButton.frame.size.height / 2) , 0, 0);
+                         self.addNewButton.frame = CGRectMake(self.addNewButton.frame.origin.x + (self.addNewButton.frame.size.width / 2), self.addNewButton.frame.origin.y + (self.addNewButton.frame.size.height / 2) , 0, 0);
                      }completion:nil];
-    self.nameTextField.placeholder = @"Opponent...";
-    self.plusSignButton.alpha = 0;
-    self.plusSignButton = nil;
-    self.nameTextField.alpha = 1;
-   [self.nameTextField becomeFirstResponder];
-    
-    
 }
+
 
 -(void)showConfigAndDate
 {
     if(self.configButton == nil)
     {
-        UIButton *setupConfigButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        setupConfigButton.frame  = CGRectMake(75, 377, 25, 25);
-        setupConfigButton.backgroundColor = [UIColor clearColor];
-       // [setupConfigButton setImage:[UIImage imageNamed:@"config-wheel.png"] forState:UIControlStateNormal];
-        [setupConfigButton addTarget:self.viewController action:@selector(configButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
-        [setupConfigButton setEnabled:YES];
-        self.configButton = setupConfigButton;  
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setFrame:CGRectMake(75, 377, 25, 25)];
+        [button setBackgroundColor:[UIColor clearColor]];
+        [button addTarget:self.viewController action:@selector(configButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+        [button setEnabled:YES];
+        self.configButton = button;  
         self.bookImgView.image = [UIImage imageNamed:@"bookWithRibbon.png"];
     }
     [self addSubview:self.configButton];
     
     if(self.dateLabel == nil)
     {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(139, 330, 129, 21)];
-        label.backgroundColor = [UIColor clearColor];
-        label.textAlignment = UITextAlignmentRight;
-        label.font = [UIFont fontWithName:@"Helvetica" size:19.0f];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(139, 310, 129, 21)];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setTextAlignment:UITextAlignmentRight ];
+        [label setFont:[UIFont fontWithName:@"STHeitiJ-Light" size:16.0f]];
         
         NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM / dd / YYYY"];
@@ -222,8 +166,8 @@
             label.text = [dateFormatter stringFromDate:[self.viewController.opponent date]];
         }
         else 
-        {
-            label.text = @"error: date with no opponent";
+        {   // There must be an error.
+            label.text = @"";
         }
         self.dateLabel = label;        
     }
@@ -236,8 +180,8 @@
     if(self.viewController.opponent == nil)
     {
         [self showPlusButton];
-        self.configButton = nil;
-        self.dateLabel = nil;
+        [self setConfigButton:nil];
+        [self setDateLabel:nil];
     }
     else if(self.viewController.opponent != nil)
     {
@@ -245,11 +189,6 @@
         self.nameTextField.text = [self.viewController.opponent name];
         [self showConfigAndDate];
     }
-    
-    
-    
 }
-
-
 
 @end

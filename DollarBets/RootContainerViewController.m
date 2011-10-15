@@ -8,6 +8,8 @@
 
 #import "RootContainerViewController.h"
 #import "MainViewController.h"
+#import "BookViewController.h"
+#import "BookFrontView.h"
 
 @implementation RootContainerViewController
 @synthesize context = _context;
@@ -39,11 +41,11 @@
 - (void)loadView
 {
     UIView *containerView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-    containerView.backgroundColor = [UIColor blueColor];
+    containerView.backgroundColor = [UIColor clearColor];
     [containerView setUserInteractionEnabled:YES];
     self.view = containerView;
     
-   
+    
     
     
 }
@@ -53,11 +55,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     
     self.mainViewController = [[MainViewController alloc] initWithManagedObjectContext:self.context];
     self.mainViewController.parent = self;
-  //  [self addChildViewController:self.mainViewController];
+    //  [self addChildViewController:self.mainViewController];
     [self.view addSubview:self.mainViewController.view];
     
 }
@@ -72,24 +74,41 @@
 
 -(void)OpenBook:(BookViewController *)book
 {
+    aFrame = book.view.frame;
     NSLog(@"RootContainerViewController : OpenBookWithOpponent:");
+    NSLog(@"frame(%f, %f, %f, %f)",book.view.frame.origin.x, book.view.frame.origin.y, book.view.frame.size.height, book.view.frame.size.width);
 
     self.rootViewController = [[RootViewController alloc] init];
-    self.rootViewController.currentBook = book;
     self.rootViewController.delegate = self;
     
+   //  [book.view setAutoresizingMask:UIViewAutoresizingNone];
     
-//    [UIView transitionFromView:self.mainViewController.view toView:self.rootViewController.view duration:0.5f options:UIViewAnimationTransitionFlipFromLeft completion:nil];
-    [book.view removeFromSuperview];
-      
+    [UIView animateWithDuration:1.0f 
+                          delay:0.0f 
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         book.frontView.transform = CGAffineTransformMakeScale(1.4f, 1.4f);
+                     }
+                     completion:^(BOOL finished){  
+                         [book.view removeFromSuperview];
+                        
+                         
+                         self.rootViewController.topBook = book;
+                         
+                         
+                         [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionNone animations:^{
+                             [self.view addSubview:self.rootViewController.view];
+                             
+                         } 
+                                         completion:^(BOOL finished){    [self.mainViewController.view removeFromSuperview];
+                                         }
+                          ];
+                         
+                     }];  
     
-    [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionNone animations:^{
-        [self.view addSubview:self.rootViewController.view];
-
-    } completion:nil];
     
     
-    [self.mainViewController.view removeFromSuperview];
+    NSLog(@"frame(%f, %f, %f, %f)",book.view.frame.origin.x, book.view.frame.origin.y, book.view.frame.size.height, book.view.frame.size.width);
     
 }
 
@@ -98,17 +117,62 @@
 
 
 
--(void)closeBook
-{
+-(void)closeBook:(BookViewController *)book
+{   
+    NSLog(@"frame(%f, %f, %f, %f)",book.view.frame.origin.x, book.view.frame.origin.y, book.view.frame.size.height, book.view.frame.size.width);
     
-    [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionCurlDown animations:^{
+    
+    [book.view removeFromSuperview];
+    [book removeFromParentViewController];
+    book.view.frame = aFrame;
+    [self.mainViewController.bookScrollView addSubview:book.view];
+    
+
+
+    [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionNone animations:^{
         [self.view addSubview:self.mainViewController.view];
+        //  [book refreshFrontView];
         
-    } completion:nil];
+    } completion:^(BOOL finished){
+        
+        [self.rootViewController.view removeFromSuperview];
+        
+        
+        [UIView animateWithDuration:1.0f 
+                              delay:0.0f 
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             book.frontView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+                         }completion:nil];
+
+        
+        
+    }];
+
+    /*
     
+    [UIView animateWithDuration:1.0f 
+                          delay:0.0f 
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         book.frontView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+                     }
+                     completion:^(BOOL finished){  
+                         [book.view removeFromSuperview];
+                         [book removeFromParentViewController];
+                         book.view.frame = aFrame;
+                         [self.mainViewController.bookScrollView addSubview:book.view];
+                         
+                         [self.rootViewController.view removeFromSuperview];
+                         [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionNone animations:^{
+                             [self.view addSubview:self.mainViewController.view];
+                           //  [book refreshFrontView];
+                             
+                         } completion:^(BOOL finished){}];
+                     }];
     
-    [self.rootViewController.view removeFromSuperview];
-    
+    */
+    NSLog(@"frame(%f, %f, %f, %f)",book.view.frame.origin.x, book.view.frame.origin.y, book.view.frame.size.height, book.view.frame.size.width);
 }
 
 

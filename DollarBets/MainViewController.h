@@ -36,6 +36,6 @@
 -(void)slideToCurrentPage:(bool)animated;
 -(void)changeToPage:(int)page animated:(BOOL)animated;
 -(void)setupSlider;
-
-
+-(void)loadScrollViewWithPage:(int)page;
+-(void)reloadBooks;
 @end

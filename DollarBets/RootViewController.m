@@ -56,7 +56,7 @@
 @synthesize betPageEditButton;
 @synthesize delegate;
 @synthesize currentBook;
-
+@synthesize topBook;
 
 
 
@@ -75,9 +75,9 @@
     // Configure the page view controller and add it as a child view controller.
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
-    self.opponent = self.currentBook.opponent;
+    self.opponent = self.topBook.opponent;
     //UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
-    NSArray *viewControllers = [NSArray arrayWithObjects:self.currentBook,nil];
+    NSArray *viewControllers = [NSArray arrayWithObjects:self.topBook,nil];
     
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
     
@@ -94,20 +94,7 @@
     
     [self.pageViewController didMoveToParentViewController:self];    
     
-    /*
-     for (UIGestureRecognizer* gesture  in self.pageViewController.gestureRecognizers) {
-     [gestureRecognizers addObject:gesture];
-     
-     
-     }
-     */
-    
-    
-    // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
-    //self.modelController.gestureRecognizers = self.pageViewController.gestureRecognizers;
-    
-    
-    
+
     
     self.imagePicker.delegate = self;
     
@@ -124,11 +111,11 @@
     
     UIViewController *startingViewController = [self.modelController viewControllerAtIndex:0];
     [self.pageViewController setViewControllers:[NSArray arrayWithObject:startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished){
-            currentBook.view.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
-        
+                 
     }];
     
-    
+
+
     
 }
 
@@ -683,7 +670,17 @@
 
 - (IBAction)homeButtonSelected:(id)sender 
 {
-    [self.delegate closeBook];
+    
+    topBook.view.frame = CGRectMake(0, 0, 320, 460);
+  
+    NSArray *viewControllers = [NSArray arrayWithObject:self.topBook];
+    
+    
+    [self.pageViewController setViewControllers:viewControllers
+                                      direction:UIPageViewControllerNavigationDirectionReverse
+                                       animated:NO
+                                     completion:^(BOOL finished){    [self.delegate closeBook:self.topBook];
+    }];
     
 }
 

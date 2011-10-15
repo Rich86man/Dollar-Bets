@@ -12,12 +12,12 @@
 {
     UILabel *amountLabel;
     UILabel *descriptionLabel;
-    
+    UIImageView *addNew;
 
 }
 @property (nonatomic, retain)UILabel *amountLabel;
 @property (nonatomic, retain)UILabel *descriptionLabel;
-
+@property (nonatomic, retain)UIImageView *addNew;
 
 
 @end

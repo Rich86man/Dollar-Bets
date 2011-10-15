@@ -27,6 +27,7 @@
     
 }
 @property (assign)id delegate;
+@property (assign)BookViewController *topBook;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) Opponent *opponent;
 @property (strong, nonatomic) BookViewController *currentBook;

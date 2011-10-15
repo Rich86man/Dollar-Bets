@@ -10,6 +10,7 @@
 #import "Opponent.h"
 #import "Twitter/Twitter.h"
 #import "RootViewController.h"
+#import "AppDelegate.h"
 #define DEFAULT_KEYBOARD_SIZE 220.0f
 
 @interface BetPage(PrivateMethods)
@@ -46,12 +47,25 @@
     self = [super init];
     if (self) {
         // Custom initialization
-        self.bet = aBet;       
+        self.bet = aBet;      
+        newBet = NO;
+        if ([self.bet.report isEqualToString:@"Bet Description..."])
+        {
+            newBet = YES;
+        }
     }
     return self;
     
 }
 
+-(id)initAsNewWithOpponent:(Opponent *)opp
+{   self = [super init];
+    if (self) {
+        newBet = YES;
+
+    }
+    return self;
+}
 
 
 
@@ -105,7 +119,11 @@
     // [self.scrollView addGestureRecognizer:tap];
     [self.gestureView addGestureRecognizer:tap];
     [self.gestureViewTwo addGestureRecognizer:tap];
-    
+    if(newBet)
+    {
+        [self.delegate didTapPage:self];
+        [self.delegate betPageEditButtonSelected:nil];
+    }
 }
 
 
@@ -298,9 +316,9 @@
     else
     {
         NSNumberFormatter *nf = [[NSNumberFormatter alloc]init];
-    self.bet.amount = [nf numberFromString:self.amountTextView.text];
+        self.bet.amount = [nf numberFromString:self.amountTextView.text];
         [self setUpAmountLabel];
-
+        
     }
     
 }

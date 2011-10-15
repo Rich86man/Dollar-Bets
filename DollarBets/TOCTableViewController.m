@@ -7,7 +7,6 @@
 //
 
 #import "TOCTableViewController.h"
-#import "statusBarView.h"
 #import "TOCBetsTableViewCell.h"
 #import "RootViewController.h"
 
@@ -25,24 +24,27 @@
 -(void)addSaveButton;
 -(void)removeSaveButton;
 -(void)resizeQuickView;
--(BOOL)saveQuickBet;
 @end
 
 @implementation TOCTableViewController
 @synthesize delegate;
-@synthesize amountTextView;
-@synthesize saveButton;
-@synthesize amountLabel;
-@synthesize overlayView;
-@synthesize overlayLabel;
-@synthesize statusBar;
 @synthesize tableView;
-
-@synthesize tableOfContentsHeader = _tableOfContentsHeader, graphsHeader = _graphsHeader;
-@synthesize quickAddView, amountTextField, descriptionTextView, refreshArrow, bet;
-@synthesize opponent, bets;
+@synthesize opponent, bets,  quickBet;
 @synthesize myHomeButtonTimer;
+@synthesize quickAddView, amountTextView, amountLabel, descriptionTextView, saveButton;
+@synthesize overlayView, overlayLabel;
+@synthesize headerView;
 
+
+-(id)initWithOpponent:(Opponent *)opp
+{
+    self = [super init];
+    if(self)
+    {
+        self.opponent = opp;
+    }
+    return self;
+}
 
 
 #pragma mark - View lifecycle
@@ -51,21 +53,16 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
     
     NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
-    
     self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+    
     self.view.backgroundColor = [UIColor clearColor];
     self.quickAddView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"crissXcross.png"]];
-    self.statusBar.backgroundColor = [UIColor clearColor];
-    self.statusBar.centerLabel.text = @"Quick Add";
     
-    
-    
-    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHeader)];
+    [self.headerView addGestureRecognizer:tap];
     
     isQuickAdding = NO;
     isDragging = NO;
@@ -78,167 +75,122 @@
     self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(timerFired) userInfo:nil repeats:NO];
 }
 
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self.myHomeButtonTimer invalidate];
-    
     [self.delegate hideHomeButton:0.0f];
-    
 }
+
 
 - (void)viewDidUnload
 {
     [self setQuickAddView:nil];
-    [self setAmountTextField:nil];
-    [self setTableOfContentsHeader:nil];
-    [self setGraphsHeader:nil];
+    [self setHeaderView:nil];
     [self setDescriptionTextView:nil];
     [self setTableView:nil];
     [self setOverlayView:nil];
-    [self setStatusBar:nil];
     [self setSaveButton:nil];
     [self setOverlayLabel:nil];
     [self setAmountLabel:nil];
-    [self setBet:nil];
+    [self setQuickBet:nil];
     [self setAmountTextView:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    
 }
+
 
 -(NSString *)description
 {
-    
     return @"TableOfContents Page";
 }
+
 
 -(void)timerFired
 {
     [self.delegate showHomeButton:1.0];
 }
+
+
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
-    
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    
-    switch (section) {
-        case 0:
-            return [self.bets count];
-            break;
-        case 1:
-            return 0;
-            break;
-            
-        default:
-            return 0;
-            break;
-    }
-    
-}
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.bets count] + 1;    
+}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *sec1 = @"section1";
-    static NSString *sec0 = @"section0";
+    static NSString *normalCell = @"betCell";
+    static NSString *addBetCell = @"addBetCell";
     
-    if (indexPath.section == 0) {
-        TOCBetsTableViewCell *betCell = [self.tableView dequeueReusableCellWithIdentifier:sec0];
+    if (indexPath.row < [self.bets count]) 
+    {
+        TOCBetsTableViewCell *betCell = [self.tableView dequeueReusableCellWithIdentifier:normalCell];
         if (betCell == nil)
         {   
-            betCell = [[TOCBetsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:sec0];
+            betCell = [[TOCBetsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:normalCell];
         }
-        
         
         betCell.amountLabel.text = [NSString stringWithFormat:@"$%@",[[[bets objectAtIndex:indexPath.row] amount] stringValue]];     
         betCell.descriptionLabel.text = [[bets objectAtIndex:indexPath.row] report];
         
-        return betCell;   
-        
+        return betCell;  
     }
     else
     {
-        
-        
-        UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:sec1];
+        TOCBetsTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addBetCell];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:sec1];
+            cell = [[TOCBetsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:addBetCell];
         }
         
-        cell.textLabel.text = @"Testing";
-        
+        cell.addNew.alpha = 1.0f;
         
         return cell;
     }
+
 }
 
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if(section == 0)
-    { 
-        return self.tableOfContentsHeader;
-    }
-    else if (section == 1)    { 
-        // return self.graphsHeader;        
-        
-    }
-    
-    return nil;   
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return self.headerView;
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    switch (section) {
-        case 0:
-            return self.tableOfContentsHeader.frame.size.height;
-            break;
-        case 1:
-            //return self.graphsHeader.frame.size.height;
-            //break;
-            
-        default:
-            return 0.0f;
-            break;
-    }
-    
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return self.headerView.frame.size.height;    
 }
+
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"didselect IndexPath: %@", [indexPath description]);
-    NSUInteger index = indexPath.row + 1;
-    [self.delegate didSelectPage:index];
+    NSUInteger page = indexPath.row + 1;
+    [self.delegate didSelectPage:page];
 }
-
 
 
 #pragma mark - ScrollViewDelegate Functions
 
-
-
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     if( scrollView.contentOffset.y <= -1.0f && scrollView.contentOffset.y > -122.0f && !isQuickAdding)
     {
         CGFloat offset =   scrollView.contentOffset.y;
-        
         self.quickAddView.frame = CGRectMake(0, 0, 320, -offset);
-        
         
         if (offset > -90 && offset < 0)
             self.overlayView.alpha = -offset / 100;
-        
-        
     }
-    
 }
 
 
@@ -251,61 +203,39 @@
         scrollView.contentInset = UIEdgeInsetsMake(122.0, 0, 0, 0 );
         isQuickAdding = YES;
         [self.delegate didBeginQuickEdit:self];
-        if(!self.bet)
+        if(!self.quickBet)
         {
-            self.bet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.opponent.managedObjectContext];
-            self.bet.opponent = self.opponent;
-            self.bet.didWin = [NSNumber numberWithInt:2];
-            self.bet.amount = [NSNumber numberWithInt:1];
-            self.bet.date = [NSDate date];
-            
-            
+            self.quickBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.opponent.managedObjectContext];
+            self.quickBet.opponent = self.opponent;
+            self.quickBet.didWin = [NSNumber numberWithInt:2];
+            self.quickBet.amount = [NSNumber numberWithInt:1];
+            self.quickBet.date = [NSDate date];
         }
         [self.delegate showHomeButton:NO];
         [self.myHomeButtonTimer invalidate];
         [self resizeQuickView];
-        
     }
     // If they are currently quickadding and they pull past 160 px, cancel quick add.
     if (scrollView.contentOffset.y < -160.0f && isQuickAdding)
     {
         isQuickAdding = NO;
-        
-        //[self removeSaveButton];
-        //self.quickAddView.frame = self.quickAddView.frame = CGRectMake(0, 0, 320, 100);
-        [self.delegate savedQuickBet];
-        
+        [self.delegate savedQuickBet];        
         [UIView  animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
                           animations:^{
                               scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
-                              //scrollView.contentOffset = CGPointMake(0, 0);
-                              //self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
+
                           }completion:^(BOOL finished){        
                               self.overlayLabel.text = @"Pull Down To Add New";
                               
                           }];
         
-        // scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
-        //[scrollView setContentInset:UIEdgeInsetsZero];
-        //[scrollView setContentOffset:CGPointMake(0, 1.0f) animated:YES];
-        // [scrollView setContentInset:UIEdgeInsetsZero];
-        //scrollView.contentOffset = CGPointMake(0, 0);
         self.overlayLabel.text = @"Pull Down To Add New";
         self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self.delegate selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
-        
-        
-        
-        
     }
-    
-    
-    
 }
 
 
-
 #pragma mark - TextView Delegate Functions
-
 
 - (void)textViewDidChange:(UITextView *)textView
 {
@@ -321,21 +251,14 @@
             [self addSaveButton];
         }
         
-        
         if(textView.contentSize.height > descriptionTextView.frame.size.height)
         {
-            NSLog(@"New descriptionTextView.contentSize.height = %f",textView.contentSize.height);
             CGRect newTextFrame = descriptionTextView.frame;
             CGRect newViewFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y, self.quickAddView.frame.size.width, self.quickAddView.frame.size.height + ( textView.contentSize.height -descriptionTextView.frame.size.height ));    
             CGRect newOverlayFrame = CGRectMake(self.overlayView.frame.origin.x, self.overlayView.frame.origin.y + ( textView.contentSize.height -descriptionTextView.frame.size.height ), self.overlayView.frame.size.width , self.overlayView.frame.size.height);
-            
             CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, self.saveButton.frame.origin.y + ( textView.contentSize.height -descriptionTextView.frame.size.height ), SAVE_BUTTON_WIDTH, self.saveButton.frame.size.height);
             
-            
-            
-            
             newTextFrame.size.height = textView.contentSize.height;
-            
             
             [UIView animateWithDuration:0.02f animations:^{
                 descriptionTextView.frame = newTextFrame;
@@ -351,13 +274,9 @@
             CGRect newTextFrame = descriptionTextView.frame;
             CGRect newViewFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y, self.quickAddView.frame.size.width, self.quickAddView.frame.size.height - ( descriptionTextView.frame.size.height - textView.contentSize.height));    
             CGRect newOverlayFrame = CGRectMake(self.overlayView.frame.origin.x, self.overlayView.frame.origin.y - ( descriptionTextView.frame.size.height - textView.contentSize.height ), self.overlayView.frame.size.width , self.overlayView.frame.size.height);
-            
             CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, self.saveButton.frame.origin.y - ( descriptionTextView.frame.size.height - textView.contentSize.height ), SAVE_BUTTON_WIDTH, self.saveButton.frame.size.height);
-            
-            
-            
+        
             newTextFrame.size.height = textView.contentSize.height;
-            
             
             [UIView animateWithDuration:0.02f animations:^{
                 descriptionTextView.frame = newTextFrame;
@@ -370,151 +289,36 @@
     else
     {
         NSNumberFormatter *nf = [[NSNumberFormatter alloc]init];
-        self.bet.amount = [nf numberFromString:self.amountTextView.text];
+        self.quickBet.amount = [nf numberFromString:self.amountTextView.text];
         [self setUpAmountLabel];
         
     }
     
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range 
- replacementText:(NSString *)text
-{    
-    /* 
-     // Any new character added is passed in as the "text" parameter
-     if ([text isEqualToString:@"\n"]) {
-     // Be sure to test for equality using the "isEqualToString" message
-     [textView resignFirstResponder];
-     
-     
-     // Return FALSE so that the final '\n' character doesn't get added
-     return FALSE;
-     }
-     // For any other character return TRUE so that the text gets added to the view
-     return TRUE;
-     */
-    return YES;
-}
 
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
-    if (textView.tag == 0) {
-        self.bet.report = self.descriptionTextView.text;
+    if (textView.tag == 0) 
+    {
+        self.quickBet.report = self.descriptionTextView.text;
     }
     
 }
-
-#pragma mark - TextField Delegate Functions
-
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    
-    if (textField.text.length > 20)
-        return NO;
-    
-    if([string length] < 1 && range.location == 0)
-    {
-        [self removeSaveButton];
-    }
-    else if (![self.descriptionTextView.text isEqualToString:@""])
-    {
-        [self addSaveButton];
-    }
-    
-    
-    return YES;
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if([textField.text isEqualToString:@""])
-    {
-        [self removeSaveButton];
-    }
-    else 
-    {
-        
-        if(![self.descriptionTextView.text isEqualToString:@""])
-        {
-            [self addSaveButton];
-        }
-        
-        NSNumberFormatter *numFormat =  [[NSNumberFormatter alloc] init];
-        
-        NSNumber *number = [numFormat numberFromString:amountTextField.text];
-        
-        if(number == nil)
-        {
-            textField.font = [UIFont systemFontOfSize:14.0f];
-            textField.text = @"Must Be a Valid Number";
-            textField.textColor = [UIColor redColor];
-            textField.alpha = 0;
-            
-            [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionAutoreverse animations:^{
-                textField.alpha = 1;
-            }completion:^(BOOL finished){
-                self.amountTextField.text = @"";
-                self.amountTextField.font = [UIFont fontWithName:@"STHeitiJ-Light" size:14.0f];
-                self.amountTextField.textColor = [UIColor blackColor];
-                self.amountTextField.alpha = 1;
-                
-                
-                
-                
-            }];
-            [self removeSaveButton];
-            
-        }
-        else
-        {
-            
-            
-        }
-    }
-    
-}
-
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    
-    
-    if([self.descriptionTextView.text isEqualToString:@""])
-    {
-        [self.descriptionTextView becomeFirstResponder];
-    }
-    else 
-    {
-        [self addSaveButton];
-    }
-    
-    //[self.amountTextField resignFirstResponder];
-    
-    
-    return YES;
-}
-
-
 
 
 #pragma mark - Quick Add Functions
 
 -(void)resizeQuickView;
 {
-    
-    
-    
-    if(self.saveButton.alpha == 1){
+    if(self.saveButton.alpha == 1)
+    {
         self.saveButton.frame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y + self.descriptionTextView.frame.size.height - 31, SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT);
-        
     }
     else if(self.saveButton.alpha == 0)
     {
         self.saveButton.frame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y, SAVE_BUTTON_WIDTH, 0);
     }
-    
-    
-    //CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountLabel.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING + saveButton.frame.size.height + (self.saveButton.alpha == 1 ? SAVE_BUTTON_BOTTOM_PADDING : 0) );
     
     CGRect newQuickViewFrame = CGRectMake(0, 0, 0, 0);
     
@@ -526,12 +330,6 @@
     CGRect newOverlayFrame = self.overlayLabel.frame;
     newOverlayFrame.origin.y = newQuickViewFrame.size.height + PADDING;
     
-    
-    /*
-     [UIView animateWithDuration:0.5f animations:^{
-     self.quickAddView.frame = newQuickViewFrame;    
-     }];
-     */
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options:UIViewAnimationOptionBeginFromCurrentState animations:^{
@@ -544,77 +342,34 @@
 {
     if (self.saveButton.alpha == 0)
     {        
-        /*
-         CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y + self.descriptionTextView.frame.size.height - 31, SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT);
-         
-         CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountTextField.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING + newSaveButtonFrame.size.height + SAVE_BUTTON_BOTTOM_PADDING);   
-         
-         self.saveButton.frame = newSaveButtonFrame;
-         CGFloat alphaValue = 1;
-         
-         
-         [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^() {
-         self.saveButton.frame = newSaveButtonFrame;
-         self.quickAddView.frame = newQuickViewFrame;
-         self.saveButton.alpha = alphaValue;
-         
-         } completion:nil];
-         */
         self.saveButton.alpha = 1;
         [self resizeQuickView];
     }
-    
-    
-    // [self.delegate readyToSave:YES];
-    
 }
 
--(void)removeSaveButton{
-    
+-(void)removeSaveButton
+{    
     if(self.saveButton.alpha == 1)
     {
-        
-        /*
-         CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y, SAVE_BUTTON_WIDTH, 0);
-         CGRect newQuickViewFrame = CGRectMake(0, 0, 320, PADDING + self.amountTextField.frame.size.height + PADDING + self.descriptionTextView.frame.size.height + PADDING);   
-         
-         
-         CGFloat alphaValue = 0;
-         
-         [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationCurveEaseInOut animations:^() {
-         self.quickAddView.frame = newQuickViewFrame;
-         self.saveButton.frame = newSaveButtonFrame;
-         self.saveButton.alpha = alphaValue;
-         
-         
-         } completion:nil];
-         */
-        
         self.saveButton.alpha = 0;
         [self resizeQuickView];
-    }
-    
-    //[self.delegate readyToSave:NO];
+    }    
 }
 
 
 - (IBAction)save:(UIButton *)sender {
-    
-    if([self.amountTextField isFirstResponder])
-        [self.amountTextField resignFirstResponder];
+
     
     if([self.descriptionTextView isFirstResponder])
         [self.descriptionTextView resignFirstResponder];
     
     
-    if([self saveQuickBet])
+    if([quickBet save])
     {
-        
         [self removeSaveButton];
         self.amountLabel.text = @"";
         self.descriptionTextView.text = @"";
         self.overlayLabel.text = @"Pull Down To Add New";
-        
         
         [UIView  animateWithDuration:0.5f delay:0.5f options:UIViewAnimationCurveEaseInOut animations:^{
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
@@ -622,11 +377,8 @@
             self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
             self.overlayView.alpha = 0;
         }completion:nil];
-        
-        
-        
+    
         isQuickAdding = NO;
-        
         
         NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
         self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
@@ -635,50 +387,15 @@
         [self.tableView endUpdates];
         [self.delegate savedQuickBet];
     }
-    
-    
 }
 
--(BOOL)saveQuickBet
-{/*
-  NSNumberFormatter *numFormat =  [[NSNumberFormatter alloc] init];
-  
-  
-  
-  
-  Bet *newBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[self.opponent managedObjectContext]];
-  newBet.opponent = self.opponent;
-  newBet.amount = [numFormat numberFromString:amountTextField.text];
-  newBet.report = self.descriptionTextView.text;
-  newBet.date = [NSDate date];
-  newBet.didWin = [NSNumber numberWithInt:2];
-  
-  
-  
-  NSError *error =  nil;
-  [newBet.managedObjectContext save:&error];
-  */
-    NSError *error =  nil;
-    [self.bet.managedObjectContext save:&error];
-    
-    if(error)
-    {
-        NSLog(@"%@\n", [error  description]);
-        return NO;
-    }
-    else 
-        return YES;
-    
-    
-    
-}
 
 
 #pragma mark - Custom Headers
 
--(UIView *)tableOfContentsHeader
+-(UIView *)headerView
 {
-    if (!_tableOfContentsHeader) {
+    if (!headerView) {
         
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 40, 320, 100)];
         view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"black-Linen.png"]];
@@ -696,78 +413,37 @@
         tl1.text = @"Bets";
         tl1.textColor = [UIColor lightGrayColor];
         tl1.textAlignment = UITextAlignmentCenter;
-        /*    
-         UIButton *homeButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 60, 37)];
-         
-         [homeButton setImage:[UIImage imageNamed:@"homeButton.png" forState:UIControlStateNormal]];
-         
-         */  
-        
         
         [view addSubview:tl];
-        [view addSubview:tl1];
-        
-        _tableOfContentsHeader = view;
-        
+        [view addSubview:tl1];        
+        headerView = view;
     }
     
-    
-    return _tableOfContentsHeader;
-    
-    
+    return headerView;
 }
 
--(UIView *)graphsHeader
+-(void)didTapHeader
 {
-    
-    if (!_graphsHeader){
-        
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 40, 320, 60)];
-        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"black-Linen.png"]];
-        
-        
-        UILabel *tl = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 280, 46)];    
-        tl.backgroundColor = [UIColor clearColor];
-        tl.font = [UIFont fontWithName:@"STHeitiJ-Light" size:30.0f];
-        tl.text = @"Graphs";
-        tl.textColor = [UIColor lightGrayColor];
-        tl.textAlignment = UITextAlignmentCenter;
-        
-        
-        
-        
-        
-        [view addSubview:tl];
-        
-        
-        
-        _graphsHeader =  view;
-        
-        
-        
-    }
-    
-    
-    return _graphsHeader;
+    [self.myHomeButtonTimer invalidate];
+    [self.delegate showHomeButton:0.0f];
 }
-
 
 -(void)setUpAmountLabel
 {
     UILabel *label = self.amountLabel;
     
     
-    switch ([self.bet.didWin intValue]) {
+    switch ([self.quickBet.didWin intValue]) {
         case 0:
-            label.text = [NSString stringWithFormat:@"- $%i",[self.bet.amount intValue]];
+            label.text = [NSString stringWithFormat:@"- $%i",[self.quickBet.amount intValue]];
             label.textColor = [UIColor redColor];
             break;
         case 1:
-            label.text = [NSString stringWithFormat:@"+ $%i",[self.bet.amount intValue]];
+            label.text = [NSString stringWithFormat:@"+ $%i",[self.quickBet.amount intValue]];
             label.textColor = [UIColor greenColor];
             break;
         case 2:
-            label.text = [NSString stringWithFormat:@"-/+ $%i",[self.bet.amount intValue]];
+            label.text = [NSString stringWithFormat:@"-/+ $%i",[self.quickBet.amount intValue]];
             label.textColor = [UIColor grayColor];
             break;
         default:

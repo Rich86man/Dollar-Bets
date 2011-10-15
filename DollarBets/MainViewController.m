@@ -19,7 +19,7 @@
 
 
 @interface MainViewController (PrivateMethods)
--(void)loadScrollViewWithPage:(int)page;
+//-(void)loadScrollViewWithPage:(int)page;
 -(void)scrollViewDidScroll:(UIScrollView *)sender;
 -(NSInteger)currentPage;
 -(void) easterEgg:(Opponent *)newOpponent;
@@ -53,13 +53,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    /* Create a scroll view for the books */
+    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:self.view.frame];
+    [scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]]];
+    [scrollView setPagingEnabled:YES];
+    [scrollView setShowsVerticalScrollIndicator:NO];
+    [scrollView setShowsHorizontalScrollIndicator:NO];
+    [scrollView setDirectionalLockEnabled:YES];
+    [scrollView setDelegate:self];
+    [self setBookScrollView:scrollView];
+    [self.view addSubview:self.bookScrollView];
     /* Retreive all Opponents to help setup the Controller */
     self.opponents = [Opponent allOponentsSortedBy:@"date"];
     [self resizeScrollView];    // Resize to fit number of Opponents
     // + 1 for the add page 
     
     /* ScrollView Setup */
-    self.bookScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]];
+   // self.bookScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]];
     
     /* view controllers are created lazily
      in the meantime, load the array with placeholders which will be replaced on demand */
@@ -143,7 +153,6 @@
         
         controller.delegate = self;
         [books replaceObjectAtIndex:page withObject:controller];
-        controller.debugLabel.text =  [NSString stringWithFormat:@"page : %i\tbooks index : %i",page, [self.books indexOfObject:controller]];        
     }
     
     /* Add the controller's view to the scroll view */
@@ -242,6 +251,11 @@
 }
 
 
+-(void)reloadBooks
+{
+    [self loadScrollViewWithPage:[self currentPage]];
+}
+
 #pragma mark - BookViewController Delegate Functions
 
 /* 
@@ -334,18 +348,7 @@
  */
 -(void)didSelectBook:(BookViewController *)book
 {
-    NSLog(@"MainViewController : didSelectBook:");
-    
-    
-    [UIView animateWithDuration:1.0f 
-                          delay:0.0f 
-                        options:UIViewAnimationOptionCurveLinear
-                     animations:^{
-                         book.view.transform = CGAffineTransformMakeScale(1.5f, 1.5f);
-                     }
-                     completion:^(BOOL finished){  
-                         [self.parent OpenBook:book];
-                     } ];
+    [self.parent OpenBook:book];
 }
 
 /* 

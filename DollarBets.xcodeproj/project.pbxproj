@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA03E8061408481B00DA2345 /* BookSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA03E8051408481B00DA2345 /* BookSettingsView.m */; };
 		FA0D32B41444BD5E00E4755C /* deleteDoubleCheckButtonSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0D32B21444BD5E00E4755C /* deleteDoubleCheckButtonSelected.png */; };
 		FA0D32B51444BD5E00E4755C /* deleteDoubleCheckButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0D32B31444BD5E00E4755C /* deleteDoubleCheckButtonSelected@2x.png */; };
 		FA0D32B81444BD6B00E4755C /* deleteDoubleCheckButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0D32B61444BD6B00E4755C /* deleteDoubleCheckButton.png */; };
@@ -23,6 +22,7 @@
 		FA0D32D51444DBFF00E4755C /* sliderPageControlBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0D32D11444DBFF00E4755C /* sliderPageControlBg@2x.png */; };
 		FA0D32DD1444EAB300E4755C /* paperTop.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0D32DB1444EAB300E4755C /* paperTop.png */; };
 		FA0D32DE1444EAB300E4755C /* paperTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0D32DC1444EAB300E4755C /* paperTop@2x.png */; };
+		FA1B56401448B89900FEE881 /* BookBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1B563F1448B89900FEE881 /* BookBackView.m */; };
 		FA1D8B14140C176600C4DD59 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B0D140C176600C4DD59 /* RootViewController.m */; };
 		FA1D8B16140C176600C4DD59 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B11140C176600C4DD59 /* ModelController.m */; };
 		FA1D8B17140C176600C4DD59 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1D8B12140C176600C4DD59 /* RootViewController.xib */; };
@@ -52,7 +52,6 @@
 		FA45BA311401E66E00C02A78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA301401E66E00C02A78 /* AppDelegate.m */; };
 		FA45BA341401E66E00C02A78 /* DollarBets.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA321401E66E00C02A78 /* DollarBets.xcdatamodeld */; };
 		FA45BA411401E6C900C02A78 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA3F1401E6C900C02A78 /* MainViewController.m */; };
-		FA45BA421401E6C900C02A78 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA401401E6C900C02A78 /* MainViewController.xib */; };
 		FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4D38861413FAEE003064BC /* TOCTableViewController.m */; };
 		FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4D38871413FAEE003064BC /* TOCTableViewController.xib */; };
 		FA671A631443FC1F00E876F8 /* chooseNew.png in Resources */ = {isa = PBXBuildFile; fileRef = FA671A621443FC1F00E876F8 /* chooseNew.png */; };
@@ -126,8 +125,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FA03E8041408481B00DA2345 /* BookSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookSettingsView.h; sourceTree = "<group>"; };
-		FA03E8051408481B00DA2345 /* BookSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookSettingsView.m; sourceTree = "<group>"; };
 		FA0D32B21444BD5E00E4755C /* deleteDoubleCheckButtonSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteDoubleCheckButtonSelected.png; sourceTree = "<group>"; };
 		FA0D32B31444BD5E00E4755C /* deleteDoubleCheckButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deleteDoubleCheckButtonSelected@2x.png"; sourceTree = "<group>"; };
 		FA0D32B61444BD6B00E4755C /* deleteDoubleCheckButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteDoubleCheckButton.png; sourceTree = "<group>"; };
@@ -144,6 +141,8 @@
 		FA0D32D11444DBFF00E4755C /* sliderPageControlBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sliderPageControlBg@2x.png"; sourceTree = "<group>"; };
 		FA0D32DB1444EAB300E4755C /* paperTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paperTop.png; sourceTree = "<group>"; };
 		FA0D32DC1444EAB300E4755C /* paperTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paperTop@2x.png"; sourceTree = "<group>"; };
+		FA1B563E1448B89900FEE881 /* BookBackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookBackView.h; sourceTree = "<group>"; };
+		FA1B563F1448B89900FEE881 /* BookBackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookBackView.m; sourceTree = "<group>"; };
 		FA1D8B0C140C176600C4DD59 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		FA1D8B0D140C176600C4DD59 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		FA1D8B10140C176600C4DD59 /* ModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
@@ -184,7 +183,6 @@
 		FA45BA331401E66E00C02A78 /* DollarBets.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DollarBets.xcdatamodel; sourceTree = "<group>"; };
 		FA45BA3E1401E6C900C02A78 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		FA45BA3F1401E6C900C02A78 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		FA45BA401401E6C900C02A78 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		FA4D38851413FAEE003064BC /* TOCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCTableViewController.h; sourceTree = "<group>"; };
 		FA4D38861413FAEE003064BC /* TOCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCTableViewController.m; sourceTree = "<group>"; };
 		FA4D38871413FAEE003064BC /* TOCTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOCTableViewController.xib; sourceTree = "<group>"; };
@@ -313,8 +311,8 @@
 		FA1D8B19140C176E00C4DD59 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				FA4D38831413FAC4003064BC /* Table Of Contents */,
 				FAB474D614194E4D0000075F /* Bet Page */,
-				FA4D38831413FAC4003064BC /* TOCTablViewController */,
 				FA1D8B0C140C176600C4DD59 /* RootViewController.h */,
 				FA1D8B0D140C176600C4DD59 /* RootViewController.m */,
 				FA1D8B10140C176600C4DD59 /* ModelController.h */,
@@ -360,8 +358,8 @@
 			children = (
 				FA2486F014083E1C00AC31BE /* BookFrontView.h */,
 				FA2486F114083E1C00AC31BE /* BookFrontView.m */,
-				FA03E8041408481B00DA2345 /* BookSettingsView.h */,
-				FA03E8051408481B00DA2345 /* BookSettingsView.m */,
+				FA1B563E1448B89900FEE881 /* BookBackView.h */,
+				FA1B563F1448B89900FEE881 /* BookBackView.m */,
 			);
 			name = "Book Views";
 			sourceTree = "<group>";
@@ -504,7 +502,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		FA4D38831413FAC4003064BC /* TOCTablViewController */ = {
+		FA4D38831413FAC4003064BC /* Table Of Contents */ = {
 			isa = PBXGroup;
 			children = (
 				FA4D38851413FAEE003064BC /* TOCTableViewController.h */,
@@ -513,7 +511,7 @@
 				FADC500014181A07008F8C4E /* TOCBetsTableViewCell.h */,
 				FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */,
 			);
-			name = TOCTablViewController;
+			name = "Table Of Contents";
 			sourceTree = "<group>";
 		};
 		FA59C3BD14439C5B00C7DD7E /* Images */ = {
@@ -530,7 +528,6 @@
 				FA2486EB14083CF100AC31BE /* Induvidual books */,
 				FA45BA3E1401E6C900C02A78 /* MainViewController.h */,
 				FA45BA3F1401E6C900C02A78 /* MainViewController.m */,
-				FA45BA401401E6C900C02A78 /* MainViewController.xib */,
 			);
 			name = MainScreen;
 			sourceTree = "<group>";
@@ -634,7 +631,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA45BA2B1401E66E00C02A78 /* InfoPlist.strings in Resources */,
-				FA45BA421401E6C900C02A78 /* MainViewController.xib in Resources */,
 				FA1D8B17140C176600C4DD59 /* RootViewController.xib in Resources */,
 				FABD4601140FFF9D00A0683A /* beige_paper.png in Resources */,
 				FABD4602140FFF9D00A0683A /* black-Linen.png in Resources */,
@@ -744,7 +740,6 @@
 				FA437B7D14046EBC00CD43EF /* Bet.m in Sources */,
 				FAB9D59014047943000F4FC0 /* Opponent.m in Sources */,
 				FA2486F214083E1C00AC31BE /* BookFrontView.m in Sources */,
-				FA03E8061408481B00DA2345 /* BookSettingsView.m in Sources */,
 				FA1D8B14140C176600C4DD59 /* RootViewController.m in Sources */,
 				FA1D8B16140C176600C4DD59 /* ModelController.m in Sources */,
 				FA1D8B26140C2F8300C4DD59 /* RootContainerViewController.m in Sources */,
@@ -754,6 +749,7 @@
 				FAB474DA14194E730000075F /* BetPage.m in Sources */,
 				FA215D89143D44DC001919C4 /* ModalImageViewController.m in Sources */,
 				FA0D32CC1444D8F900E4755C /* SliderPageControl.m in Sources */,
+				FA1B56401448B89900FEE881 /* BookBackView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

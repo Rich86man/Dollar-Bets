@@ -22,4 +22,6 @@
 @property (nonatomic, retain) NSString * report;
 @property (nonatomic, retain) Opponent *opponent;
 
+-(bool)save;
+
 @end

@@ -36,7 +36,7 @@
     NSString * pageNum;
   
     int editState;
-
+    bool newBet;
 
     
 
@@ -63,6 +63,7 @@
 
 
 -(id)initWithBet:(Bet*)aBet;
+-(id)initAsNewWithOpponent:(Opponent *)opp;
 -(void)setUpAmountLabel;
 
 - (void)editButtonSelected;

@@ -7,44 +7,25 @@
 //
 
 #import "BookViewController.h"
-#import <CoreGraphics/CoreGraphics.h>
+//#import <CoreGraphics/CoreGraphics.h>
 #import "Opponent.h"
 #import "BookFrontView.h"
-#import "BookSettingsView.h"
-
-@interface BookViewController(PrivateMethods)
--(void)setupDebugLabel;
-@end    
+#import "BookBackView.h"
 
 @implementation BookViewController
 @synthesize frontView, backView;
 @synthesize delegate;
 @synthesize opponent;
-@synthesize containerView;
 
-@synthesize debugLabel;
 
 -(id)initWithOpponent:(Opponent *)opp
 {
     if (self = [super init])
     {
-        [self setFrontView:nil];
-        [self setBackView:nil];
-        [self setContainerView:nil];
-        [self setOpponent:nil];
         self.opponent = opp;
+        self.view.frame = CGRectMake(0, 0, 320, 480);
     }    
     return self;
-}
-
-
--(void)setupDebugLabel
-{
-    /*  --------DEBUG LABEL---------*/
-    UILabel *dl = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, 320, 30)];
-    dl.font = [UIFont fontWithName:@"STHeitiJ-Light" size:20.0f];
-    dl.textAlignment = UITextAlignmentCenter;
-    self.debugLabel = dl;
 }
 
 
@@ -53,26 +34,16 @@
 - (void)loadView
 {
     [super loadView];
-  //  self.view = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-    /*
-    UIView *localContainerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-	self.containerView = localContainerView;
-    self.containerView.backgroundColor = [UIColor clearColor];
-    */
-
-    /*  --------DEBUG LABEL---------*/
-    [self.containerView addSubview:self.debugLabel];
-    
+    [self.view setClearsContextBeforeDrawing:YES];
     BookFrontView *bfw = [[BookFrontView alloc] initWithFrame:self.view.frame ];
     bfw.viewController = self;
     self.frontView = bfw;
     
-    BookSettingsView *bsw = [[BookSettingsView alloc] initWithFrame:self.view.frame];
+    BookBackView *bsw = [[BookBackView alloc] initWithFrame:self.view.frame];
     bsw.viewController = self;
     bsw.backgroundColor = [UIColor clearColor];
     self.backView = bsw;
     
-   // self.view = self.containerView;
 }
 
 
@@ -89,7 +60,6 @@
 {
     [self setFrontView:nil];
     [self setBackView:nil];
-    [self setContainerView:nil];
     [self setOpponent:nil];
     [super viewDidUnload];
 }
@@ -124,6 +94,15 @@
     }
 }
 
+-(void)addNewButtonSelected
+{
+    self.frontView.nameTextField.placeholder = @"Opponent...";
+    self.frontView.addNewButton.alpha = 0;
+    self.frontView.addNewButton = nil;
+    self.frontView.nameTextField.alpha = 1;
+    [self.frontView.nameTextField becomeFirstResponder];
+    
+}
 
 -(void)didDoubleClick
 {

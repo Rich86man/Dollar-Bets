@@ -8,6 +8,7 @@
 
 #import "ModelController.h"
 #import "TOCTableViewController.h"
+#import "RootViewController.h"
 #import "BetPage.h"
 
 
@@ -50,13 +51,26 @@
 {   
     // Return the data view controller for the given index.
     if ( index > [self.bets count] ) {
-        return nil;
+        
+        Bet * aBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[[self.rvc opponent] managedObjectContext]];
+        aBet.opponent = [self.rvc opponent];
+        aBet.report = @"Bet Description...";
+        aBet.didWin = [NSNumber numberWithInt:2];
+        aBet.amount = [NSNumber numberWithInt:1];
+        aBet.date = [NSDate date];
+
+        self.bets = [self.bets arrayByAddingObject:aBet];
+        
+        BetPage *betPage = [[BetPage alloc] initWithBet:aBet]; 
+        betPage.delegate = rvc;
+        betPage.pageNum =  [NSString stringWithFormat:@"%@/%i",[NSNumber numberWithInt:index],[bets count]];
+        return betPage;
     }
     
     if (index == 0)
     {
-        TOCTableViewController *toc = [[TOCTableViewController alloc]initWithNibName:@"TOCTableViewController" bundle:nil];
-        toc.opponent = self.opponent;
+        TOCTableViewController *toc = [[TOCTableViewController alloc]initWithOpponent:self.opponent];
+
         toc.delegate = self.rvc;
         return toc;
     }
