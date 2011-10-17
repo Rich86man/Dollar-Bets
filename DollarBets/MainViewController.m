@@ -134,6 +134,8 @@
      [books addObject:[NSNull null]];
      **************************************************************************************************/
     
+   
+    
     /* We will take our lazily loaded controllers, test for null and init
      new Book View controllers to supply to the ScrollView */
     BookViewController *controller = [books objectAtIndex:page];
@@ -150,7 +152,14 @@
         {
             controller = [[BookViewController alloc] initWithOpponent:[self.opponents objectAtIndex:page]];
         }
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didSelectBook:)];
+        tapGesture.delegate = self;
+        for (UIGestureRecognizer *gesture in self.bookScrollView.gestureRecognizers) {
+            [tapGesture requireGestureRecognizerToFail:gesture];
+        }
         
+        
+        [controller.view addGestureRecognizer:tapGesture];
         controller.delegate = self;
         [books replaceObjectAtIndex:page withObject:controller];
     }
@@ -346,10 +355,25 @@
  The purpose of this function is to expand the bookcover
  and pass control over to the parent view controller. 
  */
--(void)didSelectBook:(BookViewController *)book
+-(void)didSelectBook:(UIGestureRecognizer *)gesture
 {
-    [self.parent OpenBook:book];
+
+        [self.parent OpenBook:[self.books objectAtIndex:[self currentPage]]];        
+   
+    
+
 }
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    if ([touch.view isKindOfClass:[UIButton class]]) 
+    {
+        return NO;
+    }
+    return YES;
+}
+
 
 /* 
  Slider page Control delegate Functions

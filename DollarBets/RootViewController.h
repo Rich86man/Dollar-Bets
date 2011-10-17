@@ -11,67 +11,61 @@
 #import "TOCTableViewController.h"
 #import "BetPage.h"
 #import "BookViewController.h"
+#import "RKPageViewController.h"
 
-
-@interface RootViewController : UIViewController <UINavigationControllerDelegate, UIPageViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, TOCTableViewControllerDelegate, BetPageControllerDelegate>
+@interface RootViewController : UIViewController <UINavigationControllerDelegate, UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, TOCTableViewControllerDelegate, BetPageControllerDelegate>
 {
     Opponent *opponent;
-    UIViewController *currentPageBeingEdited;
+    BetPage *currentPageBeingEdited;
     UIImagePickerController *imagePicker;
     int editState;
     int twitterKeyboard;
     NSMutableArray *gestureRecognizers;
     bool isHomeButtonHidden;
+    bool isBetPageOverlayShowing;
     
     
 }
 @property (assign) id delegate;
 @property (assign) BookViewController *topBook;
 @property (strong, nonatomic) Opponent *opponent;
-@property (strong, nonatomic) UIViewController *currentPageBeingEdited;
-@property (strong, nonatomic) UIPageViewController *pageViewController;
-
+@property (strong, nonatomic) BetPage *currentPageBeingEdited;
+@property (strong, nonatomic) RKPageViewController *pageViewController;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
-
-
-/*Table of Contents Overlay */
+/* Table of Contents Overlay */
 @property (strong, nonatomic) IBOutlet UIButton *homeButton;
-
 /* Fancy Keyboard */
 @property (strong, nonatomic) IBOutlet UIToolbar *keyboardToolbar;
 @property (strong, nonatomic) IBOutlet UIView *backroundView;
 @property (strong, nonatomic) IBOutlet UIView *choosePhotoView;
 @property (strong, nonatomic) IBOutlet UIImageView *choosePhotoImageView;
 @property (strong, nonatomic) IBOutlet UIButton *removePhotoButton;
-
 @property (strong, nonatomic) IBOutlet UIView *chooseDidWinView;
+/* Bet page Overlat view */
 @property (strong, nonatomic) IBOutlet UIView *betOverlayView;
 @property (strong, nonatomic) IBOutlet UIImageView *rightArrow;
 @property (strong, nonatomic) IBOutlet UIImageView *leftArrow;
 
 
-- (IBAction)doneButtonSelected:(id)sender;
-
-
-- (IBAction)chooseNewButtonSelected:(id)sender;
-
-- (IBAction)deletePhotoButtonSelected:(id)sender;
-
-
-- (IBAction)didWinButtonPresses:(id)sender;
-- (IBAction)homeButtonSelected:(id)sender;
-
-- (IBAction)betPageBackButtonPressed:(id)sender;
-- (IBAction)betPageEditButtonSelected:(id)sender;
-- (IBAction)keyboardToolbarButtonPressed:(UIBarButtonItem *)sender;
-
+/* Table Of contents Overlay Functions */
 -(void)showHomeButton:(NSInteger)duration;
 -(void)hideHomeButton:(NSInteger)duration;
+- (IBAction)homeButtonSelected:(id)sender;
 
+/* Custom Keyboard Functions */
+- (IBAction)keyboardToolbarButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)doneButtonSelected:(id)sender;
+- (IBAction)chooseNewPhotoButtonSelected:(id)sender;
+- (IBAction)deletePhotoButtonSelected:(id)sender;
+- (IBAction)didWinButtonPressed:(id)sender;
+
+/* Bet Page Overlay Functions */
+-(void)showBetPageOverlay;
 -(void)hideBetPageOverlay:(NSInteger)duration;
+- (IBAction)betPageBackButtonPressed:(id)sender;
+- (IBAction)betPageEditButtonSelected:(id)sender;
 
-
--(void)disablePageViewGestures:(_Bool)disable;
+/* UIPageViewController helper functions */
 -(void)flipToPage:(int)page animated:(bool)animated;
 -(void)openBook;
 -(void)closeBook;

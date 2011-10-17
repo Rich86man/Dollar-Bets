@@ -14,9 +14,11 @@
 #define DEFAULT_KEYBOARD_SIZE 220.0f
 
 @interface BetPage(PrivateMethods)
+
 -(void)setUpMap;
 -(void)setUpDollars;
-
+-(void)showOverlay;
+-(void)hideOverlay:(NSInteger)duration;
 
 
 
@@ -39,6 +41,8 @@
 @synthesize tweetButton;
 @synthesize gestureView;
 @synthesize gestureViewTwo;
+@synthesize overlayView;
+
 @synthesize delegate;
 
 
@@ -82,6 +86,12 @@
     
     [self setUpAmountLabel];
     
+    if (self.overlayView.alpha == 0) 
+    {
+        overlayShowing = NO;
+    }
+    else
+        overlayShowing = YES;
     
     self.descriptionTextView.text = self.bet.report;
     
@@ -114,15 +124,14 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapPage)];
     [tap setNumberOfTapsRequired:1];
+    [tap setDelegate:self];
     
-    //   [self.gestureView setGestureRecognizers:[NSArray arrayWithObject:tap]];
-    // [self.scrollView addGestureRecognizer:tap];
-    [self.gestureView addGestureRecognizer:tap];
-    [self.gestureViewTwo addGestureRecognizer:tap];
+    [self.view addGestureRecognizer:tap];
+
     if(newBet)
     {
-        [self.delegate didTapPage:self];
-        [self.delegate betPageEditButtonSelected:nil];
+        [self showOverlay];
+        [self.delegate editButtonSelected:self];
     }
 }
 
@@ -152,6 +161,16 @@
     
 }
 
+- (IBAction)backButtonSelected:(id)sender 
+{
+    [self.delegate didselectBack:self];
+}
+
+- (IBAction)editButtonSelected:(id)sender 
+{
+    [self.delegate didselectEdit:self];
+}
+
 -(NSString *)description
 {
     NSMutableString *desc = [[NSMutableString alloc]init];
@@ -165,13 +184,12 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
     [self.delegate betPageWillAppear:self];    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [self.delegate hideBetPageOverlay:0.0];
+    [self hideOverlay:0.0];
 }
 
 /*
@@ -240,6 +258,8 @@
     [self setGestureView:nil];
     [self setGestureViewTwo:nil];
     [self setAmountTextView:nil];
+    [self setOverlayView:nil];
+
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -343,37 +363,84 @@
     
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch 
-{
-    
-    
-    
-    if (touch.view == self.photoButton) {
-        
-        return NO;
-    }
-    return YES;
-}
+
 
 #pragma mark - TextFieldDelegate 
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    CGPoint touchPoint = [touch locationInView:self.view];
+    NSLog(@"%f, %f", touchPoint.x, touchPoint.y);    
+    if (touchPoint.x < 220 && touchPoint.x > 100 && ![touch.view isKindOfClass:[UIButton class]]) 
+        return YES;
+    else 
+        return NO;
+
+}
+/*
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-   
-    NSSet *arr = [event touchesForView:self.photoButton];
-    
-    if ([arr count] == 0)
-        [super touchesBegan:touches withEvent:event];
+
+    for (UITouch *touch in touches)
+    {
+        
+    }
 }
-
-
-
+*/
 -(void)didTapPage
 {
     
+    if (overlayShowing) 
+    {
+        [self hideOverlay:1.0f];
+    }
+    else
+        [self showOverlay];
     
-    [self.delegate didTapPage:self];
-    NSLog(@"did Tap Page");
+}
+
+
+-(void)showOverlay
+{
+    if(!overlayShowing)
+    {
+        [UIView animateWithDuration:1.0f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
     
+                             [self.overlayView setAlpha:1.0f];
+                             
+                         }
+                         completion:nil];
+
+            overlayShowing = YES;
+    }
+}
+
+
+-(void)hideOverlay:(NSInteger)duration
+{
+    if (!duration) 
+    {
+        duration = 1.0f;
+    }
+    
+    if(overlayShowing)
+    {
+        
+        
+        [UIView animateWithDuration:duration
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                                [self.overlayView setAlpha:0.0f];                             
+                         }
+                         completion:nil];
+        
+        overlayShowing = NO;
+    }
 }
 
 

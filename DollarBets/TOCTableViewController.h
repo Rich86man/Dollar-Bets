@@ -16,15 +16,12 @@
 
 -(void)didSelectPage:(int)index;
 -(void)didBeginQuickAdd:(id)sender;
--(void)readyToSave:(bool)ready;
 -(void)savedQuickBet;
 
 @end
 
 @interface TOCTableViewController : UIViewController <UITableViewDelegate, UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate> {
-    
-    Bet *quickBet;
-    UITableView *tableView;
+        UITableView *tableView;
     // Custom Headers
     UIView *headerView;
     UIView *graphsHeader;    
@@ -40,6 +37,8 @@
     // Managed Objects
     Opponent *opponent;
     NSArray *bets;
+    Bet *quickBet;
+
 
     NSTimer *myHomeButtonTimer;
     
@@ -64,10 +63,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
 @property (strong, nonatomic) IBOutlet UILabel *amountLabel;
 
-
-
 -(id)initWithOpponent:(Opponent *)opp;
-
 -(void)setUpAmountLabel;
 -(void)timerFired;
 

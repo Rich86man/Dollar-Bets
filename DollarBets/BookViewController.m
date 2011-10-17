@@ -104,11 +104,12 @@
     
 }
 
+/*
 -(void)didDoubleClick
 {
     [self.delegate didSelectBook:self];
 }
-
+*/
 
 -(void)refreshFrontView
 {
@@ -162,13 +163,14 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField 
 {
     self.frontView.nameLabel.alpha = 0.0f;
+    [self.frontView hidePlusButton];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     self.frontView.nameLabel.text = textField.text;
     self.frontView.nameLabel.alpha = 1.0f;
-    [self.frontView hidePlusButton];
+    //[self.frontView hidePlusButton];
     textField.text = @"";
     [textField resignFirstResponder];
     [delegate opponentCreatedWithName:frontView.nameLabel.text by:self];

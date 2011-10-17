@@ -183,6 +183,12 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (scrollView.contentOffset.y < -1.0) 
+    {
+        [self.myHomeButtonTimer invalidate];
+        [self.delegate hideHomeButton:0.0f];
+    }
+    
     if( scrollView.contentOffset.y <= -1.0f && scrollView.contentOffset.y > -122.0f && !isQuickAdding)
     {
         CGFloat offset =   scrollView.contentOffset.y;
@@ -232,8 +238,18 @@
         self.overlayLabel.text = @"Pull Down To Add New";
         self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self.delegate selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
     }
+           
+    
 }
 
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if(scrollView.contentOffset.y == 0 && ![self.myHomeButtonTimer isValid])
+    {
+        self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(timerFired) userInfo:nil repeats:NO];
+    }
+
+}
 
 #pragma mark - TextView Delegate Functions
 

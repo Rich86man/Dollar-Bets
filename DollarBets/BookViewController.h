@@ -25,7 +25,7 @@
 @end
 
 
-@interface BookViewController : UIViewController <UIGestureRecognizerDelegate, UITextFieldDelegate> {
+@interface BookViewController : UIViewController < UITextFieldDelegate> {
     
     BookFrontView *frontView;
     BookBackView *backView;

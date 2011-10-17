@@ -9,7 +9,7 @@
 #import "BookFrontView.h"
 #import "BookViewController.h"
 #import "Opponent.h"
-
+#import "RKButton.h"
 #define RGB256_TO_COL(col) ((col) / 255.0f)
 
 @implementation BookFrontView
@@ -39,9 +39,9 @@
         [imageView setImage:[UIImage imageNamed:@"book.png"]];
         [imageView setUserInteractionEnabled:YES];
         
-        UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self.viewController action:@selector(didDoubleClick)];
-        [doubleTap setNumberOfTapsRequired:2];
-        [imageView addGestureRecognizer:doubleTap];
+       // UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self.viewController action:@selector(didDoubleClick)];
+       // [doubleTap setNumberOfTapsRequired:2];
+        //[imageView addGestureRecognizer:doubleTap];
         self.bookImgView = imageView;
     }
     [self addSubview:self.bookImgView];
@@ -145,7 +145,7 @@
 {
     if(self.configButton == nil)
     {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        RKButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(75, 377, 25, 25)];
         [button setBackgroundColor:[UIColor clearColor]];
         [button addTarget:self.viewController action:@selector(configButtonSelected:) forControlEvents:UIControlEventTouchUpInside];

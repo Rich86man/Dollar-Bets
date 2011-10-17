@@ -13,10 +13,11 @@
 @protocol BetPageControllerDelegate <NSObject>
 
 -(void)betPageWillAppear:(BetPage *)betPage;
-
-
 -(void)didSelectphoto:(BetPage *)onPage;
 -(void)didSelectTweet:(BetPage *)onPage;
+-(void)didselectEdit:(BetPage *)onPage;
+-(void)didselectBack:(BetPage *)onPage;
+
 
 -(void)didTapPage:(BetPage *)onPage;
 
@@ -37,7 +38,7 @@
   
     int editState;
     bool newBet;
-
+    bool overlayShowing;
     
 
 }
@@ -61,11 +62,15 @@
 @property (strong, nonatomic) IBOutlet UIView *gestureView;
 @property (strong, nonatomic) IBOutlet UIView *gestureViewTwo;
 
+@property (strong, nonatomic) IBOutlet UIView *overlayView;
+
 
 -(id)initWithBet:(Bet*)aBet;
 -(id)initAsNewWithOpponent:(Opponent *)opp;
 -(void)setUpAmountLabel;
+- (IBAction)backButtonSelected:(id)sender;
 
+- (IBAction)editButtonSelected:(id)sender;
 - (void)editButtonSelected;
 - (IBAction)photoButtonSelected:(id)sender;
 - (IBAction)tweetButtonSelected:(id)sender;

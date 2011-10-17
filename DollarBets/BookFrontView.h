@@ -10,7 +10,7 @@
 
 @class BookViewController;
 @class Opponent;
-
+@class RKButton;
 @interface BookFrontView : UIView
 {
     UIImageView *bookImgView;
