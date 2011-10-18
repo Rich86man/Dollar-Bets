@@ -32,8 +32,6 @@
 @property (strong, nonatomic) BetPage *currentPageBeingEdited;
 @property (strong, nonatomic) RKPageViewController *pageViewController;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
-/* Table of Contents Overlay */
-@property (strong, nonatomic) IBOutlet UIButton *homeButton;
 /* Fancy Keyboard */
 @property (strong, nonatomic) IBOutlet UIToolbar *keyboardToolbar;
 @property (strong, nonatomic) IBOutlet UIView *backroundView;
@@ -41,16 +39,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *choosePhotoImageView;
 @property (strong, nonatomic) IBOutlet UIButton *removePhotoButton;
 @property (strong, nonatomic) IBOutlet UIView *chooseDidWinView;
-/* Bet page Overlat view */
-@property (strong, nonatomic) IBOutlet UIView *betOverlayView;
-@property (strong, nonatomic) IBOutlet UIImageView *rightArrow;
-@property (strong, nonatomic) IBOutlet UIImageView *leftArrow;
-
-
-/* Table Of contents Overlay Functions */
--(void)showHomeButton:(NSInteger)duration;
--(void)hideHomeButton:(NSInteger)duration;
-- (IBAction)homeButtonSelected:(id)sender;
 
 /* Custom Keyboard Functions */
 - (IBAction)keyboardToolbarButtonPressed:(UIBarButtonItem *)sender;
@@ -59,17 +47,9 @@
 - (IBAction)deletePhotoButtonSelected:(id)sender;
 - (IBAction)didWinButtonPressed:(id)sender;
 
-/* Bet Page Overlay Functions */
--(void)showBetPageOverlay;
--(void)hideBetPageOverlay:(NSInteger)duration;
-- (IBAction)betPageBackButtonPressed:(id)sender;
-- (IBAction)betPageEditButtonSelected:(id)sender;
-
 /* UIPageViewController helper functions */
--(void)flipToPage:(int)page animated:(bool)animated;
+-(void)flipToPage:(int)page animated:(bool)animated forward:(bool)forward;
 -(void)openBook;
 -(void)closeBook;
-
-
 
 @end

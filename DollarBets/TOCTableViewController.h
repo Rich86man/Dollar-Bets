@@ -13,19 +13,18 @@
 #import "Bet.h"
 
 @protocol TOCTableViewControllerDelegate <NSObject>
-
 -(void)didSelectPage:(int)index;
 -(void)didBeginQuickAdd:(id)sender;
+-(void)didselectHomeButton;
 -(void)savedQuickBet;
-
 @end
 
-@interface TOCTableViewController : UIViewController <UITableViewDelegate, UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate> {
-        UITableView *tableView;
+@interface TOCTableViewController : UIViewController <UITableViewDelegate, UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate> 
+{
+    UITableView *tableView;
     // Custom Headers
     UIView *headerView;
-    UIView *graphsHeader;    
-
+    
     // Quick add View
     UIView *quickAddView;
     UITextView *descriptionTextView;
@@ -37,13 +36,14 @@
     // Managed Objects
     Opponent *opponent;
     NSArray *bets;
-    Bet *quickBet;
+    Bet *bet;
 
 
     NSTimer *myHomeButtonTimer;
     
     bool isQuickAdding;
     bool isDragging;
+    bool homeButtonShowing;
     
 
 }
@@ -51,28 +51,26 @@
 @property (strong, nonatomic) Opponent *opponent;
 @property (strong, nonatomic) NSArray *bets;
 @property (strong, nonatomic) NSTimer *myHomeButtonTimer;
-@property (strong, nonatomic) Bet *quickBet;
+@property (strong, nonatomic) Bet *bet;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) UIView *headerView;
+@property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIView *quickAddView;
 @property (strong, nonatomic) IBOutlet UIView *overlayView;
 @property (strong, nonatomic) IBOutlet UILabel *overlayLabel;
-
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UITextView *amountTextView;
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
 @property (strong, nonatomic) IBOutlet UILabel *amountLabel;
 
+@property (strong, nonatomic) IBOutlet UIButton *homeButton;
 -(id)initWithOpponent:(Opponent *)opp;
 -(void)setUpAmountLabel;
 -(void)timerFired;
 
 // Quick add Functions
 - (IBAction)save:(UIButton *)sender;
+- (IBAction)homeButtonSelected:(id)sender;
 
 -(void)didTapHeader;
-
-
-
 
 @end

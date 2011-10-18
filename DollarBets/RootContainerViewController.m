@@ -83,7 +83,7 @@
 
     
     
-    [UIView animateWithDuration:1.0f 
+    [UIView animateWithDuration:0.7f 
                           delay:0.0f 
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
@@ -138,7 +138,7 @@
         [self.rootViewController.view removeFromSuperview];
         
         
-        [UIView animateWithDuration:1.0f 
+        [UIView animateWithDuration:0.7f 
                               delay:0.0f 
                             options:UIViewAnimationOptionCurveLinear
                          animations:^{

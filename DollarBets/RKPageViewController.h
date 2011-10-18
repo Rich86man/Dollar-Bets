@@ -1,6 +1,10 @@
 //
 //  RKPageViewController.h
 //  DollarBets
+// 
+//
+// This is a subclass of UIPageViewController. It is need to disable
+// the Page View gestures in certain circumstances. 
 //
 //  Created by Richard Kirk on 10/17/11.
 //  Copyright (c) 2011 Home. All rights reserved.

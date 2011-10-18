@@ -38,9 +38,7 @@
     if (self) {
         // Create the data model.
         self.opponent = opp;
-        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
-        self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
-    
+          
         
         
     }
@@ -48,7 +46,10 @@
 }
 
 - (UIViewController *)viewControllerAtIndex:(NSUInteger)index
-{   
+{     
+    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+    self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+
     // Return the data view controller for the given index.
     if ( index > [self.bets count] ) {
         
@@ -59,11 +60,11 @@
         aBet.amount = [NSNumber numberWithInt:1];
         aBet.date = [NSDate date];
 
-        self.bets = [self.bets arrayByAddingObject:aBet];
+        //self.bets = [self.bets arrayByAddingObject:aBet];
         
         BetPage *betPage = [[BetPage alloc] initWithBet:aBet]; 
         betPage.delegate = rvc;
-        betPage.pageNum =  [NSString stringWithFormat:@"%@/%i",[NSNumber numberWithInt:index],[bets count]];
+        betPage.pageNum =  [NSString stringWithFormat:@"%@/%@",[NSNumber numberWithInt:index],[NSNumber numberWithInt:index]];
         return betPage;
     }
     
@@ -78,10 +79,7 @@
     BetPage *betPage = [[BetPage alloc] initWithBet:[self.bets objectAtIndex:index -1]]; 
     betPage.delegate = rvc;
     betPage.pageNum =  [NSString stringWithFormat:@"%@/%i",[NSNumber numberWithInt:index],[bets count]];
-  //  betPage.view.gestureRecognizers = [[rvc pageViewController] gestureRecognizers];
-    
-    
-   // betPage.scrollView.gestureRecognizers = self.gestureRecognizers;
+  
     return betPage;
 
     /*

@@ -13,23 +13,12 @@
 
 - (id)initWithTransitionStyle:(UIPageViewControllerTransitionStyle)style navigationOrientation:(UIPageViewControllerNavigationOrientation)navigationOrientation options:(NSDictionary *)options
 {
-    
-    self = [super initWithTransitionStyle:style navigationOrientation:navigationOrientation options:options];
-    if (self)
-    {/*
-        for (UIGestureRecognizer *gesture in self.gestureRecognizers) {
-            gesture.delegate = self;
-        }        
-    */
-        
-      }
-    return self;
-    
+    return [super initWithTransitionStyle:style navigationOrientation:navigationOrientation options:options];;
 }
+
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    
     if ([touch.view isKindOfClass:[UIButton class]]) 
     {
         return NO;
@@ -38,11 +27,11 @@
 }
 
 
-
 -(void)disablePageViewGestures:(_Bool)disable   
 {
     if(disable)
-    {NSLog(@"Disabling Gestures");
+    {
+        NSLog(@"Disabling Page View Gestures");
         for (UIGestureRecognizer *gesture in self.gestureRecognizers) 
         {
             if([gesture isEnabled])
@@ -50,7 +39,8 @@
         }
     }
     else if(!disable)
-    {NSLog(@"Enabling Gestures");
+    {
+        NSLog(@"Enabling Page View Gestures");
         for (UIGestureRecognizer *gesture in self.gestureRecognizers) 
         {
             if(![gesture isEnabled])
@@ -58,6 +48,7 @@
         }
     }
 }
+
 
 -(NSNumber *)currentPage
 {

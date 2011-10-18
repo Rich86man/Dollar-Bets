@@ -16,7 +16,7 @@
 @synthesize frontView, backView;
 @synthesize delegate;
 @synthesize opponent;
-
+@synthesize frontViewIsVisible;
 
 -(id)initWithOpponent:(Opponent *)opp
 {

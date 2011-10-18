@@ -38,8 +38,7 @@
 @synthesize modelController = _modelController;
 @synthesize imagePicker;
 @synthesize keyboardToolbar,choosePhotoView, choosePhotoImageView, removePhotoButton, backroundView, chooseDidWinView;
-@synthesize betOverlayView, rightArrow, leftArrow;
-@synthesize homeButton;
+
 
 
 - (void)didReceiveMemoryWarning
@@ -75,10 +74,6 @@
     [self setChoosePhotoView:nil];
     [self setChoosePhotoImageView:nil];
     [self setChooseDidWinView:nil];
-    [self setHomeButton:nil];
-    [self setBetOverlayView:nil];
-    [self setRightArrow:nil];
-    [self setLeftArrow:nil];
     [self setRemovePhotoButton:nil];
     [super viewDidUnload];
 
@@ -98,53 +93,15 @@
 }
 
 
-#pragma mark - TableOfContents Overlay Functions
-
--(void)showHomeButton:(NSInteger)duration
-{
-    if(!duration)
-    {
-        duration = 1.0f;
-    }
-    
-    if(isHomeButtonHidden)
-    {
-        [UIView animateWithDuration:duration
-                              delay:0.0f
-                            options:UIViewAnimationCurveEaseIn
-                         animations:^{
-                             self.homeButton.frame = CGRectMake(20, 0, 44, 61);
-                         } completion:nil];
-    }
-    isHomeButtonHidden = NO;
-}
-
--(void)hideHomeButton:(NSInteger)duration
-{
-    if (!duration) {
-        duration = 0.05f;
-    }
-    if(!isHomeButtonHidden)
-    {
-        [UIView animateWithDuration:duration
-                              delay:0.0f
-                            options:UIViewAnimationCurveEaseIn
-                         animations:^{
-                             self.homeButton.frame = CGRectMake(20, -61, 44, 61);
-                         } completion:nil];
-        
-    }
-    isHomeButtonHidden = YES;
-}
-
-
-- (IBAction)homeButtonSelected:(id)sender 
-{
-    [self closeBook];
-}
 
 
 #pragma mark - TOCTableViewController Delegate Functions
+
+-(void)didSelectPage:(int)index
+{
+    [self flipToPage:index animated:YES forward:YES];
+}
+
 
 -(void)didBeginQuickAdd:(id)sender
 {
@@ -153,15 +110,15 @@
 }
 
 
--(void)didSelectPage:(int)index
-{
-    [self flipToPage:index animated:YES];
-}
-
-
 -(void)savedQuickBet
 {
     [self.pageViewController disablePageViewGestures:NO];
+}
+
+
+-(void)didselectHomeButton
+{
+    [self closeBook];
 }
 
 
@@ -419,7 +376,7 @@
 
 -(void)didselectBack:(BetPage *)onPage
 {
-    [self flipToPage:0 animated:YES];
+    [self flipToPage:0 animated:YES forward:NO];
 }
 
 -(void)didselectEdit:(BetPage *)onPage
@@ -515,12 +472,18 @@
 }
 
 
--(void)flipToPage:(int)page animated:(_Bool)animated
+-(void)flipToPage:(int)page animated:(_Bool)animated forward:(_Bool)forward
 {
     UIViewController *selectedPage = [self.modelController viewControllerAtIndex:page];
     NSArray *viewControllers = [NSArray arrayWithObject:selectedPage];
     
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:animated completion:NULL];
+    if (forward) 
+    {
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:animated completion:NULL];
+    }
+    else
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:animated completion:NULL];
+
 }
 
 

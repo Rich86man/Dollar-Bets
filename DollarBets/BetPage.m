@@ -14,78 +14,72 @@
 #define DEFAULT_KEYBOARD_SIZE 220.0f
 
 @interface BetPage(PrivateMethods)
-
 -(void)setUpMap;
 -(void)setUpDollars;
 -(void)showOverlay;
 -(void)hideOverlay:(NSInteger)duration;
-
-
-
-
+-(void)didTapPage;
 @end
 
 @implementation BetPage
 
 @synthesize bet;
 @synthesize scrollView;
-@synthesize titleLabel;
-@synthesize dateLabel;
-@synthesize descriptionTextView;
-@synthesize amountTextView;
-@synthesize amountLabel;
-@synthesize pageNumberLabel;
-
-@synthesize pageNum;
-@synthesize photoButton;
-@synthesize tweetButton;
-@synthesize gestureView;
-@synthesize gestureViewTwo;
 @synthesize overlayView;
-
+@synthesize descriptionTextView, amountTextView;
+@synthesize titleLabel, dateLabel, amountLabel, pageNumberLabel;
+@synthesize photoButton, tweetButton;
+@synthesize pageNum;
 @synthesize delegate;
 
 
 -(id)initWithBet:(Bet *)aBet
 {
     self = [super init];
-    if (self) {
-        // Custom initialization
-        self.bet = aBet;      
-        newBet = NO;
+    if (self) 
+    {
+        self.bet = aBet;
+        
         if ([self.bet.report isEqualToString:@"Bet Description..."])
         {
             newBet = YES;
         }
+        else 
+            newBet = NO;
     }
     return self;
-    
 }
 
 -(id)initAsNewWithOpponent:(Opponent *)opp
-{   self = [super init];
-    if (self) {
+{   
+    self = [super init];
+    if (self) 
+    {
         newBet = YES;
-
     }
     return self;
 }
 
 
-
 #pragma mark - View lifecycle
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"PaperBackround.png"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
+    //self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
+    self.scrollView.backgroundColor = [UIColor clearColor];
+
+    
+    
+    /* Set up Labels */
     self.titleLabel.text = self.bet.opponent.name;
-    
     self.pageNumberLabel.text = self.pageNum;
-    
     [self setUpAmountLabel];
+    self.descriptionTextView.text = self.bet.report;
+    self.dateLabel.text =  [self.bet.date RKStringFromDate];
     
+    /* Check if the Overlay view is currently showing */
     if (self.overlayView.alpha == 0) 
     {
         overlayShowing = NO;
@@ -93,24 +87,17 @@
     else
         overlayShowing = YES;
     
-    self.descriptionTextView.text = self.bet.report;
+    //self.descriptionTextView.contentOffset = CGPointMake(0, 0);
     
-    NSDateFormatter *df = [[NSDateFormatter alloc]init ];
-    
-    [df setDateStyle:NSDateFormatterMediumStyle];
-    
-    self.dateLabel.text = [df stringFromDate:self.bet.date];
-    
-    self.descriptionTextView.contentOffset = CGPointMake(0, 0);
-    
-    
+    /* In case of very long descriptions, move the portion of the scroll view being shown */
     if (self.descriptionTextView.contentSize.height > 301)
     {
         CGRect frame = self.scrollView.frame;
-        frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height );//- 302); 
+        frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height ); 
         self.scrollView.frame = frame;
     }
     
+    /* Set up the buttons */
     if(self.bet.picture)
         [self.photoButton setEnabled:YES];
     else
@@ -121,17 +108,219 @@
     else
         [self.tweetButton setEnabled:NO];
     
-    
+    /* Create a tap gesture recognizer to show the overlay */
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapPage)];
     [tap setNumberOfTapsRequired:1];
     [tap setDelegate:self];
-    
     [self.view addGestureRecognizer:tap];
-
+    
+    /* Finally, if dealing with a new page, show the keyboard right away */
     if(newBet)
     {
         [self showOverlay];
-        [self.delegate editButtonSelected:self];
+        
+        [self.descriptionTextView setEditable:YES];
+        [self.descriptionTextView becomeFirstResponder];
+        [self.delegate didselectEdit:self];
+    }
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.delegate betPageWillAppear:self];    
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self hideOverlay:0.0];
+}
+
+
+- (void)viewDidUnload
+{
+    [self setTitleLabel:nil];
+    [self setScrollView:nil];
+    [self setDateLabel:nil];
+    [self setDescriptionTextView:nil];
+    [self setAmountLabel:nil];
+    [self setPageNumberLabel:nil];
+    [self setPhotoButton:nil];
+    [self setTweetButton:nil];
+    [self setAmountTextView:nil];
+    [self setOverlayView:nil];
+    [self setAmountTextView:nil];
+    [super viewDidUnload];
+}
+
+
+-(NSString *)description
+{
+    NSMutableString *desc = [[NSMutableString alloc]init];
+    
+    [desc appendString:@"Bet Page "];
+    [desc appendFormat:@"with index:  %@   ",self.pageNumberLabel.text ];
+    [desc appendFormat:@"and bet name : %@ ", self.bet.report];
+    return [NSString stringWithString:desc];
+}
+
+
+#pragma mark - Button actions
+
+- (IBAction)backButtonSelected:(id)sender 
+{
+    [self.delegate didselectBack:self];
+}
+
+
+- (IBAction)editButtonSelected:(id)sender 
+{
+
+    
+    [self.descriptionTextView setEditable:YES];
+    [self.descriptionTextView becomeFirstResponder];
+    [self.delegate didselectEdit:self];
+}
+
+
+- (IBAction)photoButtonSelected:(id)sender 
+{
+    [self.delegate didSelectphoto:self];
+}
+
+
+- (IBAction)tweetButtonSelected:(id)sender 
+{
+    [self.delegate didSelectTweet:self];
+}
+
+
+#pragma mark - TextView Delegate Functions
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if(textView.tag == 0)
+    {
+        if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) 
+        {
+            
+            [UIView animateWithDuration:0.1f animations:^{
+                self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
+            }];
+        }
+    }
+}
+
+
+- (void)textViewDidChange:(UITextView *)textView
+{    
+    if(textView.tag == 0)
+    {
+        if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
+            
+            [UIView animateWithDuration:0.1f animations:^{
+                self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
+            }];
+        }
+    }
+    else
+    {
+        NSNumberFormatter *nf = [[NSNumberFormatter alloc]init];
+        self.bet.amount = [nf numberFromString:textView.text];
+        [self setUpAmountLabel];
+        
+    }
+    
+}
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if(textView.tag == 0)
+    {
+        [UIView animateWithDuration:0.3f animations:^{
+            self.scrollView.contentOffset = CGPointMake(0, 0);
+        }];
+        
+        
+        self.descriptionTextView.contentOffset = CGPointMake(0, 0);
+        
+        if (self.descriptionTextView.contentSize.height > 301)
+        {
+            CGRect frame = self.scrollView.frame;
+            frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height - 302); 
+            self.scrollView.frame = frame;
+        }
+    }
+    
+    
+}
+
+
+#pragma mark - UIGesture Delegate Functions
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    CGPoint touchPoint = [touch locationInView:self.view];
+    NSLog(@"%f, %f", touchPoint.x, touchPoint.y);    
+    if (touchPoint.x < 220 && touchPoint.x > 100 && ![touch.view isKindOfClass:[UIButton class]]) 
+        return YES;
+    else 
+        return NO;
+}
+
+
+#pragma mark - Overlay Stuff
+
+-(void)didTapPage
+{
+    
+    if (overlayShowing) 
+    {
+        [self hideOverlay:1.0f];
+    }
+    else
+        [self showOverlay];
+    
+}
+
+
+-(void)showOverlay
+{
+    if(!overlayShowing)
+    {
+        [UIView animateWithDuration:1.0f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             
+                             [self.overlayView setAlpha:1.0f];
+                             
+                         }
+                         completion:nil];
+        
+        overlayShowing = YES;
+    }
+}
+
+
+-(void)hideOverlay:(NSInteger)duration
+{
+    if (!duration) 
+    {
+        duration = 1.0f;
+    }
+    
+    if(overlayShowing)
+    {
+        [UIView animateWithDuration:duration
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             [self.overlayView setAlpha:0.0f];                             
+                         }
+                         completion:nil];
+        
+        overlayShowing = NO;
     }
 }
 
@@ -139,7 +328,6 @@
 -(void)setUpAmountLabel
 {
     UILabel *label = self.amountLabel;
-    
     
     switch ([self.bet.didWin intValue]) {
         case 0:
@@ -157,41 +345,10 @@
         default:
             break;
     }
-    
-    
-}
-
-- (IBAction)backButtonSelected:(id)sender 
-{
-    [self.delegate didselectBack:self];
-}
-
-- (IBAction)editButtonSelected:(id)sender 
-{
-    [self.delegate didselectEdit:self];
-}
-
--(NSString *)description
-{
-    NSMutableString *desc = [[NSMutableString alloc]init];
-    
-    [desc appendString:@"Bet Page "];
-    [desc appendFormat:@"with index:  %@   ",self.pageNumberLabel.text ];
-    [desc appendFormat:@"and bet name : %@ ", self.bet.report];
-    return [NSString stringWithString:desc];
 }
 
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [self.delegate betPageWillAppear:self];    
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [self hideOverlay:0.0];
-}
-
+/* Possible maps implementation */
 /*
  -(void)setUpMap
  {
@@ -222,226 +379,6 @@
  
  }
  */
-
-
-/*
- -(void)setUpDollars
- {
- int betAmount = [self.bet.amount intValue];
- if(betAmount == 1)
- {
- self.dollarImageView.image = [UIImage imageNamed:@"oneDollar.png"];
- }
- else if(betAmount == 5)
- {
- self.dollarImageView.image = [UIImage imageNamed:@"fiveDollar.png"];
- }
- else
- self.dollarImageView.alpha = 0;
- 
- 
- }
- */
-
-- (void)viewDidUnload
-{
-    [self setTitleLabel:nil];
-    [self setScrollView:nil];
-    [self setDateLabel:nil];
-    [self setDescriptionTextView:nil];
-    [self setAmountLabel:nil];
-
-    [self setPageNumberLabel:nil];
-    
-    [self setPhotoButton:nil];
-    [self setTweetButton:nil];
-    [self setGestureView:nil];
-    [self setGestureViewTwo:nil];
-    [self setAmountTextView:nil];
-    [self setOverlayView:nil];
-
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
-
-
-
-
-
-- (void)editButtonSelected
-{
-    
-    [self.descriptionTextView setEditable:YES];
-    [self.descriptionTextView becomeFirstResponder];
-}
-
-- (IBAction)photoButtonSelected:(id)sender 
-{
-    [self.delegate didSelectphoto:self];
-}
-
-- (IBAction)tweetButtonSelected:(id)sender 
-{
-    [self.delegate didSelectTweet:self];
-}
-
-#pragma mark - TextViewDelegateFunctions
-/*
- - (BOOL)textViewShouldBeginEditing:(UITextView *)textView;
- - (BOOL)textViewShouldEndEditing:(UITextView *)textView;
- 
- 
- 
- 
- - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
- - (void)textViewDidChangeSelection:(UITextView *)textView;
- 
- */
-
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    if(textView.tag == 0)
-    {
-        if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
-            
-            [UIView animateWithDuration:0.1f animations:^{
-                self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
-            }];
-        }
-    }
-}
-
-
-- (void)textViewDidChange:(UITextView *)textView
-{    
-    if(textView.tag == 0)
-    {
-        if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
-            
-            [UIView animateWithDuration:0.1f animations:^{
-                self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
-            }];
-        }
-    }
-    else
-    {
-        NSNumberFormatter *nf = [[NSNumberFormatter alloc]init];
-        self.bet.amount = [nf numberFromString:self.amountTextView.text];
-        [self setUpAmountLabel];
-        
-    }
-    
-}
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    if(textView.tag == 0)
-    {
-        [UIView animateWithDuration:0.3f animations:^{
-            self.scrollView.contentOffset = CGPointMake(0, 0);
-        }];
-        
-        
-        self.descriptionTextView.contentOffset = CGPointMake(0, 0);
-        
-        if (self.descriptionTextView.contentSize.height > 301)
-        {
-            CGRect frame = self.scrollView.frame;
-            frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height - 302); 
-            self.scrollView.frame = frame;
-        }
-    }
-    
-    
-}
-
-
-
-#pragma mark - TextFieldDelegate 
-
--(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-{
-    
-    CGPoint touchPoint = [touch locationInView:self.view];
-    NSLog(@"%f, %f", touchPoint.x, touchPoint.y);    
-    if (touchPoint.x < 220 && touchPoint.x > 100 && ![touch.view isKindOfClass:[UIButton class]]) 
-        return YES;
-    else 
-        return NO;
-
-}
-/*
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-
-    for (UITouch *touch in touches)
-    {
-        
-    }
-}
-*/
--(void)didTapPage
-{
-    
-    if (overlayShowing) 
-    {
-        [self hideOverlay:1.0f];
-    }
-    else
-        [self showOverlay];
-    
-}
-
-
--(void)showOverlay
-{
-    if(!overlayShowing)
-    {
-        [UIView animateWithDuration:1.0f
-                              delay:0.0f
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-    
-                             [self.overlayView setAlpha:1.0f];
-                             
-                         }
-                         completion:nil];
-
-            overlayShowing = YES;
-    }
-}
-
-
--(void)hideOverlay:(NSInteger)duration
-{
-    if (!duration) 
-    {
-        duration = 1.0f;
-    }
-    
-    if(overlayShowing)
-    {
-        
-        
-        [UIView animateWithDuration:duration
-                              delay:0.0f
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                                [self.overlayView setAlpha:0.0f];                             
-                         }
-                         completion:nil];
-        
-        overlayShowing = NO;
-    }
-}
 
 
 @end

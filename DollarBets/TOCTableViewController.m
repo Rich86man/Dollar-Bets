@@ -24,12 +24,15 @@
 -(void)addSaveButton;
 -(void)removeSaveButton;
 -(void)resizeQuickView;
+-(void)showHomeButton:(NSInteger)duration;
+-(void)hideHomeButton:(NSInteger)duration;
 @end
 
 @implementation TOCTableViewController
+@synthesize homeButton;
 @synthesize delegate;
 @synthesize tableView;
-@synthesize opponent, bets,  quickBet;
+@synthesize opponent, bets,  bet;
 @synthesize myHomeButtonTimer;
 @synthesize quickAddView, amountTextView, amountLabel, descriptionTextView, saveButton;
 @synthesize overlayView, overlayLabel;
@@ -52,21 +55,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
-    
-    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
-    self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
-    
+    /* setup the Views */
     self.view.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
     self.quickAddView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"crissXcross.png"]];
+    self.headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"black-Linen.png"]];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHeader)];
     [self.headerView addGestureRecognizer:tap];
+
     
+    /* Retrieve the list of bets for the tableview */
+    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+    self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+    
+    /* Check the current position of the Home button */ 
+    if(self.homeButton.frame.origin.y < 0)
+        homeButtonShowing = NO;
+    else
+        homeButtonShowing = YES;
+        
+    self.homeButton.alpha = 1.0f;
     isQuickAdding = NO;
     isDragging = NO;
-    
 }
 
 
@@ -79,7 +90,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self.myHomeButtonTimer invalidate];
-    [self.delegate hideHomeButton:0.0f];
+    [self hideHomeButton:0.0f];
 }
 
 
@@ -93,8 +104,9 @@
     [self setSaveButton:nil];
     [self setOverlayLabel:nil];
     [self setAmountLabel:nil];
-    [self setQuickBet:nil];
+    [self setBet:nil];
     [self setAmountTextView:nil];
+    [self setHomeButton:nil];
     [super viewDidUnload];
     
 }
@@ -105,11 +117,6 @@
     return @"TableOfContents Page";
 }
 
-
--(void)timerFired
-{
-    [self.delegate showHomeButton:1.0];
-}
 
 
 #pragma mark - Table view data source
@@ -126,7 +133,8 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
+{
     static NSString *normalCell = @"betCell";
     static NSString *addBetCell = @"addBetCell";
     
@@ -137,8 +145,7 @@
         {   
             betCell = [[TOCBetsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:normalCell];
         }
-        
-        betCell.amountLabel.text = [NSString stringWithFormat:@"$%@",[[[bets objectAtIndex:indexPath.row] amount] stringValue]];     
+        betCell.amountLabel.text = [NSString stringWithFormat:@"$%@",[[[bets objectAtIndex:indexPath.row] amount] stringValue]];   
         betCell.descriptionLabel.text = [[bets objectAtIndex:indexPath.row] report];
         
         return betCell;  
@@ -146,15 +153,14 @@
     else
     {
         TOCBetsTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addBetCell];
-        if (cell == nil) {
+        if (cell == nil) 
+        {
             cell = [[TOCBetsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:addBetCell];
         }
-        
         cell.addNew.alpha = 1.0f;
         
         return cell;
     }
-
 }
 
 
@@ -179,6 +185,7 @@
 }
 
 
+
 #pragma mark - ScrollViewDelegate Functions
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -186,7 +193,7 @@
     if (scrollView.contentOffset.y < -1.0) 
     {
         [self.myHomeButtonTimer invalidate];
-        [self.delegate hideHomeButton:0.0f];
+        [self hideHomeButton:0.0f];
     }
     
     if( scrollView.contentOffset.y <= -1.0f && scrollView.contentOffset.y > -122.0f && !isQuickAdding)
@@ -209,15 +216,15 @@
         scrollView.contentInset = UIEdgeInsetsMake(122.0, 0, 0, 0 );
         isQuickAdding = YES;
         [self.delegate didBeginQuickAdd:self];
-        if(!self.quickBet)
+        if(!self.bet)
         {
-            self.quickBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.opponent.managedObjectContext];
-            self.quickBet.opponent = self.opponent;
-            self.quickBet.didWin = [NSNumber numberWithInt:2];
-            self.quickBet.amount = [NSNumber numberWithInt:1];
-            self.quickBet.date = [NSDate date];
+            self.bet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.opponent.managedObjectContext];
+            self.bet.opponent = self.opponent;
+            self.bet.didWin = [NSNumber numberWithInt:2];
+            self.bet.amount = [NSNumber numberWithInt:1];
+            self.bet.date = [NSDate date];
         }
-        [self.delegate showHomeButton:NO];
+        [self hideHomeButton:0.0f];
         [self.myHomeButtonTimer invalidate];
         [self resizeQuickView];
     }
@@ -236,11 +243,10 @@
                           }];
         
         self.overlayLabel.text = @"Pull Down To Add New";
-        self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self.delegate selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
+        self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(showHomeButton:) userInfo:nil repeats:NO];
     }
-           
-    
 }
+
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -305,7 +311,7 @@
     else
     {
         NSNumberFormatter *nf = [[NSNumberFormatter alloc]init];
-        self.quickBet.amount = [nf numberFromString:self.amountTextView.text];
+        self.bet.amount = [nf numberFromString:self.amountTextView.text];
         [self setUpAmountLabel];
         
     }
@@ -317,7 +323,7 @@
 {
     if (textView.tag == 0) 
     {
-        self.quickBet.report = self.descriptionTextView.text;
+        self.bet.report = self.descriptionTextView.text;
     }
     
 }
@@ -354,6 +360,7 @@
     
 }
 
+
 -(void)addSaveButton
 {
     if (self.saveButton.alpha == 0)
@@ -362,6 +369,7 @@
         [self resizeQuickView];
     }
 }
+
 
 -(void)removeSaveButton
 {    
@@ -373,14 +381,12 @@
 }
 
 
-- (IBAction)save:(UIButton *)sender {
-
-    
+- (IBAction)save:(UIButton *)sender 
+{    
     if([self.descriptionTextView isFirstResponder])
         [self.descriptionTextView resignFirstResponder];
     
-    
-    if([quickBet save])
+    if([bet save])
     {
         [self removeSaveButton];
         self.amountLabel.text = @"";
@@ -398,6 +404,7 @@
         
         NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
         self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+        
         [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.bets count] -1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
@@ -406,68 +413,90 @@
 }
 
 
-
-#pragma mark - Custom Headers
-
--(UIView *)headerView
-{
-    if (!headerView) {
-        
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 40, 320, 100)];
-        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"black-Linen.png"]];
-        
-        UILabel *tl = [[UILabel alloc]initWithFrame:CGRectMake(20, 20, 280, 46)];    
-        tl.backgroundColor = [UIColor clearColor];
-        tl.font = [UIFont fontWithName:@"STHeitiJ-Light" size:40.0f];
-        tl.text = @"Table of";
-        tl.textColor = [UIColor lightGrayColor];
-        tl.textAlignment = UITextAlignmentCenter;
-        
-        UILabel *tl1 = [[UILabel alloc]initWithFrame:CGRectMake(20, 49, 280, 51)];    
-        tl1.backgroundColor = [UIColor clearColor];
-        tl1.font = [UIFont fontWithName:@"STHeitiJ-Light" size:40.0f];
-        tl1.text = @"Bets";
-        tl1.textColor = [UIColor lightGrayColor];
-        tl1.textAlignment = UITextAlignmentCenter;
-        
-        [view addSubview:tl];
-        [view addSubview:tl1];        
-        headerView = view;
-    }
-    
-    return headerView;
-}
-
 -(void)didTapHeader
 {
     [self.myHomeButtonTimer invalidate];
-    [self.delegate showHomeButton:0.0f];
+    [self showHomeButton:0.0f];
 }
+
+
+- (IBAction)homeButtonSelected:(id)sender 
+{
+    [self.delegate didselectHomeButton];
+}
+
 
 -(void)setUpAmountLabel
 {
     UILabel *label = self.amountLabel;
     
-    
-    switch ([self.quickBet.didWin intValue]) {
+    switch ([self.bet.didWin intValue]) 
+    {
         case 0:
-            label.text = [NSString stringWithFormat:@"- $%i",[self.quickBet.amount intValue]];
+            label.text = [NSString stringWithFormat:@"- $%i",[self.bet.amount intValue]];
             label.textColor = [UIColor redColor];
             break;
         case 1:
-            label.text = [NSString stringWithFormat:@"+ $%i",[self.quickBet.amount intValue]];
+            label.text = [NSString stringWithFormat:@"+ $%i",[self.bet.amount intValue]];
             label.textColor = [UIColor greenColor];
             break;
         case 2:
-            label.text = [NSString stringWithFormat:@"-/+ $%i",[self.quickBet.amount intValue]];
+            label.text = [NSString stringWithFormat:@"-/+ $%i",[self.bet.amount intValue]];
             label.textColor = [UIColor grayColor];
             break;
         default:
             break;
     }
+}
+
+
+-(void)timerFired
+{
+    [self showHomeButton:1.0];
+}
+
+
+
+-(void)showHomeButton:(NSInteger)duration
+{
+    if(!duration)
+    {
+        duration = 1.0f;
+    }
     
+    if(!homeButtonShowing)
+    {
+        [UIView animateWithDuration:duration
+                              delay:0.0f
+                            options:UIViewAnimationCurveEaseIn
+                         animations:^{
+                             self.homeButton.frame = CGRectMake(20, 0, 44, 61);
+                         } completion:nil];
+        homeButtonShowing = YES;
+    }
+
+}
+
+-(void)hideHomeButton:(NSInteger)duration
+{
+    if (!duration) 
+    {
+        duration = 0.05f;
+    }
+    if(homeButtonShowing)
+    {
+        [UIView animateWithDuration:duration
+                              delay:0.0f
+                            options:UIViewAnimationCurveEaseIn
+                         animations:^{
+                             self.homeButton.frame = CGRectMake(20, -61, 44, 61);
+                         } completion:nil];
+        homeButtonShowing = NO;    
+    }
     
 }
+
+
 
 
 

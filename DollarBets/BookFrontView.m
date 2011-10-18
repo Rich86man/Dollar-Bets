@@ -9,7 +9,7 @@
 #import "BookFrontView.h"
 #import "BookViewController.h"
 #import "Opponent.h"
-#import "RKButton.h"
+
 #define RGB256_TO_COL(col) ((col) / 255.0f)
 
 @implementation BookFrontView
@@ -39,8 +39,8 @@
         [imageView setImage:[UIImage imageNamed:@"book.png"]];
         [imageView setUserInteractionEnabled:YES];
         
-       // UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self.viewController action:@selector(didDoubleClick)];
-       // [doubleTap setNumberOfTapsRequired:2];
+        // UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self.viewController action:@selector(didDoubleClick)];
+        // [doubleTap setNumberOfTapsRequired:2];
         //[imageView addGestureRecognizer:doubleTap];
         self.bookImgView = imageView;
     }
@@ -48,13 +48,13 @@
     
     if(!self.nameLabel)
     {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(80, 60, 215, 100)];
-        [label setFont:[UIFont fontWithName:@"STHeitiJ-Light" size:30.0f]];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(80, 60, 200, 100)];
+        [label setFont:[UIFont fontWithName:HEITI size:30.0f]];
         [label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(171) green:RGB256_TO_COL(170) blue:RGB256_TO_COL(79) alpha:1.0]];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setContentMode:UIViewContentModeCenter];
         [label setAdjustsFontSizeToFitWidth:YES];
-
+        
         if(self.viewController.opponent != nil)
         {
             label.text = [self.viewController.opponent name];
@@ -74,16 +74,16 @@
     
     if(self.nameTextField == nil)
     {
-        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(80, 60, 215, 100)];
+        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(80, 60, 200, 100)];
         [textField setContentMode:UIViewContentModeCenter];
         [textField setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
         [textField setAdjustsFontSizeToFitWidth:YES];
         [textField setBackgroundColor:[UIColor clearColor]];
         [textField setDelegate:self.viewController];
-        [textField setFont:[UIFont fontWithName:@"STHeitiJ-Light" size:30.0f]];
+        [textField setFont:[UIFont fontWithName:HEITI size:30.0f]];
         [textField setTextColor:[UIColor colorWithRed:RGB256_TO_COL(171) green:RGB256_TO_COL(170) blue:RGB256_TO_COL(79) alpha:1.0]];
-
-
+        
+        
         self.nameTextField = textField;
     }
     [self addSubview:self.nameTextField];
@@ -122,8 +122,8 @@
                           delay:0 
                         options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse | UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
                      animations:^{ 
-                         self.addNewButton.alpha = 0.1f;
-                         self.addNewButton.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
+                         self.addNewButton.imageView.alpha = 0.0f;
+                         self.addNewButton.imageView.transform = CGAffineTransformMakeScale(0.8f, 0.8f);
                          
                      }    
                      completion:nil];   
@@ -132,12 +132,17 @@
 
 -(void)hidePlusButton
 {
+    
     [UIView animateWithDuration:1.0 
                           delay:0.0
-                        options:UIViewAnimationCurveEaseIn 
+                        options:UIViewAnimationOptionBeginFromCurrentState 
                      animations:^{
-                         self.addNewButton.frame = CGRectMake(self.addNewButton.frame.origin.x + (self.addNewButton.frame.size.width / 2), self.addNewButton.frame.origin.y + (self.addNewButton.frame.size.height / 2) , 0, 0);
-                     }completion:nil];
+                         self.addNewButton.imageView.transform = CGAffineTransformMakeScale(0.0, 0.0);
+                     }completion:^(BOOL finished){
+                         self.addNewButton.alpha = 0;
+                         self.addNewButton = nil;
+                     }];
+
 }
 
 
@@ -145,8 +150,8 @@
 {
     if(self.configButton == nil)
     {
-        RKButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake(75, 377, 25, 25)];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setFrame:CGRectMake(60, 347, 55, 55)];
         [button setBackgroundColor:[UIColor clearColor]];
         [button addTarget:self.viewController action:@selector(configButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
         [button setEnabled:YES];
@@ -160,14 +165,12 @@
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(139, 310, 129, 21)];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setTextAlignment:UITextAlignmentRight ];
-        [label setFont:[UIFont fontWithName:@"STHeitiJ-Light" size:16.0f]];
+        [label setFont:[UIFont fontWithName:HEITI size:16.0f]];
         
-        NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM / dd / YYYY"];
-        
+               
         if (self.viewController.opponent != nil)
         {
-            label.text = [dateFormatter stringFromDate:[self.viewController.opponent date]];
+            label.text = [self.viewController.opponent.date RKStringFromDate];
         }
         else 
         {   // There must be an error.
@@ -190,7 +193,8 @@
     else if(self.viewController.opponent != nil)
     {
         [self hidePlusButton];
-        self.nameTextField.text = [self.viewController.opponent name];
+        self.nameTextField.text = @" ";
+        self.nameLabel.text = [self.viewController.opponent name];
         [self showConfigAndDate];
     }
 }

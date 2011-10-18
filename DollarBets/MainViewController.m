@@ -159,7 +159,7 @@
         }
         
         
-        [controller.view addGestureRecognizer:tapGesture];
+        [controller.frontView addGestureRecognizer:tapGesture];
         controller.delegate = self;
         [books replaceObjectAtIndex:page withObject:controller];
     }
@@ -291,10 +291,11 @@
     self.opponents = [self.opponents arrayByAddingObject:newOpponent];
     book.opponent = newOpponent;
     
+    [self easterEgg:newOpponent];
     [book refreshFrontView];
     [self resizeScrollView];
     
-    [self easterEgg:newOpponent];
+
     
 }
 
@@ -357,11 +358,7 @@
  */
 -(void)didSelectBook:(UIGestureRecognizer *)gesture
 {
-
         [self.parent OpenBook:[self.books objectAtIndex:[self currentPage]]];        
-   
-    
-
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -371,6 +368,8 @@
     {
         return NO;
     }
+    
+
     return YES;
 }
 
@@ -438,11 +437,11 @@
 -(void)easterEgg:(Opponent *)newOpponent
 {
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM / DD / YYYY"];
+    [dateFormatter setDateFormat:@"MM / dd / yyyy"];
     
+    NSString *name = [newOpponent.name lowercaseString];
     
-    
-    if ([newOpponent.name isEqualToString:@"Johnny Curry"])
+    if ([name isEqualToString:@"johnny curry"])
     {
         Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
         newBet1.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
@@ -452,7 +451,7 @@
         newBet1.opponent = newOpponent;
         
         Bet *newBet2 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet2.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
+        newBet2.date = [dateFormatter dateFromString:@"05 / 11 / 2010"];
         newBet2.amount = [NSNumber numberWithInt:1];
         newBet2.report = @"Will Hannah walk out of the Complex in the next 20 min";
         newBet2.didWin = [NSNumber numberWithInt:0];
@@ -498,7 +497,7 @@
         newOpponent.name = @"Captain";
         [newOpponent save];
     }
-    else if ([newOpponent.name isEqualToString:@"Matt Carmichael"])
+    else if ([name isEqualToString:@"matt carmichael"])
     {
         Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
         newBet1.date = [dateFormatter dateFromString:@"10 / 12 / 2010"];
@@ -516,7 +515,7 @@
         
         
         Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet3.date = [dateFormatter dateFromString:@"11 / 22 / 2010"];
+        newBet3.date = [dateFormatter dateFromString:@"11 / 21 / 2010"];
         newBet3.amount = [NSNumber numberWithInt:1];
         newBet3.report = @"Beer Pong Shot";
         newBet3.didWin = [NSNumber numberWithInt:1];
@@ -531,7 +530,7 @@
         newBet4.opponent = newOpponent;
         
         Bet *newBet5 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet5.date = [dateFormatter dateFromString:@"04 / 09 / 2011"];
+        newBet5.date = [dateFormatter dateFromString:@"04 / 08 / 2011"];
         newBet5.amount = [NSNumber numberWithInt:1];
         newBet5.report = @"Can Captain catch a frog?";
         newBet5.didWin = [NSNumber numberWithInt:0];
@@ -548,7 +547,7 @@
         [newOpponent save];
         
     }
-    else if ([newOpponent.name isEqualToString:@"Konrad Gungor"])
+    else if ([name isEqualToString:@"konrad gungor"])
     {
         Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
         newBet1.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
@@ -566,7 +565,7 @@
         
         
         Bet *newBet3 =[NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
-        newBet3.date = [dateFormatter dateFromString:@"11 / 12 / 2010"];
+        newBet3.date = [dateFormatter dateFromString:@"11 / 11 / 2010"];
         newBet3.amount = [NSNumber numberWithInt:1];
         newBet3.report = @"Beer pong shot";
         newBet3.didWin = [NSNumber numberWithInt:0];
@@ -578,7 +577,7 @@
         [newOpponent save];
         
     }  
-    else if ([newOpponent.name isEqualToString:@"Mary Thomas"])
+    else if ([name isEqualToString:@"mary thomas"])
     {
         Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
         newBet1.date = [dateFormatter dateFromString:@"05 / 12 / 2010"];
@@ -620,7 +619,7 @@
         newOpponent.name = @"Richard Kirk";
         [newOpponent save];        
     }
-    else if ([newOpponent.name isEqualToString:@"Carlos Gardinali"])
+    else if ([name isEqualToString:@"carlos gardinali"])
     {
         Bet *newBet1 = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:self.context];
         newBet1.date = [dateFormatter dateFromString:@"10 / 10 / 2010"];

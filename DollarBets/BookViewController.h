@@ -29,12 +29,13 @@
     
     BookFrontView *frontView;
     BookBackView *backView;
-    bool frontViewIsVisible;        
+    BOOL frontViewIsVisible;        
 
 }
 @property (strong, nonatomic)Opponent *opponent;
 @property (strong, nonatomic)BookFrontView *frontView;
 @property (strong, nonatomic)BookBackView *backView;
+@property (readonly, nonatomic) BOOL frontViewIsVisible;
 @property (assign)id delegate;
 
 

@@ -11,7 +11,8 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-    #import <CoreData/CoreData.h>
+    #import <CoreData/CoreData.h>       
+    #import "NSDate+RK.h"
 #endif
 
 #define HEITI @"STHeitiJ-Light"
