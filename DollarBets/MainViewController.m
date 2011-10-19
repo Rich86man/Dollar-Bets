@@ -53,6 +53,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.frame = [[UIScreen mainScreen]bounds];
     /* Create a scroll view for the books */
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:self.view.frame];
     [scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]]];
@@ -69,7 +70,7 @@
     // + 1 for the add page 
     
     /* ScrollView Setup */
-   // self.bookScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]];
+    // self.bookScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]];
     
     /* view controllers are created lazily
      in the meantime, load the array with placeholders which will be replaced on demand */
@@ -81,10 +82,15 @@
     self.books = controllers;
     
     /* Load the first few Book Covers on the ScrollView */
-    for (int i = 0; i < [self.opponents count] && i < 3; i++) {
-        [self loadScrollViewWithPage:i ];
+    if ([self.opponents count] == 0)
+        [self loadScrollViewWithPage:0 ];
+    else 
+    {
+        for (int i = 0; i <= [self.opponents count] && i < 3; i++) 
+        {
+            [self loadScrollViewWithPage:i ];
+        }
     }
-    
     
     [self setupSlider];
 }
@@ -134,7 +140,7 @@
      [books addObject:[NSNull null]];
      **************************************************************************************************/
     
-   
+    
     
     /* We will take our lazily loaded controllers, test for null and init
      new Book View controllers to supply to the ScrollView */
@@ -152,7 +158,7 @@
         {
             controller = [[BookViewController alloc] initWithOpponent:[self.opponents objectAtIndex:page]];
         }
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didSelectBook:)];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didSelectBook:)];
         tapGesture.delegate = self;
         for (UIGestureRecognizer *gesture in self.bookScrollView.gestureRecognizers) {
             [tapGesture requireGestureRecognizerToFail:gesture];
@@ -272,9 +278,11 @@
  entering a name on the AddNewBook. It creates a new opponent in 
  Core Data, configures and saves it. 
  */
--(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *)book
+-(void)nameBookFinishedWithName:(NSString *)oppName by:(BookViewController *)book
 {
     
+    if(!book.opponent)
+    {
     Opponent *newOpponent = [NSEntityDescription insertNewObjectForEntityForName:@"Opponent" inManagedObjectContext:self.context];
     
     newOpponent.name = oppName;
@@ -294,8 +302,18 @@
     [self easterEgg:newOpponent];
     [book refreshFrontView];
     [self resizeScrollView];
+    }
+    else
+    {
+        [book.opponent setName:oppName];
+        if(![book.opponent save])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Did not save" message:@"There is a problem with coredata plese email RichardBKirk@gmail.com and let him know how this happened" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Okay", "Email", nil];
+            [alert show];
+        }
+    }
     
-
+    
     
 }
 
@@ -358,7 +376,7 @@
  */
 -(void)didSelectBook:(UIGestureRecognizer *)gesture
 {
-        [self.parent OpenBook:[self.books objectAtIndex:[self currentPage]]];        
+    [self.parent OpenBook:[self.books objectAtIndex:[self currentPage]]];        
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -369,7 +387,7 @@
         return NO;
     }
     
-
+    
     return YES;
 }
 
@@ -638,7 +656,7 @@
         newOpponent.name = @"Captain";
         [newOpponent save];
     }
-
+    
 }
 
 

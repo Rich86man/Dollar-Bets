@@ -11,6 +11,7 @@
 #import "Opponent.h"
 #import "BookFrontView.h"
 #import "BookBackView.h"
+#import "FXLabel.h"
 
 @implementation BookViewController
 @synthesize frontView, backView;
@@ -80,14 +81,15 @@
 
 -(void)deleteButtonSelected:(id)sender
 {
-    switch ([sender tag]) {
+    switch ([sender tag]) 
+    {
         case 0:
             [self.backView showPopOver];
             [self.backView.deleteButton setSelected:YES];
             break;
         case 1:
-            [self.delegate deleteThisBook:self];
             [self.backView.deleteButton setSelected:NO];
+            [self.delegate deleteThisBook:self];
             break;
         default:
             break;
@@ -95,13 +97,15 @@
 }
 
 -(void)addNewButtonSelected
-{
+{   [self.frontView.nameTextField setUserInteractionEnabled:YES];
+    self.frontView.nameTextField.alpha = 1.0f;
     self.frontView.nameTextField.placeholder = @"Opponent...";
-    self.frontView.addNewButton.alpha = 0;
-    self.frontView.addNewButton = nil;
-    self.frontView.nameTextField.alpha = 1;
-    [self.frontView.nameTextField becomeFirstResponder];
+  //  self.frontView.addNewButton.alpha = 0;
+    //self.frontView.addNewButton = nil;
+    //self.frontView.nameTextField.alpha = 1;
     
+    [self.frontView.nameTextField becomeFirstResponder];
+    [self.frontView hidePlusButton];    
 }
 
 /*
@@ -162,18 +166,19 @@
 #pragma mark - TextField Delegate Functions
 -(void)textFieldDidBeginEditing:(UITextField *)textField 
 {
-    self.frontView.nameLabel.alpha = 0.0f;
-    [self.frontView hidePlusButton];
+    [self.frontView.nameLabel setAlpha:0.0f];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     self.frontView.nameLabel.text = textField.text;
     self.frontView.nameLabel.alpha = 1.0f;
-    //[self.frontView hidePlusButton];
+
     textField.text = @"";
+    [textField setUserInteractionEnabled:NO];
     [textField resignFirstResponder];
-    [delegate opponentCreatedWithName:frontView.nameLabel.text by:self];
+    [delegate nameBookFinishedWithName:frontView.nameLabel.text by:self];
+   
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

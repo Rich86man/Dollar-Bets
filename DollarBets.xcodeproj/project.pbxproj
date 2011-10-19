@@ -28,17 +28,11 @@
 		FA215D6D143CC761001919C4 /* ribbon.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D6C143CC761001919C4 /* ribbon.png */; };
 		FA215D77143D26CB001919C4 /* poloroidBig.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D75143D26C9001919C4 /* poloroidBig.png */; };
 		FA215D78143D26CB001919C4 /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D76143D26CA001919C4 /* remove.png */; };
-		FA215D7A143D286B001919C4 /* crissXcross.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D79143D286A001919C4 /* crissXcross.png */; };
-		FA215D7D143D2F1D001919C4 /* chooseNew.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D7B143D2F1A001919C4 /* chooseNew.png */; };
-		FA215D7E143D2F1D001919C4 /* chooseNewSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D7C143D2F1B001919C4 /* chooseNewSelected.png */; };
 		FA215D89143D44DC001919C4 /* ModalImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA215D87143D44DC001919C4 /* ModalImageViewController.m */; };
 		FA215D8A143D44DC001919C4 /* ModalImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA215D88143D44DC001919C4 /* ModalImageViewController.xib */; };
 		FA215D8C143D46B4001919C4 /* tweetIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D8B143D46B3001919C4 /* tweetIcon.png */; };
 		FA2486F214083E1C00AC31BE /* BookFrontView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2486F114083E1C00AC31BE /* BookFrontView.m */; };
-		FA24C157144CA6D2005E485F /* chooseNewSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA24C156144CA6D2005E485F /* chooseNewSelected.png */; };
 		FA2603A0143A1D6600437D55 /* poloroidIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FA26039D143A1D6600437D55 /* poloroidIcon.png */; };
-		FA2603AF143A40D800437D55 /* locToolbarIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2603AE143A40D800437D55 /* locToolbarIcon.png */; };
-		FA399B3D14117E04003548BF /* black_denim.png in Resources */ = {isa = PBXBuildFile; fileRef = FA399B3C14117E04003548BF /* black_denim.png */; };
 		FA3BB313143FD24100299FE3 /* noRedButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FA3BB310143FD24100299FE3 /* noRedButton.png */; };
 		FA3BB314143FD24100299FE3 /* undecidedGrayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FA3BB311143FD24100299FE3 /* undecidedGrayButton.png */; };
 		FA3BB315143FD24100299FE3 /* yesGreenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FA3BB312143FD24100299FE3 /* yesGreenButton.png */; };
@@ -53,14 +47,15 @@
 		FA45BA411401E6C900C02A78 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA3F1401E6C900C02A78 /* MainViewController.m */; };
 		FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4D38861413FAEE003064BC /* TOCTableViewController.m */; };
 		FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4D38871413FAEE003064BC /* TOCTableViewController.xib */; };
+		FA5C4414144E9891009F5C79 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5C4413144E9891009F5C79 /* QuartzCore.framework */; };
 		FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6ADA331402A9FF007E6CB1 /* BookViewController.m */; };
 		FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */; };
+		FA83BA6C144F6CBD00558DD4 /* FXLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FA83BA6B144F6CBD00558DD4 /* FXLabel.m */; };
 		FAAC98401449F77600AD3CC5 /* betNavBar.png in Resources */ = {isa = PBXBuildFile; fileRef = FAAC983E1449F77600AD3CC5 /* betNavBar.png */; };
 		FAAC98421449F79800AD3CC5 /* betNavBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAAC98411449F79800AD3CC5 /* betNavBar@2x.png */; };
 		FAB06B2E14439DB900F81678 /* book.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B2D14439DB900F81678 /* book.png */; };
 		FAB06B6414439DDC00F81678 /* black_denim.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B3014439DDB00F81678 /* black_denim.png */; };
 		FAB06B6514439DDC00F81678 /* black-Linen.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B3114439DDB00F81678 /* black-Linen.png */; };
-		FAB06B6614439DDC00F81678 /* book.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B3214439DDB00F81678 /* book.png */; };
 		FAB06B6814439DDC00F81678 /* bookBack.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B3414439DDB00F81678 /* bookBack.png */; };
 		FAB06B6914439DDC00F81678 /* bookBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B3514439DDB00F81678 /* bookBack@2x.png */; };
 		FAB06B6A14439DDC00F81678 /* bookBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B3614439DDB00F81678 /* bookBackButton.png */; };
@@ -84,14 +79,8 @@
 		FAB06B7E14439DDC00F81678 /* leftArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4A14439DDC00F81678 /* leftArrow.png */; };
 		FAB06B7F14439DDC00F81678 /* leftArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4B14439DDC00F81678 /* leftArrow@2x.png */; };
 		FAB06B8014439DDC00F81678 /* locToolbarIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4C14439DDC00F81678 /* locToolbarIcon.png */; };
-		FAB06B8114439DDC00F81678 /* noRedButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4D14439DDC00F81678 /* noRedButton.png */; };
-		FAB06B8214439DDC00F81678 /* padded.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4E14439DDC00F81678 /* padded.png */; };
 		FAB06B8714439DDC00F81678 /* poloroidBetPage.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5314439DDC00F81678 /* poloroidBetPage.png */; };
 		FAB06B8814439DDC00F81678 /* poloroidBetPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5414439DDC00F81678 /* poloroidBetPage@2x.png */; };
-		FAB06B8914439DDC00F81678 /* poloroidBig.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5514439DDC00F81678 /* poloroidBig.png */; };
-		FAB06B8A14439DDC00F81678 /* poloroidIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5614439DDC00F81678 /* poloroidIcon.png */; };
-		FAB06B8B14439DDC00F81678 /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5714439DDC00F81678 /* remove.png */; };
-		FAB06B8C14439DDC00F81678 /* ribbon.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5814439DDC00F81678 /* ribbon.png */; };
 		FAB06B8D14439DDC00F81678 /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5914439DDC00F81678 /* rightArrow.png */; };
 		FAB06B8E14439DDC00F81678 /* rightArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5A14439DDC00F81678 /* rightArrow@2x.png */; };
 		FAB06B8F14439DDC00F81678 /* saveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5B14439DDC00F81678 /* saveButton.png */; };
@@ -100,7 +89,6 @@
 		FAB06B9214439DDC00F81678 /* saveButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5E14439DDC00F81678 /* saveButtonPressed@2x.png */; };
 		FAB06B9314439DDC00F81678 /* tableOfContentsBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5F14439DDC00F81678 /* tableOfContentsBackButton.png */; };
 		FAB06B9414439DDC00F81678 /* tableOfContentsBackButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B6014439DDC00F81678 /* tableOfContentsBackButton@2x.png */; };
-		FAB06B9514439DDC00F81678 /* tweetIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B6114439DDC00F81678 /* tweetIcon.png */; };
 		FAB06B9614439DDC00F81678 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B6214439DDC00F81678 /* twitter.png */; };
 		FAB06B9714439DDC00F81678 /* twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B6314439DDC00F81678 /* twitter@2x.png */; };
 		FAB06B9B1443F58F00F81678 /* book@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B9A1443F58E00F81678 /* book@2x.png */; };
@@ -114,17 +102,13 @@
 		FAB474E6141A88710000075F /* paperTop.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB474E5141A88710000075F /* paperTop.png */; };
 		FAB9D59014047943000F4FC0 /* Opponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB9D58F14047943000F4FC0 /* Opponent.m */; };
 		FABD4601140FFF9D00A0683A /* beige_paper.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FB140FFF9D00A0683A /* beige_paper.png */; };
-		FABD4602140FFF9D00A0683A /* black-Linen.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FC140FFF9D00A0683A /* black-Linen.png */; };
-		FABD4604140FFF9D00A0683A /* leather_1.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FE140FFF9D00A0683A /* leather_1.png */; };
 		FABD4605140FFF9D00A0683A /* padded.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FF140FFF9D00A0683A /* padded.png */; };
 		FACD7511144CB47500384AFF /* RKPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FACD7510144CB47500384AFF /* RKPageViewController.m */; };
 		FACD7518144CD20A00384AFF /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACD7517144CD20900384AFF /* RootViewController.xib */; };
 		FACD751D144CE81300384AFF /* NSDate+RK.m in Sources */ = {isa = PBXBuildFile; fileRef = FACD751C144CE81300384AFF /* NSDate+RK.m */; };
-		FACD7524144D09DE00384AFF /* paperTop.png in Resources */ = {isa = PBXBuildFile; fileRef = FACD7523144D09DE00384AFF /* paperTop.png */; };
 		FACD7529144D188500384AFF /* handmadepaper.png in Resources */ = {isa = PBXBuildFile; fileRef = FACD7528144D188500384AFF /* handmadepaper.png */; };
 		FACD752B144D22E900384AFF /* roughLine.png in Resources */ = {isa = PBXBuildFile; fileRef = FACD752A144D22E800384AFF /* roughLine.png */; };
 		FACD752E144D25EE00384AFF /* RKPaperView.m in Sources */ = {isa = PBXBuildFile; fileRef = FACD752D144D25EE00384AFF /* RKPaperView.m */; };
-		FAD4107E144CA68100BCF2F3 /* chooseNew.png in Resources */ = {isa = PBXBuildFile; fileRef = FAD4107D144CA68100BCF2F3 /* chooseNew.png */; };
 		FADC500214181A08008F8C4E /* TOCBetsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -164,7 +148,6 @@
 		FA215D8B143D46B3001919C4 /* tweetIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tweetIcon.png; sourceTree = "<group>"; };
 		FA2486F014083E1C00AC31BE /* BookFrontView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookFrontView.h; sourceTree = "<group>"; };
 		FA2486F114083E1C00AC31BE /* BookFrontView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookFrontView.m; sourceTree = "<group>"; };
-		FA24C156144CA6D2005E485F /* chooseNewSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chooseNewSelected.png; sourceTree = "<group>"; };
 		FA26039D143A1D6600437D55 /* poloroidIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poloroidIcon.png; sourceTree = "<group>"; };
 		FA2603AE143A40D800437D55 /* locToolbarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locToolbarIcon.png; sourceTree = "<group>"; };
 		FA399B3C14117E04003548BF /* black_denim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black_denim.png; sourceTree = "<group>"; };
@@ -189,9 +172,12 @@
 		FA4D38851413FAEE003064BC /* TOCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCTableViewController.h; sourceTree = "<group>"; };
 		FA4D38861413FAEE003064BC /* TOCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCTableViewController.m; sourceTree = "<group>"; };
 		FA4D38871413FAEE003064BC /* TOCTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOCTableViewController.xib; sourceTree = "<group>"; };
+		FA5C4413144E9891009F5C79 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FA6ADA321402A9FF007E6CB1 /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookViewController.h; sourceTree = "<group>"; };
 		FA6ADA331402A9FF007E6CB1 /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookViewController.m; sourceTree = "<group>"; };
 		FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FA83BA6A144F6CBD00558DD4 /* FXLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXLabel.h; sourceTree = "<group>"; };
+		FA83BA6B144F6CBD00558DD4 /* FXLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXLabel.m; sourceTree = "<group>"; };
 		FAAC983E1449F77600AD3CC5 /* betNavBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = betNavBar.png; sourceTree = "<group>"; };
 		FAAC98411449F79800AD3CC5 /* betNavBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "betNavBar@2x.png"; sourceTree = "<group>"; };
 		FAB06B2D14439DB900F81678 /* book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = book.png; sourceTree = "<group>"; };
@@ -266,7 +252,6 @@
 		FACD752A144D22E800384AFF /* roughLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = roughLine.png; sourceTree = "<group>"; };
 		FACD752C144D25EE00384AFF /* RKPaperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPaperView.h; sourceTree = "<group>"; };
 		FACD752D144D25EE00384AFF /* RKPaperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKPaperView.m; sourceTree = "<group>"; };
-		FAD4107D144CA68100BCF2F3 /* chooseNew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chooseNew.png; sourceTree = "<group>"; };
 		FADC500014181A07008F8C4E /* TOCBetsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCBetsTableViewCell.h; sourceTree = "<group>"; };
 		FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCBetsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -276,6 +261,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA5C4414144E9891009F5C79 /* QuartzCore.framework in Frameworks */,
 				FAB2E3CE143D735E00066844 /* Twitter.framework in Frameworks */,
 				FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */,
 				FA45BA211401E66E00C02A78 /* UIKit.framework in Frameworks */,
@@ -402,6 +388,7 @@
 		FA45BA1F1401E66E00C02A78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA5C4413144E9891009F5C79 /* QuartzCore.framework */,
 				FAB2E3CD143D735E00066844 /* Twitter.framework */,
 				FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */,
 				FA45BA201401E66E00C02A78 /* UIKit.framework */,
@@ -432,8 +419,6 @@
 				FAB06B3014439DDB00F81678 /* black_denim.png */,
 				FAB06B3114439DDB00F81678 /* black-Linen.png */,
 				FAB06B3214439DDB00F81678 /* book.png */,
-				FAD4107D144CA68100BCF2F3 /* chooseNew.png */,
-				FA24C156144CA6D2005E485F /* chooseNewSelected.png */,
 				FAB06B9A1443F58E00F81678 /* book@2x.png */,
 				FAB06B3414439DDB00F81678 /* bookBack.png */,
 				FAB06B3514439DDB00F81678 /* bookBack@2x.png */,
@@ -597,6 +582,8 @@
 		FACD751A144CE7BC00384AFF /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FA83BA6A144F6CBD00558DD4 /* FXLabel.h */,
+				FA83BA6B144F6CBD00558DD4 /* FXLabel.m */,
 				FA215D85143D44B3001919C4 /* Modal ImageViewController */,
 				FA437B8114046ED200CD43EF /* Managed Objects */,
 				FA0D32CD1444D90600E4755C /* SliderPageController */,
@@ -678,21 +665,14 @@
 			files = (
 				FA45BA2B1401E66E00C02A78 /* InfoPlist.strings in Resources */,
 				FABD4601140FFF9D00A0683A /* beige_paper.png in Resources */,
-				FABD4602140FFF9D00A0683A /* black-Linen.png in Resources */,
-				FABD4604140FFF9D00A0683A /* leather_1.png in Resources */,
 				FABD4605140FFF9D00A0683A /* padded.png in Resources */,
-				FA399B3D14117E04003548BF /* black_denim.png in Resources */,
 				FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */,
 				FAB474DB14194E730000075F /* BetPage.xib in Resources */,
 				FAB474E6141A88710000075F /* paperTop.png in Resources */,
 				FA2603A0143A1D6600437D55 /* poloroidIcon.png in Resources */,
-				FA2603AF143A40D800437D55 /* locToolbarIcon.png in Resources */,
 				FA215D6D143CC761001919C4 /* ribbon.png in Resources */,
 				FA215D77143D26CB001919C4 /* poloroidBig.png in Resources */,
 				FA215D78143D26CB001919C4 /* remove.png in Resources */,
-				FA215D7A143D286B001919C4 /* crissXcross.png in Resources */,
-				FA215D7D143D2F1D001919C4 /* chooseNew.png in Resources */,
-				FA215D7E143D2F1D001919C4 /* chooseNewSelected.png in Resources */,
 				FA215D8A143D44DC001919C4 /* ModalImageViewController.xib in Resources */,
 				FA215D8C143D46B4001919C4 /* tweetIcon.png in Resources */,
 				FA3BB313143FD24100299FE3 /* noRedButton.png in Resources */,
@@ -701,7 +681,6 @@
 				FAB06B2E14439DB900F81678 /* book.png in Resources */,
 				FAB06B6414439DDC00F81678 /* black_denim.png in Resources */,
 				FAB06B6514439DDC00F81678 /* black-Linen.png in Resources */,
-				FAB06B6614439DDC00F81678 /* book.png in Resources */,
 				FAB06B6814439DDC00F81678 /* bookBack.png in Resources */,
 				FAB06B6914439DDC00F81678 /* bookBack@2x.png in Resources */,
 				FAB06B6A14439DDC00F81678 /* bookBackButton.png in Resources */,
@@ -725,14 +704,8 @@
 				FAB06B7E14439DDC00F81678 /* leftArrow.png in Resources */,
 				FAB06B7F14439DDC00F81678 /* leftArrow@2x.png in Resources */,
 				FAB06B8014439DDC00F81678 /* locToolbarIcon.png in Resources */,
-				FAB06B8114439DDC00F81678 /* noRedButton.png in Resources */,
-				FAB06B8214439DDC00F81678 /* padded.png in Resources */,
 				FAB06B8714439DDC00F81678 /* poloroidBetPage.png in Resources */,
 				FAB06B8814439DDC00F81678 /* poloroidBetPage@2x.png in Resources */,
-				FAB06B8914439DDC00F81678 /* poloroidBig.png in Resources */,
-				FAB06B8A14439DDC00F81678 /* poloroidIcon.png in Resources */,
-				FAB06B8B14439DDC00F81678 /* remove.png in Resources */,
-				FAB06B8C14439DDC00F81678 /* ribbon.png in Resources */,
 				FAB06B8D14439DDC00F81678 /* rightArrow.png in Resources */,
 				FAB06B8E14439DDC00F81678 /* rightArrow@2x.png in Resources */,
 				FAB06B8F14439DDC00F81678 /* saveButton.png in Resources */,
@@ -741,7 +714,6 @@
 				FAB06B9214439DDC00F81678 /* saveButtonPressed@2x.png in Resources */,
 				FAB06B9314439DDC00F81678 /* tableOfContentsBackButton.png in Resources */,
 				FAB06B9414439DDC00F81678 /* tableOfContentsBackButton@2x.png in Resources */,
-				FAB06B9514439DDC00F81678 /* tweetIcon.png in Resources */,
 				FAB06B9614439DDC00F81678 /* twitter.png in Resources */,
 				FAB06B9714439DDC00F81678 /* twitter@2x.png in Resources */,
 				FAB06B9B1443F58F00F81678 /* book@2x.png in Resources */,
@@ -764,10 +736,7 @@
 				FA0D32DE1444EAB300E4755C /* paperTop@2x.png in Resources */,
 				FAAC98401449F77600AD3CC5 /* betNavBar.png in Resources */,
 				FAAC98421449F79800AD3CC5 /* betNavBar@2x.png in Resources */,
-				FAD4107E144CA68100BCF2F3 /* chooseNew.png in Resources */,
-				FA24C157144CA6D2005E485F /* chooseNewSelected.png in Resources */,
 				FACD7518144CD20A00384AFF /* RootViewController.xib in Resources */,
-				FACD7524144D09DE00384AFF /* paperTop.png in Resources */,
 				FACD7529144D188500384AFF /* handmadepaper.png in Resources */,
 				FACD752B144D22E900384AFF /* roughLine.png in Resources */,
 			);
@@ -800,6 +769,7 @@
 				FACD7511144CB47500384AFF /* RKPageViewController.m in Sources */,
 				FACD751D144CE81300384AFF /* NSDate+RK.m in Sources */,
 				FACD752E144D25EE00384AFF /* RKPaperView.m in Sources */,
+				FA83BA6C144F6CBD00558DD4 /* FXLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

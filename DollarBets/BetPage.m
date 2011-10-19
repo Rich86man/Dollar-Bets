@@ -31,34 +31,20 @@
 @synthesize photoButton, tweetButton;
 @synthesize pageNum;
 @synthesize delegate;
+@synthesize addNewView;
 
 
--(id)initWithBet:(Bet *)aBet
+-(id)initWithBet:(Bet *)aBet asNew:(_Bool)isNew
 {
     self = [super init];
     if (self) 
     {
         self.bet = aBet;
-        
-        if ([self.bet.report isEqualToString:@"Bet Description..."])
-        {
-            newBet = YES;
-        }
-        else 
-            newBet = NO;
+        newBet = isNew;
     }
     return self;
 }
 
--(id)initAsNewWithOpponent:(Opponent *)opp
-{   
-    self = [super init];
-    if (self) 
-    {
-        newBet = YES;
-    }
-    return self;
-}
 
 
 #pragma mark - View lifecycle
@@ -117,25 +103,43 @@
     /* Finally, if dealing with a new page, show the keyboard right away */
     if(newBet)
     {
-        [self showOverlay];
+        UIView *view = [[UIView alloc]initWithFrame:self.view.frame];
+        [view setBackgroundColor:[UIColor lightGrayColor]];
+        [view setAlpha:0.8f];
+    
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, view.frame.size.height / 2 , 320, 50)];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setFont:[UIFont fontWithName:HEITI size:25]];
+        [label setTextAlignment:UITextAlignmentCenter];
+        [label setTextColor:[UIColor whiteColor]];
+        [label setText:@"Tap to edit"];
+        [view addSubview:label];
         
-        [self.descriptionTextView setEditable:YES];
-        [self.descriptionTextView becomeFirstResponder];
-        [self.delegate didselectEdit:self];
+        UITapGestureRecognizer *addNewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addNewOverlayTapped)];
+        [view addGestureRecognizer:addNewTap];
+        self.addNewView = view;
+        [self.view addSubview:self.addNewView];
     }
 }
-
-
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated 
 {
-    [self.delegate betPageWillAppear:self];    
+    [super viewWillAppear:animated];
+    [self.delegate betPageWillAppear:self];  
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 
--(void)viewWillDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated 
 {
-    [self hideOverlay:0.0];
+    [super viewWillDisappear:animated];
+       [self hideOverlay:0.0];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
+
+
+
 
 
 - (void)viewDidUnload
@@ -193,6 +197,19 @@
 - (IBAction)tweetButtonSelected:(id)sender 
 {
     [self.delegate didSelectTweet:self];
+}
+
+
+#pragma mark - Keyboard Stuff
+
+- (void)keyboardWillShow:(NSNotification *)notification 
+{
+    scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y + self.descriptionTextView.contentSize.height); 
+}
+
+-(void)keyboardWillHide:(NSNotification *)notification 
+{
+    scrollView.contentOffset = CGPointMake(0, 0);
 }
 
 
@@ -281,6 +298,18 @@
     else
         [self showOverlay];
     
+}
+
+
+-(void)addNewOverlayTapped
+{
+    [self.addNewView removeFromSuperview];
+    
+    [self showOverlay];
+    [self.descriptionTextView setEditable:YES];
+    [self.descriptionTextView becomeFirstResponder];
+    [self.descriptionTextView setText:@""];
+    [self.delegate didselectEdit:self];
 }
 
 

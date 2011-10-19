@@ -113,6 +113,10 @@
 -(void)savedQuickBet
 {
     [self.pageViewController disablePageViewGestures:NO];
+    
+    if ([self.currentPageBeingEdited.descriptionTextView isFirstResponder]) {
+        [self.currentPageBeingEdited.descriptionTextView resignFirstResponder];
+    }
 }
 
 
@@ -212,7 +216,7 @@
 {
     [UIView animateWithDuration:0.3f
                           delay:0.0f
-                        options:nil
+                        options:0
                      animations:^{
                          
                          switch (editState) 
@@ -502,11 +506,14 @@
     topBook.view.frame = CGRectMake(0, 0, 320, 460);
     NSArray *viewControllers = [NSArray arrayWithObject:self.topBook];
     
+    /* staying away from retain cycles */
+    __block typeof(self) bself = self;
+    
     [self.pageViewController setViewControllers:viewControllers
                    direction:UIPageViewControllerNavigationDirectionReverse
                     animated:NO
                   completion:^(BOOL finished){    
-                      [self.delegate closeBook:self.topBook];
+                      [bself.delegate closeBook:bself.topBook];
                   }];
 }
 

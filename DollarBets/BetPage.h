@@ -35,6 +35,7 @@
 @property (strong, nonatomic) Bet *bet;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *overlayView;
+@property (strong, nonatomic) UIView *addNewView;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UITextView *amountTextView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
@@ -45,9 +46,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *tweetButton;
 @property (strong,nonatomic) NSString* pageNum;
 
--(id)initWithBet:(Bet*)aBet;
--(id)initAsNewWithOpponent:(Opponent *)opp;
+-(id)initWithBet:(Bet*)aBet asNew:(bool)isNew;
+
 -(void)setUpAmountLabel;
+-(void)addNewOverlayTapped;
 
 - (IBAction)backButtonSelected:(id)sender;
 - (IBAction)editButtonSelected:(id)sender;

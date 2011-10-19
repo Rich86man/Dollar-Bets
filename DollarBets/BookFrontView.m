@@ -9,8 +9,11 @@
 #import "BookFrontView.h"
 #import "BookViewController.h"
 #import "Opponent.h"
+#import "FXLabel.h"
+
 
 #define RGB256_TO_COL(col) ((col) / 255.0f)
+#define BODONI @"BodoniSvtyTwoSCITCTT-Book"
 
 @implementation BookFrontView
 @synthesize nameTextField, bookImgView, dateLabel;
@@ -32,28 +35,35 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    
     if(!self.bookImgView)
     {
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(31, 44, 265, 362)];
         [imageView setBackgroundColor:[UIColor clearColor]];
         [imageView setImage:[UIImage imageNamed:@"book.png"]];
         [imageView setUserInteractionEnabled:YES];
-        
-        // UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self.viewController action:@selector(didDoubleClick)];
-        // [doubleTap setNumberOfTapsRequired:2];
-        //[imageView addGestureRecognizer:doubleTap];
+
         self.bookImgView = imageView;
     }
     [self addSubview:self.bookImgView];
     
     if(!self.nameLabel)
     {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(80, 60, 200, 100)];
-        [label setFont:[UIFont fontWithName:HEITI size:30.0f]];
-        [label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(171) green:RGB256_TO_COL(170) blue:RGB256_TO_COL(79) alpha:1.0]];
+        FXLabel *label = [[FXLabel alloc]initWithFrame:CGRectMake(80, 60, 200, 100)];
+        [label setFont:[UIFont fontWithName:HEITI_MEDIUM size:35.0f]];
+        [label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(116) green:RGB256_TO_COL(72) blue:RGB256_TO_COL(35) alpha:0.1]];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setContentMode:UIViewContentModeCenter];
         [label setAdjustsFontSizeToFitWidth:YES];
+        [label setShadowColor:[UIColor colorWithWhite:1.0f alpha:0.3f]];
+        [label setShadowOffset:CGSizeMake(1.0f, 1.0f)];
+        [label setShadowBlur:1.0f ];
+        [label setInnerShadowColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
+        [label setInnerShadowOffset:CGSizeMake(0.1f, 0.4f)];
+        
+        
+        
+        
         
         if(self.viewController.opponent != nil)
         {
@@ -80,9 +90,9 @@
         [textField setAdjustsFontSizeToFitWidth:YES];
         [textField setBackgroundColor:[UIColor clearColor]];
         [textField setDelegate:self.viewController];
-        [textField setFont:[UIFont fontWithName:HEITI size:30.0f]];
-        [textField setTextColor:[UIColor colorWithRed:RGB256_TO_COL(171) green:RGB256_TO_COL(170) blue:RGB256_TO_COL(79) alpha:1.0]];
-        
+        [textField setFont:[UIFont fontWithName:HEITI_MEDIUM size:30.0f]];
+        [textField setTextColor:[UIColor colorWithRed:RGB256_TO_COL(47) green:RGB256_TO_COL(14) blue:RGB256_TO_COL(8) alpha:1.0]];
+        [textField setUserInteractionEnabled:NO];
         
         self.nameTextField = textField;
     }
@@ -162,10 +172,16 @@
     
     if(self.dateLabel == nil)
     {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(139, 310, 129, 21)];
+        FXLabel *label = [[FXLabel alloc]initWithFrame:CGRectMake(139, 310, 129, 21)];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setTextAlignment:UITextAlignmentRight ];
-        [label setFont:[UIFont fontWithName:HEITI size:16.0f]];
+        [label setFont:[UIFont fontWithName:HEITI_MEDIUM size:16.0f]];
+        [label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(116) green:RGB256_TO_COL(72) blue:RGB256_TO_COL(35) alpha:0.1]];
+        [label setShadowColor:[UIColor colorWithWhite:1.0f alpha:0.3f]];
+        [label setShadowOffset:CGSizeMake(1.0f, 1.0f)];
+        [label setShadowBlur:1.0f ];
+        [label setInnerShadowColor:[UIColor colorWithWhite:0.0f alpha:0.6f]];
+        [label setInnerShadowOffset:CGSizeMake(0.1f, 0.4f)];
         
                
         if (self.viewController.opponent != nil)

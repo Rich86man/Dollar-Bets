@@ -60,9 +60,8 @@
         aBet.amount = [NSNumber numberWithInt:1];
         aBet.date = [NSDate date];
 
-        //self.bets = [self.bets arrayByAddingObject:aBet];
-        
-        BetPage *betPage = [[BetPage alloc] initWithBet:aBet]; 
+        self.bets = [self.bets arrayByAddingObject:aBet];
+        BetPage *betPage = [[BetPage alloc] initWithBet:aBet asNew:YES]; 
         betPage.delegate = rvc;
         betPage.pageNum =  [NSString stringWithFormat:@"%@/%@",[NSNumber numberWithInt:index],[NSNumber numberWithInt:index]];
         return betPage;
@@ -76,7 +75,7 @@
         return toc;
     }
 
-    BetPage *betPage = [[BetPage alloc] initWithBet:[self.bets objectAtIndex:index -1]]; 
+    BetPage *betPage = [[BetPage alloc] initWithBet:[self.bets objectAtIndex:index -1] asNew:NO]; 
     betPage.delegate = rvc;
     betPage.pageNum =  [NSString stringWithFormat:@"%@/%i",[NSNumber numberWithInt:index],[bets count]];
   
@@ -106,7 +105,9 @@
     
     if ( [viewController isKindOfClass:[TOCTableViewController class]])
         return 0;
-    return [self.bets indexOfObject:[(BetPage *)viewController bet]] + 1;
+         return [self.bets indexOfObject:[(BetPage *)viewController bet]] + 1;
+
+
 }
 
 #pragma mark - Page View Controller Data Source

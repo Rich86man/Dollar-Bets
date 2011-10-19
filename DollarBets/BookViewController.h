@@ -19,7 +19,8 @@
 @class BookFrontView, BookBackView, BookViewController, Opponent;
 
 @protocol BookViewControllerDelegate <NSObject>
--(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *)book;
+-(void)nameBookFinishedWithName:(NSString *)oppName by:(BookViewController *)book;
+//-(void)opponentCreatedWithName:(NSString *)oppName by:(BookViewController *)book;
 -(void)deleteThisBook:(BookViewController *)book;
 -(void)didSelectBook:(BookViewController *)book;
 @end

@@ -56,10 +56,10 @@
  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
  CGFloat locations[] = { 0.0, 1.0 };
  
- CGColorRef whiteColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1].CGColor; 
- CGColorRef whiteColortwo = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.99].CGColor; 
- NSArray *colors = [NSArray arrayWithObjects:(__bridge id)whiteColor, (__bridge id)whiteColortwo, nil];
- 
+ /* there is an error in iOS5 which requires me to make the array in such a way. Please see :
+  https://devforums.apple.com/message/550670 */
+ NSArray *colors = [NSArray arrayWithObjects:(id)[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1].CGColor, (id)[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.99].CGColor, nil];
+     
  CGGradientRef gradient = CGGradientCreateWithColors(colorSpace,(__bridge CFArrayRef) colors, locations);
  
  CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));

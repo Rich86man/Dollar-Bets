@@ -13,9 +13,9 @@
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<string>IBUIView</string>
-			<string>IBUIImageView</string>
-			<string>IBUILabel</string>
 			<string>IBProxyObject</string>
+			<string>IBUILabel</string>
+			<string>IBUIImageView</string>
 			<string>IBUITextView</string>
 			<string>IBUIScrollView</string>
 			<string>IBUIButton</string>
@@ -43,24 +43,6 @@
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="IBUIImageView" id="826902739">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrameSize">{320, 920}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="46172215"/>
-						<string key="NSReuseIdentifierKey">_NS:366</string>
-						<bool key="IBUIAutoresizesSubviews">NO</bool>
-						<float key="IBUIAlpha">0.0</float>
-						<int key="IBUIContentMode">5</int>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">paperBackround.png</string>
-						</object>
-					</object>
 					<object class="IBUITextView" id="380551078">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483356</int>
@@ -113,7 +95,7 @@
 								<string key="NSFrame">{{13, 0}, {110, 120}}</string>
 								<reference key="NSSuperview" ref="289765313"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="607170445"/>
+								<reference key="NSNextKeyView" ref="661277426"/>
 								<string key="NSReuseIdentifierKey">_NS:328</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -171,7 +153,7 @@
 								<string key="NSFrame">{{31, 100}, {255, 462}}</string>
 								<reference key="NSSuperview" ref="289765313"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="661277426"/>
+								<reference key="NSNextKeyView" ref="876589400"/>
 								<string key="NSReuseIdentifierKey">_NS:525</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -253,7 +235,7 @@
 								<string key="NSFrame">{{235, 25}, {72, 72}}</string>
 								<reference key="NSSuperview" ref="289765313"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="876589400"/>
+								<reference key="NSNextKeyView" ref="607170445"/>
 								<string key="NSReuseIdentifierKey">_NS:225</string>
 								<int key="IBUIContentMode">1</int>
 								<int key="IBUITag">10</int>
@@ -492,7 +474,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="826902739"/>
+				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -676,7 +658,6 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="289765313"/>
-							<reference ref="826902739"/>
 							<reference ref="380551078"/>
 							<reference ref="418889124"/>
 							<reference ref="693181396"/>
@@ -698,11 +679,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">5</int>
 						<reference key="object" ref="418889124"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">6</int>
-						<reference key="object" ref="826902739"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -821,7 +797,6 @@
 					<string>30.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
-					<string>6.IBPluginDependency</string>
 					<string>79.IBPluginDependency</string>
 					<string>85.IBPluginDependency</string>
 					<string>86.IBPluginDependency</string>
@@ -834,7 +809,6 @@
 					<string>UIResponder</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>RKPaperView</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1038,7 +1012,6 @@
 				<string>betNavBar.png</string>
 				<string>editPageButton.png</string>
 				<string>leftArrow.png</string>
-				<string>paperBackround.png</string>
 				<string>poloroidBetPage.png</string>
 				<string>rightArrow.png</string>
 				<string>roughLine.png</string>
@@ -1050,7 +1023,6 @@
 				<string>{326, 50}</string>
 				<string>{50, 30}</string>
 				<string>{9, 14}</string>
-				<string>{320, 920}</string>
 				<string>{65, 77}</string>
 				<string>{9, 14}</string>
 				<string>{320, 3}</string>

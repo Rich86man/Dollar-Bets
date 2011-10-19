@@ -41,13 +41,9 @@
 - (void)loadView
 {
     UIView *containerView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-    containerView.backgroundColor = [UIColor clearColor];
+    containerView.backgroundColor = [UIColor greenColor];
     [containerView setUserInteractionEnabled:YES];
     self.view = containerView;
-    
-    
-    
-    
 }
 
 
@@ -55,8 +51,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
     self.mainViewController = [[MainViewController alloc] initWithManagedObjectContext:self.context];
     self.mainViewController.parent = self;
     //  [self addChildViewController:self.mainViewController];

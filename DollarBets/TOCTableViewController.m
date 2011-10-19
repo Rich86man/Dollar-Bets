@@ -452,6 +452,7 @@
 
 -(void)timerFired
 {
+    if(!isQuickAdding)
     [self showHomeButton:1.0];
 }
 

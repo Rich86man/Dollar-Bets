@@ -10,21 +10,22 @@
 
 @class BookViewController;
 @class Opponent;
-@class RKButton;
+@class FXLabel;
+
 @interface BookFrontView : UIView
 {
     UIImageView *bookImgView;
-    UILabel *nameLabel;
+    FXLabel *nameLabel;
     UITextField *nameTextField;
-    UILabel *dateLabel;
+    FXLabel *dateLabel;
     UIButton *addNewButton;
     UIButton *configButton;
 
 }
-@property (strong, retain) UIImageView *bookImgView;
-@property (strong, nonatomic) UILabel *nameLabel;
-@property (strong, retain) UITextField *nameTextField;
-@property (strong, retain) UILabel *dateLabel;
+@property (strong, nonatomic) UIImageView *bookImgView;
+@property (strong, nonatomic) FXLabel *nameLabel;
+@property (strong, nonatomic) FXLabel *dateLabel;
+@property (strong, nonatomic) UITextField *nameTextField;
 @property (strong, nonatomic) UIButton *addNewButton;
 @property (strong, nonatomic) UIButton *configButton;
 @property (assign)BookViewController *viewController;
