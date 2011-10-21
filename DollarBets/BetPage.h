@@ -16,6 +16,7 @@
 -(void)didSelectTweet:(BetPage *)onPage;
 -(void)didselectEdit:(BetPage *)onPage;
 -(void)didselectBack:(BetPage *)onPage;
+-(void)didBeginEditingDescription;
 @end
 
 @interface BetPage : UIViewController < UITextViewDelegate, UIGestureRecognizerDelegate , UIScrollViewDelegate>
@@ -30,6 +31,7 @@
 
     bool newBet;
     bool overlayShowing;
+    bool editing;
 }
 @property (assign)id delegate;
 @property (strong, nonatomic) Bet *bet;
@@ -55,6 +57,7 @@
 - (IBAction)editButtonSelected:(id)sender;
 - (IBAction)photoButtonSelected:(id)sender;
 - (IBAction)tweetButtonSelected:(id)sender;
+-(void)doneEditing;
 
 
 

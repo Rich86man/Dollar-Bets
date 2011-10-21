@@ -283,25 +283,25 @@
     
     if(!book.opponent)
     {
-    Opponent *newOpponent = [NSEntityDescription insertNewObjectForEntityForName:@"Opponent" inManagedObjectContext:self.context];
-    
-    newOpponent.name = oppName;
-    newOpponent.date = [NSDate date];
-    
-    /* If for some reason it does not save, show an alert asking the user
-     to send an email with details */
-    if(![newOpponent save])
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Did not save" message:@"There is a problem with coredata plese email RichardBKirk@gmail.com and let him know how this happened" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Okay", "Email", nil];
-        [alert show];
-    }
-    
-    self.opponents = [self.opponents arrayByAddingObject:newOpponent];
-    book.opponent = newOpponent;
-    
-    [self easterEgg:newOpponent];
-    [book refreshFrontView];
-    [self resizeScrollView];
+        Opponent *newOpponent = [NSEntityDescription insertNewObjectForEntityForName:@"Opponent" inManagedObjectContext:self.context];
+        
+        newOpponent.name = oppName;
+        newOpponent.date = [NSDate date];
+        
+        /* If for some reason it does not save, show an alert asking the user
+         to send an email with details */
+        if(![newOpponent save])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Did not save" message:@"There is a problem with coredata plese email RichardBKirk@gmail.com and let him know how this happened" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Okay", "Email", nil];
+            [alert show];
+        }
+        
+        self.opponents = [self.opponents arrayByAddingObject:newOpponent];
+        book.opponent = newOpponent;
+        
+        [self easterEgg:newOpponent];
+        [book refreshFrontView];
+        [self resizeScrollView];
     }
     else
     {
@@ -386,9 +386,11 @@
     {
         return NO;
     }
-    
-    
-    return YES;
+    if ([touch.view isKindOfClass:[UIImageView class]])
+    {
+        return YES;
+    }
+    else return NO;
 }
 
 

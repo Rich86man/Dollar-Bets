@@ -17,6 +17,7 @@
 -(void)didBeginQuickAdd:(id)sender;
 -(void)didselectHomeButton;
 -(void)savedQuickBet;
+-(void)didBeginEditingDescription;
 @end
 
 @interface TOCTableViewController : UIViewController <UITableViewDelegate, UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate> 

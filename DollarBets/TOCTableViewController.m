@@ -258,6 +258,24 @@
 }
 
 #pragma mark - TextView Delegate Functions
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    
+    if(textView.tag == 0)
+        [self.delegate didBeginEditingDescription];
+    /*
+    switch (textView.tag) {
+        case 0:
+            [self.delegate didBeginEditingDescription];
+            break;
+        case 1:
+            [self.delegate didBeginEditingAmount];
+            break;
+        default:
+            break;
+    }
+     */
+}
 
 - (void)textViewDidChange:(UITextView *)textView
 {
@@ -389,7 +407,7 @@
     if([bet save])
     {
         [self removeSaveButton];
-        self.amountLabel.text = @"";
+        self.amountLabel.text = @"+1";
         self.descriptionTextView.text = @"";
         self.overlayLabel.text = @"Pull Down To Add New";
         

@@ -8,6 +8,8 @@
 
 #import "BookBackView.h"
 
+#define RGB256_TO_COL(col) ((col) / 255.0f)
+
 @implementation BookBackView
 @synthesize backButton, bookImageView;
 @synthesize popOver;
@@ -43,16 +45,14 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(45, 275, 204, 34)];
         
-        [button setAdjustsImageWhenHighlighted:NO];
+        [button setAdjustsImageWhenHighlighted:YES];
         [button setTitle:@"Delete" forState:UIControlStateNormal];
         [button setTitle:@"Delete" forState:UIControlStateSelected];
         [button setTitle:@"Delete" forState:UIControlStateHighlighted];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
         
         [button setBackgroundImage:[UIImage imageNamed:@"deleteButton.png"] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"deleteButtonPressed.png"] forState:UIControlStateSelected];
-        [button setBackgroundImage:[UIImage imageNamed:@"deleteButtonPressed.png"] forState:UIControlStateHighlighted];
-        [button addTarget:self.viewController action:@selector(deleteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+         [button addTarget:self.viewController action:@selector(deleteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
         [button setTag:0];
         self.deleteButton = button;
     }
@@ -68,6 +68,17 @@
         self.backButton = button;
     }
     [self addSubview:self.backButton];
+    
+    UIButton *changeNameButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [changeNameButton setFrame:CGRectMake(45, 120, 197, 31)];
+    [changeNameButton addTarget:self.viewController action:@selector(changeNamePressed) forControlEvents:UIControlEventTouchUpInside];
+    [changeNameButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+    [changeNameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [changeNameButton setTitle:@"Change Name" forState:UIControlStateNormal];
+    [changeNameButton setTitleColor:[UIColor colorWithRed:RGB256_TO_COL(184) green:RGB256_TO_COL(180) blue:RGB256_TO_COL(180) alpha:1.0] forState:UIControlStateNormal];
+    [changeNameButton setBackgroundImage:[UIImage imageNamed:@"changeNameButton.png"] forState:UIControlStateNormal];
+     [changeNameButton setAdjustsImageWhenHighlighted:NO];
+     [self addSubview:changeNameButton];
     
 }
 

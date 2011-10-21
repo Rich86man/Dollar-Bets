@@ -100,4 +100,25 @@
     return YES;
 }
 
+
+-(NSNumber *)numberOfWins
+{
+    int winsCount = 0;
+    for (Bet *bet in self.bets) {
+        if ([[bet didWin] intValue] == 1)
+            winsCount++;
+    }
+    return [NSNumber numberWithInt:winsCount];
+}
+
+-(NSNumber *)numberOfLosses
+{
+    int lossesCount = 0;
+    for (Bet *bet in self.bets) {
+        if ([[bet didWin] intValue] == 0)
+            lossesCount++;
+    }   
+    return [NSNumber numberWithInt:lossesCount];
+}
+
 @end

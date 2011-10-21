@@ -27,6 +27,7 @@
 @property (readonly, strong, nonatomic) ModelController *modelController;
 
 -(void)setupPageViewController;
+-(void)changeEditStateTo:(int)state;
 @end
 
 @implementation RootViewController
@@ -126,6 +127,12 @@
 }
 
 
+-(void)didBeginEditingDescription
+{
+    [self changeEditStateTo:0];
+}
+
+
 #pragma mark - Custom Keyboard stuff
 
 - (void)viewWillAppear:(BOOL)animated 
@@ -147,78 +154,33 @@
     
     if(twitterKeyboard == 0)
     {  
+
         [UIView animateWithDuration:0.3
                          animations:^{
                              self.backroundView.frame = KEYBOARD_FRAME_UP;
                              self.keyboardToolbar.frame = KEYBOARD_TOOLBAR_FRAME_UP;} ];
+        
     }
 }
 
 
 - (IBAction)keyboardToolbarButtonPressed:(UIBarButtonItem *)sender 
 {
-    int newEditState = sender.tag;
-    
-    if(newEditState == editState)
-        return;
-    
-    switch (editState) 
-    {
-        case 0:
-            if(self.currentPageBeingEdited.descriptionTextView.isFirstResponder)
-                [self.currentPageBeingEdited.descriptionTextView resignFirstResponder]; 
-            break;
-        case 1:
-            if(self.currentPageBeingEdited.amountTextView.isFirstResponder)
-                [self.currentPageBeingEdited.amountTextView resignFirstResponder]; 
-            
-            break;
-        case 2:
-            self.choosePhotoView.frame = KEYBOARD_FRAME_DOWN;
-            
-            break;
-        case 3:
-            self.chooseDidWinView.frame = KEYBOARD_FRAME_DOWN;
-            break;
-            
-        default:
-            break;
-    }
-    
-    switch (newEditState) 
-    {
-            
-        case 1:
-            if([self.currentPageBeingEdited respondsToSelector:@selector(setAmountTextView:)])
-                [self.currentPageBeingEdited.amountTextView becomeFirstResponder];
-            break;
-        case 2:
-            if (self.currentPageBeingEdited.bet.picture)
-                self.removePhotoButton.alpha = 1.0f;
-            else
-                self.removePhotoButton.alpha = 0.0f;
-            
-            self.choosePhotoView.frame = KEYBOARD_FRAME_UP;
-            break;
-        case 3:
-            self.chooseDidWinView.frame = KEYBOARD_FRAME_UP;
-            break;
-            
-        default:
-            break;
-    }
-    
-    editState = newEditState;
+    [self changeEditStateTo:sender.tag];
 }
 
 
 - (IBAction)doneButtonSelected:(id)sender 
 {
+    if ([currentPageBeingEdited isKindOfClass:[BetPage class]]) {
+        [currentPageBeingEdited doneEditing];
+    }
+    
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options:0
                      animations:^{
-                         
+                         NSLog(@"editSate: %i", editState);
                          switch (editState) 
                          {
                              case 0:
@@ -366,15 +328,6 @@
     [self presentModalViewController:tweet animated:YES];
 }
 
-/*
--(void)didTapPage:(BetPage *)onPage
-{
-    if (self.currentPageBeingEdited.overlayView.alpha == 0)
-        [self showBetPageOverlay];
-    else
-        [self hideBetPageOverlay:1.0f];
-}
-*/
 
 #pragma mark - Bet Page Overlay Functions
 
@@ -517,5 +470,61 @@
                   }];
 }
 
+
+-(void)changeEditStateTo:(int)state
+{
+    int newEditState = state;
+    
+    if(newEditState == editState)
+        return;
+    
+    switch (editState) 
+    {
+        case 0:
+            if(self.currentPageBeingEdited.descriptionTextView.isFirstResponder)
+                [self.currentPageBeingEdited.descriptionTextView resignFirstResponder]; 
+            break;
+        case 1:
+            if(self.currentPageBeingEdited.amountTextView.isFirstResponder)
+                [self.currentPageBeingEdited.amountTextView resignFirstResponder]; 
+            
+            break;
+        case 2:
+            self.choosePhotoView.frame = KEYBOARD_FRAME_DOWN;
+            
+            break;
+        case 3:
+            self.chooseDidWinView.frame = KEYBOARD_FRAME_DOWN;
+            break;
+            
+        default:
+            break;
+    }
+    
+    switch (newEditState) 
+    {
+            
+        case 1:
+            if([self.currentPageBeingEdited respondsToSelector:@selector(setAmountTextView:)])
+                [self.currentPageBeingEdited.amountTextView becomeFirstResponder];
+            break;
+        case 2:
+            if (self.currentPageBeingEdited.bet.picture)
+                self.removePhotoButton.alpha = 1.0f;
+            else
+                self.removePhotoButton.alpha = 0.0f;
+            
+            self.choosePhotoView.frame = KEYBOARD_FRAME_UP;
+            break;
+        case 3:
+            self.chooseDidWinView.frame = KEYBOARD_FRAME_UP;
+            break;
+            
+        default:
+            break;
+    }
+    
+    editState = newEditState;
+}
 
 @end

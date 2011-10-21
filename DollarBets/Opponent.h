@@ -31,5 +31,7 @@
 - (void)removeBetsObject:(Bet *)value;
 - (void)addBets:(NSSet *)values;
 - (void)removeBets:(NSSet *)values;
+-(NSNumber *)numberOfWins;
+-(NSNumber *)numberOfLosses;
 
 @end

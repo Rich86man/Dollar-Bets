@@ -20,6 +20,7 @@
 @synthesize configButton, addNewButton;
 @synthesize viewController;
 @synthesize nameLabel;
+@synthesize summaryLabel;
 
 
 -(id)initWithFrame:(CGRect)frame
@@ -36,6 +37,9 @@
 - (void)drawRect:(CGRect)rect
 {
     
+
+    
+    
     if(!self.bookImgView)
     {
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(31, 44, 265, 362)];
@@ -49,17 +53,20 @@
     
     if(!self.nameLabel)
     {
-        FXLabel *label = [[FXLabel alloc]initWithFrame:CGRectMake(80, 60, 200, 100)];
+        UILabel *label = [[FXLabel alloc]initWithFrame:CGRectMake(80, 60, 200, 100)];
         [label setFont:[UIFont fontWithName:HEITI_MEDIUM size:35.0f]];
-        [label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(116) green:RGB256_TO_COL(72) blue:RGB256_TO_COL(35) alpha:0.1]];
+        //[label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(116) green:RGB256_TO_COL(72) blue:RGB256_TO_COL(35) alpha:0.1]];
+        [label setTextColor:[UIColor colorWithWhite:0.0f alpha:0.7f]];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setContentMode:UIViewContentModeCenter];
         [label setAdjustsFontSizeToFitWidth:YES];
-        [label setShadowColor:[UIColor colorWithWhite:1.0f alpha:0.3f]];
+        //[label setShadowColor:[UIColor colorWithWhite:1.0f alpha:0.3f]];
+        [label setShadowColor:[UIColor colorWithRed:RGB256_TO_COL(116) green:RGB256_TO_COL(72) blue:RGB256_TO_COL(35) alpha:1.0]];
+
         [label setShadowOffset:CGSizeMake(1.0f, 1.0f)];
-        [label setShadowBlur:1.0f ];
-        [label setInnerShadowColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
-        [label setInnerShadowOffset:CGSizeMake(0.1f, 0.4f)];
+        //[label setShadowBlur:1.0f ];
+      //  [label setInnerShadowColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
+        //[label setInnerShadowOffset:CGSizeMake(0.1f, 0.4f)];
         
         
         
@@ -81,7 +88,6 @@
     [self addSubview:self.nameLabel];
     
     
-    
     if(self.nameTextField == nil)
     {
         UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(80, 60, 200, 100)];
@@ -90,8 +96,8 @@
         [textField setAdjustsFontSizeToFitWidth:YES];
         [textField setBackgroundColor:[UIColor clearColor]];
         [textField setDelegate:self.viewController];
-        [textField setFont:[UIFont fontWithName:HEITI_MEDIUM size:30.0f]];
-        [textField setTextColor:[UIColor colorWithRed:RGB256_TO_COL(47) green:RGB256_TO_COL(14) blue:RGB256_TO_COL(8) alpha:1.0]];
+        [textField setFont:[UIFont fontWithName:HEITI_MEDIUM size:35.0f]];
+        [textField setTextColor:[UIColor colorWithRed:RGB256_TO_COL(33) green:RGB256_TO_COL(15) blue:RGB256_TO_COL(0) alpha:1.0]];
         [textField setUserInteractionEnabled:NO];
         
         self.nameTextField = textField;
@@ -107,8 +113,27 @@
     {
         [self showConfigAndDate];
     }
+
+    if(!self.summaryLabel)
+    {
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(145, 175, 126, 126)];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setFont:[UIFont fontWithName:HEITI_MEDIUM size:20]];        
+        [label setNumberOfLines:4];
+        //[label setShadowColor:[UIColor colorWithRed:RGB256_TO_COL(97) green:RGB256_TO_COL(52) blue:RGB256_TO_COL(19) alpha:1.0]];
+        [label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(33) green:RGB256_TO_COL(15) blue:RGB256_TO_COL(0) alpha:1.0]];
+        //[label setShadowColor:[UIColor colorWithWhite:0.0f alpha:1.0f]];
+        //[label setShadowOffset:CGSizeMake(1.0f, 1.0f)];
+        [label setLineBreakMode:UILineBreakModeCharacterWrap];
+        [label setText:@""];
+        self.summaryLabel = label;
+        [self setupSummaryLabel];
+    }
+    [self addSubview:self.summaryLabel];
     
 }
+
+
 
 
 -(void)showPlusButton
@@ -116,10 +141,14 @@
     if(self.addNewButton == nil)
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake(115, 150, 100, 100)];
+   //     [button setFrame:CGRectMake(115, 150, 100, 100)];
+        [button setFrame:CGRectMake(31, 44, 265, 362)];
         [button setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateSelected];
         [button setImage:[UIImage imageNamed:@"plusSign.png"] forState:UIControlStateHighlighted];
+        [button setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 50, 0  )];
+        [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+        [button setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
         [button setAdjustsImageWhenDisabled:NO];
         [button setAdjustsImageWhenHighlighted:NO];
         [button setBackgroundColor:[UIColor clearColor]];
@@ -158,7 +187,9 @@
 
 -(void)showConfigAndDate
 {
-    if(self.configButton == nil)
+    self.bookImgView.image = [UIImage imageNamed:@"bookWithRibbon.png"];
+    
+    if(!self.configButton)
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(60, 347, 55, 55)];
@@ -166,24 +197,19 @@
         [button addTarget:self.viewController action:@selector(configButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
         [button setEnabled:YES];
         self.configButton = button;  
-        self.bookImgView.image = [UIImage imageNamed:@"bookWithRibbon.png"];
+
     }
     [self addSubview:self.configButton];
     
     if(self.dateLabel == nil)
     {
-        FXLabel *label = [[FXLabel alloc]initWithFrame:CGRectMake(139, 310, 129, 21)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(139, 310, 129, 21)];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setTextAlignment:UITextAlignmentRight ];
         [label setFont:[UIFont fontWithName:HEITI_MEDIUM size:16.0f]];
-        [label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(116) green:RGB256_TO_COL(72) blue:RGB256_TO_COL(35) alpha:0.1]];
-        [label setShadowColor:[UIColor colorWithWhite:1.0f alpha:0.3f]];
-        [label setShadowOffset:CGSizeMake(1.0f, 1.0f)];
-        [label setShadowBlur:1.0f ];
-        [label setInnerShadowColor:[UIColor colorWithWhite:0.0f alpha:0.6f]];
-        [label setInnerShadowOffset:CGSizeMake(0.1f, 0.4f)];
-        
-               
+        [label setTextColor:[UIColor colorWithRed:RGB256_TO_COL(33) green:RGB256_TO_COL(15) blue:RGB256_TO_COL(0) alpha:1.0]];
+
+       
         if (self.viewController.opponent != nil)
         {
             label.text = [self.viewController.opponent.date RKStringFromDate];
@@ -195,6 +221,28 @@
         self.dateLabel = label;        
     }
     [self addSubview:self.dateLabel];
+}
+
+
+-(void)setupSummaryLabel;
+{
+    if ([self.viewController.opponent.bets count] > 0)
+    {
+        int wins = [[self.viewController.opponent numberOfWins] intValue];
+        int losses = [[self.viewController.opponent numberOfLosses] intValue];
+        
+        NSMutableString *summary = [[NSMutableString alloc]init];
+        [summary appendString:@"Wins        + "];
+        [summary appendFormat:@"%i\n", wins];
+        [summary appendString:@"Losses      - "];
+        [summary appendFormat:@"%i\n", losses];
+        [summary appendString:@"------------------\n"];
+        [summary appendFormat:@"Total         %i", wins - losses];
+        self.summaryLabel.text = summary;
+    }
+    else
+        self.summaryLabel.text = @"";
+    
 }
 
 
@@ -213,6 +261,8 @@
         self.nameLabel.text = [self.viewController.opponent name];
         [self showConfigAndDate];
     }
+    
+    [self setupSummaryLabel];
 }
 
 @end

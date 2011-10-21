@@ -19,6 +19,7 @@
 -(void)showOverlay;
 -(void)hideOverlay:(NSInteger)duration;
 -(void)didTapPage;
+-(void)resizeScrollView;
 @end
 
 @implementation BetPage
@@ -52,10 +53,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
-    //self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
-    self.scrollView.backgroundColor = [UIColor clearColor];
-
+      self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
+  //  self.scrollView.backgroundColor = [UIColor clearColor];
+    
     
     
     /* Set up Labels */
@@ -75,13 +75,7 @@
     
     //self.descriptionTextView.contentOffset = CGPointMake(0, 0);
     
-    /* In case of very long descriptions, move the portion of the scroll view being shown */
-    if (self.descriptionTextView.contentSize.height > 301)
-    {
-        CGRect frame = self.scrollView.frame;
-        frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height ); 
-        self.scrollView.frame = frame;
-    }
+    [self resizeScrollView];
     
     /* Set up the buttons */
     if(self.bet.picture)
@@ -106,7 +100,7 @@
         UIView *view = [[UIView alloc]initWithFrame:self.view.frame];
         [view setBackgroundColor:[UIColor lightGrayColor]];
         [view setAlpha:0.8f];
-    
+        
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, view.frame.size.height / 2 , 320, 50)];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setFont:[UIFont fontWithName:HEITI size:25]];
@@ -126,16 +120,17 @@
     [super viewWillAppear:animated];
     [self.delegate betPageWillAppear:self];  
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated 
 {
-    [super viewWillDisappear:animated];
-       [self hideOverlay:0.0];
+    
+    [self hideOverlay:0.0];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [super viewWillDisappear:animated];
 }
 
 
@@ -180,7 +175,15 @@
 
 - (IBAction)editButtonSelected:(id)sender 
 {
-
+    editing = YES;
+    [self hideOverlay:1.0];
+    [self.scrollView setScrollEnabled:YES];
+    [self.scrollView setShowsVerticalScrollIndicator:YES];
+    
+    
+    CGRect frame =  self.scrollView.frame;
+    frame.size.height = frame.size.height + self.descriptionTextView.contentSize.height;
+    self.scrollView.frame = frame;
     
     [self.descriptionTextView setEditable:YES];
     [self.descriptionTextView becomeFirstResponder];
@@ -190,13 +193,26 @@
 
 - (IBAction)photoButtonSelected:(id)sender 
 {
-    [self.delegate didSelectphoto:self];
+    if(!editing)
+        [self.delegate didSelectphoto:self];
 }
 
 
 - (IBAction)tweetButtonSelected:(id)sender 
 {
-    [self.delegate didSelectTweet:self];
+    if (!editing) 
+    {
+        [self.delegate didSelectTweet:self];
+    }
+    
+}
+
+
+-(void)doneEditing
+{   
+    editing = NO;
+    [self.scrollView setShowsVerticalScrollIndicator:NO];
+    [self resizeScrollView];
 }
 
 
@@ -204,6 +220,7 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification 
 {
+    
     scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y + self.descriptionTextView.contentSize.height); 
 }
 
@@ -219,9 +236,10 @@
 {
     if(textView.tag == 0)
     {
+        [self.delegate didBeginEditingDescription];
         if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) 
         {
-            
+           
             [UIView animateWithDuration:0.1f animations:^{
                 self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
             }];
@@ -234,11 +252,21 @@
 {    
     if(textView.tag == 0)
     {
-        if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) {
-            
+        if (textView.contentSize.height != self.scrollView.contentOffset.y ) 
+        {
+            CGRect frame =  self.scrollView.frame;
+            frame.size.height = 460 + self.descriptionTextView.contentSize.height;
+            self.scrollView.frame = frame;
+            scrollView.contentOffset = CGPointMake(0, self.descriptionTextView.contentSize.height); 
             [UIView animateWithDuration:0.1f animations:^{
-                self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
+                scrollView.contentOffset = CGPointMake(0, self.descriptionTextView.contentSize.height); 
             }];
+        }
+        if(textView.contentSize.height >= textView.frame.size.height)
+        {
+            CGRect frame = textView.frame;
+            frame.size.height = frame.size.height + 22;
+            textView.frame = frame;
         }
     }
     else
@@ -277,6 +305,9 @@
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
+    if (editing)
+        return NO;
+    
     CGPoint touchPoint = [touch locationInView:self.view];
     NSLog(@"%f, %f", touchPoint.x, touchPoint.y);    
     if (touchPoint.x < 220 && touchPoint.x > 100 && ![touch.view isKindOfClass:[UIButton class]]) 
@@ -377,6 +408,32 @@
 }
 
 
+-(void)resizeScrollView
+{
+    /* In case of very long descriptions, move the portion of the scroll view being shown */
+    if (descriptionTextView.contentSize.height + descriptionTextView.frame.origin.y > 460)
+    {
+        CGRect frame = self.scrollView.frame;
+        frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height * 2); 
+        self.scrollView.frame = frame;
+        [scrollView setContentSize:CGSizeMake(320, scrollView.frame.size.height)];
+
+        [scrollView setScrollEnabled:YES];
+    }
+    else
+    {
+        self.scrollView.frame = CGRectMake(0, 0, 320, 460);
+        [scrollView setScrollEnabled:NO];
+        [scrollView setContentSize:CGSizeMake(0,0)];
+    }
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView1
+{
+    self.scrollView.contentOffset = scrollView1.contentOffset;
+}
+
+
 /* Possible maps implementation */
 /*
  -(void)setUpMap
@@ -408,6 +465,7 @@
  
  }
  */
+
 
 
 @end

@@ -39,12 +39,13 @@
     BookFrontView *bfw = [[BookFrontView alloc] initWithFrame:self.view.frame ];
     bfw.viewController = self;
     self.frontView = bfw;
+    [self.view addSubview:self.frontView];
     
     BookBackView *bsw = [[BookBackView alloc] initWithFrame:self.view.frame];
     bsw.viewController = self;
     bsw.backgroundColor = [UIColor clearColor];
     self.backView = bsw;
-    
+
 }
 
 
@@ -52,10 +53,16 @@
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor clearColor]];
-    [self.view addSubview:self.frontView];
+
     frontViewIsVisible = YES;
+    [self.frontView setupSummaryLabel];
 }
 
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.frontView refresh];
+}
 
 - (void)viewDidUnload
 {
@@ -108,12 +115,16 @@
     [self.frontView hidePlusButton];    
 }
 
-/*
--(void)didDoubleClick
+-(void)changeNamePressed
 {
-    [self.delegate didSelectBook:self];
+    [self.frontView.nameTextField setUserInteractionEnabled:YES];
+    self.frontView.nameLabel.alpha = 0.0f;
+    self.frontView.nameTextField.alpha = 1.0f;
+    self.frontView.nameTextField.placeholder = @"Opponent...";    
+    [self.frontView.nameTextField becomeFirstResponder];  
+    [self flipCurrentView];
 }
-*/
+
 
 -(void)refreshFrontView
 {
@@ -174,7 +185,7 @@
     self.frontView.nameLabel.text = textField.text;
     self.frontView.nameLabel.alpha = 1.0f;
 
-    textField.text = @"";
+    textField.text = @" ";
     [textField setUserInteractionEnabled:NO];
     [textField resignFirstResponder];
     [delegate nameBookFinishedWithName:frontView.nameLabel.text by:self];

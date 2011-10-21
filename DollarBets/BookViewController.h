@@ -30,6 +30,7 @@
     
     BookFrontView *frontView;
     BookBackView *backView;
+    Opponent *opponent;
     BOOL frontViewIsVisible;        
 
 }
@@ -47,6 +48,7 @@
 -(void)backButtonSelected:(id)sender;
 -(void)deleteButtonSelected:(id)sender;
 -(void)addNewButtonSelected;
+-(void)changeNamePressed;
 
 -(void)flipCurrentView;
 -(void)refreshFrontView;

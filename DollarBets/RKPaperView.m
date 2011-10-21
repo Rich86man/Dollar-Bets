@@ -24,7 +24,7 @@
 // An empty implementation adversely affects performance during animation.
  -(void)drawRect:(CGRect)rect
  {
- 
+     //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
  //Get the current drawing context   
  CGContextRef context = UIGraphicsGetCurrentContext(); 
  //Set the line color and width
@@ -52,18 +52,18 @@
  CGContextStrokePath(context);
  
  
- 
+ /*
  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
  CGFloat locations[] = { 0.0, 1.0 };
  
- /* there is an error in iOS5 which requires me to make the array in such a way. Please see :
-  https://devforums.apple.com/message/550670 */
- NSArray *colors = [NSArray arrayWithObjects:(id)[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1].CGColor, (id)[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.99].CGColor, nil];
+ // there is an error in iOS5 which requires me to make the array in such a way. Please see :
+ // https://devforums.apple.com/message/550670 
+ NSArray *colors = [NSArray arrayWithObjects:(id)[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1].CGColor, (id)[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.8].CGColor, nil];
      
  CGGradientRef gradient = CGGradientCreateWithColors(colorSpace,(__bridge CFArrayRef) colors, locations);
  
- CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
- CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
+ CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), 230);
+ CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), 230);
  
  CGContextSaveGState(context);
  CGContextAddRect(context, rect);
@@ -73,6 +73,7 @@
  
  CGGradientRelease(gradient);
  CGColorSpaceRelease(colorSpace);
+ */
  }
  
 

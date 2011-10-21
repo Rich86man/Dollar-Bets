@@ -50,6 +50,8 @@
 		FA5C4414144E9891009F5C79 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5C4413144E9891009F5C79 /* QuartzCore.framework */; };
 		FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6ADA331402A9FF007E6CB1 /* BookViewController.m */; };
 		FA6ADA401402BF8E007E6CB1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */; };
+		FA7FCFEE1450C3E800489541 /* changeNameButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FA7FCFEC1450C3E800489541 /* changeNameButton.png */; };
+		FA7FCFEF1450C3E800489541 /* changeNameButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA7FCFED1450C3E800489541 /* changeNameButton@2x.png */; };
 		FA83BA6C144F6CBD00558DD4 /* FXLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FA83BA6B144F6CBD00558DD4 /* FXLabel.m */; };
 		FAAC98401449F77600AD3CC5 /* betNavBar.png in Resources */ = {isa = PBXBuildFile; fileRef = FAAC983E1449F77600AD3CC5 /* betNavBar.png */; };
 		FAAC98421449F79800AD3CC5 /* betNavBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAAC98411449F79800AD3CC5 /* betNavBar@2x.png */; };
@@ -176,6 +178,8 @@
 		FA6ADA321402A9FF007E6CB1 /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookViewController.h; sourceTree = "<group>"; };
 		FA6ADA331402A9FF007E6CB1 /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookViewController.m; sourceTree = "<group>"; };
 		FA6ADA3F1402BF8E007E6CB1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FA7FCFEC1450C3E800489541 /* changeNameButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = changeNameButton.png; sourceTree = "<group>"; };
+		FA7FCFED1450C3E800489541 /* changeNameButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "changeNameButton@2x.png"; sourceTree = "<group>"; };
 		FA83BA6A144F6CBD00558DD4 /* FXLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXLabel.h; sourceTree = "<group>"; };
 		FA83BA6B144F6CBD00558DD4 /* FXLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXLabel.m; sourceTree = "<group>"; };
 		FAAC983E1449F77600AD3CC5 /* betNavBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = betNavBar.png; sourceTree = "<group>"; };
@@ -413,6 +417,8 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FA7FCFEC1450C3E800489541 /* changeNameButton.png */,
+				FA7FCFED1450C3E800489541 /* changeNameButton@2x.png */,
 				FAAC983E1449F77600AD3CC5 /* betNavBar.png */,
 				FAAC98411449F79800AD3CC5 /* betNavBar@2x.png */,
 				FA0D32D61444DDC900E4755C /* Slider Page Control  */,
@@ -739,6 +745,8 @@
 				FACD7518144CD20A00384AFF /* RootViewController.xib in Resources */,
 				FACD7529144D188500384AFF /* handmadepaper.png in Resources */,
 				FACD752B144D22E900384AFF /* roughLine.png in Resources */,
+				FA7FCFEE1450C3E800489541 /* changeNameButton.png in Resources */,
+				FA7FCFEF1450C3E800489541 /* changeNameButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
