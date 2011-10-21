@@ -73,5 +73,6 @@
 - (IBAction)homeButtonSelected:(id)sender;
 
 -(void)didTapHeader;
+-(void)didTapAmountLabel;
 
 @end

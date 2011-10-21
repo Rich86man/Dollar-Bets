@@ -53,7 +53,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-  
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]];
     self.opponent = self.topBook.opponent;
 	[self setupPageViewController];
     self.imagePicker.delegate = self;
@@ -62,7 +62,7 @@
     twitterKeyboard = 0;
     isHomeButtonHidden = YES;
     [self.pageViewController  disablePageViewGestures:NO];
-    self.backroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"crissXcross.png"]];
+    self.backroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"crissXcross"]];
     
     [self openBook];
 }
@@ -411,17 +411,19 @@
 -(void)setupPageViewController
 {
     RKPageViewController *pageView = [[RKPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    
     [pageView setDelegate:self];
     [pageView setDataSource:self.modelController];
     
     [self addChildViewController:pageView];
-    [self.view addSubview:pageView.view];
-    [self.view sendSubviewToBack:pageView.view];
+    [self.view insertSubview:pageView.view atIndex:1];
+    self.view.gestureRecognizers = pageView.gestureRecognizers;
+    //[self.view addSubview:pageView.view];
+    
+    //[self.view sendSubviewToBack:pageView.view];
     
     // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
-    CGRect pageViewRect = self.view.bounds;
-    pageView.view.frame = pageViewRect;
+   // CGRect pageViewRect = self.view.bounds;
+    pageView.view.frame = CGRectMake(0, 8, 305, 438);
     self.pageViewController = pageView;
     [self.pageViewController didMoveToParentViewController:self];    
     
@@ -464,8 +466,9 @@
     
     [self.pageViewController setViewControllers:viewControllers
                    direction:UIPageViewControllerNavigationDirectionReverse
-                    animated:NO
+                    animated:YES
                   completion:^(BOOL finished){    
+                      if(finished)
                       [bself.delegate closeBook:bself.topBook];
                   }];
 }
@@ -477,6 +480,9 @@
     
     if(newEditState == editState)
         return;
+    
+    if (!self.pageViewController.gesturesDisabled)
+        [self.pageViewController disablePageViewGestures:YES];
     
     switch (editState) 
     {

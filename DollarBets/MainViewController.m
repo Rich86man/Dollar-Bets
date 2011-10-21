@@ -301,6 +301,7 @@
         
         [self easterEgg:newOpponent];
         [book refreshFrontView];
+        [self loadScrollViewWithPage:[books indexOfObject:book] + 1];
         [self resizeScrollView];
     }
     else
@@ -312,7 +313,6 @@
             [alert show];
         }
     }
-    
     
     
 }

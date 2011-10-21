@@ -11,15 +11,7 @@
 #import "RootViewController.h"
 #import "BetPage.h"
 
-
-/*
- A controller object that manages a simple model -- a collection of month names.
- 
- The controller serves as the data source for the page view controller; it therefore implements pageViewController:viewControllerBeforeViewController: and pageViewController:viewControllerAfterViewController:.
- It also implements a custom method, viewControllerAtIndex: which is useful in the implementation of the data source methods, and in the initial configuration of the application.
- 
- There is no need to actually create view controllers for each page in advance -- indeed doing so incurs unnecessary overhead. Given the data model, these methods create, configure, and return a new view controller on demand.
- */
+#define MPAGE_FRAME CGRectMake(0, 7, 305, 446)
 
 @interface ModelController()
 @property (strong, nonatomic) NSArray *bets;
@@ -51,17 +43,9 @@
     self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
 
     // Return the data view controller for the given index.
-    if ( index > [self.bets count] ) {
-        
-        Bet * aBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[[self.rvc opponent] managedObjectContext]];
-        aBet.opponent = [self.rvc opponent];
-        aBet.report = @"Bet Description...";
-        aBet.didWin = [NSNumber numberWithInt:2];
-        aBet.amount = [NSNumber numberWithInt:1];
-        aBet.date = [NSDate date];
-
-        self.bets = [self.bets arrayByAddingObject:aBet];
-        BetPage *betPage = [[BetPage alloc] initWithBet:aBet asNew:YES]; 
+    if ( index > [self.bets count] ) 
+    {
+        BetPage *betPage = [[BetPage alloc] initWithBet:nil asNew:YES]; 
         betPage.delegate = rvc;
         betPage.pageNum =  [NSString stringWithFormat:@"%@/%@",[NSNumber numberWithInt:index],[NSNumber numberWithInt:index]];
         return betPage;
@@ -102,12 +86,17 @@
      For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
      */
     
-    
+    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+    self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+        
     if ( [viewController isKindOfClass:[TOCTableViewController class]])
         return 0;
-         return [self.bets indexOfObject:[(BetPage *)viewController bet]] + 1;
-
-
+    
+    if ([(BetPage *)viewController newBet]) {
+        return [self.bets count] + 1;
+    }
+        
+    return [self.bets indexOfObject:[(BetPage *)viewController bet]] + 1;
 }
 
 #pragma mark - Page View Controller Data Source

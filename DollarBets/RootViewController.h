@@ -25,6 +25,7 @@
     bool isBetPageOverlayShowing;
     
     
+    
 }
 @property (assign) id delegate;
 @property (assign) BookViewController *topBook;
@@ -46,6 +47,7 @@
 - (IBAction)chooseNewPhotoButtonSelected:(id)sender;
 - (IBAction)deletePhotoButtonSelected:(id)sender;
 - (IBAction)didWinButtonPressed:(id)sender;
+-(void)changeEditStateTo:(int)state;
 
 /* UIPageViewController helper functions */
 -(void)flipToPage:(int)page animated:(bool)animated forward:(bool)forward;

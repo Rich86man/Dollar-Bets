@@ -29,7 +29,7 @@
     NSString * pageNum;
   
 
-    bool newBet;
+    BOOL newBet;
     bool overlayShowing;
     bool editing;
 }
@@ -46,6 +46,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *pageNumberLabel;
 @property (strong, nonatomic) IBOutlet UIButton *photoButton;
 @property (strong, nonatomic) IBOutlet UIButton *tweetButton;
+@property (nonatomic) BOOL newBet;
 @property (strong,nonatomic) NSString* pageNum;
 
 -(id)initWithBet:(Bet*)aBet asNew:(bool)isNew;
@@ -58,8 +59,7 @@
 - (IBAction)photoButtonSelected:(id)sender;
 - (IBAction)tweetButtonSelected:(id)sender;
 -(void)doneEditing;
-
-
+-(void)didTapAmountLabel;
 
 @end
 

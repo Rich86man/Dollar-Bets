@@ -9,7 +9,7 @@
 #import "RKPageViewController.h"
 
 @implementation RKPageViewController
-
+@synthesize gesturesDisabled;
 
 - (id)initWithTransitionStyle:(UIPageViewControllerTransitionStyle)style navigationOrientation:(UIPageViewControllerNavigationOrientation)navigationOrientation options:(NSDictionary *)options
 {
@@ -37,6 +37,7 @@
             if([gesture isEnabled])
                 [gesture setEnabled:NO];
         }
+        self.gesturesDisabled = YES;
     }
     else if(!disable)
     {
@@ -46,6 +47,7 @@
             if(![gesture isEnabled])
                 [gesture setEnabled:YES];
         }
+        self.gesturesDisabled = NO;
     }
 }
 

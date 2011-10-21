@@ -33,7 +33,7 @@
 @synthesize pageNum;
 @synthesize delegate;
 @synthesize addNewView;
-
+@synthesize newBet;
 
 -(id)initWithBet:(Bet *)aBet asNew:(_Bool)isNew
 {
@@ -53,17 +53,45 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-      self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
-  //  self.scrollView.backgroundColor = [UIColor clearColor];
+    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"handmadepaper.png"]];
+    //  self.scrollView.backgroundColor = [UIColor clearColor];
     
+    if(!newBet)
+    {
+        /* Set up Labels */
+        self.titleLabel.text = self.bet.opponent.name;
+        self.pageNumberLabel.text = self.pageNum;
+        [self setUpAmountLabel];
+        self.descriptionTextView.text = self.bet.report;
+        self.dateLabel.text =  [self.bet.date RKStringFromDate];
+        
+        /* Set up the buttons */
+        if(self.bet.picture)
+            [self.photoButton setEnabled:YES];
+        else
+            [self.photoButton setEnabled:NO];
+        
+    }
+    else
+    {
+        /* Set up Labels */
+        self.titleLabel.text = [[self.delegate opponent] name];
+        self.pageNumberLabel.text = self.pageNum;
+        [self setUpAmountLabel];
+        self.descriptionTextView.text = self.bet.report;
+        self.dateLabel.text =  [self.bet.date RKStringFromDate];
+        
+        /* Set up the buttons */
+        if(self.bet.picture)
+            [self.photoButton setEnabled:YES];
+        else
+            [self.photoButton setEnabled:NO];
+        
+        
+    }
     
-    
-    /* Set up Labels */
-    self.titleLabel.text = self.bet.opponent.name;
-    self.pageNumberLabel.text = self.pageNum;
-    [self setUpAmountLabel];
-    self.descriptionTextView.text = self.bet.report;
-    self.dateLabel.text =  [self.bet.date RKStringFromDate];
+    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+        [self resizeScrollView];
     
     /* Check if the Overlay view is currently showing */
     if (self.overlayView.alpha == 0) 
@@ -72,16 +100,6 @@
     }
     else
         overlayShowing = YES;
-    
-    //self.descriptionTextView.contentOffset = CGPointMake(0, 0);
-    
-    [self resizeScrollView];
-    
-    /* Set up the buttons */
-    if(self.bet.picture)
-        [self.photoButton setEnabled:YES];
-    else
-        [self.photoButton setEnabled:NO];
     
     if([TWTweetComposeViewController canSendTweet])
         [self.tweetButton setEnabled:YES];
@@ -94,14 +112,17 @@
     [tap setDelegate:self];
     [self.view addGestureRecognizer:tap];
     
+    UITapGestureRecognizer *amountLabelTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapAmountLabel)];
+    [self.amountLabel addGestureRecognizer:amountLabelTap];
+    
     /* Finally, if dealing with a new page, show the keyboard right away */
     if(newBet)
     {
         UIView *view = [[UIView alloc]initWithFrame:self.view.frame];
         [view setBackgroundColor:[UIColor lightGrayColor]];
-        [view setAlpha:0.8f];
+        [view setAlpha:0.9f];
         
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, view.frame.size.height / 2 , 320, 50)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, view.frame.size.height / 2 , 305, 50)];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setFont:[UIFont fontWithName:HEITI size:25]];
         [label setTextAlignment:UITextAlignmentCenter];
@@ -193,7 +214,11 @@
 
 - (IBAction)photoButtonSelected:(id)sender 
 {
-    if(!editing)
+    if(editing)
+    {
+        [self.delegate changeEditStateTo:2];
+    }
+    else
         [self.delegate didSelectphoto:self];
 }
 
@@ -220,8 +245,8 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification 
 {
-    
-    scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y + self.descriptionTextView.contentSize.height); 
+    [scrollView scrollRectToVisible:CGRectMake(0, scrollView.contentOffset.y + self.descriptionTextView.contentSize.height, 305, 438) animated:YES];
+    //scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y + self.descriptionTextView.contentSize.height); 
 }
 
 -(void)keyboardWillHide:(NSNotification *)notification 
@@ -234,12 +259,12 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if(textView.tag == 0)
+    if(textView.tag == 0 || 1)
     {
         [self.delegate didBeginEditingDescription];
         if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) 
         {
-           
+            
             [UIView animateWithDuration:0.1f animations:^{
                 self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
             }];
@@ -272,8 +297,13 @@
     else
     {
         NSNumberFormatter *nf = [[NSNumberFormatter alloc]init];
-        self.bet.amount = [nf numberFromString:textView.text];
-        [self setUpAmountLabel];
+        NSNumber *newAmount = [nf numberFromString:textView.text]; 
+        
+        if([newAmount intValue] < 101 && [newAmount intValue] >= 0)
+        {
+            self.bet.amount = newAmount;
+            [self setUpAmountLabel];
+        }
         
     }
     
@@ -336,6 +366,17 @@
 {
     [self.addNewView removeFromSuperview];
     
+    Bet *realBet = [NSEntityDescription insertNewObjectForEntityForName:@"Bet" inManagedObjectContext:[[self.delegate opponent] managedObjectContext]]; 
+    realBet.opponent = [self.delegate opponent];
+    realBet.amount = [NSNumber numberWithInt:1];
+    realBet.date = [NSDate date];
+    realBet.didWin = [NSNumber numberWithInt:2];
+    realBet.report = @"Description...";
+    self.bet = realBet;
+    
+    [self.bet save];
+    
+    
     [self showOverlay];
     [self.descriptionTextView setEditable:YES];
     [self.descriptionTextView becomeFirstResponder];
@@ -348,7 +389,7 @@
 {
     if(!overlayShowing)
     {
-        [UIView animateWithDuration:1.0f
+        [UIView animateWithDuration:0.5f
                               delay:0.0f
                             options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
@@ -389,21 +430,29 @@
 {
     UILabel *label = self.amountLabel;
     
-    switch ([self.bet.didWin intValue]) {
-        case 0:
-            label.text = [NSString stringWithFormat:@"- $%i",[self.bet.amount intValue]];
-            label.textColor = [UIColor redColor];
-            break;
-        case 1:
-            label.text = [NSString stringWithFormat:@"+ $%i",[self.bet.amount intValue]];
-            label.textColor = [UIColor greenColor];
-            break;
-        case 2:
-            label.text = [NSString stringWithFormat:@"-/+ $%i",[self.bet.amount intValue]];
-            label.textColor = [UIColor grayColor];
-            break;
-        default:
-            break;
+    if (!newBet)
+    {
+        switch ([self.bet.didWin intValue]) {
+            case 0:
+                label.text = [NSString stringWithFormat:@"- $%i",[self.bet.amount intValue]];
+                label.textColor = [UIColor redColor];
+                break;
+            case 1:
+                label.text = [NSString stringWithFormat:@"+ $%i",[self.bet.amount intValue]];
+                label.textColor = [UIColor greenColor];
+                break;
+            case 2:
+                label.text = [NSString stringWithFormat:@"-/+ $%i",[self.bet.amount intValue]];
+                label.textColor = [UIColor grayColor];
+                break;
+            default:
+                break;
+        }
+    }
+    else
+    {
+        label.text = @"-/+1";
+        label.textColor = [UIColor grayColor];
     }
 }
 
@@ -411,18 +460,17 @@
 -(void)resizeScrollView
 {
     /* In case of very long descriptions, move the portion of the scroll view being shown */
-    if (descriptionTextView.contentSize.height + descriptionTextView.frame.origin.y > 460)
+    if (descriptionTextView.contentSize.height + descriptionTextView.frame.origin.y > self.view.frame.size.height)
     {
-        CGRect frame = self.scrollView.frame;
-        frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height * 2); 
-        self.scrollView.frame = frame;
-        [scrollView setContentSize:CGSizeMake(320, scrollView.frame.size.height)];
-
+        //CGRect frame = self.view.frame;
+        //frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height * 2); 
+       // self.scrollView.frame = frame;
+        [scrollView setContentSize:CGSizeMake(305, scrollView.frame.size.height + self.descriptionTextView.contentSize.height)];
         [scrollView setScrollEnabled:YES];
     }
     else
     {
-        self.scrollView.frame = CGRectMake(0, 0, 320, 460);
+        self.scrollView.frame = self.view.frame;
         [scrollView setScrollEnabled:NO];
         [scrollView setContentSize:CGSizeMake(0,0)];
     }
@@ -430,10 +478,16 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView1
 {
-    self.scrollView.contentOffset = scrollView1.contentOffset;
+    
+    [self.scrollView setContentOffset:CGPointMake(0, scrollView1.contentOffset.y)];
 }
 
 
+-(void)didTapAmountLabel
+{   
+    if (editing)
+        [self.delegate changeEditStateTo:1];
+}
 /* Possible maps implementation */
 /*
  -(void)setUpMap

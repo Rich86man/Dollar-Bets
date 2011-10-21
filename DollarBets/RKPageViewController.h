@@ -14,6 +14,7 @@
 
 @interface RKPageViewController : UIPageViewController <UIGestureRecognizerDelegate, UIPageViewControllerDelegate>
 
+@property ( nonatomic)BOOL gesturesDisabled;
 -(NSNumber *)currentPage;
 -(void)disablePageViewGestures:(_Bool)disable;
 

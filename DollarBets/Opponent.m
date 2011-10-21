@@ -106,7 +106,7 @@
     int winsCount = 0;
     for (Bet *bet in self.bets) {
         if ([[bet didWin] intValue] == 1)
-            winsCount++;
+            winsCount = winsCount + [bet.amount intValue];
     }
     return [NSNumber numberWithInt:winsCount];
 }
@@ -116,7 +116,7 @@
     int lossesCount = 0;
     for (Bet *bet in self.bets) {
         if ([[bet didWin] intValue] == 0)
-            lossesCount++;
+            lossesCount = lossesCount + [bet.amount intValue];
     }   
     return [NSNumber numberWithInt:lossesCount];
 }

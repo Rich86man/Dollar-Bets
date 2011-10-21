@@ -63,14 +63,16 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHeader)];
     [self.headerView addGestureRecognizer:tap];
-
+    
+    UITapGestureRecognizer *amountLabelTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapAmountLabel)];
+    [self.amountLabel addGestureRecognizer:amountLabelTap];
     
     /* Retrieve the list of bets for the tableview */
     NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
     self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
     
     /* Check the current position of the Home button */ 
-    if(self.homeButton.frame.origin.y < 0)
+    if(self.homeButton.frame.size.height < 1)
         homeButtonShowing = NO;
     else
         homeButtonShowing = YES;
@@ -199,7 +201,7 @@
     if( scrollView.contentOffset.y <= -1.0f && scrollView.contentOffset.y > -122.0f && !isQuickAdding)
     {
         CGFloat offset =   scrollView.contentOffset.y;
-        self.quickAddView.frame = CGRectMake(0, 0, 320, -offset);
+        self.quickAddView.frame = CGRectMake(0, 0, 305, -offset);
         
         if (offset > -90 && offset < 0)
             self.overlayView.alpha = -offset / 100;
@@ -328,9 +330,15 @@
     }
     else
     {
+        
         NSNumberFormatter *nf = [[NSNumberFormatter alloc]init];
-        self.bet.amount = [nf numberFromString:self.amountTextView.text];
-        [self setUpAmountLabel];
+        NSNumber *newAmount = [nf numberFromString:textView.text]; 
+        
+        if([newAmount intValue] < 101 && [newAmount intValue] >= 0)
+        {
+            self.bet.amount = newAmount;
+            [self setUpAmountLabel];
+        }
         
     }
     
@@ -363,9 +371,9 @@
     CGRect newQuickViewFrame = CGRectMake(0, 0, 0, 0);
     
     if (self.saveButton.alpha == 0.0f)
-        newQuickViewFrame = CGRectMake(0, 0, 320, self.descriptionTextView.frame.origin.y + self.descriptionTextView.frame.size.height + PADDING);
+        newQuickViewFrame = CGRectMake(0, 0, 305, self.descriptionTextView.frame.origin.y + self.descriptionTextView.frame.size.height + PADDING);
     else
-        newQuickViewFrame = CGRectMake(0, 0, 320, self.saveButton.frame.origin.y + self.saveButton.frame.size.height + PADDING);
+        newQuickViewFrame = CGRectMake(0, 0, 305, self.saveButton.frame.origin.y + self.saveButton.frame.size.height + PADDING);
     
     CGRect newOverlayFrame = self.overlayLabel.frame;
     newOverlayFrame.origin.y = newQuickViewFrame.size.height + PADDING;
@@ -401,20 +409,22 @@
 
 - (IBAction)save:(UIButton *)sender 
 {    
-    if([self.descriptionTextView isFirstResponder])
-        [self.descriptionTextView resignFirstResponder];
+    [self.delegate doneButtonSelected:nil];
     
     if([bet save])
     {
         [self removeSaveButton];
         self.amountLabel.text = @"+1";
         self.descriptionTextView.text = @"";
+        CGRect frame =  self.descriptionTextView.frame;
+        frame.size.height = 31;
+        self.descriptionTextView.frame = frame;
         self.overlayLabel.text = @"Pull Down To Add New";
         
         [UIView  animateWithDuration:0.5f delay:0.5f options:UIViewAnimationCurveEaseInOut animations:^{
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
             self.tableView.contentOffset = CGPointMake(0, 0); 
-            self.quickAddView.frame = CGRectMake(0, 0, 320, 0);
+            self.quickAddView.frame = CGRectMake(0, 0, 305, 0);
             self.overlayView.alpha = 0;
         }completion:nil];
     
@@ -437,6 +447,11 @@
     [self showHomeButton:0.0f];
 }
 
+
+-(void)didTapAmountLabel
+{
+    [self.delegate changeEditStateTo:1];
+}
 
 - (IBAction)homeButtonSelected:(id)sender 
 {
@@ -508,7 +523,7 @@
                               delay:0.0f
                             options:UIViewAnimationCurveEaseIn
                          animations:^{
-                             self.homeButton.frame = CGRectMake(20, -61, 44, 61);
+                             self.homeButton.frame = CGRectMake(20, 0, 44, 0);
                          } completion:nil];
         homeButtonShowing = NO;    
     }
