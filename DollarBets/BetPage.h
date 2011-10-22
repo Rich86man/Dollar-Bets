@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "Bet.h"
-@class BetPage;
+@class BetPage, RKPaperView;
 @protocol BetPageControllerDelegate <NSObject>
 -(void)betPageWillAppear:(BetPage *)betPage;
 -(void)didSelectphoto:(BetPage *)onPage;
@@ -46,6 +46,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *pageNumberLabel;
 @property (strong, nonatomic) IBOutlet UIButton *photoButton;
 @property (strong, nonatomic) IBOutlet UIButton *tweetButton;
+@property (strong, nonatomic) IBOutlet RKPaperView *paperView;
 @property (nonatomic) BOOL newBet;
 @property (strong,nonatomic) NSString* pageNum;
 

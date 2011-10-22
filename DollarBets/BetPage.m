@@ -11,7 +11,13 @@
 #import "Twitter/Twitter.h"
 #import "RootViewController.h"
 #import "AppDelegate.h"
-#define DEFAULT_KEYBOARD_SIZE 220.0f
+#import "RKPaperView.h"
+
+#define DEFAULT_KEYBOARD_HEIGHT 214.0f
+#define KEYBOARD_ADDON_HEIGHT 44
+
+#define PAGE_BOTTOM_PADDING 20
+
 
 @interface BetPage(PrivateMethods)
 -(void)setUpMap;
@@ -20,6 +26,7 @@
 -(void)hideOverlay:(NSInteger)duration;
 -(void)didTapPage;
 -(void)resizeScrollView;
+-(void)resizeDescription;
 @end
 
 @implementation BetPage
@@ -33,6 +40,7 @@
 @synthesize pageNum;
 @synthesize delegate;
 @synthesize addNewView;
+@synthesize paperView;
 @synthesize newBet;
 
 -(id)initWithBet:(Bet *)aBet asNew:(_Bool)isNew
@@ -42,6 +50,7 @@
     {
         self.bet = aBet;
         newBet = isNew;
+
     }
     return self;
 }
@@ -90,8 +99,10 @@
         
     }
     
-    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
-        [self resizeScrollView];
+    
+    [self resizeDescription];    
+    [self resizeScrollView];
+
     
     /* Check if the Overlay view is currently showing */
     if (self.overlayView.alpha == 0) 
@@ -149,6 +160,7 @@
 {
     
     [self hideOverlay:0.0];
+    editing = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [super viewWillDisappear:animated];
@@ -171,6 +183,7 @@
     [self setAmountTextView:nil];
     [self setOverlayView:nil];
     [self setAmountTextView:nil];
+    [self setPaperView:nil];
     [super viewDidUnload];
 }
 
@@ -198,15 +211,16 @@
 {
     editing = YES;
     [self hideOverlay:1.0];
+    [UIView animateWithDuration:0.3 animations:^{
+     scrollView.contentOffset = CGPointMake(0, self.descriptionTextView.frame.origin.y - 40);
+    }];
+   
     [self.scrollView setScrollEnabled:YES];
     [self.scrollView setShowsVerticalScrollIndicator:YES];
     
     
-    CGRect frame =  self.scrollView.frame;
-    frame.size.height = frame.size.height + self.descriptionTextView.contentSize.height;
-    self.scrollView.frame = frame;
-    
     [self.descriptionTextView setEditable:YES];
+    [self.descriptionTextView setUserInteractionEnabled:YES];
     [self.descriptionTextView becomeFirstResponder];
     [self.delegate didselectEdit:self];
 }
@@ -236,7 +250,8 @@
 -(void)doneEditing
 {   
     editing = NO;
-    [self.scrollView setShowsVerticalScrollIndicator:NO];
+    [self.descriptionTextView setEditable:NO];
+    [self.descriptionTextView setUserInteractionEnabled:NO];
     [self resizeScrollView];
 }
 
@@ -245,13 +260,12 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification 
 {
-    [scrollView scrollRectToVisible:CGRectMake(0, scrollView.contentOffset.y + self.descriptionTextView.contentSize.height, 305, 438) animated:YES];
-    //scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y + self.descriptionTextView.contentSize.height); 
+    [self resizeScrollView];
 }
 
 -(void)keyboardWillHide:(NSNotification *)notification 
 {
-    scrollView.contentOffset = CGPointMake(0, 0);
+
 }
 
 
@@ -259,16 +273,11 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if(textView.tag == 0 || 1)
+    if(textView.tag == 0)
     {
         [self.delegate didBeginEditingDescription];
-        if (textView.contentSize.height - self.scrollView.contentOffset.y > 38.0f) 
-        {
-            
-            [UIView animateWithDuration:0.1f animations:^{
-                self.scrollView.contentOffset = CGPointMake(0, (textView.contentSize.height - 38));
-            }];
-        }
+        [self resizeDescription];
+    
     }
 }
 
@@ -277,22 +286,7 @@
 {    
     if(textView.tag == 0)
     {
-        if (textView.contentSize.height != self.scrollView.contentOffset.y ) 
-        {
-            CGRect frame =  self.scrollView.frame;
-            frame.size.height = 460 + self.descriptionTextView.contentSize.height;
-            self.scrollView.frame = frame;
-            scrollView.contentOffset = CGPointMake(0, self.descriptionTextView.contentSize.height); 
-            [UIView animateWithDuration:0.1f animations:^{
-                scrollView.contentOffset = CGPointMake(0, self.descriptionTextView.contentSize.height); 
-            }];
-        }
-        if(textView.contentSize.height >= textView.frame.size.height)
-        {
-            CGRect frame = textView.frame;
-            frame.size.height = frame.size.height + 22;
-            textView.frame = frame;
-        }
+        [self resizeDescription];
     }
     else
     {
@@ -315,19 +309,7 @@
         [UIView animateWithDuration:0.3f animations:^{
             self.scrollView.contentOffset = CGPointMake(0, 0);
         }];
-        
-        
-        self.descriptionTextView.contentOffset = CGPointMake(0, 0);
-        
-        if (self.descriptionTextView.contentSize.height > 301)
-        {
-            CGRect frame = self.scrollView.frame;
-            frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height - 302); 
-            self.scrollView.frame = frame;
-        }
     }
-    
-    
 }
 
 
@@ -456,31 +438,92 @@
     }
 }
 
+-(void)resizeDescription
+{
+    /* handle expanding the textview and then resize the scrollview */
+    if(self.descriptionTextView.contentSize.height > self.descriptionTextView.frame.size.height)
+    {   
+        CGRect frame = self.descriptionTextView.frame;
+        frame.size.height = self.descriptionTextView.contentSize.height;
+        self.descriptionTextView.frame = frame;
+        
+        if (descriptionTextView.frame.origin.y + self.descriptionTextView.frame.size.height > self.scrollView.contentSize.height) 
+        {
+            [self resizeScrollView];
+        }
+    }
+    
+    /* Handle when a user types too much and the text is hidden by the keyboard */
+    int textViewBottomPoint = self.descriptionTextView.frame.origin.y + self.descriptionTextView.contentSize.height;
+    int visibleArea = self.view.frame.size.height - (DEFAULT_KEYBOARD_HEIGHT + KEYBOARD_ADDON_HEIGHT);
+    int visibleAreaBottomPoint = visibleArea + self.scrollView.contentOffset.y;
+    
+    if( textViewBottomPoint > visibleAreaBottomPoint)
+    {
+        CGPoint offsetPoint = CGPointMake(0, textViewBottomPoint - visibleArea);
+        self.scrollView.contentOffset = offsetPoint;
+    }
+
+}
 
 -(void)resizeScrollView
 {
-    /* In case of very long descriptions, move the portion of the scroll view being shown */
-    if (descriptionTextView.contentSize.height + descriptionTextView.frame.origin.y > self.view.frame.size.height)
+    if(editing)
     {
-        //CGRect frame = self.view.frame;
-        //frame.size.height = frame.size.height + (self.descriptionTextView.contentSize.height * 2); 
-       // self.scrollView.frame = frame;
-        [scrollView setContentSize:CGSizeMake(305, scrollView.frame.size.height + self.descriptionTextView.contentSize.height)];
-        [scrollView setScrollEnabled:YES];
+        CGSize content = CGSizeMake(self.view.frame.size.width, self.descriptionTextView.frame.origin.y + self.descriptionTextView.contentSize.height);
+        [self.scrollView setScrollEnabled:YES];
+        
+        /* In case of very long descriptions, allow the user to scroll */
+        if(content.height > self.scrollView.frame.size.height)
+        {
+            content.height = content.height + DEFAULT_KEYBOARD_HEIGHT;
+            self.scrollView.contentSize = content ;
+            
+            CGRect frame = self.paperView.frame;
+            frame.size.height = content.height + PAGE_BOTTOM_PADDING;
+            self.paperView.frame = frame;
+            
+        }
+        else
+        {
+            content.height = self.scrollView.frame.size.height + DEFAULT_KEYBOARD_HEIGHT;
+            self.scrollView.contentSize = content ;
+            
+            CGRect frame = self.paperView.frame;
+            frame.size.height = content.height + PAGE_BOTTOM_PADDING;
+            self.paperView.frame = frame;
+        }
+        
+        
+        
     }
     else
     {
-        self.scrollView.frame = self.view.frame;
-        [scrollView setScrollEnabled:NO];
-        [scrollView setContentSize:CGSizeMake(0,0)];
+        CGSize content = CGSizeMake(0, self.descriptionTextView.frame.origin.y + self.descriptionTextView.contentSize.height);
+        self.scrollView.contentSize = content;
+
+        /* In case of very long descriptions, allow the user to scroll */
+        if(content.height > self.scrollView.frame.size.height)
+        {
+            [self.scrollView setScrollEnabled:YES];
+            
+            CGRect frame = self.paperView.frame;
+            frame.size.height = content.height + PAGE_BOTTOM_PADDING;
+            self.paperView.frame = frame;
+            
+        }
+        else
+        {
+            [self.scrollView setScrollEnabled:NO];
+            self.paperView.frame = self.scrollView.frame;
+        }
+
     }
+    
+    
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView1
-{
-    
-    [self.scrollView setContentOffset:CGPointMake(0, scrollView1.contentOffset.y)];
-}
+
 
 
 -(void)didTapAmountLabel
@@ -488,6 +531,8 @@
     if (editing)
         [self.delegate changeEditStateTo:1];
 }
+
+
 /* Possible maps implementation */
 /*
  -(void)setUpMap
