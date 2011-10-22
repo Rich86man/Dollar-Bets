@@ -40,7 +40,7 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
 {
-    UIView *containerView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 460)];
     containerView.backgroundColor = [UIColor greenColor];
     [containerView setUserInteractionEnabled:YES];
     self.view = containerView;
@@ -81,7 +81,7 @@
                           delay:0.0f 
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         book.frontView.transform = CGAffineTransformMakeScale(1.4f, 1.4f);
+                         book.frontView.transform = CGAffineTransformMakeScale(1.8f, 1.8f);
                      }
                      completion:^(BOOL finished){  
                          [book.view removeFromSuperview];
@@ -123,7 +123,7 @@
     
 
 
-    [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionNone animations:^{
+    [UIView transitionWithView:self.view duration:0.1f options:UIViewAnimationOptionTransitionNone animations:^{
         [self.view addSubview:self.mainViewController.view];
         //  [book refreshFrontView];
         
@@ -143,29 +143,7 @@
         
     }];
 
-    /*
-    
-    [UIView animateWithDuration:1.0f 
-                          delay:0.0f 
-                        options:UIViewAnimationOptionCurveLinear
-                     animations:^{
-                         book.frontView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
-                     }
-                     completion:^(BOOL finished){  
-                         [book.view removeFromSuperview];
-                         [book removeFromParentViewController];
-                         book.view.frame = aFrame;
-                         [self.mainViewController.bookScrollView addSubview:book.view];
-                         
-                         [self.rootViewController.view removeFromSuperview];
-                         [UIView transitionWithView:self.view duration:0.5f options:UIViewAnimationOptionTransitionNone animations:^{
-                             [self.view addSubview:self.mainViewController.view];
-                           //  [book refreshFrontView];
-                             
-                         } completion:^(BOOL finished){}];
-                     }];
-    
-    */
+
     NSLog(@"frame(%f, %f, %f, %f)",book.view.frame.origin.x, book.view.frame.origin.y, book.view.frame.size.height, book.view.frame.size.width);
 }
 

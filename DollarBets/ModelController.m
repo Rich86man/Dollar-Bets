@@ -104,9 +104,16 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     NSUInteger index = [self indexOfViewController:viewController];
-    if ((index == 0) || (index == NSNotFound)) {
+    if (index == NSNotFound) 
+    {
         return nil;
     }
+    if(index == 0) 
+    {
+        return [self.rvc topBook];
+
+    }
+    
     
     index--;
     return [self viewControllerAtIndex:index];
@@ -122,10 +129,11 @@
     if (index == NSNotFound) {
         return nil;
     }
+
     
         index++;
 
-    if (index > [self.bets count]) {
+    if (index > [self.bets count] + 1) {
         return nil;
     }
     

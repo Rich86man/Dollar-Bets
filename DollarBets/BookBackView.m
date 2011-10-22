@@ -105,9 +105,7 @@
         [button setTitle:@"Delete" forState:UIControlStateHighlighted];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
         [button setBackgroundImage:[UIImage imageNamed:@"deleteDoubleCheckButton.png"] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"deleteDoubleCheckButtonSelected.png"] forState:UIControlStateSelected];
-        [button setBackgroundImage:[UIImage imageNamed:@"deleteDoubleCheckButtonSelected.png"] forState:UIControlStateHighlighted];
-        [button addTarget:self.viewController action:@selector(deleteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+               [button addTarget:self.viewController action:@selector(deleteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
         [button setTag:1];
         [popView addSubview:button];
         

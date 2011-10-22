@@ -45,6 +45,8 @@
 		FA45BA311401E66E00C02A78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA301401E66E00C02A78 /* AppDelegate.m */; };
 		FA45BA341401E66E00C02A78 /* DollarBets.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA321401E66E00C02A78 /* DollarBets.xcdatamodeld */; };
 		FA45BA411401E6C900C02A78 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA3F1401E6C900C02A78 /* MainViewController.m */; };
+		FA45CC5E14536DC70090C217 /* paperPlusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45CC5C14536DC70090C217 /* paperPlusSign.png */; };
+		FA45CC5F14536DC70090C217 /* paperPlusSign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45CC5D14536DC70090C217 /* paperPlusSign@2x.png */; };
 		FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4D38861413FAEE003064BC /* TOCTableViewController.m */; };
 		FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4D38871413FAEE003064BC /* TOCTableViewController.xib */; };
 		FA5C4414144E9891009F5C79 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5C4413144E9891009F5C79 /* QuartzCore.framework */; };
@@ -173,6 +175,8 @@
 		FA45BA331401E66E00C02A78 /* DollarBets.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DollarBets.xcdatamodel; sourceTree = "<group>"; };
 		FA45BA3E1401E6C900C02A78 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		FA45BA3F1401E6C900C02A78 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		FA45CC5C14536DC70090C217 /* paperPlusSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paperPlusSign.png; sourceTree = "<group>"; };
+		FA45CC5D14536DC70090C217 /* paperPlusSign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paperPlusSign@2x.png"; sourceTree = "<group>"; };
 		FA4D38851413FAEE003064BC /* TOCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCTableViewController.h; sourceTree = "<group>"; };
 		FA4D38861413FAEE003064BC /* TOCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCTableViewController.m; sourceTree = "<group>"; };
 		FA4D38871413FAEE003064BC /* TOCTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TOCTableViewController.xib; sourceTree = "<group>"; };
@@ -421,6 +425,8 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FA45CC5C14536DC70090C217 /* paperPlusSign.png */,
+				FA45CC5D14536DC70090C217 /* paperPlusSign@2x.png */,
 				FAC5BF781452047A00813FFF /* rootBookBackround.png */,
 				FAC5BF791452047A00813FFF /* rootBookBackround@2x.png */,
 				FA7FCFEC1450C3E800489541 /* changeNameButton.png */,
@@ -755,6 +761,8 @@
 				FA7FCFEF1450C3E800489541 /* changeNameButton@2x.png in Resources */,
 				FAC5BF7A1452047B00813FFF /* rootBookBackround.png in Resources */,
 				FAC5BF7B1452047B00813FFF /* rootBookBackround@2x.png in Resources */,
+				FA45CC5E14536DC70090C217 /* paperPlusSign.png in Resources */,
+				FA45CC5F14536DC70090C217 /* paperPlusSign@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

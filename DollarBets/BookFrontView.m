@@ -157,12 +157,12 @@
     }
     [self addSubview:self.addNewButton];
     
-    [UIView animateWithDuration:1.2 
+    [UIView animateWithDuration:1.0 
                           delay:0 
                         options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse | UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
                      animations:^{ 
-                         self.addNewButton.imageView.alpha = 0.0f;
-                         self.addNewButton.imageView.transform = CGAffineTransformMakeScale(0.8f, 0.8f);
+                         self.addNewButton.imageView.alpha = 0.1f;
+                          self.addNewButton.imageView.transform = CGAffineTransformMakeScale(0.9, 0.9);
                          
                      }    
                      completion:nil];   
@@ -232,12 +232,12 @@
         int losses = [[self.viewController.opponent numberOfLosses] intValue];
         
         NSMutableString *summary = [[NSMutableString alloc]init];
-        [summary appendString:@"Wins        + "];
+        [summary appendString:@"Wins      + "];
         [summary appendFormat:@"%i\n", wins];
-        [summary appendString:@"Losses      - "];
+        [summary appendString:@"Losses    - "];
         [summary appendFormat:@"%i\n", losses];
         [summary appendString:@"------------------\n"];
-        [summary appendFormat:@"Total         %i", wins - losses];
+        [summary appendFormat:@"Total       %i", wins - losses];
         self.summaryLabel.text = summary;
     }
     else

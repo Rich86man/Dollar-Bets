@@ -19,6 +19,7 @@
 #define PAGE_BOTTOM_PADDING 20
 
 
+
 @interface BetPage(PrivateMethods)
 -(void)setUpMap;
 -(void)setUpDollars;
@@ -33,7 +34,8 @@
 
 @synthesize bet;
 @synthesize scrollView;
-@synthesize overlayView;
+@synthesize overlayStatusBar;
+@synthesize overlayBottom;
 @synthesize descriptionTextView, amountTextView;
 @synthesize titleLabel, dateLabel, amountLabel, pageNumberLabel;
 @synthesize photoButton, tweetButton;
@@ -79,33 +81,45 @@
             [self.photoButton setEnabled:YES];
         else
             [self.photoButton setEnabled:NO];
+        self.addNewView.alpha = 0;
         
+        
+        [self resizeDescription];    
+        [self resizeScrollView];
+
     }
     else
     {
         /* Set up Labels */
         self.titleLabel.text = [[self.delegate opponent] name];
         self.pageNumberLabel.text = self.pageNum;
-        [self setUpAmountLabel];
-        self.descriptionTextView.text = self.bet.report;
-        self.dateLabel.text =  [self.bet.date RKStringFromDate];
+               
+        self.photoButton.alpha = 0;
+        self.tweetButton.alpha = 0;
+        self.amountLabel.alpha = 0;
+        self.descriptionTextView.alpha = 0;
         
-        /* Set up the buttons */
-        if(self.bet.picture)
-            [self.photoButton setEnabled:YES];
-        else
-            [self.photoButton setEnabled:NO];
+
         
+        /* set Up the addnw overlay */
+        self.addNewView.alpha = 1.0f;
+        self.addNewView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
+        UIButton *addNewButton = (UIButton *)[[self.addNewView subviews] objectAtIndex:0];
         
+        [UIView animateWithDuration:1.0 
+                              delay:0 
+                            options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse | UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
+                         animations:^{ 
+                             addNewButton.imageView.alpha = 0.1f;
+                             addNewButton.imageView.transform = CGAffineTransformMakeScale(0.9, 0.9);
+                         }    
+                         completion:nil]; 
     }
     
     
-    [self resizeDescription];    
-    [self resizeScrollView];
-
     
     /* Check if the Overlay view is currently showing */
-    if (self.overlayView.alpha == 0) 
+    if (self.overlayStatusBar.alpha == 0) 
     {
         overlayShowing = NO;
     }
@@ -126,27 +140,11 @@
     UITapGestureRecognizer *amountLabelTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapAmountLabel)];
     [self.amountLabel addGestureRecognizer:amountLabelTap];
     
-    /* Finally, if dealing with a new page, show the keyboard right away */
-    if(newBet)
-    {
-        UIView *view = [[UIView alloc]initWithFrame:self.view.frame];
-        [view setBackgroundColor:[UIColor lightGrayColor]];
-        [view setAlpha:0.9f];
-        
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, view.frame.size.height / 2 , 305, 50)];
-        [label setBackgroundColor:[UIColor clearColor]];
-        [label setFont:[UIFont fontWithName:HEITI size:25]];
-        [label setTextAlignment:UITextAlignmentCenter];
-        [label setTextColor:[UIColor whiteColor]];
-        [label setText:@"Tap to edit"];
-        [view addSubview:label];
-        
-        UITapGestureRecognizer *addNewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addNewOverlayTapped)];
-        [view addGestureRecognizer:addNewTap];
-        self.addNewView = view;
-        [self.view addSubview:self.addNewView];
-    }
+    self.scrollView.contentOffset = CGPointZero;
+
 }
+
+
 - (void)viewWillAppear:(BOOL)animated 
 {
     [super viewWillAppear:animated];
@@ -181,9 +179,10 @@
     [self setPhotoButton:nil];
     [self setTweetButton:nil];
     [self setAmountTextView:nil];
-    [self setOverlayView:nil];
+    [self setOverlayStatusBar:nil];
     [self setAmountTextView:nil];
     [self setPaperView:nil];
+    [self setOverlayBottom:nil];
     [super viewDidUnload];
 }
 
@@ -216,7 +215,7 @@
     }];
    
     [self.scrollView setScrollEnabled:YES];
-    [self.scrollView setShowsVerticalScrollIndicator:YES];
+    
     
     
     [self.descriptionTextView setEditable:YES];
@@ -344,7 +343,7 @@
 }
 
 
--(void)addNewOverlayTapped
+-(void)addNewOverlayButtonTapped
 {
     [self.addNewView removeFromSuperview];
     
@@ -353,16 +352,29 @@
     realBet.amount = [NSNumber numberWithInt:1];
     realBet.date = [NSDate date];
     realBet.didWin = [NSNumber numberWithInt:2];
-    realBet.report = @"Description...";
+    realBet.report = @"";
     self.bet = realBet;
     
     [self.bet save];
     
+    [self setUpAmountLabel];
+    self.dateLabel.text =  [self.bet.date RKStringFromDate];
     
+    /* Set up the buttons */
+    if(self.bet.picture)
+        [self.photoButton setEnabled:YES];
+    else
+        [self.photoButton setEnabled:NO];
+    self.addNewView.alpha = 0;
+    
+    
+    [self resizeDescription];    
+    [self resizeScrollView];
+        
     [self showOverlay];
     [self.descriptionTextView setEditable:YES];
     [self.descriptionTextView becomeFirstResponder];
-    [self.descriptionTextView setText:@""];
+    [self.descriptionTextView setText:@"Description..."];
     [self.delegate didselectEdit:self];
 }
 
@@ -376,7 +388,8 @@
                             options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
                              
-                             [self.overlayView setAlpha:1.0f];
+                             [self.overlayStatusBar setAlpha:1.0f];
+                             [self.overlayBottom setAlpha:1.0f];
                              
                          }
                          completion:nil];
@@ -399,7 +412,8 @@
                               delay:0.0f
                             options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-                             [self.overlayView setAlpha:0.0f];                             
+                             [self.overlayStatusBar setAlpha:0.0f];
+                                                          [self.overlayBottom setAlpha:0.0f];
                          }
                          completion:nil];
         
@@ -452,6 +466,7 @@
             [self resizeScrollView];
         }
     }
+    
     
     /* Handle when a user types too much and the text is hidden by the keyboard */
     int textViewBottomPoint = self.descriptionTextView.frame.origin.y + self.descriptionTextView.contentSize.height;
@@ -523,6 +538,16 @@
     
 }
 
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    static int defaultHeight = 208;
+    CGRect frame = self.descriptionTextView.frame;
+    
+    frame.size.height = defaultHeight + self.scrollView.contentOffset.y;
+    
+    self.descriptionTextView.frame = frame;
+}
 
 
 

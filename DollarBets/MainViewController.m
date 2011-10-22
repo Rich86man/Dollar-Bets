@@ -53,7 +53,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.frame = [[UIScreen mainScreen]bounds];
+    self.view.frame = CGRectMake(0, 0, 320, 460);
     /* Create a scroll view for the books */
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:self.view.frame];
     [scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]]];

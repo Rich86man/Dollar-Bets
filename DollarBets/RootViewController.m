@@ -77,7 +77,7 @@
     [self setChooseDidWinView:nil];
     [self setRemovePhotoButton:nil];
     [super viewDidUnload];
-
+    
 }
 
 - (ModelController *)modelController
@@ -154,7 +154,7 @@
     
     if(twitterKeyboard == 0)
     {  
-
+        
         [UIView animateWithDuration:0.3
                          animations:^{
                              self.backroundView.frame = KEYBOARD_FRAME_UP;
@@ -214,9 +214,11 @@
                              [self.currentPageBeingEdited.descriptionTextView setEditable:NO];  
                              self.currentPageBeingEdited.bet.report = self.currentPageBeingEdited.descriptionTextView.text;            
                              [self.currentPageBeingEdited.bet save];
+                             [self.pageViewController disablePageViewGestures:NO];
+                             
                          }
                          
-                         [self.pageViewController disablePageViewGestures:NO];
+                         
                      }];
     
     editState = 0;
@@ -316,11 +318,11 @@
     NSString *tweetString = [NSString stringWithFormat:@"%@ bet me $%@ that:%@",onPage.bet.opponent.name , [onPage.bet.amount stringValue],onPage.bet.report] ;
     if([tweetString length] > 160)
     {
-    NSRange range = NSMakeRange(0, 160);
+        NSRange range = NSMakeRange(0, 160);
         tweetString = [tweetString substringWithRange:range];
     }
-        
-        [tweet setInitialText:tweetString];
+    
+    [tweet setInitialText:tweetString];
     
     if(onPage.bet.picture)
         [tweet addImage:[UIImage imageWithData:onPage.bet.picture]];
@@ -341,25 +343,25 @@
     currentPageBeingEdited = onPage;
     self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
     [self.pageViewController disablePageViewGestures:YES];
-
-}
-/*
-- (IBAction)betPageBackButtonPressed:(id)sender 
-{  
-    [self hideBetPageOverlay:0.0];
-
-}
-*/
-
-/*
-- (IBAction)betPageEditButtonSelected:(id)sender 
-{
-    self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
-    [self.pageViewController disablePageViewGestures:YES];
-    [self.currentPageBeingEdited editButtonSelected];
     
 }
-*/
+/*
+ - (IBAction)betPageBackButtonPressed:(id)sender 
+ {  
+ [self hideBetPageOverlay:0.0];
+ 
+ }
+ */
+
+/*
+ - (IBAction)betPageEditButtonSelected:(id)sender 
+ {
+ self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
+ [self.pageViewController disablePageViewGestures:YES];
+ [self.currentPageBeingEdited editButtonSelected];
+ 
+ }
+ */
 
 #pragma mark -
 #pragma mark UIImagePickerControllerDelegate
@@ -422,8 +424,8 @@
     //[self.view sendSubviewToBack:pageView.view];
     
     // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
-   // CGRect pageViewRect = self.view.bounds;
-    pageView.view.frame = CGRectMake(0, 8, 305, 438);
+    // CGRect pageViewRect = self.view.bounds;
+    pageView.view.frame = CGRectMake(0, 11, 305, 438);
     self.pageViewController = pageView;
     [self.pageViewController didMoveToParentViewController:self];    
     
@@ -442,7 +444,7 @@
     }
     else
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:animated completion:NULL];
-
+    
 }
 
 
@@ -465,12 +467,25 @@
     __block typeof(self) bself = self;
     
     [self.pageViewController setViewControllers:viewControllers
-                   direction:UIPageViewControllerNavigationDirectionReverse
-                    animated:YES
-                  completion:^(BOOL finished){    
-                      if(finished)
-                      [bself.delegate closeBook:bself.topBook];
-                  }];
+                                      direction:UIPageViewControllerNavigationDirectionReverse
+                                       animated:YES
+                                     completion:^(BOOL finished){    
+                                         if(finished)
+                                             [bself.delegate closeBook:bself.topBook];
+                                     }];
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    
+    if(completed)
+    {
+    
+        if( [[pageViewController.viewControllers objectAtIndex:0] isKindOfClass:[BookViewController class]])
+        {
+                       [self.delegate closeBook:self.topBook];
+        }
+    }
 }
 
 

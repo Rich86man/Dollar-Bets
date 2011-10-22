@@ -36,8 +36,9 @@
 @property (assign)id delegate;
 @property (strong, nonatomic) Bet *bet;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) IBOutlet UIView *overlayView;
-@property (strong, nonatomic) UIView *addNewView;
+@property (strong, nonatomic) IBOutlet UIView *overlayStatusBar;
+@property (strong, nonatomic) IBOutlet UIView *overlayBottom;
+@property (strong, nonatomic) IBOutlet UIView *addNewView;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UITextView *amountTextView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
@@ -53,7 +54,7 @@
 -(id)initWithBet:(Bet*)aBet asNew:(bool)isNew;
 
 -(void)setUpAmountLabel;
--(void)addNewOverlayTapped;
+-(IBAction)addNewOverlayButtonTapped;
 
 - (IBAction)backButtonSelected:(id)sender;
 - (IBAction)editButtonSelected:(id)sender;
