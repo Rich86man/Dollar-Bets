@@ -21,6 +21,9 @@
     UIButton *addNewButton;
     UIButton *configButton;
     UILabel *summaryLabel;
+    UIView *winsAmountTab;
+    UIView *lossesAmountTab;
+    
 }
 @property (strong, nonatomic) UIImageView *bookImgView;
 @property (strong, nonatomic) UILabel *nameLabel;
@@ -30,13 +33,14 @@
 @property (strong, nonatomic) UIButton *configButton;
 @property (strong, nonatomic) UILabel *summaryLabel;
 @property (assign)BookViewController *viewController;
-
-
+@property (strong, nonatomic)UIView *winsAmountTab;
+@property (strong, nonatomic)UIView *lossesAmountTab;
 
 -(void)showPlusButton;
 -(void)hidePlusButton;
 -(void)showConfigAndDate;
--(void)setupSummaryLabel;
--(void)refresh;
 
+-(void)refresh;
+-(void)showWins;
+-(void)showLosses;
 @end

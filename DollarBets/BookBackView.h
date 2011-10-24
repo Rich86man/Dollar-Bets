@@ -26,4 +26,6 @@
 
 -(void)showPopOver;
 -(void)hidePopOver;
+-(void)showWinsTab;
+-(void)showLossesTab;
 @end

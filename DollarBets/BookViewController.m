@@ -55,7 +55,6 @@
     [self.view setBackgroundColor:[UIColor clearColor]];
 
     frontViewIsVisible = YES;
-    [self.frontView setupSummaryLabel];
 }
 
 

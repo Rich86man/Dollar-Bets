@@ -7,7 +7,7 @@
 //
 
 #import "BookBackView.h"
-
+#import "BookViewController.h"
 #define RGB256_TO_COL(col) ((col) / 255.0f)
 
 @implementation BookBackView
@@ -52,7 +52,7 @@
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
         
         [button setBackgroundImage:[UIImage imageNamed:@"deleteButton.png"] forState:UIControlStateNormal];
-         [button addTarget:self.viewController action:@selector(deleteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self.viewController action:@selector(deleteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
         [button setTag:0];
         self.deleteButton = button;
     }
@@ -77,8 +77,8 @@
     [changeNameButton setTitle:@"Change Name" forState:UIControlStateNormal];
     [changeNameButton setTitleColor:[UIColor colorWithRed:RGB256_TO_COL(184) green:RGB256_TO_COL(180) blue:RGB256_TO_COL(180) alpha:1.0] forState:UIControlStateNormal];
     [changeNameButton setBackgroundImage:[UIImage imageNamed:@"changeNameButton.png"] forState:UIControlStateNormal];
-     [changeNameButton setAdjustsImageWhenHighlighted:NO];
-     [self addSubview:changeNameButton];
+    [changeNameButton setAdjustsImageWhenHighlighted:NO];
+    [self addSubview:changeNameButton];
     
 }
 
@@ -105,7 +105,7 @@
         [button setTitle:@"Delete" forState:UIControlStateHighlighted];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
         [button setBackgroundImage:[UIImage imageNamed:@"deleteDoubleCheckButton.png"] forState:UIControlStateNormal];
-               [button addTarget:self.viewController action:@selector(deleteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self.viewController action:@selector(deleteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
         [button setTag:1];
         [popView addSubview:button];
         
@@ -132,6 +132,34 @@
     }
     
 }
+
+-(void)showWinsTab
+{
+    if ([self.viewController.opponent numberOfWins] > 0)
+    {
+        
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.bookImageView.frame.origin.x - 10, 200, 10, 27)];
+        [imageView setImage:[UIImage imageNamed:@"winsAmountTabFlipped.png"]];
+        [imageView setBackgroundColor:[UIColor clearColor]];
+        
+        [self addSubview:imageView];
+    }
+}
+
+-(void)showLossesTab
+{
+    if ([self.viewController.opponent numberOfLosses] > 0)
+    {
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.bookImageView.frame.origin.x - 10, 250, 10, 27)];
+        [imageView setImage:[UIImage imageNamed:@"lossesAmountTabFlipped.png"]];
+        [imageView setBackgroundColor:[UIColor clearColor]];
+        
+        [self addSubview:imageView];
+    }
+}
+
 
 
 @end

@@ -275,6 +275,9 @@
     if(textView.tag == 0)
     {
         [self.delegate didBeginEditingDescription];
+        if ([textView.text isEqualToString:@"Description..."]) {
+            textView.text = @"";
+        }
         [self resizeDescription];
     
     }
@@ -366,6 +369,11 @@
     else
         [self.photoButton setEnabled:NO];
     self.addNewView.alpha = 0;
+    
+    self.photoButton.alpha = 1;
+    self.tweetButton.alpha = 1;
+    self.amountLabel.alpha = 1;
+    self.descriptionTextView.alpha = 1;
     
     
     [self resizeDescription];    
