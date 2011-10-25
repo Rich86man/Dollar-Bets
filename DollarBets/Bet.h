@@ -22,6 +22,9 @@
 @property (nonatomic, retain) NSString * report;
 @property (nonatomic, retain) Opponent *opponent;
 
++(bool)deleteBet:(Bet *)bet;
+
 -(bool)save;
+
 
 @end

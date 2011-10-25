@@ -18,9 +18,10 @@
 -(void)didselectHomeButton;
 -(void)savedQuickBet;
 -(void)didBeginEditingDescription;
+-(void)editingTable:(BOOL)editing;
 @end
 
-@interface TOCTableViewController : UIViewController <UITableViewDelegate, UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate> 
+@interface TOCTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate> 
 {
     UITableView *tableView;
     // Custom Headers
@@ -71,6 +72,7 @@
 // Quick add Functions
 - (IBAction)save:(UIButton *)sender;
 - (IBAction)homeButtonSelected:(id)sender;
+- (IBAction)editButtonSelected:(id)sender;
 
 -(void)didTapHeader;
 -(void)didTapAmountLabel;

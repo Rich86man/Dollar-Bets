@@ -63,7 +63,7 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHeader)];
     [self.headerView addGestureRecognizer:tap];
-    
+    tap.delegate = self;
     UITapGestureRecognizer *amountLabelTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapAmountLabel)];
     [self.amountLabel addGestureRecognizer:amountLabelTap];
     
@@ -76,7 +76,8 @@
         homeButtonShowing = NO;
     else
         homeButtonShowing = YES;
-        
+    
+      
     self.homeButton.alpha = 1.0f;
     isQuickAdding = NO;
     isDragging = NO;
@@ -149,6 +150,16 @@
         }
         betCell.amountLabel.text = [NSString stringWithFormat:@"$%@",[[[bets objectAtIndex:indexPath.row] amount] stringValue]];   
         betCell.descriptionLabel.text = [[bets objectAtIndex:indexPath.row] report];
+        switch ([[[bets objectAtIndex:indexPath.row] didWin] intValue]) {
+            case 0:
+                [betCell.amountLabel setTextColor:[UIColor colorWithRed:RGB256_TO_COL(12) green:RGB256_TO_COL(134) blue:RGB256_TO_COL(24) alpha:1.0]];
+                break;
+            case 1:
+                [betCell.amountLabel setTextColor:[UIColor colorWithRed:RGB256_TO_COL(178) green:RGB256_TO_COL(54) blue:RGB256_TO_COL(54) alpha:1.0]];
+                break;
+            default:
+                break;
+        }
         
         return betCell;  
     }
@@ -160,7 +171,8 @@
             cell = [[TOCBetsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:addBetCell];
         }
         cell.addNew.alpha = 1.0f;
-        
+        [cell setEditingAccessoryType:<#(UITableViewCellAccessoryType)#> ];
+    
         return cell;
     }
 }
@@ -178,12 +190,66 @@
 }
 
 
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row >= [self.bets count])
+        return UITableViewCellEditingStyleInsert;
+    else 
+        return UITableViewCellEditingStyleDelete;
+}
+
+
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row <= [self.bets count]) 
+    {
+        Bet *betToDelete = [self.bets objectAtIndex:indexPath.row];
+        [Bet deleteBet:betToDelete];
+        
+        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+        self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+        
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];   
+    }
+    else if (indexPath.row == [self.bets count] +1)
+    {
+        [self.tableView setEditing:!self.tableView.editing];
+        [self.delegate editingTable:self.tableView.editing];
+        
+        NSUInteger page = indexPath.row + 1;
+        [self.delegate didSelectPage:page];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+    
+}
+
+- (IBAction)editButtonSelected:(id)sender 
+{
+        
+    [self.tableView setEditing:!self.tableView.editing];
+    [self.delegate editingTable:self.tableView.editing];
+    
+    
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUInteger page = indexPath.row + 1;
-    [self.delegate didSelectPage:page];
+    if(!isQuickAdding)
+    {
+        NSUInteger page = indexPath.row + 1;
+        [self.delegate didSelectPage:page];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+    
 }
 
 
@@ -238,7 +304,7 @@
         [UIView  animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
                           animations:^{
                               scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0 );
-
+                              
                           }completion:^(BOOL finished){        
                               self.overlayLabel.text = @"Pull Down To Add New";
                               
@@ -256,7 +322,7 @@
     {
         self.myHomeButtonTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(timerFired) userInfo:nil repeats:NO];
     }
-
+    
 }
 
 #pragma mark - TextView Delegate Functions
@@ -266,16 +332,16 @@
     if(textView.tag == 0)
         [self.delegate didBeginEditingDescription];
     /*
-    switch (textView.tag) {
-        case 0:
-            [self.delegate didBeginEditingDescription];
-            break;
-        case 1:
-            [self.delegate didBeginEditingAmount];
-            break;
-        default:
-            break;
-    }
+     switch (textView.tag) {
+     case 0:
+     [self.delegate didBeginEditingDescription];
+     break;
+     case 1:
+     [self.delegate didBeginEditingAmount];
+     break;
+     default:
+     break;
+     }
      */
 }
 
@@ -317,7 +383,7 @@
             CGRect newViewFrame = CGRectMake(self.quickAddView.frame.origin.x, self.quickAddView.frame.origin.y, self.quickAddView.frame.size.width, self.quickAddView.frame.size.height - ( descriptionTextView.frame.size.height - textView.contentSize.height));    
             CGRect newOverlayFrame = CGRectMake(self.overlayView.frame.origin.x, self.overlayView.frame.origin.y - ( descriptionTextView.frame.size.height - textView.contentSize.height ), self.overlayView.frame.size.width , self.overlayView.frame.size.height);
             CGRect newSaveButtonFrame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, self.saveButton.frame.origin.y - ( descriptionTextView.frame.size.height - textView.contentSize.height ), SAVE_BUTTON_WIDTH, self.saveButton.frame.size.height);
-        
+            
             newTextFrame.size.height = textView.contentSize.height;
             
             [UIView animateWithDuration:0.02f animations:^{
@@ -427,7 +493,7 @@
             self.quickAddView.frame = CGRectMake(0, 0, 305, 0);
             self.overlayView.alpha = 0;
         }completion:nil];
-    
+        
         isQuickAdding = NO;
         
         NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
@@ -437,6 +503,9 @@
         [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.bets count] -1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
         [self.delegate savedQuickBet];
+        self.bet = nil;
+        [self.amountLabel setTextColor:[UIColor grayColor]];
+        
     }
 }
 
@@ -457,6 +526,8 @@
 {
     [self.delegate didselectHomeButton];
 }
+
+
 
 
 -(void)setUpAmountLabel
@@ -486,7 +557,7 @@
 -(void)timerFired
 {
     if(!isQuickAdding)
-    [self showHomeButton:1.0];
+        [self showHomeButton:1.0];
 }
 
 
@@ -508,7 +579,7 @@
                          } completion:nil];
         homeButtonShowing = YES;
     }
-
+    
 }
 
 -(void)hideHomeButton:(NSInteger)duration
@@ -531,7 +602,14 @@
 }
 
 
-
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([touch.view isKindOfClass:[UIButton class]]) {
+        return NO;
+    }
+    
+    else return YES;
+}
 
 
 @end

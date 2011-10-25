@@ -25,7 +25,7 @@
         [label setTextAlignment:UITextAlignmentLeft];
         [label setContentMode:UIViewContentModeCenter];
         self.descriptionLabel = label;
-        [self  addSubview:descriptionLabel];
+        [self.contentView  addSubview:descriptionLabel];
         
         amountLabel = [[UILabel alloc] init];
         amountLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:30.0f];
@@ -33,7 +33,7 @@
         [amountLabel setContentMode:UIViewContentModeCenter];
         [amountLabel setTextAlignment:UITextAlignmentCenter];
         amountLabel.backgroundColor = [UIColor clearColor];
-        [self addSubview:amountLabel];
+        [self.contentView addSubview:amountLabel];
         
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"plusSign"]];
         [imageView setContentMode:UIViewContentModeScaleToFill];
@@ -61,5 +61,32 @@
 {
     [super setSelected:selected animated:animated];
 }
+
+
+
+//- (void)didTransitionToState:(UITableViewCellStateMask)state
+//{
+//        if (state == 1)
+//        {
+//            CGRect frame = self.contentView.frame;
+//            frame.origin.x = frame.origin.x + 30;
+//            
+//            
+//            [UIView animateWithDuration:0.3f animations:^{
+//                //self.descriptionLabel.frame = CGRectMake(100 ,0,186, 44);
+//                //self.amountLabel.frame = CGRectMake(30 ,0,57, 39);
+//            self.contentView.frame = frame;
+//            
+//            }];
+//        }   
+//        else if (state == 2)
+//        {
+//            [UIView animateWithDuration:0.3f animations:^{
+//                self.descriptionLabel.frame = CGRectMake(70 ,0,216, 44);
+//                self.amountLabel.frame = CGRectMake(0 ,0,57, 39);
+//           }];
+//        }
+//         
+//}
 
 @end

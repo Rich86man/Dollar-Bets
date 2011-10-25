@@ -80,6 +80,9 @@
     [changeNameButton setAdjustsImageWhenHighlighted:NO];
     [self addSubview:changeNameButton];
     
+    
+    [self showWinsTab];
+    [self showLossesTab];
 }
 
 
@@ -135,11 +138,11 @@
 
 -(void)showWinsTab
 {
-    if ([self.viewController.opponent numberOfWins] > 0)
+    if ([[self.viewController.opponent numberOfWins] intValue] > 0)
     {
         
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.bookImageView.frame.origin.x - 10, 200, 10, 27)];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.bookImageView.frame.origin.x - 10, 100, 10, 27)];
         [imageView setImage:[UIImage imageNamed:@"winsAmountTabFlipped.png"]];
         [imageView setBackgroundColor:[UIColor clearColor]];
         
@@ -149,10 +152,10 @@
 
 -(void)showLossesTab
 {
-    if ([self.viewController.opponent numberOfLosses] > 0)
+    if ([[self.viewController.opponent numberOfLosses] intValue] > 0)
     {
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.bookImageView.frame.origin.x - 10, 250, 10, 27)];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.bookImageView.frame.origin.x - 10, 150, 10, 27)];
         [imageView setImage:[UIImage imageNamed:@"lossesAmountTabFlipped.png"]];
         [imageView setBackgroundColor:[UIColor clearColor]];
         

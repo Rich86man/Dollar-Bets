@@ -18,3 +18,4 @@
 
 #define HEITI @"STHeitiJ-Light"
 #define HEITI_MEDIUM @"STHeitiJ-Medium" 
+#define RGB256_TO_COL(col) ((col) / 255.0f)

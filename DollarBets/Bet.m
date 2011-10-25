@@ -21,6 +21,25 @@
 @dynamic report;
 @dynamic opponent;
 
++(bool)deleteBet:(Bet *)bet
+{
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+   
+    [bet.opponent removeBetsObject:bet];
+    [context deleteObject:bet];
+    
+    NSError *error = nil;
+    [context save:&error];
+    if(error)
+    {  
+        NSLog(@"%@\n", [error  description]);
+        return NO;
+    }
+    return YES;
+
+}
+
+
 -(bool)save
 {
     NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];

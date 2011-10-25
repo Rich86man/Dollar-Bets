@@ -12,8 +12,8 @@
 #import "FXLabel.h"
 
 
-#define RGB256_TO_COL(col) ((col) / 255.0f)
-#define BODONI @"BodoniSvtyTwoSCITCTT-Book"
+
+
 
 @implementation BookFrontView
 @synthesize nameTextField, bookImgView, dateLabel;
@@ -113,7 +113,7 @@
     {
         [self showConfigAndDate];
     }
-
+    
     
     
     [self showWins];
@@ -234,27 +234,30 @@
 
 -(void)showWins
 {
-    if ([self.viewController.opponent numberOfWins] > 0)
+    if ([[self.viewController.opponent numberOfWins] intValue] > 0)
     {
         
         if (!self.winsAmountTab)
         {
-            UIView *aview = [[UIView alloc]initWithFrame:CGRectMake(296, 50, 39, 35)];
+            UIView *aview = [[UIView alloc]initWithFrame:CGRectMake(282, 100, 39, 35)];
             [aview setBackgroundColor:[UIColor clearColor]];
             
             
-            UIImageView *imageView = [[UIImageView alloc]initWithFrame:aview.frame];
+            UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,39, 35)];
             [imageView setImage:[UIImage imageNamed:@"winsAmountTab.png"]];
             
             [aview addSubview:imageView];
             
-            UILabel *label = [[UILabel alloc]initWithFrame:aview.frame];
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 35, 35)];
             [label setBackgroundColor:[UIColor clearColor]];
-            [ label setTextColor:[UIColor whiteColor]];
-            [label setFont:[UIFont fontWithName:HEITI size:10]];
+            [label setTextColor:[UIColor whiteColor]];
+            [label setAdjustsFontSizeToFitWidth:YES];
+            [label setFont:[UIFont fontWithName:HEITI size:15]];
             [label setTextAlignment:UITextAlignmentCenter];
             [label setContentMode:UIViewContentModeCenter];
-            [label setText:[[self.viewController.opponent numberOfWins] stringValue]];
+        
+            NSString *text = [NSString stringWithFormat:@"$%@",[[self.viewController.opponent numberOfWins] stringValue]];
+            [label setText:text];
             
             [aview addSubview:label];
             self.winsAmountTab = aview;
@@ -265,27 +268,29 @@
 
 -(void)showLosses
 {
-    if ([self.viewController.opponent numberOfLosses] > 0)
+    if ([[self.viewController.opponent numberOfLosses] intValue] > 0)
     {
         
         if (!self.lossesAmountTab)
         {
-            UIView *aview = [[UIView alloc]initWithFrame:CGRectMake(300, 100, 39, 35)];
+            UIView *aview = [[UIView alloc]initWithFrame:CGRectMake(282, 150, 39, 35)];
             [aview setBackgroundColor:[UIColor clearColor]];
             
             
-            UIImageView *imageView = [[UIImageView alloc]initWithFrame:aview.frame];
+            UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 39, 35)];
             [imageView setImage:[UIImage imageNamed:@"lossesAmountTab.png"]];
             
             [aview addSubview:imageView];
             
-            UILabel *label = [[UILabel alloc]initWithFrame:aview.frame];
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 35, 35)];
             [label setBackgroundColor:[UIColor clearColor]];
+            [label setAdjustsFontSizeToFitWidth:YES];
             [ label setTextColor:[UIColor whiteColor]];
-            [label setFont:[UIFont fontWithName:HEITI size:10]];
+            [label setFont:[UIFont fontWithName:HEITI size:15]];
             [label setTextAlignment:UITextAlignmentCenter];
             [label setContentMode:UIViewContentModeCenter];
-            [label setText:[[self.viewController.opponent numberOfLosses] stringValue]];
+             NSString *text = [NSString stringWithFormat:@"$%@",[[self.viewController.opponent numberOfLosses] stringValue]];
+            [label setText:text];
             
             [aview addSubview:label];
             self.lossesAmountTab = aview;

@@ -132,7 +132,10 @@
     [self changeEditStateTo:0];
 }
 
-
+-(void)editingTable:(BOOL)editing
+{
+    [self.pageViewController disablePageViewGestures:editing];
+}
 #pragma mark - Custom Keyboard stuff
 
 - (void)viewWillAppear:(BOOL)animated 

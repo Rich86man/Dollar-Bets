@@ -379,6 +379,7 @@
     [self resizeDescription];    
     [self resizeScrollView];
         
+    self.newBet = NO;
     [self showOverlay];
     [self.descriptionTextView setEditable:YES];
     [self.descriptionTextView becomeFirstResponder];
