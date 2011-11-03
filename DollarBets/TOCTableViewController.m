@@ -29,6 +29,7 @@
 @end
 
 @implementation TOCTableViewController
+@synthesize editButton;
 @synthesize homeButton;
 @synthesize delegate;
 @synthesize tableView;
@@ -77,7 +78,12 @@
     else
         homeButtonShowing = YES;
     
-      
+    if ([self.bets count] == 0) {
+        self.editButton.alpha = 0;
+    }
+    else
+        self.editButton.alpha = 1;
+    
     self.homeButton.alpha = 1.0f;
     isQuickAdding = NO;
     isDragging = NO;
@@ -110,6 +116,7 @@
     [self setBet:nil];
     [self setAmountTextView:nil];
     [self setHomeButton:nil];
+    [self setEditButton:nil];
     [super viewDidUnload];
     
 }
@@ -152,12 +159,14 @@
         betCell.descriptionLabel.text = [[bets objectAtIndex:indexPath.row] report];
         switch ([[[bets objectAtIndex:indexPath.row] didWin] intValue]) {
             case 0:
-                [betCell.amountLabel setTextColor:[UIColor colorWithRed:RGB256_TO_COL(12) green:RGB256_TO_COL(134) blue:RGB256_TO_COL(24) alpha:1.0]];
+                             [betCell.amountLabel setTextColor:[UIColor colorWithRed:RGB256_TO_COL(178) green:RGB256_TO_COL(54) blue:RGB256_TO_COL(54) alpha:1.0]];
+
                 break;
             case 1:
-                [betCell.amountLabel setTextColor:[UIColor colorWithRed:RGB256_TO_COL(178) green:RGB256_TO_COL(54) blue:RGB256_TO_COL(54) alpha:1.0]];
+                [betCell.amountLabel setTextColor:[UIColor colorWithRed:RGB256_TO_COL(12) green:RGB256_TO_COL(134) blue:RGB256_TO_COL(24) alpha:1.0]];
                 break;
             default:
+                [betCell.amountLabel setTextColor:[UIColor blackColor]];
                 break;
         }
         
@@ -171,8 +180,7 @@
             cell = [[TOCBetsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:addBetCell];
         }
         cell.addNew.alpha = 1.0f;
-        [cell setEditingAccessoryType:<#(UITableViewCellAccessoryType)#> ];
-    
+        
         return cell;
     }
 }
@@ -192,14 +200,17 @@
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return YES;
+    if (indexPath.row == [self.bets count] +1)
+        return NO;
+    else
+        return YES;
 }
 
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row >= [self.bets count])
-        return UITableViewCellEditingStyleInsert;
+        return UITableViewCellEditingStyleNone;
     else 
         return UITableViewCellEditingStyleDelete;
 }
@@ -216,25 +227,21 @@
         NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
         self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
         
+        if ([self.bets count] == 0)
+            self.editButton.alpha = 0;
+        
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];   
     }
-    else if (indexPath.row == [self.bets count] +1)
-    {
-        [self.tableView setEditing:!self.tableView.editing];
-        [self.delegate editingTable:self.tableView.editing];
-        
-        NSUInteger page = indexPath.row + 1;
-        [self.delegate didSelectPage:page];
-        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-    }
-    
+
 }
 
 - (IBAction)editButtonSelected:(id)sender 
 {
-        
+    
     [self.tableView setEditing:!self.tableView.editing];
     [self.delegate editingTable:self.tableView.editing];
+    [self.editButton setHighlighted:![self.editButton isHighlighted]];
+    
     
     
 }
@@ -243,12 +250,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if(!isQuickAdding)
     {
-        NSUInteger page = indexPath.row + 1;
-        [self.delegate didSelectPage:page];
-        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+        if (!self.tableView.editing) 
+        {
+            NSUInteger page = indexPath.row + 1;
+            [self.delegate didSelectPage:page];
+            
+        }
+        else if (indexPath.row == [self.bets count])
+        {
+            NSUInteger page = indexPath.row + 1;
+            [self.delegate didSelectPage:page];
+            ; 
+            
+        }
+        
     }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];    
+    
     
 }
 
@@ -420,6 +442,19 @@
     
 }
 
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if(textView.tag == 1)
+    {
+    if (range.length > 2 || range.location > 2)
+        return NO;
+    else 
+        return YES;
+    }
+    
+    return YES;
+}
+
 
 #pragma mark - Quick Add Functions
 
@@ -498,6 +533,11 @@
         
         NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
         self.bets = [self.opponent.bets sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
+        
+        if ([self.bets count] > 0) 
+        {
+            self.editButton.alpha = 1.0f;
+        }
         
         [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.bets count] -1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];

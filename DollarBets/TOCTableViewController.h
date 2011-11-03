@@ -62,6 +62,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UITextView *amountTextView;
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
 @property (strong, nonatomic) IBOutlet UILabel *amountLabel;
 
 @property (strong, nonatomic) IBOutlet UIButton *homeButton;

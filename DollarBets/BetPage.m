@@ -315,6 +315,20 @@
 }
 
 
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if(textView.tag == 1)
+    {
+        if (range.length > 2 || range.location > 2)
+            return NO;
+        else 
+            return YES;
+    }
+    
+    return YES;
+}
+
+
 #pragma mark - UIGesture Delegate Functions
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch

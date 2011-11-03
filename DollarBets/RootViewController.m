@@ -100,6 +100,7 @@
 
 -(void)didSelectPage:(int)index
 {
+    [self.pageViewController disablePageViewGestures:NO];
     [self flipToPage:index animated:YES forward:YES];
 }
 
@@ -318,7 +319,7 @@
         [self dismissModalViewControllerAnimated:YES];
     } ];
     
-    NSString *tweetString = [NSString stringWithFormat:@"%@ bet me $%@ that:%@",onPage.bet.opponent.name , [onPage.bet.amount stringValue],onPage.bet.report] ;
+    NSString *tweetString = [NSString stringWithFormat:@"%@ bet me $%@ that: %@",onPage.bet.opponent.name , [onPage.bet.amount stringValue],onPage.bet.report] ;
     if([tweetString length] > 160)
     {
         NSRange range = NSMakeRange(0, 160);
@@ -463,7 +464,9 @@
 
 -(void)closeBook
 {
+ 
     topBook.view.frame = CGRectMake(0, 0, 320, 460);
+    [topBook refreshFrontView];
     NSArray *viewControllers = [NSArray arrayWithObject:self.topBook];
     
     /* staying away from retain cycles */

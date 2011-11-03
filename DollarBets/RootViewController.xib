@@ -288,7 +288,7 @@
 								<reference key="IBUINormalTitleShadowColor" ref="961959719"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">yesGreenButton.png</string>
+									<string key="NSResourceName">yesButton.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="1054725613"/>
 								<reference key="IBUIFont" ref="513016964"/>
@@ -313,7 +313,7 @@
 								<reference key="IBUINormalTitleShadowColor" ref="961959719"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">noRedButton.png</string>
+									<string key="NSResourceName">noButton.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="1054725613"/>
 								<reference key="IBUIFont" ref="513016964"/>
@@ -324,6 +324,7 @@
 								<string key="NSFrame">{{21, 161}, {278, 46}}</string>
 								<reference key="NSSuperview" ref="30299098"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:225</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<int key="IBUITag">2</int>
@@ -338,7 +339,7 @@
 								<reference key="IBUINormalTitleShadowColor" ref="961959719"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">undecidedGrayButton.png</string>
+									<string key="NSResourceName">undecidedButton.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="1054725613"/>
 								<reference key="IBUIFont" ref="513016964"/>
@@ -896,25 +897,25 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>chooseNewButton.png</string>
 				<string>chooseNewButtonPressed.png</string>
-				<string>noRedButton.png</string>
+				<string>noButton.png</string>
 				<string>poloroidBig.png</string>
 				<string>remove.png</string>
 				<string>ribbon.png</string>
 				<string>rootBookBackround.png</string>
-				<string>undecidedGrayButton.png</string>
-				<string>yesGreenButton.png</string>
+				<string>undecidedButton.png</string>
+				<string>yesButton.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{155, 29}</string>
 				<string>{155, 29}</string>
-				<string>{278, 46}</string>
+				<string>{279, 46}</string>
 				<string>{186, 213}</string>
 				<string>{29, 29}</string>
 				<string>{27, 22}</string>
 				<string>{320, 460}</string>
-				<string>{278, 46}</string>
-				<string>{278, 46}</string>
+				<string>{279, 46}</string>
+				<string>{279, 46}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">933</string>
