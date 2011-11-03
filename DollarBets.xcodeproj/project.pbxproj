@@ -104,7 +104,6 @@
 		FAB06B8814439DDC00F81678 /* poloroidBetPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5414439DDC00F81678 /* poloroidBetPage@2x.png */; };
 		FAB06B8D14439DDC00F81678 /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5914439DDC00F81678 /* rightArrow.png */; };
 		FAB06B8E14439DDC00F81678 /* rightArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5A14439DDC00F81678 /* rightArrow@2x.png */; };
-		FAB06B8F14439DDC00F81678 /* saveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5B14439DDC00F81678 /* saveButton.png */; };
 		FAB06B9014439DDC00F81678 /* saveButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5C14439DDC00F81678 /* saveButton@2x.png */; };
 		FAB06B9114439DDC00F81678 /* saveButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5D14439DDC00F81678 /* saveButtonPressed.png */; };
 		FAB06B9214439DDC00F81678 /* saveButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5E14439DDC00F81678 /* saveButtonPressed@2x.png */; };
@@ -259,7 +258,6 @@
 		FAB06B5814439DDC00F81678 /* ribbon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ribbon.png; sourceTree = "<group>"; };
 		FAB06B5914439DDC00F81678 /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightArrow.png; sourceTree = "<group>"; };
 		FAB06B5A14439DDC00F81678 /* rightArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rightArrow@2x.png"; sourceTree = "<group>"; };
-		FAB06B5B14439DDC00F81678 /* saveButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saveButton.png; sourceTree = "<group>"; };
 		FAB06B5C14439DDC00F81678 /* saveButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "saveButton@2x.png"; sourceTree = "<group>"; };
 		FAB06B5D14439DDC00F81678 /* saveButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saveButtonPressed.png; sourceTree = "<group>"; };
 		FAB06B5E14439DDC00F81678 /* saveButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "saveButtonPressed@2x.png"; sourceTree = "<group>"; };
@@ -533,7 +531,6 @@
 				FACD752A144D22E800384AFF /* roughLine.png */,
 				FAB06B5914439DDC00F81678 /* rightArrow.png */,
 				FAB06B5A14439DDC00F81678 /* rightArrow@2x.png */,
-				FAB06B5B14439DDC00F81678 /* saveButton.png */,
 				FAB06B5C14439DDC00F81678 /* saveButton@2x.png */,
 				FAB06B5D14439DDC00F81678 /* saveButtonPressed.png */,
 				FAB06B5E14439DDC00F81678 /* saveButtonPressed@2x.png */,
@@ -771,7 +768,6 @@
 				FAB06B8814439DDC00F81678 /* poloroidBetPage@2x.png in Resources */,
 				FAB06B8D14439DDC00F81678 /* rightArrow.png in Resources */,
 				FAB06B8E14439DDC00F81678 /* rightArrow@2x.png in Resources */,
-				FAB06B8F14439DDC00F81678 /* saveButton.png in Resources */,
 				FAB06B9014439DDC00F81678 /* saveButton@2x.png in Resources */,
 				FAB06B9114439DDC00F81678 /* saveButtonPressed.png in Resources */,
 				FAB06B9214439DDC00F81678 /* saveButtonPressed@2x.png in Resources */,
