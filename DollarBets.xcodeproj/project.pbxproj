@@ -133,6 +133,7 @@
 		FACD752E144D25EE00384AFF /* RKPaperView.m in Sources */ = {isa = PBXBuildFile; fileRef = FACD752D144D25EE00384AFF /* RKPaperView.m */; };
 		FADC500214181A08008F8C4E /* TOCBetsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */; };
 		FADD150B1459DB6400E63F7F /* IpadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FADD150A1459DB6400E63F7F /* IpadIcon.png */; };
+		FAFED812146310AD00060246 /* saveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAFED811146310AD00060246 /* saveButton.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -297,6 +298,7 @@
 		FADC500014181A07008F8C4E /* TOCBetsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCBetsTableViewCell.h; sourceTree = "<group>"; };
 		FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCBetsTableViewCell.m; sourceTree = "<group>"; };
 		FADD150A1459DB6400E63F7F /* IpadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IpadIcon.png; path = ../IpadIcon.png; sourceTree = "<group>"; };
+		FAFED811146310AD00060246 /* saveButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saveButton.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -531,6 +533,7 @@
 				FACD752A144D22E800384AFF /* roughLine.png */,
 				FAB06B5914439DDC00F81678 /* rightArrow.png */,
 				FAB06B5A14439DDC00F81678 /* rightArrow@2x.png */,
+				FAFED811146310AD00060246 /* saveButton.png */,
 				FAB06B5C14439DDC00F81678 /* saveButton@2x.png */,
 				FAB06B5D14439DDC00F81678 /* saveButtonPressed.png */,
 				FAB06B5E14439DDC00F81678 /* saveButtonPressed@2x.png */,
@@ -825,6 +828,7 @@
 				FAA6FEF41459D127005BDAC3 /* noButton@2x.png in Resources */,
 				FAA6FEF51459D127005BDAC3 /* undecidedButton@2x.png in Resources */,
 				FADD150B1459DB6400E63F7F /* IpadIcon.png in Resources */,
+				FAFED812146310AD00060246 /* saveButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
