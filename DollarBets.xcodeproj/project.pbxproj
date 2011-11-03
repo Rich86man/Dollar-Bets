@@ -298,7 +298,7 @@
 		FACD752D144D25EE00384AFF /* RKPaperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKPaperView.m; sourceTree = "<group>"; };
 		FADC500014181A07008F8C4E /* TOCBetsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCBetsTableViewCell.h; sourceTree = "<group>"; };
 		FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOCBetsTableViewCell.m; sourceTree = "<group>"; };
-		FADD150A1459DB6400E63F7F /* IpadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IpadIcon.png; sourceTree = "<group>"; };
+		FADD150A1459DB6400E63F7F /* IpadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IpadIcon.png; path = ../IpadIcon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -416,7 +416,6 @@
 		FA45BA111401E66E00C02A78 = {
 			isa = PBXGroup;
 			children = (
-				FADD150A1459DB6400E63F7F /* IpadIcon.png */,
 				FA45BA261401E66E00C02A78 /* DollarBets */,
 				FA45BA1F1401E66E00C02A78 /* Frameworks */,
 				FA45BA1D1401E66E00C02A78 /* Products */,
@@ -459,6 +458,7 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FADD150A1459DB6400E63F7F /* IpadIcon.png */,
 				FAA6FEE21459CB76005BDAC3 /* TOCeditButton.png */,
 				FAA6FEE31459CB76005BDAC3 /* TOCeditButton@2x.png */,
 				FAA6FEE41459CB77005BDAC3 /* TOCeditButtonSelected.png */,
