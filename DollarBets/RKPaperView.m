@@ -52,7 +52,7 @@
  CGContextStrokePath(context);
  
  
- /*
+ 
  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
  CGFloat locations[] = { 0.0, 1.0 };
  
@@ -73,7 +73,7 @@
  
  CGGradientRelease(gradient);
  CGColorSpaceRelease(colorSpace);
- */
+ 
  }
  
 

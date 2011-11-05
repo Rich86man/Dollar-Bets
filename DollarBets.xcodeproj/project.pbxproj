@@ -30,7 +30,6 @@
 		FA215D78143D26CB001919C4 /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D76143D26CA001919C4 /* remove.png */; };
 		FA215D89143D44DC001919C4 /* ModalImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA215D87143D44DC001919C4 /* ModalImageViewController.m */; };
 		FA215D8A143D44DC001919C4 /* ModalImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA215D88143D44DC001919C4 /* ModalImageViewController.xib */; };
-		FA215D8C143D46B4001919C4 /* tweetIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D8B143D46B3001919C4 /* tweetIcon.png */; };
 		FA2486F214083E1C00AC31BE /* BookFrontView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2486F114083E1C00AC31BE /* BookFrontView.m */; };
 		FA2603A0143A1D6600437D55 /* poloroidIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FA26039D143A1D6600437D55 /* poloroidIcon.png */; };
 		FA3827531455BD5F00D19669 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA3827521455BD5F00D19669 /* icon@2x.png */; };
@@ -96,10 +95,8 @@
 		FAB06B7A14439DDC00F81678 /* editPageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4614439DDB00F81678 /* editPageButton@2x.png */; };
 		FAB06B7B14439DDC00F81678 /* homeRibbon.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4714439DDC00F81678 /* homeRibbon.png */; };
 		FAB06B7C14439DDC00F81678 /* homeRibbon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4814439DDC00F81678 /* homeRibbon@2x.png */; };
-		FAB06B7D14439DDC00F81678 /* leather_1.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4914439DDC00F81678 /* leather_1.png */; };
 		FAB06B7E14439DDC00F81678 /* leftArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4A14439DDC00F81678 /* leftArrow.png */; };
 		FAB06B7F14439DDC00F81678 /* leftArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4B14439DDC00F81678 /* leftArrow@2x.png */; };
-		FAB06B8014439DDC00F81678 /* locToolbarIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B4C14439DDC00F81678 /* locToolbarIcon.png */; };
 		FAB06B8714439DDC00F81678 /* poloroidBetPage.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5314439DDC00F81678 /* poloroidBetPage.png */; };
 		FAB06B8814439DDC00F81678 /* poloroidBetPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5414439DDC00F81678 /* poloroidBetPage@2x.png */; };
 		FAB06B8D14439DDC00F81678 /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB06B5914439DDC00F81678 /* rightArrow.png */; };
@@ -119,9 +116,7 @@
 		FAB2E3CE143D735E00066844 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB2E3CD143D735E00066844 /* Twitter.framework */; };
 		FAB474DA14194E730000075F /* BetPage.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB474D814194E730000075F /* BetPage.m */; };
 		FAB474DB14194E730000075F /* BetPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB474D914194E730000075F /* BetPage.xib */; };
-		FAB474E6141A88710000075F /* paperTop.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB474E5141A88710000075F /* paperTop.png */; };
 		FAB9D59014047943000F4FC0 /* Opponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB9D58F14047943000F4FC0 /* Opponent.m */; };
-		FABD4601140FFF9D00A0683A /* beige_paper.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FB140FFF9D00A0683A /* beige_paper.png */; };
 		FABD4605140FFF9D00A0683A /* padded.png in Resources */ = {isa = PBXBuildFile; fileRef = FABD45FF140FFF9D00A0683A /* padded.png */; };
 		FAC5BF7A1452047B00813FFF /* rootBookBackround.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC5BF781452047A00813FFF /* rootBookBackround.png */; };
 		FAC5BF7B1452047B00813FFF /* rootBookBackround@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC5BF791452047A00813FFF /* rootBookBackround@2x.png */; };
@@ -167,11 +162,9 @@
 		FA215D86143D44DC001919C4 /* ModalImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalImageViewController.h; sourceTree = "<group>"; };
 		FA215D87143D44DC001919C4 /* ModalImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalImageViewController.m; sourceTree = "<group>"; };
 		FA215D88143D44DC001919C4 /* ModalImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModalImageViewController.xib; sourceTree = "<group>"; };
-		FA215D8B143D46B3001919C4 /* tweetIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tweetIcon.png; sourceTree = "<group>"; };
 		FA2486F014083E1C00AC31BE /* BookFrontView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookFrontView.h; sourceTree = "<group>"; };
 		FA2486F114083E1C00AC31BE /* BookFrontView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookFrontView.m; sourceTree = "<group>"; };
 		FA26039D143A1D6600437D55 /* poloroidIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poloroidIcon.png; sourceTree = "<group>"; };
-		FA2603AE143A40D800437D55 /* locToolbarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locToolbarIcon.png; sourceTree = "<group>"; };
 		FA3827521455BD5F00D19669 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		FA3827541455BE3800D19669 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		FA3827561455CCD900D19669 /* winsAmountTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = winsAmountTab.png; sourceTree = "<group>"; };
@@ -182,7 +175,6 @@
 		FA38275F1455CF3B00D19669 /* lossesAmountTabFlipped@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lossesAmountTabFlipped@2x.png"; sourceTree = "<group>"; };
 		FA3827621455CF4300D19669 /* winsAmountTabFilpped.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = winsAmountTabFilpped.png; sourceTree = "<group>"; };
 		FA3827631455CF4400D19669 /* winsAmountTabFlipped@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "winsAmountTabFlipped@2x.png"; sourceTree = "<group>"; };
-		FA399B3C14117E04003548BF /* black_denim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black_denim.png; sourceTree = "<group>"; };
 		FA437B7B14046EBC00CD43EF /* Bet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bet.h; sourceTree = "<group>"; };
 		FA437B7C14046EBC00CD43EF /* Bet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bet.m; sourceTree = "<group>"; };
 		FA45BA1C1401E66E00C02A78 /* DollarBets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DollarBets.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,10 +238,8 @@
 		FAB06B4614439DDB00F81678 /* editPageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editPageButton@2x.png"; sourceTree = "<group>"; };
 		FAB06B4714439DDC00F81678 /* homeRibbon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeRibbon.png; sourceTree = "<group>"; };
 		FAB06B4814439DDC00F81678 /* homeRibbon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeRibbon@2x.png"; sourceTree = "<group>"; };
-		FAB06B4914439DDC00F81678 /* leather_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leather_1.png; sourceTree = "<group>"; };
 		FAB06B4A14439DDC00F81678 /* leftArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftArrow.png; sourceTree = "<group>"; };
 		FAB06B4B14439DDC00F81678 /* leftArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leftArrow@2x.png"; sourceTree = "<group>"; };
-		FAB06B4C14439DDC00F81678 /* locToolbarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locToolbarIcon.png; sourceTree = "<group>"; };
 		FAB06B4E14439DDC00F81678 /* padded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = padded.png; sourceTree = "<group>"; };
 		FAB06B5314439DDC00F81678 /* poloroidBetPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poloroidBetPage.png; sourceTree = "<group>"; };
 		FAB06B5414439DDC00F81678 /* poloroidBetPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poloroidBetPage@2x.png"; sourceTree = "<group>"; };
@@ -264,7 +254,6 @@
 		FAB06B5E14439DDC00F81678 /* saveButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "saveButtonPressed@2x.png"; sourceTree = "<group>"; };
 		FAB06B5F14439DDC00F81678 /* tableOfContentsBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableOfContentsBackButton.png; sourceTree = "<group>"; };
 		FAB06B6014439DDC00F81678 /* tableOfContentsBackButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableOfContentsBackButton@2x.png"; sourceTree = "<group>"; };
-		FAB06B6114439DDC00F81678 /* tweetIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tweetIcon.png; sourceTree = "<group>"; };
 		FAB06B6214439DDC00F81678 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		FAB06B6314439DDC00F81678 /* twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter@2x.png"; sourceTree = "<group>"; };
 		FAB06B9A1443F58E00F81678 /* book@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "book@2x.png"; sourceTree = "<group>"; };
@@ -276,12 +265,8 @@
 		FAB474D714194E730000075F /* BetPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BetPage.h; sourceTree = "<group>"; };
 		FAB474D814194E730000075F /* BetPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BetPage.m; sourceTree = "<group>"; };
 		FAB474D914194E730000075F /* BetPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BetPage.xib; sourceTree = "<group>"; };
-		FAB474E5141A88710000075F /* paperTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paperTop.png; sourceTree = "<group>"; };
 		FAB9D58E14047943000F4FC0 /* Opponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Opponent.h; sourceTree = "<group>"; };
 		FAB9D58F14047943000F4FC0 /* Opponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Opponent.m; sourceTree = "<group>"; };
-		FABD45FB140FFF9D00A0683A /* beige_paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beige_paper.png; sourceTree = "<group>"; };
-		FABD45FC140FFF9D00A0683A /* black-Linen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black-Linen.png"; sourceTree = "<group>"; };
-		FABD45FE140FFF9D00A0683A /* leather_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leather_1.png; sourceTree = "<group>"; };
 		FABD45FF140FFF9D00A0683A /* padded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = padded.png; sourceTree = "<group>"; };
 		FAC5BF781452047A00813FFF /* rootBookBackround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rootBookBackround.png; sourceTree = "<group>"; };
 		FAC5BF791452047A00813FFF /* rootBookBackround@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rootBookBackround@2x.png"; sourceTree = "<group>"; };
@@ -290,7 +275,6 @@
 		FACD7517144CD20900384AFF /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		FACD751B144CE81300384AFF /* NSDate+RK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RK.h"; sourceTree = "<group>"; };
 		FACD751C144CE81300384AFF /* NSDate+RK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RK.m"; sourceTree = "<group>"; };
-		FACD7523144D09DE00384AFF /* paperTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paperTop.png; sourceTree = "<group>"; };
 		FACD7528144D188500384AFF /* handmadepaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = handmadepaper.png; sourceTree = "<group>"; };
 		FACD752A144D22E800384AFF /* roughLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = roughLine.png; sourceTree = "<group>"; };
 		FACD752C144D25EE00384AFF /* RKPaperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPaperView.h; sourceTree = "<group>"; };
@@ -458,98 +442,7 @@
 		FA45BA271401E66E00C02A78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FADD150A1459DB6400E63F7F /* IpadIcon.png */,
-				FAA6FEE21459CB76005BDAC3 /* TOCeditButton.png */,
-				FAA6FEE31459CB76005BDAC3 /* TOCeditButton@2x.png */,
-				FAA6FEE41459CB77005BDAC3 /* TOCeditButtonSelected.png */,
-				FAA6FEE51459CB77005BDAC3 /* TOCeditButtonSelected@2x.png */,
-				FA3827621455CF4300D19669 /* winsAmountTabFilpped.png */,
-				FA3827631455CF4400D19669 /* winsAmountTabFlipped@2x.png */,
-				FA38275E1455CF3B00D19669 /* lossesAmountTabFlipped.png */,
-				FA38275F1455CF3B00D19669 /* lossesAmountTabFlipped@2x.png */,
-				FA38275A1455CCE400D19669 /* lossesAmountTab.png */,
-				FA38275B1455CCE400D19669 /* lossesAmountTab@2x.png */,
-				FA3827561455CCD900D19669 /* winsAmountTab.png */,
-				FA3827571455CCD900D19669 /* winsAmountTab@2x.png */,
-				FA3827541455BE3800D19669 /* icon.png */,
-				FA3827521455BD5F00D19669 /* icon@2x.png */,
-				FA45CC5C14536DC70090C217 /* paperPlusSign.png */,
-				FA45CC5D14536DC70090C217 /* paperPlusSign@2x.png */,
-				FAC5BF781452047A00813FFF /* rootBookBackround.png */,
-				FAC5BF791452047A00813FFF /* rootBookBackround@2x.png */,
-				FA7FCFEC1450C3E800489541 /* changeNameButton.png */,
-				FA7FCFED1450C3E800489541 /* changeNameButton@2x.png */,
-				FAAC983E1449F77600AD3CC5 /* betNavBar.png */,
-				FAAC98411449F79800AD3CC5 /* betNavBar@2x.png */,
-				FA0D32D61444DDC900E4755C /* Slider Page Control  */,
-				FAB06B3014439DDB00F81678 /* black_denim.png */,
-				FAB06B3114439DDB00F81678 /* black-Linen.png */,
-				FAB06B3214439DDB00F81678 /* book.png */,
-				FAB06B9A1443F58E00F81678 /* book@2x.png */,
-				FAB06B3414439DDB00F81678 /* bookBack.png */,
-				FAB06B3514439DDB00F81678 /* bookBack@2x.png */,
-				FAB06B3614439DDB00F81678 /* bookBackButton.png */,
-				FAB06B3714439DDB00F81678 /* bookBackButton@2x.png */,
-				FAB06B3814439DDB00F81678 /* bookBackPressed.png */,
-				FAB06B3914439DDB00F81678 /* bookBackPressed@2x.png */,
-				FAB06B3A14439DDB00F81678 /* bookWithRibbon.png */,
-				FAB06B3B14439DDB00F81678 /* bookWithRibbon@2x.png */,
-				FAB06B9C1443FA8300F81678 /* chooseNewButton.png */,
-				FAB06B9D1443FA8400F81678 /* chooseNewButton@2x.png */,
-				FAB06B9E1443FA8600F81678 /* chooseNewButtonPressed.png */,
-				FAB06B9F1443FA8700F81678 /* chooseNewButtonPressed@2x.png */,
-				FAB06B3E14439DDB00F81678 /* crissXcross.png */,
-				FAB06B3F14439DDB00F81678 /* dateBackgroundLabel.png */,
-				FAB06B4014439DDB00F81678 /* dateBackgroundLabel@2x.png */,
-				FAB06B4114439DDB00F81678 /* deleteButton.png */,
-				FAB06B4214439DDB00F81678 /* deleteButton@2x.png */,
-				FAB06B4314439DDB00F81678 /* deleteButtonPressed.png */,
-				FAB06B4414439DDB00F81678 /* deleteButtonPressed@2x.png */,
-				FA0D32B61444BD6B00E4755C /* deleteDoubleCheckButton.png */,
-				FA0D32B71444BD6B00E4755C /* deleteDoubleCheckButton@2x.png */,
-				FA0D32B21444BD5E00E4755C /* deleteDoubleCheckButtonSelected.png */,
-				FA0D32B31444BD5E00E4755C /* deleteDoubleCheckButtonSelected@2x.png */,
-				FAB06B4514439DDB00F81678 /* editPageButton.png */,
-				FAB06B4614439DDB00F81678 /* editPageButton@2x.png */,
-				FAB06B4714439DDC00F81678 /* homeRibbon.png */,
-				FAB06B4814439DDC00F81678 /* homeRibbon@2x.png */,
-				FAB06B4914439DDC00F81678 /* leather_1.png */,
-				FAB06B4A14439DDC00F81678 /* leftArrow.png */,
-				FAB06B4B14439DDC00F81678 /* leftArrow@2x.png */,
-				FAB06B4C14439DDC00F81678 /* locToolbarIcon.png */,
-				FAB06B4E14439DDC00F81678 /* padded.png */,
-				FACD7523144D09DE00384AFF /* paperTop.png */,
-				FA0D32DC1444EAB300E4755C /* paperTop@2x.png */,
-				FA0D32C21444CEFF00E4755C /* plusSign.png */,
-				FA0D32C31444CEFF00E4755C /* plusSign@2x.png */,
-				FAB06B5314439DDC00F81678 /* poloroidBetPage.png */,
-				FAB06B5414439DDC00F81678 /* poloroidBetPage@2x.png */,
-				FAB06B5514439DDC00F81678 /* poloroidBig.png */,
-				FAB06B5614439DDC00F81678 /* poloroidIcon.png */,
-				FA0D32BE1444C56300E4755C /* popOver.png */,
-				FA0D32BF1444C56300E4755C /* popOver@2x.png */,
-				FAB06B5714439DDC00F81678 /* remove.png */,
-				FAB06B5814439DDC00F81678 /* ribbon.png */,
-				FACD752A144D22E800384AFF /* roughLine.png */,
-				FAB06B5914439DDC00F81678 /* rightArrow.png */,
-				FAB06B5A14439DDC00F81678 /* rightArrow@2x.png */,
-				FAFED811146310AD00060246 /* saveButton.png */,
-				FAB06B5C14439DDC00F81678 /* saveButton@2x.png */,
-				FAB06B5D14439DDC00F81678 /* saveButtonPressed.png */,
-				FAB06B5E14439DDC00F81678 /* saveButtonPressed@2x.png */,
-				FAB06B5F14439DDC00F81678 /* tableOfContentsBackButton.png */,
-				FAB06B6014439DDC00F81678 /* tableOfContentsBackButton@2x.png */,
-				FAB06B6114439DDC00F81678 /* tweetIcon.png */,
-				FAB06B6214439DDC00F81678 /* twitter.png */,
-				FAB06B6314439DDC00F81678 /* twitter@2x.png */,
-				FAB06B2D14439DB900F81678 /* book.png */,
-				FA59C3BD14439C5B00C7DD7E /* Images */,
-				FA9100781440C37200B1C2A4 /* Book Views */,
-				FA9100761440C35200B1C2A4 /* Buttons */,
-				FA215D75143D26C9001919C4 /* poloroidBig.png */,
-				FA215D6C143CC761001919C4 /* ribbon.png */,
-				FA2603AE143A40D800437D55 /* locToolbarIcon.png */,
-				FABD45F8140FFF6700A0683A /* testpatterns */,
+				FABF09F61465C67300D582C1 /* Images */,
 				FA45BA321401E66E00C02A78 /* DollarBets.xcdatamodeld */,
 				FA45BA281401E66E00C02A78 /* DollarBets-Info.plist */,
 				FA45BA291401E66E00C02A78 /* InfoPlist.strings */,
@@ -569,13 +462,6 @@
 				FADC500114181A08008F8C4E /* TOCBetsTableViewCell.m */,
 			);
 			name = "Table Of Contents";
-			sourceTree = "<group>";
-		};
-		FA59C3BD14439C5B00C7DD7E /* Images */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Images;
 			sourceTree = "<group>";
 		};
 		FA6ADA2B1402A983007E6CB1 /* MainScreen */ = {
@@ -599,16 +485,8 @@
 				FAA6FEEF1459D127005BDAC3 /* undecidedButton@2x.png */,
 				FA26039D143A1D6600437D55 /* poloroidIcon.png */,
 				FA215D76143D26CA001919C4 /* remove.png */,
-				FA215D8B143D46B3001919C4 /* tweetIcon.png */,
 			);
 			name = Buttons;
-			sourceTree = "<group>";
-		};
-		FA9100781440C37200B1C2A4 /* Book Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Book Views";
 			sourceTree = "<group>";
 		};
 		FAB474D614194E4D0000075F /* Bet Page */ = {
@@ -621,19 +499,123 @@
 			name = "Bet Page";
 			sourceTree = "<group>";
 		};
-		FABD45F8140FFF6700A0683A /* testpatterns */ = {
+		FABD45F8140FFF6700A0683A /* patterns */ = {
 			isa = PBXGroup;
 			children = (
+				FAB06B3014439DDB00F81678 /* black_denim.png */,
+				FAB06B3114439DDB00F81678 /* black-Linen.png */,
 				FACD7528144D188500384AFF /* handmadepaper.png */,
 				FA215D79143D286A001919C4 /* crissXcross.png */,
-				FA399B3C14117E04003548BF /* black_denim.png */,
-				FAB474E5141A88710000075F /* paperTop.png */,
-				FABD45FB140FFF9D00A0683A /* beige_paper.png */,
-				FABD45FC140FFF9D00A0683A /* black-Linen.png */,
-				FABD45FE140FFF9D00A0683A /* leather_1.png */,
 				FABD45FF140FFF9D00A0683A /* padded.png */,
 			);
-			name = testpatterns;
+			name = patterns;
+			sourceTree = "<group>";
+		};
+		FABF09F01465BF8100D582C1 /* FXLabel */ = {
+			isa = PBXGroup;
+			children = (
+				FA83BA6A144F6CBD00558DD4 /* FXLabel.h */,
+				FA83BA6B144F6CBD00558DD4 /* FXLabel.m */,
+			);
+			name = FXLabel;
+			sourceTree = "<group>";
+		};
+		FABF09F11465C55C00D582C1 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				FA3827541455BE3800D19669 /* icon.png */,
+				FA3827521455BD5F00D19669 /* icon@2x.png */,
+				FADD150A1459DB6400E63F7F /* IpadIcon.png */,
+			);
+			name = icons;
+			sourceTree = "<group>";
+		};
+		FABF09F61465C67300D582C1 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				FAB06B6314439DDC00F81678 /* twitter@2x.png */,
+				FAB06B2D14439DB900F81678 /* book.png */,
+				FA9100761440C35200B1C2A4 /* Buttons */,
+				FA215D75143D26C9001919C4 /* poloroidBig.png */,
+				FA215D6C143CC761001919C4 /* ribbon.png */,
+				FABD45F8140FFF6700A0683A /* patterns */,
+				FAB06B5414439DDC00F81678 /* poloroidBetPage@2x.png */,
+				FAB06B5514439DDC00F81678 /* poloroidBig.png */,
+				FAB06B5614439DDC00F81678 /* poloroidIcon.png */,
+				FA0D32BE1444C56300E4755C /* popOver.png */,
+				FA0D32BF1444C56300E4755C /* popOver@2x.png */,
+				FAB06B5714439DDC00F81678 /* remove.png */,
+				FAB06B5814439DDC00F81678 /* ribbon.png */,
+				FACD752A144D22E800384AFF /* roughLine.png */,
+				FAB06B5914439DDC00F81678 /* rightArrow.png */,
+				FAB06B5A14439DDC00F81678 /* rightArrow@2x.png */,
+				FAFED811146310AD00060246 /* saveButton.png */,
+				FAB06B5C14439DDC00F81678 /* saveButton@2x.png */,
+				FAB06B5D14439DDC00F81678 /* saveButtonPressed.png */,
+				FAB06B5E14439DDC00F81678 /* saveButtonPressed@2x.png */,
+				FAB06B5F14439DDC00F81678 /* tableOfContentsBackButton.png */,
+				FAB06B6014439DDC00F81678 /* tableOfContentsBackButton@2x.png */,
+				FAB06B6214439DDC00F81678 /* twitter.png */,
+				FAB06B4214439DDB00F81678 /* deleteButton@2x.png */,
+				FAB06B4314439DDB00F81678 /* deleteButtonPressed.png */,
+				FAB06B4414439DDB00F81678 /* deleteButtonPressed@2x.png */,
+				FA0D32B61444BD6B00E4755C /* deleteDoubleCheckButton.png */,
+				FA0D32B71444BD6B00E4755C /* deleteDoubleCheckButton@2x.png */,
+				FA0D32B21444BD5E00E4755C /* deleteDoubleCheckButtonSelected.png */,
+				FA0D32B31444BD5E00E4755C /* deleteDoubleCheckButtonSelected@2x.png */,
+				FAB06B4514439DDB00F81678 /* editPageButton.png */,
+				FAB06B4614439DDB00F81678 /* editPageButton@2x.png */,
+				FAB06B4714439DDC00F81678 /* homeRibbon.png */,
+				FAB06B4814439DDC00F81678 /* homeRibbon@2x.png */,
+				FAB06B4A14439DDC00F81678 /* leftArrow.png */,
+				FAB06B4B14439DDC00F81678 /* leftArrow@2x.png */,
+				FAB06B4E14439DDC00F81678 /* padded.png */,
+				FA0D32DC1444EAB300E4755C /* paperTop@2x.png */,
+				FA0D32C21444CEFF00E4755C /* plusSign.png */,
+				FA0D32C31444CEFF00E4755C /* plusSign@2x.png */,
+				FAB06B5314439DDC00F81678 /* poloroidBetPage.png */,
+				FA0D32D61444DDC900E4755C /* Slider Page Control  */,
+				FAB06B3214439DDB00F81678 /* book.png */,
+				FAB06B9A1443F58E00F81678 /* book@2x.png */,
+				FAB06B3414439DDB00F81678 /* bookBack.png */,
+				FAB06B3514439DDB00F81678 /* bookBack@2x.png */,
+				FAB06B3614439DDB00F81678 /* bookBackButton.png */,
+				FAB06B3714439DDB00F81678 /* bookBackButton@2x.png */,
+				FAB06B3814439DDB00F81678 /* bookBackPressed.png */,
+				FAB06B3914439DDB00F81678 /* bookBackPressed@2x.png */,
+				FAB06B3A14439DDB00F81678 /* bookWithRibbon.png */,
+				FAB06B3B14439DDB00F81678 /* bookWithRibbon@2x.png */,
+				FAB06B9C1443FA8300F81678 /* chooseNewButton.png */,
+				FAB06B9D1443FA8400F81678 /* chooseNewButton@2x.png */,
+				FAB06B9E1443FA8600F81678 /* chooseNewButtonPressed.png */,
+				FAB06B9F1443FA8700F81678 /* chooseNewButtonPressed@2x.png */,
+				FAB06B3E14439DDB00F81678 /* crissXcross.png */,
+				FAB06B3F14439DDB00F81678 /* dateBackgroundLabel.png */,
+				FAB06B4014439DDB00F81678 /* dateBackgroundLabel@2x.png */,
+				FAB06B4114439DDB00F81678 /* deleteButton.png */,
+				FA45CC5C14536DC70090C217 /* paperPlusSign.png */,
+				FA45CC5D14536DC70090C217 /* paperPlusSign@2x.png */,
+				FAC5BF781452047A00813FFF /* rootBookBackround.png */,
+				FAC5BF791452047A00813FFF /* rootBookBackround@2x.png */,
+				FA7FCFEC1450C3E800489541 /* changeNameButton.png */,
+				FA7FCFED1450C3E800489541 /* changeNameButton@2x.png */,
+				FAAC983E1449F77600AD3CC5 /* betNavBar.png */,
+				FAAC98411449F79800AD3CC5 /* betNavBar@2x.png */,
+				FABF09F11465C55C00D582C1 /* icons */,
+				FAA6FEE21459CB76005BDAC3 /* TOCeditButton.png */,
+				FAA6FEE31459CB76005BDAC3 /* TOCeditButton@2x.png */,
+				FAA6FEE41459CB77005BDAC3 /* TOCeditButtonSelected.png */,
+				FAA6FEE51459CB77005BDAC3 /* TOCeditButtonSelected@2x.png */,
+				FA3827621455CF4300D19669 /* winsAmountTabFilpped.png */,
+				FA3827631455CF4400D19669 /* winsAmountTabFlipped@2x.png */,
+				FA38275E1455CF3B00D19669 /* lossesAmountTabFlipped.png */,
+				FA38275F1455CF3B00D19669 /* lossesAmountTabFlipped@2x.png */,
+				FA38275A1455CCE400D19669 /* lossesAmountTab.png */,
+				FA38275B1455CCE400D19669 /* lossesAmountTab@2x.png */,
+				FA3827561455CCD900D19669 /* winsAmountTab.png */,
+				FA3827571455CCD900D19669 /* winsAmountTab@2x.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 		FACD7519144CE43B00384AFF /* RKPageViewController */ = {
@@ -648,8 +630,7 @@
 		FACD751A144CE7BC00384AFF /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
-				FA83BA6A144F6CBD00558DD4 /* FXLabel.h */,
-				FA83BA6B144F6CBD00558DD4 /* FXLabel.m */,
+				FABF09F01465BF8100D582C1 /* FXLabel */,
 				FA215D85143D44B3001919C4 /* Modal ImageViewController */,
 				FA437B8114046ED200CD43EF /* Managed Objects */,
 				FA0D32CD1444D90600E4755C /* SliderPageController */,
@@ -730,17 +711,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA45BA2B1401E66E00C02A78 /* InfoPlist.strings in Resources */,
-				FABD4601140FFF9D00A0683A /* beige_paper.png in Resources */,
 				FABD4605140FFF9D00A0683A /* padded.png in Resources */,
 				FA4D38891413FAEE003064BC /* TOCTableViewController.xib in Resources */,
 				FAB474DB14194E730000075F /* BetPage.xib in Resources */,
-				FAB474E6141A88710000075F /* paperTop.png in Resources */,
 				FA2603A0143A1D6600437D55 /* poloroidIcon.png in Resources */,
 				FA215D6D143CC761001919C4 /* ribbon.png in Resources */,
 				FA215D77143D26CB001919C4 /* poloroidBig.png in Resources */,
 				FA215D78143D26CB001919C4 /* remove.png in Resources */,
 				FA215D8A143D44DC001919C4 /* ModalImageViewController.xib in Resources */,
-				FA215D8C143D46B4001919C4 /* tweetIcon.png in Resources */,
 				FAB06B2E14439DB900F81678 /* book.png in Resources */,
 				FAB06B6414439DDC00F81678 /* black_denim.png in Resources */,
 				FAB06B6514439DDC00F81678 /* black-Linen.png in Resources */,
@@ -763,10 +741,8 @@
 				FAB06B7A14439DDC00F81678 /* editPageButton@2x.png in Resources */,
 				FAB06B7B14439DDC00F81678 /* homeRibbon.png in Resources */,
 				FAB06B7C14439DDC00F81678 /* homeRibbon@2x.png in Resources */,
-				FAB06B7D14439DDC00F81678 /* leather_1.png in Resources */,
 				FAB06B7E14439DDC00F81678 /* leftArrow.png in Resources */,
 				FAB06B7F14439DDC00F81678 /* leftArrow@2x.png in Resources */,
-				FAB06B8014439DDC00F81678 /* locToolbarIcon.png in Resources */,
 				FAB06B8714439DDC00F81678 /* poloroidBetPage.png in Resources */,
 				FAB06B8814439DDC00F81678 /* poloroidBetPage@2x.png in Resources */,
 				FAB06B8D14439DDC00F81678 /* rightArrow.png in Resources */,
@@ -897,7 +873,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -909,15 +885,16 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -930,7 +907,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DollarBets/DollarBets-Prefix.pch";
 				INFOPLIST_FILE = "DollarBets/DollarBets-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -945,6 +924,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DollarBets/DollarBets-Prefix.pch";
 				INFOPLIST_FILE = "DollarBets/DollarBets-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB48AD20-8246-406E-BE64-BD2AC628BC34";
