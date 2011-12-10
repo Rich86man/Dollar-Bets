@@ -13,7 +13,7 @@
 #import "BookViewController.h"
 #import "RKPageViewController.h"
 
-@interface RootViewController : UIViewController <UINavigationControllerDelegate, UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, TOCTableViewControllerDelegate, BetPageControllerDelegate>
+@interface RootBookViewController : UIViewController <UINavigationControllerDelegate, UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, TOCTableViewControllerDelegate, BetPageControllerDelegate>
 {
     Opponent *opponent;
     BetPage *currentPageBeingEdited;

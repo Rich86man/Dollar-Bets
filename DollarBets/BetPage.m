@@ -9,20 +9,16 @@
 #import "BetPage.h"
 #import "Opponent.h"
 #import "Twitter/Twitter.h"
-#import "RootViewController.h"
-#import "AppDelegate.h"
+#import "RootBookViewController.h"
+#import "DollarBetsAppDelegate.h"
 #import "RKPaperView.h"
 
 #define DEFAULT_KEYBOARD_HEIGHT 214.0f
 #define KEYBOARD_ADDON_HEIGHT 44
-
 #define PAGE_BOTTOM_PADDING 20
 
 
-
 @interface BetPage(PrivateMethods)
--(void)setUpMap;
--(void)setUpDollars;
 -(void)showOverlay;
 -(void)hideOverlay:(NSInteger)duration;
 -(void)didTapPage;
@@ -165,9 +161,6 @@
 }
 
 
-
-
-
 - (void)viewDidUnload
 {
     [self setTitleLabel:nil];
@@ -228,9 +221,7 @@
 - (IBAction)photoButtonSelected:(id)sender 
 {
     if(editing)
-    {
         [self.delegate changeEditStateTo:2];
-    }
     else
         [self.delegate didSelectphoto:self];
 }
@@ -239,9 +230,7 @@
 - (IBAction)tweetButtonSelected:(id)sender 
 {
     if (!editing) 
-    {
         [self.delegate didSelectTweet:self];
-    }
     
 }
 

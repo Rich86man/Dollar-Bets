@@ -11,7 +11,7 @@
 
 @class DataViewController;
 
-@interface ModelController : NSObject <UIPageViewControllerDataSource>
+@interface BookModelController : NSObject <UIPageViewControllerDataSource>
 {
     Opponent *opponent;
     NSMutableArray *controllers;

@@ -11,7 +11,7 @@
 @class RootContainerViewController;
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface DollarBetsAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) RootContainerViewController *rootContainerViewController;

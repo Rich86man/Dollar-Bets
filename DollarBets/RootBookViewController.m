@@ -6,9 +6,9 @@
 //  Copyright (c) 2011 Home. All rights reserved.
 //
 
-#import "RootViewController.h"
+#import "RootBookViewController.h"
 
-#import "ModelController.h"
+#import "BookModelController.h"
 #import "TOCTableViewController.h"
 #import "ModalImageViewController.h"
 #import "BetPage.h"
@@ -23,14 +23,14 @@
 #define KEYBOARD_TOOLBAR_FRAME_DOWN CGRectMake(0,480,320,44);
 
 
-@interface RootViewController ()
-@property (readonly, strong, nonatomic) ModelController *modelController;
+@interface RootBookViewController ()
+@property (readonly, strong, nonatomic) BookModelController *modelController;
 
 -(void)setupPageViewController;
 -(void)changeEditStateTo:(int)state;
 @end
 
-@implementation RootViewController
+@implementation RootBookViewController
 @synthesize delegate;
 @synthesize topBook;
 @synthesize opponent;
@@ -80,20 +80,18 @@
     
 }
 
-- (ModelController *)modelController
+- (BookModelController *)modelController
 {
     /*
      Return the model controller object, creating it if necessary.
      In more complex implementations, the model controller may be passed to the view controller.
      */
     if (!_modelController) {
-        _modelController = [[ModelController alloc] initWithOpponent:self.opponent];
+        _modelController = [[BookModelController alloc] initWithOpponent:self.opponent];
         _modelController.rvc = self;
     }
     return _modelController;
 }
-
-
 
 
 #pragma mark - TOCTableViewController Delegate Functions
@@ -133,10 +131,13 @@
     [self changeEditStateTo:0];
 }
 
+
 -(void)editingTable:(BOOL)editing
 {
     [self.pageViewController disablePageViewGestures:editing];
 }
+
+
 #pragma mark - Custom Keyboard stuff
 
 - (void)viewWillAppear:(BOOL)animated 
@@ -349,25 +350,8 @@
     [self.pageViewController disablePageViewGestures:YES];
     
 }
-/*
- - (IBAction)betPageBackButtonPressed:(id)sender 
- {  
- [self hideBetPageOverlay:0.0];
- 
- }
- */
 
-/*
- - (IBAction)betPageEditButtonSelected:(id)sender 
- {
- self.choosePhotoImageView.image =  [UIImage imageWithData:self.currentPageBeingEdited.bet.picture];
- [self.pageViewController disablePageViewGestures:YES];
- [self.currentPageBeingEdited editButtonSelected];
- 
- }
- */
 
-#pragma mark -
 #pragma mark UIImagePickerControllerDelegate
 
 // this get called when an image has been chosen from the library or taken from the camera
@@ -480,6 +464,7 @@
                                              [bself.delegate closeBook:bself.topBook];
                                      }];
 }
+
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {

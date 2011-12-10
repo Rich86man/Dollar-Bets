@@ -26,13 +26,6 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 #pragma mark - View lifecycle
 
@@ -41,7 +34,7 @@
 - (void)loadView
 {
     UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 460)];
-    containerView.backgroundColor = [UIColor greenColor];
+    containerView.backgroundColor = [UIColor clearColor];
     [containerView setUserInteractionEnabled:YES];
     self.view = containerView;
 }
@@ -53,18 +46,10 @@
     [super viewDidLoad];
     self.mainViewController = [[MainViewController alloc] initWithManagedObjectContext:self.context];
     self.mainViewController.parent = self;
-    //  [self addChildViewController:self.mainViewController];
     [self.view addSubview:self.mainViewController.view];
     
 }
 
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
 -(void)OpenBook:(BookViewController *)book
 {
@@ -72,7 +57,7 @@
     NSLog(@"RootContainerViewController : OpenBookWithOpponent:");
     NSLog(@"frame(%f, %f, %f, %f)",book.view.frame.origin.x, book.view.frame.origin.y, book.view.frame.size.height, book.view.frame.size.width);
 
-    self.rootViewController = [[RootViewController alloc] init];
+    self.rootViewController = [[RootBookViewController alloc] init];
     self.rootViewController.delegate = self;
 
     

@@ -7,7 +7,6 @@
 //
 
 #import "BookViewController.h"
-//#import <CoreGraphics/CoreGraphics.h>
 #import "Opponent.h"
 #import "BookFrontView.h"
 #import "BookBackView.h"
@@ -18,6 +17,7 @@
 @synthesize delegate;
 @synthesize opponent;
 @synthesize frontViewIsVisible;
+
 
 -(id)initWithOpponent:(Opponent *)opp
 {

@@ -9,13 +9,11 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "MainViewController.h"
 #import "BookViewController.h"
-#import "RootViewController.h"
+#import "RootBookViewController.h"
 #import "BookFrontView.h"
 #import "RootContainerViewController.h"
 #import "Opponent.h"
 #import "Bet.h"
-
-
 
 
 @interface MainViewController (PrivateMethods)
@@ -67,7 +65,7 @@
     /* Retreive all Opponents to help setup the Controller */
     self.opponents = [Opponent allOponentsSortedBy:@"date"];
     [self resizeScrollView];    // Resize to fit number of Opponents
-    // + 1 for the add page 
+
     
     /* ScrollView Setup */
     // self.bookScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"padded.png"]];
@@ -138,12 +136,7 @@
         return;
     if (page == [books count])
         [books addObject:[NSNull null]];
-    /*************************************************************************************************
-     if (page == [books count] - 2) 
-     [books addObject:[NSNull null]];
-     **************************************************************************************************/
-    
-    
+
     
     /* We will take our lazily loaded controllers, test for null and init
      new Book View controllers to supply to the ScrollView */

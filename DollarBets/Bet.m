@@ -8,7 +8,7 @@
 
 #import "Bet.h"
 #import "Opponent.h"
-#import "AppDelegate.h"
+#import "DollarBetsAppDelegate.h"
 
 @implementation Bet
 
@@ -23,7 +23,7 @@
 
 +(bool)deleteBet:(Bet *)bet
 {
-    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSManagedObjectContext *context = [(DollarBetsAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
    
     [bet.opponent removeBetsObject:bet];
     [context deleteObject:bet];
@@ -42,7 +42,7 @@
 
 -(bool)save
 {
-    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSManagedObjectContext *context = [(DollarBetsAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     
     NSError *error = nil;
     [context save:&error];

@@ -6,18 +6,18 @@
 //  Copyright (c) 2011 Home. All rights reserved.
 //
 
-#import "ModelController.h"
+#import "BookModelController.h"
 #import "TOCTableViewController.h"
-#import "RootViewController.h"
+#import "RootBookViewController.h"
 #import "BetPage.h"
 
 #define MPAGE_FRAME CGRectMake(0, 7, 305, 446)
 
-@interface ModelController()
+@interface BookModelController()
 @property (strong, nonatomic) NSArray *bets;
 @end
 
-@implementation ModelController
+@implementation BookModelController
 @synthesize opponent;
 @synthesize bets;
 @synthesize controllers;

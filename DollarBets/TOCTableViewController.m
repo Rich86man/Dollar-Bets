@@ -8,8 +8,7 @@
 
 #import "TOCTableViewController.h"
 #import "TOCBetsTableViewCell.h"
-#import "RootViewController.h"
-
+#import "RootBookViewController.h"
 
 #define SAVE_BUTTON_HEIGHT 45.0f
 #define SAVE_BUTTON_WIDTH 275.0f
@@ -126,7 +125,6 @@
 {
     return @"TableOfContents Page";
 }
-
 
 
 #pragma mark - Table view data source
@@ -348,24 +346,13 @@
 }
 
 #pragma mark - TextView Delegate Functions
+
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
-    
     if(textView.tag == 0)
         [self.delegate didBeginEditingDescription];
-    /*
-     switch (textView.tag) {
-     case 0:
-     [self.delegate didBeginEditingDescription];
-     break;
-     case 1:
-     [self.delegate didBeginEditingAmount];
-     break;
-     default:
-     break;
-     }
-     */
 }
+
 
 - (void)textViewDidChange:(UITextView *)textView
 {
@@ -568,8 +555,6 @@
 }
 
 
-
-
 -(void)setUpAmountLabel
 {
     UILabel *label = self.amountLabel;
@@ -601,7 +586,6 @@
 }
 
 
-
 -(void)showHomeButton:(NSInteger)duration
 {
     if(!duration)
@@ -621,6 +605,7 @@
     }
     
 }
+
 
 -(void)hideHomeButton:(NSInteger)duration
 {

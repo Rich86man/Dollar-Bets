@@ -6,9 +6,9 @@
 //  Copyright (c) 2011 Home. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "DollarBetsAppDelegate.h"
 #import "RootContainerViewController.h"
-@implementation AppDelegate
+@implementation DollarBetsAppDelegate
 
 
 @synthesize window = _window;

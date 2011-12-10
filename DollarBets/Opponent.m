@@ -8,7 +8,7 @@
 
 #import "Opponent.h"
 #import "Bet.h"
-#import "AppDelegate.h"
+#import "DollarBetsAppDelegate.h"
 
 
 
@@ -26,7 +26,7 @@
     if(!sortDescriptor)
         sortDescriptor = @"date";
     
-    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSManagedObjectContext *context = [(DollarBetsAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Opponent"];
     
@@ -47,7 +47,7 @@
 
 +(void)deleteAll
 {
-    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSManagedObjectContext *context = [(DollarBetsAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Opponent"];
     NSError *error = nil;
     
@@ -69,7 +69,7 @@
 
 +(bool)deleteOpponent:(Opponent *)opp
 {
-    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSManagedObjectContext *context = [(DollarBetsAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     
     [context deleteObject:opp];
     
@@ -87,7 +87,7 @@
 
 -(bool)save
 {
-    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSManagedObjectContext *context = [(DollarBetsAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     
     NSError *error = nil;
     [context save:&error];
