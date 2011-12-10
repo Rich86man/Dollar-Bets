@@ -22,8 +22,8 @@
 		FA0D32D51444DBFF00E4755C /* sliderPageControlBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0D32D11444DBFF00E4755C /* sliderPageControlBg@2x.png */; };
 		FA0D32DE1444EAB300E4755C /* paperTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0D32DC1444EAB300E4755C /* paperTop@2x.png */; };
 		FA1B56401448B89900FEE881 /* BookBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1B563F1448B89900FEE881 /* BookBackView.m */; };
-		FA1D8B14140C176600C4DD59 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B0D140C176600C4DD59 /* RootViewController.m */; };
-		FA1D8B16140C176600C4DD59 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B11140C176600C4DD59 /* ModelController.m */; };
+		FA1D8B14140C176600C4DD59 /* RootBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B0D140C176600C4DD59 /* RootBookViewController.m */; };
+		FA1D8B16140C176600C4DD59 /* BookModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B11140C176600C4DD59 /* BookModelController.m */; };
 		FA1D8B26140C2F8300C4DD59 /* RootContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D8B25140C2F8300C4DD59 /* RootContainerViewController.m */; };
 		FA215D6D143CC761001919C4 /* ribbon.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D6C143CC761001919C4 /* ribbon.png */; };
 		FA215D77143D26CB001919C4 /* poloroidBig.png in Resources */ = {isa = PBXBuildFile; fileRef = FA215D75143D26C9001919C4 /* poloroidBig.png */; };
@@ -48,7 +48,7 @@
 		FA45BA251401E66E00C02A78 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA45BA241401E66E00C02A78 /* CoreData.framework */; };
 		FA45BA2B1401E66E00C02A78 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA45BA291401E66E00C02A78 /* InfoPlist.strings */; };
 		FA45BA2D1401E66E00C02A78 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA2C1401E66E00C02A78 /* main.m */; };
-		FA45BA311401E66E00C02A78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA301401E66E00C02A78 /* AppDelegate.m */; };
+		FA45BA311401E66E00C02A78 /* DollarBetsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA301401E66E00C02A78 /* DollarBetsAppDelegate.m */; };
 		FA45BA341401E66E00C02A78 /* DollarBets.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA321401E66E00C02A78 /* DollarBets.xcdatamodeld */; };
 		FA45BA411401E6C900C02A78 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA45BA3F1401E6C900C02A78 /* MainViewController.m */; };
 		FA45CC5E14536DC70090C217 /* paperPlusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = FA45CC5C14536DC70090C217 /* paperPlusSign.png */; };
@@ -121,7 +121,7 @@
 		FAC5BF7A1452047B00813FFF /* rootBookBackround.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC5BF781452047A00813FFF /* rootBookBackround.png */; };
 		FAC5BF7B1452047B00813FFF /* rootBookBackround@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC5BF791452047A00813FFF /* rootBookBackround@2x.png */; };
 		FACD7511144CB47500384AFF /* RKPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FACD7510144CB47500384AFF /* RKPageViewController.m */; };
-		FACD7518144CD20A00384AFF /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACD7517144CD20900384AFF /* RootViewController.xib */; };
+		FACD7518144CD20A00384AFF /* RootBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACD7517144CD20900384AFF /* RootBookViewController.xib */; };
 		FACD751D144CE81300384AFF /* NSDate+RK.m in Sources */ = {isa = PBXBuildFile; fileRef = FACD751C144CE81300384AFF /* NSDate+RK.m */; };
 		FACD7529144D188500384AFF /* handmadepaper.png in Resources */ = {isa = PBXBuildFile; fileRef = FACD7528144D188500384AFF /* handmadepaper.png */; };
 		FACD752B144D22E900384AFF /* roughLine.png in Resources */ = {isa = PBXBuildFile; fileRef = FACD752A144D22E800384AFF /* roughLine.png */; };
@@ -149,10 +149,10 @@
 		FA0D32DC1444EAB300E4755C /* paperTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paperTop@2x.png"; sourceTree = "<group>"; };
 		FA1B563E1448B89900FEE881 /* BookBackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookBackView.h; sourceTree = "<group>"; };
 		FA1B563F1448B89900FEE881 /* BookBackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookBackView.m; sourceTree = "<group>"; };
-		FA1D8B0C140C176600C4DD59 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		FA1D8B0D140C176600C4DD59 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		FA1D8B10140C176600C4DD59 /* ModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
-		FA1D8B11140C176600C4DD59 /* ModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
+		FA1D8B0C140C176600C4DD59 /* RootBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = RootBookViewController.h; sourceTree = "<group>"; };
+		FA1D8B0D140C176600C4DD59 /* RootBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootBookViewController.m; sourceTree = "<group>"; };
+		FA1D8B10140C176600C4DD59 /* BookModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = BookModelController.h; sourceTree = "<group>"; };
+		FA1D8B11140C176600C4DD59 /* BookModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookModelController.m; sourceTree = "<group>"; };
 		FA1D8B24140C2F8300C4DD59 /* RootContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootContainerViewController.h; sourceTree = "<group>"; };
 		FA1D8B25140C2F8300C4DD59 /* RootContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootContainerViewController.m; sourceTree = "<group>"; };
 		FA215D6C143CC761001919C4 /* ribbon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ribbon.png; sourceTree = "<group>"; };
@@ -185,8 +185,8 @@
 		FA45BA2A1401E66E00C02A78 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA45BA2C1401E66E00C02A78 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FA45BA2E1401E66E00C02A78 /* DollarBets-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DollarBets-Prefix.pch"; sourceTree = "<group>"; };
-		FA45BA2F1401E66E00C02A78 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		FA45BA301401E66E00C02A78 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FA45BA2F1401E66E00C02A78 /* DollarBetsAppDelegate.h */ = {isa = PBXFileReference; path = DollarBetsAppDelegate.h; sourceTree = "<group>"; };
+		FA45BA301401E66E00C02A78 /* DollarBetsAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DollarBetsAppDelegate.m; sourceTree = "<group>"; };
 		FA45BA331401E66E00C02A78 /* DollarBets.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DollarBets.xcdatamodel; sourceTree = "<group>"; };
 		FA45BA3E1401E6C900C02A78 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		FA45BA3F1401E6C900C02A78 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 		FAC5BF791452047A00813FFF /* rootBookBackround@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rootBookBackround@2x.png"; sourceTree = "<group>"; };
 		FACD750F144CB47500384AFF /* RKPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPageViewController.h; sourceTree = "<group>"; };
 		FACD7510144CB47500384AFF /* RKPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKPageViewController.m; sourceTree = "<group>"; };
-		FACD7517144CD20900384AFF /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
+		FACD7517144CD20900384AFF /* RootBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootBookViewController.xib; sourceTree = "<group>"; };
 		FACD751B144CE81300384AFF /* NSDate+RK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RK.h"; sourceTree = "<group>"; };
 		FACD751C144CE81300384AFF /* NSDate+RK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RK.m"; sourceTree = "<group>"; };
 		FACD7528144D188500384AFF /* handmadepaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = handmadepaper.png; sourceTree = "<group>"; };
@@ -325,23 +325,23 @@
 		FA1D8B0B140C174300C4DD59 /* OpenBook */ = {
 			isa = PBXGroup;
 			children = (
-				FA1D8B19140C176E00C4DD59 /* Root Book */,
+				FA1D8B19140C176E00C4DD59 /* RootBook */,
 			);
 			name = OpenBook;
 			sourceTree = "<group>";
 		};
-		FA1D8B19140C176E00C4DD59 /* Root Book */ = {
+		FA1D8B19140C176E00C4DD59 /* RootBook */ = {
 			isa = PBXGroup;
 			children = (
 				FA4D38831413FAC4003064BC /* Table Of Contents */,
 				FAB474D614194E4D0000075F /* Bet Page */,
-				FA1D8B0C140C176600C4DD59 /* RootViewController.h */,
-				FA1D8B0D140C176600C4DD59 /* RootViewController.m */,
-				FACD7517144CD20900384AFF /* RootViewController.xib */,
-				FA1D8B10140C176600C4DD59 /* ModelController.h */,
-				FA1D8B11140C176600C4DD59 /* ModelController.m */,
+				FA1D8B0C140C176600C4DD59 /* RootBookViewController.h */,
+				FA1D8B0D140C176600C4DD59 /* RootBookViewController.m */,
+				FACD7517144CD20900384AFF /* RootBookViewController.xib */,
+				FA1D8B10140C176600C4DD59 /* BookModelController.h */,
+				FA1D8B11140C176600C4DD59 /* BookModelController.m */,
 			);
-			name = "Root Book";
+			name = RootBook;
 			sourceTree = "<group>";
 		};
 		FA1D8B27140C2F9A00C4DD59 /* RootContainer */ = {
@@ -432,8 +432,8 @@
 			children = (
 				FACD751A144CE7BC00384AFF /* Helper Classes */,
 				FA1D8B27140C2F9A00C4DD59 /* RootContainer */,
-				FA45BA2F1401E66E00C02A78 /* AppDelegate.h */,
-				FA45BA301401E66E00C02A78 /* AppDelegate.m */,
+				FA45BA2F1401E66E00C02A78 /* DollarBetsAppDelegate.h */,
+				FA45BA301401E66E00C02A78 /* DollarBetsAppDelegate.m */,
 				FA45BA271401E66E00C02A78 /* Supporting Files */,
 			);
 			path = DollarBets;
@@ -774,7 +774,7 @@
 				FA0D32DE1444EAB300E4755C /* paperTop@2x.png in Resources */,
 				FAAC98401449F77600AD3CC5 /* betNavBar.png in Resources */,
 				FAAC98421449F79800AD3CC5 /* betNavBar@2x.png in Resources */,
-				FACD7518144CD20A00384AFF /* RootViewController.xib in Resources */,
+				FACD7518144CD20A00384AFF /* RootBookViewController.xib in Resources */,
 				FACD7529144D188500384AFF /* handmadepaper.png in Resources */,
 				FACD752B144D22E900384AFF /* roughLine.png in Resources */,
 				FA7FCFEE1450C3E800489541 /* changeNameButton.png in Resources */,
@@ -816,15 +816,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA45BA2D1401E66E00C02A78 /* main.m in Sources */,
-				FA45BA311401E66E00C02A78 /* AppDelegate.m in Sources */,
+				FA45BA311401E66E00C02A78 /* DollarBetsAppDelegate.m in Sources */,
 				FA45BA341401E66E00C02A78 /* DollarBets.xcdatamodeld in Sources */,
 				FA45BA411401E6C900C02A78 /* MainViewController.m in Sources */,
 				FA6ADA351402A9FF007E6CB1 /* BookViewController.m in Sources */,
 				FA437B7D14046EBC00CD43EF /* Bet.m in Sources */,
 				FAB9D59014047943000F4FC0 /* Opponent.m in Sources */,
 				FA2486F214083E1C00AC31BE /* BookFrontView.m in Sources */,
-				FA1D8B14140C176600C4DD59 /* RootViewController.m in Sources */,
-				FA1D8B16140C176600C4DD59 /* ModelController.m in Sources */,
+				FA1D8B14140C176600C4DD59 /* RootBookViewController.m in Sources */,
+				FA1D8B16140C176600C4DD59 /* BookModelController.m in Sources */,
 				FA1D8B26140C2F8300C4DD59 /* RootContainerViewController.m in Sources */,
 				FA4D38881413FAEE003064BC /* TOCTableViewController.m in Sources */,
 				FADC500214181A08008F8C4E /* TOCBetsTableViewCell.m in Sources */,
