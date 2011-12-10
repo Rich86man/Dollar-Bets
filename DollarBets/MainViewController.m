@@ -93,6 +93,9 @@
     }
     
     [self setupSlider];
+    
+
+
 }
 
 

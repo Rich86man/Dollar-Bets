@@ -469,7 +469,7 @@
         self.saveButton.frame = CGRectMake(SAVE_BUTTON_DEFAULT_ORIGIN_X, SAVE_BUTTON_DEFAULT_ORIGIN_Y, SAVE_BUTTON_WIDTH, 0);
     }
     
-    CGRect newQuickViewFrame = CGRectMake(0, 0, 0, 0);
+    CGRect newQuickViewFrame;
     
     if (self.saveButton.alpha == 0.0f)
         newQuickViewFrame = CGRectMake(0, 0, 305, self.descriptionTextView.frame.origin.y + self.descriptionTextView.frame.size.height + PADDING);
