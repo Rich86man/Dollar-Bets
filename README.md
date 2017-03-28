@@ -5,6 +5,9 @@ Copyright:
   Copyright (c) Richard Kirk - all right reserved.
   And, the software may includes other software.
 
+<a href="https://www.cisimple.com/jobs/7vbgqdxlopwwubw98"><img src='https://www.cisimple.com/jobs/7vbgqdxlopwwubw98/build_status.png'/></a>
+
+Continuous Integration provided by [cisimple](https://www.cisimple.com).
 
 License:
   You can choose license for this source code from below
